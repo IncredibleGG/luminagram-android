@@ -11173,4 +11173,20 @@
     <string name="LuminaHideTabs">Hide folder tabs</string>
     <string name="LuminaHideStories">Hide stories</string>
     <string name="LuminaCompactChatList">Compact chat list</string>
+    <string name="LuminaChatSettings">Chat &amp; media</string>
+    <string name="LuminaMessageActions">Message actions</string>
+    <string name="LuminaForwardNoAuthorTitle">Forward without author</string>
+    <string name="LuminaForwardNoCaptionTitle">Forward without caption</string>
+    <string name="LuminaSaveToCloudTitle">Save to Saved Messages</string>
+    <string name="LuminaSelectFromAuthorTitle">Select all from author</string>
+    <string name="LuminaMediaSaving">Media</string>
+    <string name="LuminaSaveStickers">Save stickers</string>
+    <string name="LuminaSensitive">Restricted content</string>
+    <string name="LuminaCopyRestricted">Copy from restricted chats</string>
+    <string name="LuminaSaveRestrictedMedia">Save media from no-save chats</string>
+    <string name="LuminaSensitiveInfo">The sender disabled copying or saving in these chats. Bypassing it is client-side only and may violate Telegram\'s Terms of Service. Off by default.</string>
+    <string name="LuminaForwardNoAuthor">Forward without author</string>
+    <string name="LuminaForwardNoCaption">Forward without caption</string>
+    <string name="LuminaSaveToCloud">Save to Saved Messages</string>
+    <string name="LuminaSelectFromAuthor">Select all from author</string>
 </resources>
