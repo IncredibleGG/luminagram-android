@@ -11186,4 +11186,9 @@
     <string name="LuminaPrivacyShowRegistrationDate">Show registration date</string>
     <string name="LuminaPrivacyShowRegistrationDateInfo">Show an estimated account creation date on user profiles. The date is approximate.</string>
     <string name="ProfileRegistrationDate">Registration date</string>
+    <string name="LuminaTranslateTitle">Auto-translate</string>
+    <string name="LuminaTranslateHeader">Translation</string>
+    <string name="LuminaTranslateTo">Translate to</string>
+    <string name="LuminaAutoTranslateAll">Auto-translate all chats</string>
+    <string name="LuminaAutoTranslateAllInfo">Automatically translate incoming messages in every chat, bypassing the premium requirement. Chats you have turned off individually stay off.</string>
 </resources>

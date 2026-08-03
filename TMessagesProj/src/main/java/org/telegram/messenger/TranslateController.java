@@ -91,7 +91,7 @@ public class TranslateController extends BaseController {
     }
 
     public boolean isFeatureAvailable() {
-        return isChatTranslateEnabled() && UserConfig.getInstance(currentAccount).isPremium();
+        return isChatTranslateEnabled() && (UserConfig.getInstance(currentAccount).isPremium() || LuminaGate.unlockPremiumTranslate());
     }
 
     public boolean isFeatureAvailable(long dialogId) {
@@ -101,6 +101,7 @@ public class TranslateController extends BaseController {
         final TLRPC.Chat chat = getMessagesController().getChat(-dialogId);
         return (
             UserConfig.getInstance(currentAccount).isPremium() ||
+            LuminaGate.unlockPremiumTranslate() ||
             chat != null && chat.autotranslation
         );
     }
@@ -224,7 +225,7 @@ public class TranslateController extends BaseController {
     }
 
     public boolean isTranslatingDialog(long dialogId) {
-        return isFeatureAvailable(dialogId) && translatingDialogs.get(dialogId, isChatAutoTranslated(dialogId));
+        return isFeatureAvailable(dialogId) && translatingDialogs.get(dialogId, isChatAutoTranslated(dialogId) || LuminaGate.unlockPremiumTranslate());
     }
 
     public void toggleTranslatingDialog(long dialogId) {
