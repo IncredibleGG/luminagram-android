@@ -146,6 +146,7 @@ import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LanguageDetector;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -327,6 +328,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -646,6 +648,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int infoHeaderRowEmpty;
     private int infoEndRowEmpty;
     private int phoneRow;
+    private int registrationDateRow;
     private int noteRow;
     private int locationRow;
     private int userInfoRow;
@@ -10414,6 +10417,63 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         return chatId != 0;
     }
 
+    // LuminaGram: estimated account registration date derived from userId.
+    // Telegram user ids grow roughly monotonically with creation time; we binary-search
+    // a static anchor table and linearly interpolate. Result is approximate (month/year).
+    private static final long[] REG_ANCHOR_IDS = {
+            1000000L, 2768409L, 7679610L, 11538514L, 15835244L, 23646077L, 38015510L,
+            44634663L, 46145305L, 54845238L, 63263518L, 101260938L, 103151531L, 109393468L,
+            112594714L, 116812045L, 122600695L, 124872445L, 130029930L, 132670343L, 141733941L,
+            152253017L, 157242073L, 171295414L, 188758258L, 191317690L, 199570902L, 229882272L,
+            234462946L, 253685473L, 293169835L, 315690368L, 342781860L, 352940995L, 369669043L,
+            400169472L, 616816630L, 700000000L, 800000000L, 900000000L, 1000000000L,
+            1200000000L, 1400000000L, 1600000000L, 1800000000L, 2000000000L, 3000000000L,
+            4000000000L, 5000000000L, 6000000000L, 7000000000L
+    };
+    private static final long[] REG_ANCHOR_DATES = {
+            1380326400L, 1383264000L, 1388448000L, 1391212800L, 1392940800L, 1393459200L, 1393632000L,
+            1399334400L, 1400198400L, 1411257600L, 1414454400L, 1425600000L, 1433376000L, 1439683200L,
+            1444176000L, 1448323200L, 1450483200L, 1453248000L, 1457481600L, 1461283200L, 1465344000L,
+            1466121600L, 1471046400L, 1474156800L, 1476835200L, 1477267200L, 1481932800L, 1493856000L,
+            1499472000L, 1504137600L, 1508025600L, 1526342400L, 1529625600L, 1532563200L, 1538006400L,
+            1542326400L, 1548720000L, 1556668800L, 1571184000L, 1585699200L, 1600214400L,
+            1614556800L, 1625097600L, 1633046400L, 1643673600L, 1656633600L, 1690848000L,
+            1719792000L, 1748736000L, 1777680000L, 1806624000L
+    };
+
+    private String getEstimatedRegistrationDate(long userId) {
+        if (userId <= 0) {
+            return null;
+        }
+        long[] ids = REG_ANCHOR_IDS;
+        long[] dates = REG_ANCHOR_DATES;
+        long estimate;
+        if (userId <= ids[0]) {
+            estimate = dates[0];
+        } else if (userId >= ids[ids.length - 1]) {
+            estimate = dates[dates.length - 1];
+        } else {
+            int lo = 0, hi = ids.length - 1;
+            while (hi - lo > 1) {
+                int mid = (lo + hi) >>> 1;
+                if (ids[mid] <= userId) {
+                    lo = mid;
+                } else {
+                    hi = mid;
+                }
+            }
+            long idSpan = ids[hi] - ids[lo];
+            double frac = idSpan == 0 ? 0 : (double) (userId - ids[lo]) / (double) idSpan;
+            estimate = dates[lo] + (long) (frac * (dates[hi] - dates[lo]));
+        }
+        try {
+            SimpleDateFormat fmt = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+            return "~ " + fmt.format(new Date(estimate * 1000L));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private void updateRowsIds() {
         updateNotifications(false);
 
@@ -10427,6 +10487,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         numberSectionRow = -1;
         numberRow = -1;
         birthdayRow = -1;
+        registrationDateRow = -1;
         setUsernameRow = -1;
         bioRow = -1;
         channelRow = -1;
@@ -10684,6 +10745,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
                 if (user != null && username != null) {
                     usernameRow = rowCount++;
+                }
+                if (userId != 0 && !myProfile && LuminaConfig.getBoolean("showRegistrationDate", true)
+                        && getEstimatedRegistrationDate(userId) != null) {
+                    registrationDateRow = rowCount++;
                 }
                 if (userInfo != null) {
                     if (userInfo.birthday != null) {
@@ -13451,6 +13516,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
                             containsGift = !myProfile && today && !getMessagesController().premiumPurchaseBlocked();
                         }
+                    } else if (position == registrationDateRow) {
+                        String regDate = getEstimatedRegistrationDate(userId);
+                        if (regDate == null) regDate = "—";
+                        detailCell.setTextAndValue(regDate, LocaleController.getString(R.string.ProfileRegistrationDate), false);
                     } else if (position == phoneRow) {
                         String text;
                         TLRPC.User user = getMessagesController().getUser(userId);
@@ -14282,7 +14351,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                     position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                 return VIEW_TYPE_HEADER;
-            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow) {
+            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow) {
                 return VIEW_TYPE_TEXT_DETAIL;
             } else if (position == usernameRow || position == setUsernameRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE;

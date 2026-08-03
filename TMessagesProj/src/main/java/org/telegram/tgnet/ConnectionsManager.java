@@ -37,6 +37,7 @@ import org.telegram.messenger.FileLog;
 import org.telegram.messenger.FileUploadOperation;
 import org.telegram.messenger.KeepAliveJob;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.PushListenerController;
@@ -389,6 +390,37 @@ public class ConnectionsManager extends BaseController {
     }
 
     private void sendRequestInternal(TLObject object, RequestDelegate onComplete, RequestDelegateTimestamp onCompleteTimestamp, QuickAckDelegate onQuickAck, WriteToSocketDelegate onWriteToSocket, int flags, int datacenterId, int connectionType, boolean immediate, int requestToken) {
+        // LuminaGram privacy / stealth interception (safe, non-ToS)
+        if (object != null) {
+            // (1) No read receipts: short-circuit read requests with a fake success.
+            //     Local read state is already applied before sendRequest is called.
+            if (!LuminaConfig.getBoolean("sendReadPackets", true) && (
+                    object instanceof TLRPC.TL_messages_readHistory ||
+                    object instanceof TLRPC.TL_messages_readEncryptedHistory ||
+                    object instanceof TLRPC.TL_messages_readDiscussion ||
+                    object instanceof TLRPC.TL_messages_readMessageContents ||
+                    object instanceof TLRPC.TL_channels_readHistory ||
+                    object instanceof TLRPC.TL_channels_readMessageContents)) {
+                if (onComplete != null) {
+                    TLRPC.TL_messages_affectedMessages fakeRes = new TLRPC.TL_messages_affectedMessages();
+                    fakeRes.pts = -1;
+                    fakeRes.pts_count = 0;
+                    onComplete.run(fakeRes, null);
+                }
+                return;
+            }
+            // (2) No typing / recording / upload-progress status.
+            if (!LuminaConfig.getBoolean("sendTyping", true) && (
+                    object instanceof TLRPC.TL_messages_setTyping ||
+                    object instanceof TLRPC.TL_messages_setEncryptedTyping)) {
+                return;
+            }
+            // (3) Stay offline: force offline=true rather than dropping the packet.
+            if (!LuminaConfig.getBoolean("sendOnlineStatus", true)
+                    && object instanceof org.telegram.tgnet.tl.TL_account.updateStatus) {
+                ((org.telegram.tgnet.tl.TL_account.updateStatus) object).offline = true;
+            }
+        }
         if (BuildVars.LOGS_ENABLED) {
             FileLog.d("send request " + object + " with token = " + requestToken);
         }
