@@ -109,6 +109,16 @@ android {
     }
 
 
+    flavorDimensions "channel"
+    productFlavors {
+        full {
+            dimension "channel"
+        }
+        store {
+            dimension "channel"
+        }
+    }
+
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 35

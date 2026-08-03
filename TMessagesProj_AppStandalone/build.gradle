@@ -87,10 +87,11 @@ android {
         manifest.srcFile '../TMessagesProj/config/release/AndroidManifest_standalone.xml'
     }
 
-    flavorDimensions "minApi"
+    flavorDimensions "minApi", "channel"
 
     productFlavors {
         afat {
+            dimension "minApi"
             ndk {
                 abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
             }
@@ -100,6 +101,12 @@ android {
             sourceSets.standalone {
                 manifest.srcFile '../TMessagesProj/config/release/AndroidManifest_standalone.xml'
             }
+        }
+        full {
+            dimension "channel"
+        }
+        store {
+            dimension "channel"
         }
     }
 

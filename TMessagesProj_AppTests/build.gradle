@@ -133,6 +133,7 @@ android {
     }
 
     defaultConfig {
+        missingDimensionStrategy 'channel', 'full'
         minSdkVersion 26
         targetSdkVersion 35
         versionName APP_VERSION_NAME
