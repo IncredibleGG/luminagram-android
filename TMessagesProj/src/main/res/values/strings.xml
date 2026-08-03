@@ -11167,4 +11167,10 @@
     <string name="ArticleAIPrompt">Write a prompt...</string>
     <string name="ArticleAIGenerate">Generate</string>
     <string name="ArticleAIAddToPage">Add to Page</string>
+    <string name="LuminaGramSettings">LuminaGram Settings</string>
+    <string name="LuminaGramSettingsInfo">Exclusive features</string>
+    <string name="LuminaGramChatList">Chat list</string>
+    <string name="LuminaHideTabs">Hide folder tabs</string>
+    <string name="LuminaHideStories">Hide stories</string>
+    <string name="LuminaCompactChatList">Compact chat list</string>
 </resources>

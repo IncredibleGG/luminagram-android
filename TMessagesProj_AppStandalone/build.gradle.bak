@@ -26,7 +26,7 @@ android {
     compileSdkVersion 35
     buildToolsVersion '35.0.0'
 
-    defaultConfig.applicationId = "com.luminagram.app"
+    defaultConfig.applicationId = APP_PACKAGE
 
     sourceSets.main.jniLibs.srcDirs = ['../TMessagesProj/jni/']
 
@@ -64,6 +64,7 @@ android {
             debuggable true
             jniDebuggable true
             signingConfig signingConfigs.debug
+            applicationIdSuffix ".web"
             minifyEnabled false
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), '../TMessagesProj/proguard-rules.pro', '../TMessagesProj/proguard-rules-beta.pro'
@@ -73,6 +74,7 @@ android {
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.release
+            applicationIdSuffix ".web"
             minifyEnabled true
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), '../TMessagesProj/proguard-rules.pro'

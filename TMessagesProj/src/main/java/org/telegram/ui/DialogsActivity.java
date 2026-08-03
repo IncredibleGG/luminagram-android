@@ -122,6 +122,7 @@ import org.telegram.messenger.VideoEditedInfo;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
 import org.telegram.messenger.NotificationCenter;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.NotificationsController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
@@ -6856,6 +6857,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         if (filterTabsView == null || inPreviewMode || searchIsShowed || (rightSlidingDialogContainer != null && rightSlidingDialogContainer.hasFragment())) {
             return;
         }
+        if (LuminaConfig.hideTabs) {
+            canShowFilterTabsView = false;
+            filterTabsView.setVisibility(View.GONE);
+            updateFilterTabsVisibility(animated);
+            return;
+        }
         if (filterOptions != null) {
             filterOptions.dismiss();
             filterOptions = null;
@@ -12756,7 +12763,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
         boolean onlySelfStories = !isArchive() && getStoriesController().hasOnlySelfStories();
         boolean newVisibility;
-        if (communityId != 0) {
+        if (LuminaConfig.hideStories) {
+            newVisibility = false;
+            onlySelfStories = false;
+        } else if (communityId != 0) {
             newVisibility = false;
         } else if (isArchive()) {
             newVisibility = !getStoriesController().getHiddenList().isEmpty();
