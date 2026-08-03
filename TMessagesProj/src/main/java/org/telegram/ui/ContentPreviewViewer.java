@@ -62,6 +62,8 @@ import org.telegram.messenger.FileLog;
 import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
@@ -763,6 +765,11 @@ public class ContentPreviewViewer {
                     icons.add(R.drawable.msg_delete);
                     actions.add(4);
                 }
+                if (currentDocument != null && LuminaConfig.getBoolean("saveStickers", true)) {
+                    items.add(LocaleController.getString(R.string.SaveToDownloads));
+                    icons.add(R.drawable.msg_download);
+                    actions.add(9);
+                }
 
                 if (currentStickerSet != null && currentDocument != null) {
                     final MediaDataController mediaDataController = MediaDataController.getInstance(currentAccount);
@@ -823,6 +830,19 @@ public class ContentPreviewViewer {
                             delegate.editSticker(currentDocument);
                         } else if (actions.get(which) == 8) {
                             delegate.deleteSticker(currentDocument);
+                        } else if (actions.get(which) == 9) {
+                            TLRPC.Document document = currentDocument;
+                            if (document != null) {
+                                try {
+                                    String path = FileLoader.getInstance(currentAccount).getPathToAttach(document, true).toString();
+                                    String mime = document.mime_type;
+                                    int fileType = mime != null && mime.startsWith("video") ? 1 : 0;
+                                    String name = FileLoader.getDocumentFileName(document);
+                                    MediaController.saveFile(path, parentActivity, fileType, name, mime);
+                                } catch (Exception e) {
+                                    FileLog.e(e);
+                                }
+                            }
                         }
                         dismissPopupWindow();
                     }
