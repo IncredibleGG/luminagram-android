@@ -11173,4 +11173,9 @@
     <string name="LuminaHideTabs">Hide folder tabs</string>
     <string name="LuminaHideStories">Hide stories</string>
     <string name="LuminaCompactChatList">Compact chat list</string>
+    <string name="LuminaTranslateTitle">Auto-translate</string>
+    <string name="LuminaTranslateHeader">Translation</string>
+    <string name="LuminaTranslateTo">Translate to</string>
+    <string name="LuminaAutoTranslateAll">Auto-translate all chats</string>
+    <string name="LuminaAutoTranslateAllInfo">Automatically translate incoming messages in every chat, bypassing the premium requirement. Chats you have turned off individually stay off.</string>
 </resources>
