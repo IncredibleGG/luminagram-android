@@ -11173,4 +11173,17 @@
     <string name="LuminaHideTabs">Hide folder tabs</string>
     <string name="LuminaHideStories">Hide stories</string>
     <string name="LuminaCompactChatList">Compact chat list</string>
+    <!-- LuminaGram privacy / stealth -->
+    <string name="LuminaPrivacyTitle">Privacy &amp; Stealth</string>
+    <string name="LuminaPrivacyGhostHeader">Ghost mode</string>
+    <string name="LuminaPrivacySendReadReceipts">Send read receipts</string>
+    <string name="LuminaPrivacySendReadReceiptsInfo">When off, messages are marked read only for you — peers never see the double check.</string>
+    <string name="LuminaPrivacySendTyping">Send typing status</string>
+    <string name="LuminaPrivacySendTypingInfo">When off, others never see your typing, recording or upload status.</string>
+    <string name="LuminaPrivacySendOnline">Send online status</string>
+    <string name="LuminaPrivacySendOnlineInfo">When off, you always appear offline while still using the app.</string>
+    <string name="LuminaPrivacyProfileHeader">Profile</string>
+    <string name="LuminaPrivacyShowRegistrationDate">Show registration date</string>
+    <string name="LuminaPrivacyShowRegistrationDateInfo">Show an estimated account creation date on user profiles. The date is approximate.</string>
+    <string name="ProfileRegistrationDate">Registration date</string>
 </resources>
