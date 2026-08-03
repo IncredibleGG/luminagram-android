@@ -53,6 +53,10 @@ public class LuminaGramSettingsActivity extends BaseFragment {
         items.add(UItem.asSwitch(1, LocaleController.getString(R.string.LuminaHideTabs)).setChecked(LuminaConfig.hideTabs));
         items.add(UItem.asSwitch(2, LocaleController.getString(R.string.LuminaHideStories)).setChecked(LuminaConfig.hideStories));
         items.add(UItem.asShadow(null));
+        items.add(UItem.asButton(10, LocaleController.getString(R.string.LuminaPrivacyTitle)));
+        items.add(UItem.asButton(11, LocaleController.getString(R.string.LuminaChatSettings)));
+        items.add(UItem.asButton(12, LocaleController.getString(R.string.LuminaTranslateTitle)));
+        items.add(UItem.asShadow(null));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -62,6 +66,15 @@ public class LuminaGramSettingsActivity extends BaseFragment {
                 break;
             case 2:
                 LuminaConfig.toggleHideStories();
+                break;
+            case 10:
+                presentFragment(new LuminaPrivacyActivity());
+                break;
+            case 11:
+                presentFragment(new LuminaChatActivity());
+                break;
+            case 12:
+                presentFragment(new LuminaTranslateActivity());
                 break;
         }
         if (listView != null && listView.adapter != null) {
