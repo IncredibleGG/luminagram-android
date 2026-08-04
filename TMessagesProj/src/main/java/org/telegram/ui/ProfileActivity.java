@@ -654,6 +654,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int phoneRow;
     private int registrationDateRow;
     private int dcIdRow;
+    private int newContactRiskRow;
     private int chatDateRow;
     private int luminaPrivateNoteRow;
     private int noteRow;
@@ -10514,6 +10515,32 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
     }
 
+    // LuminaGram (wave19): compact anti-scam "risk card" summary shown on a stranger's profile.
+    // Client-side only: reuses locally-known trust signals (contact status, groups in common
+    // and the estimated account-creation heuristic). Never sent to Telegram.
+    private CharSequence buildNewContactRiskSummary(long uid) {
+        StringBuilder sb = new StringBuilder();
+        // (a) contact status — this row is only added for non-contacts.
+        sb.append(LuminaLocale.getString(R.string.ProfileRiskNotContact));
+        // (b) groups in common.
+        TLRPC.UserFull full = getMessagesController().getUserFull(uid);
+        if (full != null) {
+            sb.append('\n');
+            if (full.common_chats_count > 0) {
+                sb.append(LocaleController.formatPluralString("CommonGroups", full.common_chats_count));
+            } else {
+                sb.append(LuminaLocale.getString(R.string.ProfileRiskNoCommonGroups));
+            }
+        }
+        // (c) coarse account-age estimate (same heuristic as the registration-date row).
+        String est = getEstimatedRegistrationDate(uid);
+        if (est != null) {
+            sb.append('\n');
+            sb.append(String.format(LuminaLocale.getString(R.string.ProfileRiskAccountCreated), est));
+        }
+        return sb.toString();
+    }
+
     // ---- LuminaGram info-density helpers ----
     // Datacenter that stores the profile photo (OwlGram-style). Client-side, derived
     // from the already-synced photo object; 0 when there is no photo / unknown.
@@ -10547,6 +10574,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         birthdayRow = -1;
         registrationDateRow = -1;
         dcIdRow = -1;
+        newContactRiskRow = -1;
         luminaPrivateNoteRow = -1;
         chatDateRow = -1;
         setUsernameRow = -1;
@@ -10813,6 +10841,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
                 if (LuminaConfig.getBoolean("showDcId", false) && getProfileDcId() > 0) {
                     dcIdRow = rowCount++;
+                }
+                // LuminaGram (wave19): anti-scam "new-contact risk card" — trust signals for a stranger's profile.
+                if (userId != 0 && !myProfile && !isBot && user != null && !UserObject.isService(user.id)
+                        && !getContactsController().isContact(userId)
+                        && LuminaConfig.getBoolean("newContactRiskCard", true)) {
+                    newContactRiskRow = rowCount++;
                 }
                 // LuminaGram: local, on-device private note & tags for this contact (never sent to Telegram).
                 if (userId != 0 && !myProfile) {
@@ -13597,6 +13631,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else if (position == dcIdRow) {
                         int dc = getProfileDcId();
                         detailCell.setTextAndValue(dc > 0 ? "DC" + dc : "—", LuminaLocale.getString(R.string.ProfileDcId), false);
+                    } else if (position == newContactRiskRow) {
+                        detailCell.setTextAndValue(buildNewContactRiskSummary(userId), LuminaLocale.getString(R.string.ProfileRiskCardTitle), false);
                     } else if (position == luminaPrivateNoteRow) {
                         String summary = LuminaContactNotes.getSummary(userId);
                         if (summary == null || summary.length() == 0) {
@@ -14456,7 +14492,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 return VIEW_TYPE_TEXT_DETAIL;
             } else if (position == usernameRow || position == setUsernameRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE;
-            } else if (position == noteRow) {
+            } else if (position == noteRow || position == newContactRiskRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE_2;
             } else if (position == userInfoRow || position == channelInfoRow || position == bioRow) {
                 return VIEW_TYPE_ABOUT_LINK;
