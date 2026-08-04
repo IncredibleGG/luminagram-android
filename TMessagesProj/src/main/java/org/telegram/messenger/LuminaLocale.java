@@ -110,6 +110,10 @@ public final class LuminaLocale {
         zhHans.put("LuminaSecurityDisguiseHeader", "伪装");
         zhHans.put("LuminaSecurityDisguise", "伪装成 Calculator");
         zhHans.put("LuminaSecurityDisguiseInfo", "将应用的启动图标和名称替换为普通的 Calculator。关闭以恢复正常的 LuminaGram 图标。");
+        zhHans.put("AppIconAurora", "极光");
+        zhHans.put("AppIconSunset", "日落");
+        zhHans.put("AppIconMidnight", "午夜");
+        zhHans.put("AppIconMono", "单色");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -194,6 +198,10 @@ public final class LuminaLocale {
         zhHant.put("LuminaSecurityDisguiseHeader", "偽裝");
         zhHant.put("LuminaSecurityDisguise", "偽裝成 Calculator");
         zhHant.put("LuminaSecurityDisguiseInfo", "將應用程式的啟動圖示與名稱替換為普通的 Calculator。關閉以恢復正常的 LuminaGram 圖示。");
+        zhHant.put("AppIconAurora", "極光");
+        zhHant.put("AppIconSunset", "日落");
+        zhHant.put("AppIconMidnight", "午夜");
+        zhHant.put("AppIconMono", "單色");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -278,6 +286,10 @@ public final class LuminaLocale {
         ar.put("LuminaSecurityDisguiseHeader", "التمويه");
         ar.put("LuminaSecurityDisguise", "التمويه كـ Calculator");
         ar.put("LuminaSecurityDisguiseInfo", "استبدال أيقونة التطبيق واسمه بتطبيق Calculator عادي. أوقفه لاستعادة أيقونة LuminaGram العادية.");
+        ar.put("AppIconAurora", "الشفق");
+        ar.put("AppIconSunset", "الغروب");
+        ar.put("AppIconMidnight", "منتصف الليل");
+        ar.put("AppIconMono", "أحادي");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -362,6 +374,10 @@ public final class LuminaLocale {
         ru.put("LuminaSecurityDisguiseHeader", "Маскировка");
         ru.put("LuminaSecurityDisguise", "Маскировать под Calculator");
         ru.put("LuminaSecurityDisguiseInfo", "Заменить значок и название приложения на обычный Calculator. Выключите, чтобы вернуть обычный значок LuminaGram.");
+        ru.put("AppIconAurora", "Аврора");
+        ru.put("AppIconSunset", "Закат");
+        ru.put("AppIconMidnight", "Полночь");
+        ru.put("AppIconMono", "Моно");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -446,6 +462,10 @@ public final class LuminaLocale {
         fa.put("LuminaSecurityDisguiseHeader", "استتار");
         fa.put("LuminaSecurityDisguise", "استتار به‌صورت Calculator");
         fa.put("LuminaSecurityDisguiseInfo", "نماد و نام برنامه را با یک Calculator ساده جایگزین کنید. برای بازگرداندن نماد عادی LuminaGram خاموش کنید.");
+        fa.put("AppIconAurora", "شفق");
+        fa.put("AppIconSunset", "غروب");
+        fa.put("AppIconMidnight", "نیمه‌شب");
+        fa.put("AppIconMono", "تک‌رنگ");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -530,6 +550,10 @@ public final class LuminaLocale {
         tr.put("LuminaSecurityDisguiseHeader", "Kılık değiştirme");
         tr.put("LuminaSecurityDisguise", "Calculator olarak gizle");
         tr.put("LuminaSecurityDisguiseInfo", "Uygulamanın başlatıcı simgesini ve adını sade bir Calculator ile değiştirir. Normal LuminaGram simgesini geri getirmek için kapatın.");
+        tr.put("AppIconAurora", "Aurora");
+        tr.put("AppIconSunset", "Gün batımı");
+        tr.put("AppIconMidnight", "Gece yarısı");
+        tr.put("AppIconMono", "Mono");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -614,6 +638,10 @@ public final class LuminaLocale {
         es.put("LuminaSecurityDisguiseHeader", "Disfraz");
         es.put("LuminaSecurityDisguise", "Disfrazar como Calculator");
         es.put("LuminaSecurityDisguiseInfo", "Reemplaza el icono y el nombre de la app por una simple Calculator. Desactívalo para restaurar el icono normal de LuminaGram.");
+        es.put("AppIconAurora", "Aurora");
+        es.put("AppIconSunset", "Atardecer");
+        es.put("AppIconMidnight", "Medianoche");
+        es.put("AppIconMono", "Mono");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -698,6 +726,10 @@ public final class LuminaLocale {
         ptBr.put("LuminaSecurityDisguiseHeader", "Disfarce");
         ptBr.put("LuminaSecurityDisguise", "Disfarçar como Calculator");
         ptBr.put("LuminaSecurityDisguiseInfo", "Substitui o ícone e o nome do app por uma Calculator comum. Desative para restaurar o ícone normal do LuminaGram.");
+        ptBr.put("AppIconAurora", "Aurora");
+        ptBr.put("AppIconSunset", "Pôr do sol");
+        ptBr.put("AppIconMidnight", "Meia-noite");
+        ptBr.put("AppIconMono", "Mono");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -782,6 +814,10 @@ public final class LuminaLocale {
         id.put("LuminaSecurityDisguiseHeader", "Penyamaran");
         id.put("LuminaSecurityDisguise", "Menyamar sebagai Calculator");
         id.put("LuminaSecurityDisguiseInfo", "Ganti ikon peluncur dan nama aplikasi dengan Calculator biasa. Matikan untuk memulihkan ikon LuminaGram normal.");
+        id.put("AppIconAurora", "Aurora");
+        id.put("AppIconSunset", "Senja");
+        id.put("AppIconMidnight", "Tengah malam");
+        id.put("AppIconMono", "Mono");
         T.put("id", id);
     }
 
