@@ -83,7 +83,7 @@ public class LuminaChatListActivity extends BaseFragment {
                 .setChecked(LuminaConfig.getBoolean("showMutedCount", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaShowMutedCountInfo)));
         items.add(UItem.asSwitch(ID_ONLINE_DOT, LuminaLocale.getString(R.string.LuminaChatListOnlineDot))
-                .setChecked(LuminaConfig.getBoolean("chatListOnlineDot", false)));
+                .setChecked(LuminaConfig.getBoolean("chatListOnlineDot", true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaChatListOnlineDotInfo)));
     }
 
@@ -99,7 +99,7 @@ public class LuminaChatListActivity extends BaseFragment {
                 LuminaConfig.putBoolean("showMutedCount", !LuminaConfig.getBoolean("showMutedCount", false));
                 break;
             case ID_ONLINE_DOT:
-                LuminaConfig.putBoolean("chatListOnlineDot", !LuminaConfig.getBoolean("chatListOnlineDot", false));
+                LuminaConfig.putBoolean("chatListOnlineDot", !LuminaConfig.getBoolean("chatListOnlineDot", true));
                 break;
         }
         if (listView != null && listView.adapter != null) {
