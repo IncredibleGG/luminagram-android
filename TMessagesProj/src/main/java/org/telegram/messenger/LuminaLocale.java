@@ -213,6 +213,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaStickerExportEmpty", "没有可导出的贴纸包。");
         zhHans.put("LuminaStickerImportHint", "粘贴 t.me/addstickers 链接，每行一个");
         zhHans.put("LuminaStickerImportEmpty", "未找到贴纸包链接。");
+        zhHans.put("LuminaClearAllCache", "清除所有缓存");
+        zhHans.put("LuminaClearAllCacheConfirm", "这将从此设备删除所有缓存的媒体、文件和临时数据。你的消息和账号不受影响。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -400,6 +402,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaStickerExportEmpty", "沒有可匯出的貼圖包。");
         zhHant.put("LuminaStickerImportHint", "貼上 t.me/addstickers 連結，每行一個");
         zhHant.put("LuminaStickerImportEmpty", "找不到貼圖包連結。");
+        zhHant.put("LuminaClearAllCache", "清除所有快取");
+        zhHant.put("LuminaClearAllCacheConfirm", "這將從此裝置刪除所有快取的媒體、檔案和暫存資料。你的訊息和帳號不受影響。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -586,6 +590,8 @@ public final class LuminaLocale {
         ar.put("LuminaStickerExportEmpty", "لا توجد حزم ملصقات للتصدير.");
         ar.put("LuminaStickerImportHint", "الصق روابط t.me/addstickers، رابط واحد في كل سطر");
         ar.put("LuminaStickerImportEmpty", "لم يتم العثور على روابط حزم ملصقات.");
+        ar.put("LuminaClearAllCache", "مسح كل ذاكرة التخزين المؤقت");
+        ar.put("LuminaClearAllCacheConfirm", "سيؤدي هذا إلى إزالة جميع الوسائط والملفات والبيانات المؤقتة المخزنة من هذا الجهاز. لن تتأثر رسائلك وحسابك.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -772,6 +778,8 @@ public final class LuminaLocale {
         ru.put("LuminaStickerExportEmpty", "Нет стикерпаков для экспорта.");
         ru.put("LuminaStickerImportHint", "Вставьте ссылки t.me/addstickers, по одной в строке");
         ru.put("LuminaStickerImportEmpty", "Ссылки на стикерпаки не найдены.");
+        ru.put("LuminaClearAllCache", "Очистить весь кэш");
+        ru.put("LuminaClearAllCacheConfirm", "Это удалит все кэшированные медиафайлы, файлы и временные данные с этого устройства. Ваши сообщения и аккаунт не затрагиваются.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -958,6 +966,8 @@ public final class LuminaLocale {
         fa.put("LuminaStickerExportEmpty", "بسته برچسبی برای برون‌بری وجود ندارد.");
         fa.put("LuminaStickerImportHint", "پیوندهای t.me/addstickers را جای‌گذاری کنید، هر خط یک پیوند");
         fa.put("LuminaStickerImportEmpty", "هیچ پیوند بسته برچسبی یافت نشد.");
+        fa.put("LuminaClearAllCache", "پاک کردن همه حافظه پنهان");
+        fa.put("LuminaClearAllCacheConfirm", "این کار همه رسانه‌ها، فایل‌ها و داده‌های موقت ذخیره‌شده را از این دستگاه حذف می‌کند. پیام‌ها و حساب شما تحت تأثیر قرار نمی‌گیرد.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1144,6 +1154,8 @@ public final class LuminaLocale {
         tr.put("LuminaStickerExportEmpty", "Dışa aktarılacak çıkartma paketi yok.");
         tr.put("LuminaStickerImportHint", "t.me/addstickers bağlantılarını yapıştırın, her satıra bir tane");
         tr.put("LuminaStickerImportEmpty", "Çıkartma paketi bağlantısı bulunamadı.");
+        tr.put("LuminaClearAllCache", "Tüm önbelleği temizle");
+        tr.put("LuminaClearAllCacheConfirm", "Bu işlem, önbelleğe alınmış tüm medyayı, dosyaları ve geçici verileri bu cihazdan kaldırır. Mesajlarınız ve hesabınız etkilenmez.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1330,6 +1342,8 @@ public final class LuminaLocale {
         es.put("LuminaStickerExportEmpty", "No hay paquetes de stickers para exportar.");
         es.put("LuminaStickerImportHint", "Pega enlaces t.me/addstickers, uno por línea");
         es.put("LuminaStickerImportEmpty", "No se encontraron enlaces de paquetes de stickers.");
+        es.put("LuminaClearAllCache", "Borrar toda la caché");
+        es.put("LuminaClearAllCacheConfirm", "Esto eliminará de este dispositivo todos los archivos multimedia, archivos y datos temporales en caché. Tus mensajes y tu cuenta no se verán afectados.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1516,6 +1530,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaStickerExportEmpty", "Nenhum pacote de figurinhas para exportar.");
         ptBr.put("LuminaStickerImportHint", "Cole links t.me/addstickers, um por linha");
         ptBr.put("LuminaStickerImportEmpty", "Nenhum link de pacote de figurinhas encontrado.");
+        ptBr.put("LuminaClearAllCache", "Limpar todo o cache");
+        ptBr.put("LuminaClearAllCacheConfirm", "Isso removerá deste dispositivo todas as mídias, arquivos e dados temporários em cache. Suas mensagens e sua conta não serão afetadas.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1702,6 +1718,8 @@ public final class LuminaLocale {
         id.put("LuminaStickerExportEmpty", "Tidak ada paket stiker untuk diekspor.");
         id.put("LuminaStickerImportHint", "Tempel tautan t.me/addstickers, satu per baris");
         id.put("LuminaStickerImportEmpty", "Tautan paket stiker tidak ditemukan.");
+        id.put("LuminaClearAllCache", "Hapus semua cache");
+        id.put("LuminaClearAllCacheConfirm", "Ini akan menghapus semua media, berkas, dan data sementara yang tersimpan dari perangkat ini. Pesan dan akun Anda tidak terpengaruh.");
         T.put("id", id);
     }
 

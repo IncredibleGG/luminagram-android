@@ -62,6 +62,7 @@ import org.telegram.messenger.FilePathDatabase;
 import org.telegram.messenger.FilesMigrationService;
 import org.telegram.messenger.ImageLoader;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
@@ -202,6 +203,7 @@ public class CacheControlActivity extends BaseFragment implements NotificationCe
     private static final int other_id = 2;
     private static final int clear_database_id = 3;
     private static final int reset_database_id = 4;
+    private static final int clear_all_cache_id = 5;
     private boolean loadingDialogs;
     private NestedSizeNotifierLayout nestedSizeNotifierLayout;
 
@@ -1213,6 +1215,8 @@ public class CacheControlActivity extends BaseFragment implements NotificationCe
                     clearDatabase(false);
                 } else if (id == reset_database_id) {
                     clearDatabase(true);
+                } else if (id == clear_all_cache_id) {
+                    clearAllCache();
                 }
             }
         });
@@ -1250,6 +1254,10 @@ public class CacheControlActivity extends BaseFragment implements NotificationCe
         }
 
         ActionBarMenuItem otherItem = actionBar.createMenu().addItem(other_id, R.drawable.ic_ab_other);
+        ActionBarMenuSubItem clearAllCacheItem = otherItem.addSubItem(clear_all_cache_id, R.drawable.msg_clearcache, LuminaLocale.getString(R.string.LuminaClearAllCache));
+        clearAllCacheItem.setIconColor(Theme.getColor(Theme.key_text_RedRegular));
+        clearAllCacheItem.setTextColor(Theme.getColor(Theme.key_text_RedBold));
+        clearAllCacheItem.setSelectorColor(Theme.multAlpha(Theme.getColor(Theme.key_text_RedRegular), .12f));
         clearDatabaseItem = otherItem.addSubItem(clear_database_id, R.drawable.msg_delete, LocaleController.getString(R.string.ClearLocalDatabase));
         clearDatabaseItem.setIconColor(Theme.getColor(Theme.key_text_RedRegular));
         clearDatabaseItem.setTextColor(Theme.getColor(Theme.key_text_RedBold));
@@ -1364,6 +1372,35 @@ public class CacheControlActivity extends BaseFragment implements NotificationCe
 
         nestedSizeNotifierLayout.setTargetListView(listView);
         return fragmentView;
+    }
+
+    private void clearAllCache() {
+        if (getParentActivity() == null) {
+            return;
+        }
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+            .setTitle(LuminaLocale.getString(R.string.LuminaClearAllCache))
+            .setMessage(LuminaLocale.getString(R.string.LuminaClearAllCacheConfirm))
+            .setPositiveButton(LocaleController.getString(R.string.Clear), (di, v) -> {
+                Arrays.fill(selected, true);
+                if (listView != null) {
+                    AndroidUtilities.updateVisibleRows(listView);
+                }
+                updateChart();
+                if (clearCacheButton != null) {
+                    clearCacheButton.doClearCache();
+                } else {
+                    cleanupFolders((progressValue, next) -> {}, null);
+                }
+            })
+            .setNegativeButton(LocaleController.getString(R.string.Cancel), null)
+            .create();
+        showDialog(dialog);
+        View clearButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        if (clearButton instanceof TextView) {
+            ((TextView) clearButton).setTextColor(Theme.getColor(Theme.key_text_RedRegular));
+            clearButton.setBackground(Theme.getRoundRectSelectorDrawable(AndroidUtilities.dp(6), Theme.multAlpha(Theme.getColor(Theme.key_text_RedRegular), .12f)));
+        }
     }
 
     private void clearSelectedFiles() {

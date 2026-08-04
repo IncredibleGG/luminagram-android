@@ -11375,5 +11375,7 @@
     <string name="LuminaStickerExportEmpty">No sticker sets to export.</string>
     <string name="LuminaStickerImportHint">Paste t.me/addstickers links, one per line</string>
     <string name="LuminaStickerImportEmpty">No sticker set links found.</string>
+    <string name="LuminaClearAllCache">Clear all cache</string>
+    <string name="LuminaClearAllCacheConfirm">This will remove all cached media, files and temporary data from this device. Your messages and account are not affected.</string>
 </resources>
 
