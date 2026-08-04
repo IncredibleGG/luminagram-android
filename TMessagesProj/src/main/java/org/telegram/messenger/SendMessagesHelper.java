@@ -4229,6 +4229,16 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
         PollSendParams pollSendParams = sendMessageParams.pollSendParams;
         TL_iv.RichMessage richMessage = sendMessageParams.richMessage;
 
+        // LuminaGram: text replacer / auto-substitution. Apply the user's whole-word
+        // substitution rules to outgoing plain text right before the message is built.
+        // No-op unless the user has rules; skipped for retries (already applied on the
+        // first send) and for messages carrying rich-text entities (a length change
+        // would shift entity offsets and mangle bold / mentions / custom emoji).
+        if (message != null && retryMessageObject == null
+                && (entities == null || entities.isEmpty())) {
+            message = LuminaConfig.applyTextReplacements(message);
+        }
+
         if (user != null && user.phone == null) {
             return;
         }
