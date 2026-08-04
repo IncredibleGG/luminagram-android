@@ -179,6 +179,7 @@ import org.telegram.ui.BasePermissionsActivity;
 import org.telegram.ui.Business.BusinessLinksController;
 import org.telegram.ui.Business.QuickRepliesController;
 import org.telegram.ui.ChatActivity;
+import org.telegram.ui.LuminaQuickRepliesActivity;
 import org.telegram.ui.Components.Forum.ForumUtilities;
 import org.telegram.ui.Components.Premium.PremiumFeatureBottomSheet;
 import org.telegram.ui.Components.Premium.boosts.BoostRepository;
@@ -2724,6 +2725,11 @@ public class ChatActivityEnterView extends FrameLayout implements
                     openKeyboardInternal();
                 }
             }
+        });
+        // LuminaGram: long-press the emoji button to insert a quick-reply template.
+        emojiButton.setOnLongClickListener(v -> {
+            luminaShowQuickReplies();
+            return true;
         });
         messageEditTextContainer.addView(emojiButton, LayoutHelper.createFrame(DEFAULT_HEIGHT, DEFAULT_HEIGHT, Gravity.BOTTOM | Gravity.LEFT, 2, 0, 0, 0));
         setEmojiButtonImage(false, false);
@@ -7990,6 +7996,63 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
         }
         updateSendButtonPaid();
+    }
+
+    // ===== LuminaGram: quick reply templates =====
+
+    // Chooser opened by long-pressing the emoji button: pick a template to insert, or manage the list.
+    private void luminaShowQuickReplies() {
+        if (getContext() == null) {
+            return;
+        }
+        final ArrayList<String> replies = LuminaQuickRepliesActivity.getTemplates();
+        final CharSequence manage = LuminaLocale.getString(R.string.LuminaQuickRepliesManage);
+        final CharSequence[] items = new CharSequence[replies.size() + 1];
+        for (int i = 0; i < replies.size(); i++) {
+            items[i] = replies.get(i);
+        }
+        items[replies.size()] = manage;
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), resourcesProvider);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaQuickRepliesTitle));
+        builder.setItems(items, (dialog, which) -> {
+            if (which >= 0 && which < replies.size()) {
+                luminaInsertQuickReply(replies.get(which));
+            } else if (parentFragment != null) {
+                parentFragment.presentFragment(new LuminaQuickRepliesActivity());
+            }
+        });
+        builder.setNegativeButton(getString(R.string.Cancel), null);
+        builder.show();
+    }
+
+    // Insert the chosen template at the caret (replacing any selection) in the compose field.
+    private void luminaInsertQuickReply(CharSequence template) {
+        if (messageEditText == null || template == null || template.length() == 0) {
+            return;
+        }
+        try {
+            final Editable editable = messageEditText.getText();
+            int start = messageEditText.getSelectionStart();
+            int end = messageEditText.getSelectionEnd();
+            if (start < 0) {
+                start = editable.length();
+            }
+            if (end < 0) {
+                end = start;
+            }
+            if (end < start) {
+                final int t = start;
+                start = end;
+                end = t;
+            }
+            editable.replace(start, end, template);
+            messageEditText.setSelection(start + template.length());
+        } catch (Exception e) {
+            FileLog.e(e);
+            setFieldText(template);
+        }
+        messageEditText.requestFocus();
+        openKeyboardInternal();
     }
 
     // LuminaGram: refresh the live translate preview from the current field contents.

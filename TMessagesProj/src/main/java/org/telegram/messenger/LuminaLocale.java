@@ -139,6 +139,12 @@ public final class LuminaLocale {
         zhHans.put("LuminaAppearanceFontSerif", "衬线体");
         zhHans.put("LuminaAppearanceFontMono", "等宽");
         zhHans.put("LuminaAppearanceFontInfo", "更换应用字体。新打开的界面立即生效；已打开的界面在重启应用后刷新。");
+        zhHans.put("LuminaQuickRepliesTitle", "快捷回复");
+        zhHans.put("LuminaQuickRepliesHeader", "模板");
+        zhHans.put("LuminaQuickRepliesAdd", "添加模板");
+        zhHans.put("LuminaQuickRepliesEdit", "编辑模板");
+        zhHans.put("LuminaQuickRepliesInfo", "可插入到输入框的文本模板。在聊天中长按表情按钮即可选择，长按模板可拖动排序。");
+        zhHans.put("LuminaQuickRepliesManage", "管理模板…");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -252,6 +258,12 @@ public final class LuminaLocale {
         zhHant.put("LuminaAppearanceFontSerif", "襯線體");
         zhHant.put("LuminaAppearanceFontMono", "等寬");
         zhHant.put("LuminaAppearanceFontInfo", "更換應用程式字型。新開啟的畫面立即生效；已開啟的畫面在重新啟動應用程式後更新。");
+        zhHant.put("LuminaQuickRepliesTitle", "快捷回覆");
+        zhHant.put("LuminaQuickRepliesHeader", "範本");
+        zhHant.put("LuminaQuickRepliesAdd", "新增範本");
+        zhHant.put("LuminaQuickRepliesEdit", "編輯範本");
+        zhHant.put("LuminaQuickRepliesInfo", "可插入到輸入框的文字範本。在聊天中長按表情按鈕即可選擇，長按範本可拖曳排序。");
+        zhHant.put("LuminaQuickRepliesManage", "管理範本…");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -365,6 +377,12 @@ public final class LuminaLocale {
         ar.put("LuminaAppearanceFontSerif", "Serif");
         ar.put("LuminaAppearanceFontMono", "أحادي المسافة");
         ar.put("LuminaAppearanceFontInfo", "يبدّل خط التطبيق. تُحدَّث الشاشات المفتوحة حديثًا فورًا؛ أما الشاشات المفتوحة مسبقًا فتُحدَّث بعد إعادة تشغيل التطبيق.");
+        ar.put("LuminaQuickRepliesTitle", "الردود السريعة");
+        ar.put("LuminaQuickRepliesHeader", "القوالب");
+        ar.put("LuminaQuickRepliesAdd", "إضافة قالب");
+        ar.put("LuminaQuickRepliesEdit", "تعديل القالب");
+        ar.put("LuminaQuickRepliesInfo", "قوالب نصية يمكنك إدراجها في حقل الرسالة. اضغط مطولاً على زر الإيموجي في محادثة لاختيار أحدها، واضغط مطولاً على قالب لإعادة ترتيبه.");
+        ar.put("LuminaQuickRepliesManage", "إدارة القوالب…");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -478,6 +496,12 @@ public final class LuminaLocale {
         ru.put("LuminaAppearanceFontSerif", "С засечками");
         ru.put("LuminaAppearanceFontMono", "Моноширинный");
         ru.put("LuminaAppearanceFontInfo", "Меняет шрифт приложения. Новые экраны обновляются сразу; уже открытые — после перезапуска приложения.");
+        ru.put("LuminaQuickRepliesTitle", "Быстрые ответы");
+        ru.put("LuminaQuickRepliesHeader", "Шаблоны");
+        ru.put("LuminaQuickRepliesAdd", "Добавить шаблон");
+        ru.put("LuminaQuickRepliesEdit", "Изменить шаблон");
+        ru.put("LuminaQuickRepliesInfo", "Текстовые шаблоны для вставки в поле сообщения. Зажмите кнопку эмодзи в чате, чтобы выбрать шаблон, и зажмите шаблон, чтобы изменить порядок.");
+        ru.put("LuminaQuickRepliesManage", "Управление шаблонами…");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -591,6 +615,12 @@ public final class LuminaLocale {
         fa.put("LuminaAppearanceFontSerif", "Serif");
         fa.put("LuminaAppearanceFontMono", "تک‌فاصله");
         fa.put("LuminaAppearanceFontInfo", "فونت برنامه را عوض می‌کند. صفحه‌های تازه‌بازشده فوراً به‌روز می‌شوند؛ صفحه‌های ازپیش‌باز پس از راه‌اندازی مجدد برنامه.");
+        fa.put("LuminaQuickRepliesTitle", "پاسخ‌های سریع");
+        fa.put("LuminaQuickRepliesHeader", "قالب‌ها");
+        fa.put("LuminaQuickRepliesAdd", "افزودن قالب");
+        fa.put("LuminaQuickRepliesEdit", "ویرایش قالب");
+        fa.put("LuminaQuickRepliesInfo", "قالب‌های متنی که می‌توانید در کادر پیام درج کنید. در گفتگو دکمه ایموجی را نگه دارید تا یکی را انتخاب کنید و برای مرتب‌سازی، قالب را نگه دارید.");
+        fa.put("LuminaQuickRepliesManage", "مدیریت قالب‌ها…");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -704,6 +734,12 @@ public final class LuminaLocale {
         tr.put("LuminaAppearanceFontSerif", "Serif");
         tr.put("LuminaAppearanceFontMono", "Tek aralıklı");
         tr.put("LuminaAppearanceFontInfo", "Uygulama yazı tipini değiştirir. Yeni açılan ekranlar hemen güncellenir; zaten açık ekranlar uygulama yeniden başlatıldıktan sonra yenilenir.");
+        tr.put("LuminaQuickRepliesTitle", "Hızlı yanıtlar");
+        tr.put("LuminaQuickRepliesHeader", "Şablonlar");
+        tr.put("LuminaQuickRepliesAdd", "Şablon ekle");
+        tr.put("LuminaQuickRepliesEdit", "Şablonu düzenle");
+        tr.put("LuminaQuickRepliesInfo", "Mesaj alanına ekleyebileceğiniz metin şablonları. Bir sohbette emoji düğmesine uzun basarak birini seçin; sıralamak için şablona uzun basın.");
+        tr.put("LuminaQuickRepliesManage", "Şablonları yönet…");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -817,6 +853,12 @@ public final class LuminaLocale {
         es.put("LuminaAppearanceFontSerif", "Serif");
         es.put("LuminaAppearanceFontMono", "Monoespaciada");
         es.put("LuminaAppearanceFontInfo", "Cambia la tipografía de la app. Las pantallas recién abiertas se actualizan al instante; las ya abiertas se actualizan tras reiniciar la app.");
+        es.put("LuminaQuickRepliesTitle", "Respuestas rápidas");
+        es.put("LuminaQuickRepliesHeader", "Plantillas");
+        es.put("LuminaQuickRepliesAdd", "Añadir plantilla");
+        es.put("LuminaQuickRepliesEdit", "Editar plantilla");
+        es.put("LuminaQuickRepliesInfo", "Plantillas de texto que puedes insertar en el campo del mensaje. Mantén pulsado el botón de emojis en un chat para elegir una; mantén pulsada una plantilla para reordenarla.");
+        es.put("LuminaQuickRepliesManage", "Gestionar plantillas…");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -930,6 +972,12 @@ public final class LuminaLocale {
         ptBr.put("LuminaAppearanceFontSerif", "Serifada");
         ptBr.put("LuminaAppearanceFontMono", "Monoespaçada");
         ptBr.put("LuminaAppearanceFontInfo", "Troca a fonte do app. Telas recém-abertas atualizam na hora; telas já abertas atualizam após reiniciar o app.");
+        ptBr.put("LuminaQuickRepliesTitle", "Respostas rápidas");
+        ptBr.put("LuminaQuickRepliesHeader", "Modelos");
+        ptBr.put("LuminaQuickRepliesAdd", "Adicionar modelo");
+        ptBr.put("LuminaQuickRepliesEdit", "Editar modelo");
+        ptBr.put("LuminaQuickRepliesInfo", "Modelos de texto que você pode inserir no campo de mensagem. Mantenha pressionado o botão de emoji em uma conversa para escolher um; mantenha pressionado um modelo para reordenar.");
+        ptBr.put("LuminaQuickRepliesManage", "Gerenciar modelos…");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1043,6 +1091,12 @@ public final class LuminaLocale {
         id.put("LuminaAppearanceFontSerif", "Serif");
         id.put("LuminaAppearanceFontMono", "Monospace");
         id.put("LuminaAppearanceFontInfo", "Mengganti font aplikasi. Layar yang baru dibuka diperbarui langsung; layar yang sudah terbuka diperbarui setelah aplikasi dimulai ulang.");
+        id.put("LuminaQuickRepliesTitle", "Balasan cepat");
+        id.put("LuminaQuickRepliesHeader", "Templat");
+        id.put("LuminaQuickRepliesAdd", "Tambah templat");
+        id.put("LuminaQuickRepliesEdit", "Edit templat");
+        id.put("LuminaQuickRepliesInfo", "Templat teks yang bisa kamu sisipkan ke kolom pesan. Tekan lama tombol emoji di obrolan untuk memilih salah satu; tekan lama templat untuk mengurutkan ulang.");
+        id.put("LuminaQuickRepliesManage", "Kelola templat…");
         T.put("id", id);
     }
 
