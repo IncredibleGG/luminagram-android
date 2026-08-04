@@ -145,6 +145,7 @@ import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.NotificationsController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SendMessagesHelper;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.SharedPrefsHelper;
 import org.telegram.messenger.UserConfig;
@@ -744,7 +745,7 @@ public class ChatActivityEnterView extends FrameLayout implements
     private ChatActivity.ReplyQuote replyingQuote;
     private MessageObject botMessageObject;
     private TLRPC.WebPage messageWebPage;
-    private boolean messageWebPageSearch = true;
+    private boolean messageWebPageSearch = !LuminaConfig.getBoolean("disableLinkPreview", false);
     private ChatActivityEnterViewDelegate delegate;
     private TrendingStickersAlert trendingStickersAlert;
 
@@ -5900,7 +5901,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                 if (delegate != null) {
                     if (!ignoreTextChange) {
                         if (before > count + 1 || (count - before) > 2 || TextUtils.isEmpty(charSequence)) {
-                            messageWebPageSearch = true;
+                            messageWebPageSearch = !LuminaConfig.getBoolean("disableLinkPreview", false);
                         }
                         delegate.onTextChanged(charSequence, before > count + 1 || (count - before) > 2, false);
                     }

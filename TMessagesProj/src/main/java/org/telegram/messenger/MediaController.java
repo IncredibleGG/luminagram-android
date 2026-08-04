@@ -6048,6 +6048,71 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         return null;
     }
 
+    // --- LuminaGram: strip GPS/EXIF metadata from an image before it is uploaded as a file/document ---
+    private static final String[] LUMINA_GPS_EXIF_TAGS = new String[]{
+            ExifInterface.TAG_GPS_LATITUDE, ExifInterface.TAG_GPS_LATITUDE_REF,
+            ExifInterface.TAG_GPS_LONGITUDE, ExifInterface.TAG_GPS_LONGITUDE_REF,
+            ExifInterface.TAG_GPS_ALTITUDE, ExifInterface.TAG_GPS_ALTITUDE_REF,
+            ExifInterface.TAG_GPS_TIMESTAMP, ExifInterface.TAG_GPS_DATESTAMP,
+            ExifInterface.TAG_GPS_PROCESSING_METHOD, ExifInterface.TAG_GPS_AREA_INFORMATION,
+            ExifInterface.TAG_GPS_SPEED, ExifInterface.TAG_GPS_SPEED_REF,
+            ExifInterface.TAG_GPS_TRACK, ExifInterface.TAG_GPS_TRACK_REF,
+            ExifInterface.TAG_GPS_IMG_DIRECTION, ExifInterface.TAG_GPS_IMG_DIRECTION_REF,
+            ExifInterface.TAG_GPS_DEST_LATITUDE, ExifInterface.TAG_GPS_DEST_LATITUDE_REF,
+            ExifInterface.TAG_GPS_DEST_LONGITUDE, ExifInterface.TAG_GPS_DEST_LONGITUDE_REF,
+            ExifInterface.TAG_GPS_MAP_DATUM, ExifInterface.TAG_GPS_SATELLITES,
+            ExifInterface.TAG_GPS_STATUS, ExifInterface.TAG_GPS_VERSION_ID,
+            ExifInterface.TAG_GPS_MEASURE_MODE, ExifInterface.TAG_GPS_DOP,
+            ExifInterface.TAG_GPS_DIFFERENTIAL
+    };
+
+    /**
+     * If the LuminaGram "strip photo metadata" toggle is on and {@code srcPath} is a
+     * writable image (jpeg/png/webp) that actually carries GPS EXIF, copy it into the
+     * app cache, remove every GPS tag from the copy and return the copy path. The user's
+     * original file is never modified. Returns {@code null} when there is nothing to do
+     * (toggle off, unsupported type, no GPS present, or any error) so callers fall back
+     * to the original path.
+     */
+    public static String stripGpsForUpload(String srcPath) {
+        if (srcPath == null || !LuminaConfig.getBoolean("stripPhotoMetadata", true)) {
+            return null;
+        }
+        String lower = srcPath.toLowerCase();
+        if (!(lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") || lower.endsWith(".webp"))) {
+            return null;
+        }
+        try {
+            File src = new File(srcPath);
+            if (!src.exists() || src.length() == 0) {
+                return null;
+            }
+            ExifInterface probe = new ExifInterface(srcPath);
+            boolean hasGps = probe.hasAttribute(ExifInterface.TAG_GPS_LATITUDE)
+                    || probe.hasAttribute(ExifInterface.TAG_GPS_LONGITUDE)
+                    || probe.hasAttribute(ExifInterface.TAG_GPS_PROCESSING_METHOD);
+            if (!hasGps) {
+                return null;
+            }
+            File dir = new File(FileLoader.getDirectory(FileLoader.MEDIA_DIR_CACHE), "lumina_nogps");
+            dir.mkdirs();
+            File copy = new File(dir, src.getName());
+            if (copy.exists()) {
+                copy.delete();
+            }
+            AndroidUtilities.copyFile(src, copy);
+            ExifInterface exif = new ExifInterface(copy.getAbsolutePath());
+            for (String tag : LUMINA_GPS_EXIF_TAGS) {
+                exif.setAttribute(tag, null);
+            }
+            exif.saveAttributes();
+            return copy.getAbsolutePath();
+        } catch (Throwable e) {
+            FileLog.e(e);
+            return null;
+        }
+    }
+
     public static String copyFileToCache(Uri uri, String ext) {
         return copyFileToCache(uri, ext, -1);
     }

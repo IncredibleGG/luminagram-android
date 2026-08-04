@@ -36,6 +36,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
     private static final int ID_TYPING = 2;
     private static final int ID_ONLINE = 3;
     private static final int ID_REGDATE = 4;
+    private static final int ID_SECURE_SCREEN = 5;
+    private static final int ID_DISABLE_LINK_PREVIEW = 6;
+    private static final int ID_STRIP_METADATA = 7;
 
     private UniversalRecyclerView listView;
 
@@ -79,6 +82,17 @@ public class LuminaPrivacyActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_REGDATE, LuminaLocale.getString(R.string.LuminaPrivacyShowRegistrationDate))
                 .setChecked(LuminaConfig.getBoolean("showRegistrationDate", true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyShowRegistrationDateInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacySecurityHeader)));
+        items.add(UItem.asSwitch(ID_SECURE_SCREEN, LuminaLocale.getString(R.string.LuminaPrivacySecureScreen))
+                .setChecked(LuminaConfig.getBoolean("secureScreen", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacySecureScreenInfo)));
+        items.add(UItem.asSwitch(ID_DISABLE_LINK_PREVIEW, LuminaLocale.getString(R.string.LuminaPrivacyDisableLinkPreview))
+                .setChecked(LuminaConfig.getBoolean("disableLinkPreview", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyDisableLinkPreviewInfo)));
+        items.add(UItem.asSwitch(ID_STRIP_METADATA, LuminaLocale.getString(R.string.LuminaPrivacyStripMetadata))
+                .setChecked(LuminaConfig.getBoolean("stripPhotoMetadata", true)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyStripMetadataInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -94,6 +108,16 @@ public class LuminaPrivacyActivity extends BaseFragment {
                 break;
             case ID_REGDATE:
                 LuminaConfig.putBoolean("showRegistrationDate", !LuminaConfig.getBoolean("showRegistrationDate", true));
+                break;
+            case ID_SECURE_SCREEN:
+                LuminaConfig.putBoolean("secureScreen", !LuminaConfig.getBoolean("secureScreen", false));
+                NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetPasscode);
+                break;
+            case ID_DISABLE_LINK_PREVIEW:
+                LuminaConfig.putBoolean("disableLinkPreview", !LuminaConfig.getBoolean("disableLinkPreview", false));
+                break;
+            case ID_STRIP_METADATA:
+                LuminaConfig.putBoolean("stripPhotoMetadata", !LuminaConfig.getBoolean("stripPhotoMetadata", true));
                 break;
         }
         if (listView != null && listView.adapter != null) {

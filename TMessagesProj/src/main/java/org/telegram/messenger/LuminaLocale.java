@@ -75,6 +75,13 @@ public final class LuminaLocale {
         zhHans.put("LuminaSendTranslation", "发送译文");
         zhHans.put("LuminaSendOriginal", "发送原文");
         zhHans.put("LuminaTranslateOriginalLabel", "原文");
+        zhHans.put("LuminaPrivacySecurityHeader", "安全");
+        zhHans.put("LuminaPrivacySecureScreen", "在最近任务中模糊显示");
+        zhHans.put("LuminaPrivacySecureScreenInfo", "在任务切换器中隐藏应用内容，并禁止在 LuminaGram 内截屏（对整个应用启用 FLAG_SECURE）。");
+        zhHans.put("LuminaPrivacyDisableLinkPreview", "默认禁用链接预览");
+        zhHans.put("LuminaPrivacyDisableLinkPreviewInfo", "撰写的新消息默认不带链接预览发送，服务器不会解析粘贴的链接。");
+        zhHans.put("LuminaPrivacyStripMetadata", "移除照片位置和元数据");
+        zhHans.put("LuminaPrivacyStripMetadataInfo", "从以文件形式发送的照片中移除 GPS 及其他 EXIF 元数据。压缩后的照片本就不含此类数据。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -124,6 +131,13 @@ public final class LuminaLocale {
         zhHant.put("LuminaSendTranslation", "傳送譯文");
         zhHant.put("LuminaSendOriginal", "傳送原文");
         zhHant.put("LuminaTranslateOriginalLabel", "原文");
+        zhHant.put("LuminaPrivacySecurityHeader", "安全");
+        zhHant.put("LuminaPrivacySecureScreen", "在最近工作中模糊顯示");
+        zhHant.put("LuminaPrivacySecureScreenInfo", "在工作切換器中隱藏應用程式內容，並禁止在 LuminaGram 內截圖（對整個應用程式啟用 FLAG_SECURE）。");
+        zhHant.put("LuminaPrivacyDisableLinkPreview", "預設停用連結預覽");
+        zhHant.put("LuminaPrivacyDisableLinkPreviewInfo", "撰寫的新訊息預設不帶連結預覽傳送，伺服器不會解析貼上的連結。");
+        zhHant.put("LuminaPrivacyStripMetadata", "移除相片位置與中繼資料");
+        zhHant.put("LuminaPrivacyStripMetadataInfo", "從以檔案形式傳送的相片中移除 GPS 及其他 EXIF 中繼資料。壓縮後的相片本就不含此類資料。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -173,6 +187,13 @@ public final class LuminaLocale {
         ar.put("LuminaSendTranslation", "إرسال الترجمة");
         ar.put("LuminaSendOriginal", "إرسال النص الأصلي");
         ar.put("LuminaTranslateOriginalLabel", "النص الأصلي");
+        ar.put("LuminaPrivacySecurityHeader", "الأمان");
+        ar.put("LuminaPrivacySecureScreen", "تعتيم التطبيق في قائمة التطبيقات الأخيرة");
+        ar.put("LuminaPrivacySecureScreenInfo", "يُخفي محتوى التطبيق في مبدّل المهام ويمنع التقاط لقطات الشاشة داخل LuminaGram (يُطبّق FLAG_SECURE على التطبيق بالكامل).");
+        ar.put("LuminaPrivacyDisableLinkPreview", "تعطيل معاينة الروابط افتراضيًا");
+        ar.put("LuminaPrivacyDisableLinkPreviewInfo", "تُرسل الرسائل الجديدة التي تكتبها افتراضيًا دون معاينة رابط، فلا يُطلب من الخوادم فتح الروابط الملصقة.");
+        ar.put("LuminaPrivacyStripMetadata", "إزالة موقع الصورة وبياناتها الوصفية");
+        ar.put("LuminaPrivacyStripMetadataInfo", "يزيل بيانات GPS وبيانات EXIF الأخرى من الصور المُرسلة كملفات. الصور المضغوطة لا تتضمّن هذه البيانات أصلاً.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -222,6 +243,13 @@ public final class LuminaLocale {
         ru.put("LuminaSendTranslation", "Отправить перевод");
         ru.put("LuminaSendOriginal", "Отправить оригинал");
         ru.put("LuminaTranslateOriginalLabel", "Оригинал");
+        ru.put("LuminaPrivacySecurityHeader", "Безопасность");
+        ru.put("LuminaPrivacySecureScreen", "Размывать приложение в недавних");
+        ru.put("LuminaPrivacySecureScreenInfo", "Скрывает содержимое приложения в списке недавних и блокирует скриншоты в LuminaGram (применяет FLAG_SECURE ко всему приложению).");
+        ru.put("LuminaPrivacyDisableLinkPreview", "Отключать предпросмотр ссылок по умолчанию");
+        ru.put("LuminaPrivacyDisableLinkPreviewInfo", "Новые сообщения по умолчанию отправляются без предпросмотра ссылок, поэтому серверы не запрашивают вставленные ссылки.");
+        ru.put("LuminaPrivacyStripMetadata", "Удалять геоданные и метаданные фото");
+        ru.put("LuminaPrivacyStripMetadataInfo", "Удаляет GPS и другие метаданные EXIF из фото, отправляемых как файлы. Сжатые фото и так не содержат этих данных.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -271,6 +299,13 @@ public final class LuminaLocale {
         fa.put("LuminaSendTranslation", "ارسال ترجمه");
         fa.put("LuminaSendOriginal", "ارسال متن اصلی");
         fa.put("LuminaTranslateOriginalLabel", "متن اصلی");
+        fa.put("LuminaPrivacySecurityHeader", "امنیت");
+        fa.put("LuminaPrivacySecureScreen", "محو برنامه در فهرست اخیر");
+        fa.put("LuminaPrivacySecureScreenInfo", "محتوای برنامه را در جابه‌جاگر برنامه‌ها پنهان می‌کند و از گرفتن اسکرین‌شات در LuminaGram جلوگیری می‌کند (FLAG_SECURE برای کل برنامه اعمال می‌شود).");
+        fa.put("LuminaPrivacyDisableLinkPreview", "غیرفعال‌کردن پیش‌نمایش پیوند به‌صورت پیش‌فرض");
+        fa.put("LuminaPrivacyDisableLinkPreviewInfo", "پیام‌های جدیدی که می‌نویسید به‌صورت پیش‌فرض بدون پیش‌نمایش پیوند ارسال می‌شوند تا سرورها پیوندهای چسبانده‌شده را باز نکنند.");
+        fa.put("LuminaPrivacyStripMetadata", "حذف موقعیت و فراداده عکس");
+        fa.put("LuminaPrivacyStripMetadataInfo", "داده‌های GPS و دیگر فرادادهٔ EXIF را از عکس‌هایی که به‌صورت فایل ارسال می‌شوند حذف می‌کند. عکس‌های فشرده اصولاً این داده‌ها را ندارند.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -320,6 +355,13 @@ public final class LuminaLocale {
         tr.put("LuminaSendTranslation", "Çeviriyi gönder");
         tr.put("LuminaSendOriginal", "Orijinali gönder");
         tr.put("LuminaTranslateOriginalLabel", "Orijinal");
+        tr.put("LuminaPrivacySecurityHeader", "Güvenlik");
+        tr.put("LuminaPrivacySecureScreen", "Son uygulamalarda bulanıklaştır");
+        tr.put("LuminaPrivacySecureScreenInfo", "Uygulama içeriğini görev değiştiricide gizler ve LuminaGram içinde ekran görüntüsü alınmasını engeller (FLAG_SECURE tüm uygulamaya uygulanır).");
+        tr.put("LuminaPrivacyDisableLinkPreview", "Bağlantı önizlemesini varsayılan olarak kapat");
+        tr.put("LuminaPrivacyDisableLinkPreviewInfo", "Yazdığınız yeni mesajlar varsayılan olarak bağlantı önizlemesi olmadan gönderilir; böylece sunuculardan yapıştırılan bağlantıları çözmesi istenmez.");
+        tr.put("LuminaPrivacyStripMetadata", "Fotoğraf konumunu ve meta verilerini kaldır");
+        tr.put("LuminaPrivacyStripMetadataInfo", "Dosya olarak gönderilen fotoğraflardan GPS ve diğer EXIF meta verilerini kaldırır. Sıkıştırılmış fotoğraflar bu verileri zaten içermez.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -369,6 +411,13 @@ public final class LuminaLocale {
         es.put("LuminaSendTranslation", "Enviar traducción");
         es.put("LuminaSendOriginal", "Enviar original");
         es.put("LuminaTranslateOriginalLabel", "Original");
+        es.put("LuminaPrivacySecurityHeader", "Seguridad");
+        es.put("LuminaPrivacySecureScreen", "Difuminar la app en recientes");
+        es.put("LuminaPrivacySecureScreenInfo", "Oculta el contenido de la app en el selector de tareas y bloquea las capturas de pantalla dentro de LuminaGram (aplica FLAG_SECURE en toda la app).");
+        es.put("LuminaPrivacyDisableLinkPreview", "Desactivar la vista previa de enlaces por defecto");
+        es.put("LuminaPrivacyDisableLinkPreviewInfo", "Los mensajes nuevos que redactes se envían por defecto sin vista previa de enlaces, así los servidores no resuelven los enlaces pegados.");
+        es.put("LuminaPrivacyStripMetadata", "Eliminar ubicación y metadatos de las fotos");
+        es.put("LuminaPrivacyStripMetadataInfo", "Elimina el GPS y otros metadatos EXIF de las fotos enviadas como archivos. Las fotos comprimidas no incluyen estos datos.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -418,6 +467,13 @@ public final class LuminaLocale {
         ptBr.put("LuminaSendTranslation", "Enviar tradução");
         ptBr.put("LuminaSendOriginal", "Enviar original");
         ptBr.put("LuminaTranslateOriginalLabel", "Original");
+        ptBr.put("LuminaPrivacySecurityHeader", "Segurança");
+        ptBr.put("LuminaPrivacySecureScreen", "Desfocar o app em recentes");
+        ptBr.put("LuminaPrivacySecureScreenInfo", "Oculta o conteúdo do app no alternador de tarefas e bloqueia capturas de tela dentro do LuminaGram (aplica FLAG_SECURE em todo o app).");
+        ptBr.put("LuminaPrivacyDisableLinkPreview", "Desativar a prévia de links por padrão");
+        ptBr.put("LuminaPrivacyDisableLinkPreviewInfo", "As novas mensagens que você escreve são enviadas por padrão sem prévia de link, então os servidores não resolvem os links colados.");
+        ptBr.put("LuminaPrivacyStripMetadata", "Remover localização e metadados das fotos");
+        ptBr.put("LuminaPrivacyStripMetadataInfo", "Remove GPS e outros metadados EXIF das fotos enviadas como arquivos. Fotos comprimidas não incluem esses dados.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -467,6 +523,13 @@ public final class LuminaLocale {
         id.put("LuminaSendTranslation", "Kirim terjemahan");
         id.put("LuminaSendOriginal", "Kirim asli");
         id.put("LuminaTranslateOriginalLabel", "Asli");
+        id.put("LuminaPrivacySecurityHeader", "Keamanan");
+        id.put("LuminaPrivacySecureScreen", "Buramkan aplikasi di layar terkini");
+        id.put("LuminaPrivacySecureScreenInfo", "Menyembunyikan konten aplikasi di pengalih tugas dan memblokir tangkapan layar di dalam LuminaGram (menerapkan FLAG_SECURE ke seluruh aplikasi).");
+        id.put("LuminaPrivacyDisableLinkPreview", "Nonaktifkan pratinjau tautan secara bawaan");
+        id.put("LuminaPrivacyDisableLinkPreviewInfo", "Pesan baru yang Anda tulis dikirim secara bawaan tanpa pratinjau tautan, sehingga server tidak diminta membuka tautan yang ditempel.");
+        id.put("LuminaPrivacyStripMetadata", "Hapus lokasi & metadata foto");
+        id.put("LuminaPrivacyStripMetadataInfo", "Menghapus GPS dan metadata EXIF lainnya dari foto yang dikirim sebagai file. Foto terkompresi tidak menyertakan data ini.");
         T.put("id", id);
     }
 
