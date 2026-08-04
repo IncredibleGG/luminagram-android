@@ -2373,6 +2373,37 @@ public class DialogsSearchAdapter extends RecyclerListView.SelectionAdapter {
         if (loweredQuery == null || loweredTitle == null) {
             return false;
         }
+        // Original exact/lowercase matching, kept unchanged so no previously-matching result is ever lost.
+        if (wordStartsWithInternal(loweredTitle, loweredQuery)) {
+            return true;
+        }
+        // Additive, always-on transliteration- and width/diacritic-tolerant matching.
+        // NFKD normalization folds fullwidth<->halfwidth variants and strips diacritics on
+        // BOTH sides, so a plain-Latin query matches accented or full-width dialog names.
+        String normQuery = normalizeForSearch(loweredQuery);
+        if (TextUtils.isEmpty(normQuery)) {
+            return false;
+        }
+        String normTitle = normalizeForSearch(loweredTitle);
+        if ((!normTitle.equals(loweredTitle) || !normQuery.equals(loweredQuery)) && wordStartsWithInternal(normTitle, normQuery)) {
+            return true;
+        }
+        // Transliterate the candidate name (e.g. Cyrillic->Latin) then normalize, so a Latin
+        // query finds transliterated names even when the query itself needs no transliteration.
+        String translitTitle = LocaleController.getInstance().getTranslitString(loweredTitle);
+        if (translitTitle != null && !translitTitle.equals(loweredTitle)) {
+            String normTranslitTitle = normalizeForSearch(translitTitle);
+            if (!TextUtils.isEmpty(normTranslitTitle) && wordStartsWithInternal(normTranslitTitle, normQuery)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean wordStartsWithInternal(String loweredTitle, String loweredQuery) {
+        if (loweredQuery == null || loweredTitle == null) {
+            return false;
+        }
         String[] words = loweredTitle.toLowerCase().split(" ");
         boolean found = false;
         for (int j = 0; j < words.length; ++j) {
@@ -2382,6 +2413,17 @@ public class DialogsSearchAdapter extends RecyclerListView.SelectionAdapter {
             }
         }
         return found;
+    }
+
+    // Fold Unicode width variants (fullwidth<->halfwidth) and strip diacritics via NFKD, then
+    // lowercase. Uses only java.text.Normalizer, so no external library is required.
+    private static String normalizeForSearch(String s) {
+        if (s == null) {
+            return null;
+        }
+        String normalized = java.text.Normalizer.normalize(s, java.text.Normalizer.Form.NFKD);
+        normalized = normalized.replaceAll("\\p{Mn}+", "");
+        return normalized.toLowerCase();
     }
 
     public interface OnRecentSearchLoaded {
