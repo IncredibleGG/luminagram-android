@@ -82,6 +82,15 @@ public class LuminaConfig {
         editor.putString(key, value).apply();
     }
 
+    // Generic int accessors (percent-style feature values, e.g. sticker render scale).
+    public static int getInt(String key, int def) {
+        return preferences.getInt(key, def);
+    }
+
+    public static void putInt(String key, int value) {
+        editor.putInt(key, value).apply();
+    }
+
     // ---- Message bookmarks / collections (Wave 3) ----
     // A local, client-side alternative to Saved Messages. Bookmarks live only in the
     // app-private "luminagram" prefs as a JSON array string under the "bookmarks" key

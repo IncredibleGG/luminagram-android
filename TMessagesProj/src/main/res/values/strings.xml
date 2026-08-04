@@ -11341,6 +11341,8 @@
     <string name="LuminaAppearanceFontSerif">Serif</string>
     <string name="LuminaAppearanceFontMono">Monospace</string>
     <string name="LuminaAppearanceFontInfo">Swaps the app typeface. Newly opened screens update immediately; already-open screens refresh after restarting the app.</string>
+    <string name="LuminaAppearanceStickerSizeHeader">Sticker size</string>
+    <string name="LuminaAppearanceStickerSizeInfo">Scales how large stickers appear in chats. Applies to stickers you send and receive. Open chats update as you scroll.</string>
     <!-- LuminaGram quick reply templates -->
     <string name="LuminaQuickRepliesTitle">Quick replies</string>
     <string name="LuminaQuickRepliesHeader">Templates</string>

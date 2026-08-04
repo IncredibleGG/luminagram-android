@@ -153,6 +153,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaAppearanceFontSerif", "衬线体");
         zhHans.put("LuminaAppearanceFontMono", "等宽");
         zhHans.put("LuminaAppearanceFontInfo", "更换应用字体。新打开的界面立即生效；已打开的界面在重启应用后刷新。");
+        zhHans.put("LuminaAppearanceStickerSizeHeader", "贴纸大小");
+        zhHans.put("LuminaAppearanceStickerSizeInfo", "调整贴纸在聊天中的显示大小。对你发送和接收的贴纸均生效。已打开的聊天会在滚动时更新。");
         zhHans.put("LuminaBookmark", "添加书签");
         zhHans.put("LuminaBookmarkRemove", "移除书签");
         zhHans.put("LuminaBookmarkAdded", "已添加到书签");
@@ -364,6 +366,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaAppearanceFontSerif", "襯線體");
         zhHant.put("LuminaAppearanceFontMono", "等寬");
         zhHant.put("LuminaAppearanceFontInfo", "更換應用程式字型。新開啟的畫面立即生效；已開啟的畫面在重新啟動應用程式後更新。");
+        zhHant.put("LuminaAppearanceStickerSizeHeader", "貼圖大小");
+        zhHant.put("LuminaAppearanceStickerSizeInfo", "調整貼圖在聊天中的顯示大小。對你發送和接收的貼圖皆生效。已開啟的聊天會在捲動時更新。");
         zhHant.put("LuminaBookmark", "加入書籤");
         zhHant.put("LuminaBookmarkRemove", "移除書籤");
         zhHant.put("LuminaBookmarkAdded", "已加入書籤");
@@ -575,6 +579,8 @@ public final class LuminaLocale {
         ar.put("LuminaAppearanceFontSerif", "Serif");
         ar.put("LuminaAppearanceFontMono", "أحادي المسافة");
         ar.put("LuminaAppearanceFontInfo", "يبدّل خط التطبيق. تُحدَّث الشاشات المفتوحة حديثًا فورًا؛ أما الشاشات المفتوحة مسبقًا فتُحدَّث بعد إعادة تشغيل التطبيق.");
+        ar.put("LuminaAppearanceStickerSizeHeader", "حجم الملصقات");
+        ar.put("LuminaAppearanceStickerSizeInfo", "يضبط حجم ظهور الملصقات في المحادثات. يسري على الملصقات التي ترسلها وتستقبلها. تتحدّث المحادثات المفتوحة عند التمرير.");
         ar.put("LuminaBookmark", "إضافة إشارة مرجعية");
         ar.put("LuminaBookmarkRemove", "إزالة الإشارة المرجعية");
         ar.put("LuminaBookmarkAdded", "أُضيفت إلى الإشارات المرجعية");
@@ -785,6 +791,8 @@ public final class LuminaLocale {
         ru.put("LuminaAppearanceFontSerif", "С засечками");
         ru.put("LuminaAppearanceFontMono", "Моноширинный");
         ru.put("LuminaAppearanceFontInfo", "Меняет шрифт приложения. Новые экраны обновляются сразу; уже открытые — после перезапуска приложения.");
+        ru.put("LuminaAppearanceStickerSizeHeader", "Размер стикеров");
+        ru.put("LuminaAppearanceStickerSizeInfo", "Изменяет размер отображения стикеров в чатах. Применяется к отправленным и полученным стикерам. Открытые чаты обновляются при прокрутке.");
         ru.put("LuminaBookmark", "В закладки");
         ru.put("LuminaBookmarkRemove", "Убрать из закладок");
         ru.put("LuminaBookmarkAdded", "Добавлено в закладки");
@@ -995,6 +1003,8 @@ public final class LuminaLocale {
         fa.put("LuminaAppearanceFontSerif", "Serif");
         fa.put("LuminaAppearanceFontMono", "تک‌فاصله");
         fa.put("LuminaAppearanceFontInfo", "فونت برنامه را عوض می‌کند. صفحه‌های تازه‌بازشده فوراً به‌روز می‌شوند؛ صفحه‌های ازپیش‌باز پس از راه‌اندازی مجدد برنامه.");
+        fa.put("LuminaAppearanceStickerSizeHeader", "اندازه استیکر");
+        fa.put("LuminaAppearanceStickerSizeInfo", "اندازهٔ نمایش استیکرها را در گفتگوها تنظیم می‌کند. برای استیکرهایی که می‌فرستید و دریافت می‌کنید اعمال می‌شود. گفتگوهای باز هنگام پیمایش به‌روز می‌شوند.");
         fa.put("LuminaBookmark", "افزودن نشانک");
         fa.put("LuminaBookmarkRemove", "حذف نشانک");
         fa.put("LuminaBookmarkAdded", "به نشانک‌ها افزوده شد");
@@ -1205,6 +1215,8 @@ public final class LuminaLocale {
         tr.put("LuminaAppearanceFontSerif", "Serif");
         tr.put("LuminaAppearanceFontMono", "Tek aralıklı");
         tr.put("LuminaAppearanceFontInfo", "Uygulama yazı tipini değiştirir. Yeni açılan ekranlar hemen güncellenir; zaten açık ekranlar uygulama yeniden başlatıldıktan sonra yenilenir.");
+        tr.put("LuminaAppearanceStickerSizeHeader", "Çıkartma boyutu");
+        tr.put("LuminaAppearanceStickerSizeInfo", "Çıkartmaların sohbetlerde ne kadar büyük görüneceğini ölçekler. Gönderdiğiniz ve aldığınız çıkartmalara uygulanır. Açık sohbetler kaydırdıkça güncellenir.");
         tr.put("LuminaBookmark", "Yer imi ekle");
         tr.put("LuminaBookmarkRemove", "Yer imini kaldır");
         tr.put("LuminaBookmarkAdded", "Yer imlerine eklendi");
@@ -1415,6 +1427,8 @@ public final class LuminaLocale {
         es.put("LuminaAppearanceFontSerif", "Serif");
         es.put("LuminaAppearanceFontMono", "Monoespaciada");
         es.put("LuminaAppearanceFontInfo", "Cambia la tipografía de la app. Las pantallas recién abiertas se actualizan al instante; las ya abiertas se actualizan tras reiniciar la app.");
+        es.put("LuminaAppearanceStickerSizeHeader", "Tamaño de stickers");
+        es.put("LuminaAppearanceStickerSizeInfo", "Ajusta el tamaño con que se ven los stickers en los chats. Se aplica a los stickers que envías y recibes. Los chats abiertos se actualizan al desplazarte.");
         es.put("LuminaBookmark", "Añadir marcador");
         es.put("LuminaBookmarkRemove", "Quitar marcador");
         es.put("LuminaBookmarkAdded", "Añadido a marcadores");
@@ -1625,6 +1639,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaAppearanceFontSerif", "Serifada");
         ptBr.put("LuminaAppearanceFontMono", "Monoespaçada");
         ptBr.put("LuminaAppearanceFontInfo", "Troca a fonte do app. Telas recém-abertas atualizam na hora; telas já abertas atualizam após reiniciar o app.");
+        ptBr.put("LuminaAppearanceStickerSizeHeader", "Tamanho das figurinhas");
+        ptBr.put("LuminaAppearanceStickerSizeInfo", "Ajusta o tamanho com que as figurinhas aparecem nos chats. Aplica-se às figurinhas que você envia e recebe. Chats abertos atualizam ao rolar.");
         ptBr.put("LuminaBookmark", "Adicionar marcador");
         ptBr.put("LuminaBookmarkRemove", "Remover marcador");
         ptBr.put("LuminaBookmarkAdded", "Adicionado aos marcadores");
@@ -1835,6 +1851,8 @@ public final class LuminaLocale {
         id.put("LuminaAppearanceFontSerif", "Serif");
         id.put("LuminaAppearanceFontMono", "Monospace");
         id.put("LuminaAppearanceFontInfo", "Mengganti font aplikasi. Layar yang baru dibuka diperbarui langsung; layar yang sudah terbuka diperbarui setelah aplikasi dimulai ulang.");
+        id.put("LuminaAppearanceStickerSizeHeader", "Ukuran stiker");
+        id.put("LuminaAppearanceStickerSizeInfo", "Menyesuaikan seberapa besar stiker tampil di obrolan. Berlaku untuk stiker yang Anda kirim dan terima. Obrolan yang terbuka diperbarui saat Anda menggulir.");
         id.put("LuminaBookmark", "Tambahkan penanda");
         id.put("LuminaBookmarkRemove", "Hapus penanda");
         id.put("LuminaBookmarkAdded", "Ditambahkan ke penanda");

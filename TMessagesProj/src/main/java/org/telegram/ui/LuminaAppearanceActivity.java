@@ -49,6 +49,13 @@ public class LuminaAppearanceActivity extends BaseFragment {
     private static final int ITEM_CUSTOM_ACCENT = 2;
     private static final int ITEM_ACCENT_COLOR = 3;
     private static final int ITEM_FONT = 4;
+    private static final int ITEM_STICKER_SIZE_75 = 5;
+    private static final int ITEM_STICKER_SIZE_100 = 6;
+    private static final int ITEM_STICKER_SIZE_125 = 7;
+    private static final int ITEM_STICKER_SIZE_150 = 8;
+
+    // Sticker render scale (percent); read in ChatMessageCell's sticker layout branch. 100 = unchanged.
+    private static final String KEY_STICKER_SCALE = "stickerScale";
 
     // A compact accent palette (opaque). Mirrors Telegram's default accent circles.
     private static final int[] ACCENT_PALETTE = new int[]{
@@ -109,6 +116,18 @@ public class LuminaAppearanceActivity extends BaseFragment {
         }
     }
 
+    private CharSequence stickerScaleLabel(int pct) {
+        if (pct == 100) {
+            return pct + "% (" + LuminaLocale.getString(R.string.LuminaAppearanceAccentDefault) + ")";
+        }
+        return pct + "%";
+    }
+
+    private void setStickerScale(int pct) {
+        LuminaConfig.putInt(KEY_STICKER_SCALE, pct);
+        update();
+    }
+
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaAppearanceColorsHeader)));
         if (materialYouSupported()) {
@@ -127,6 +146,14 @@ public class LuminaAppearanceActivity extends BaseFragment {
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaAppearanceFontHeader)));
         items.add(UItem.asButton(ITEM_FONT, LuminaLocale.getString(R.string.LuminaAppearanceFont), fontValueText()));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaAppearanceFontInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaAppearanceStickerSizeHeader)));
+        int stickerScale = LuminaConfig.getInt(KEY_STICKER_SCALE, 100);
+        items.add(UItem.asRadio(ITEM_STICKER_SIZE_75, stickerScaleLabel(75)).setChecked(stickerScale == 75));
+        items.add(UItem.asRadio(ITEM_STICKER_SIZE_100, stickerScaleLabel(100)).setChecked(stickerScale == 100));
+        items.add(UItem.asRadio(ITEM_STICKER_SIZE_125, stickerScaleLabel(125)).setChecked(stickerScale == 125));
+        items.add(UItem.asRadio(ITEM_STICKER_SIZE_150, stickerScaleLabel(150)).setChecked(stickerScale == 150));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaAppearanceStickerSizeInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -146,6 +173,18 @@ public class LuminaAppearanceActivity extends BaseFragment {
                 break;
             case ITEM_FONT:
                 showFontPicker();
+                break;
+            case ITEM_STICKER_SIZE_75:
+                setStickerScale(75);
+                break;
+            case ITEM_STICKER_SIZE_100:
+                setStickerScale(100);
+                break;
+            case ITEM_STICKER_SIZE_125:
+                setStickerScale(125);
+                break;
+            case ITEM_STICKER_SIZE_150:
+                setStickerScale(150);
                 break;
         }
     }
