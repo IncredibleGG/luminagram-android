@@ -82,6 +82,87 @@ public class LuminaConfig {
         editor.putString(key, value).apply();
     }
 
+    // ---- Message bookmarks / collections (Wave 3) ----
+    // A local, client-side alternative to Saved Messages. Bookmarks live only in the
+    // app-private "luminagram" prefs as a JSON array string under the "bookmarks" key
+    // (via getString/putString) — nothing is ever sent to Telegram. Each entry:
+    //   { "dialogId": <long>, "messageId": <int>, "snippet": <String>, "date": <long ms> }
+    public static final String KEY_BOOKMARKS = "bookmarks";
+
+    /** All saved bookmarks (oldest first, matching insertion order). Never null. */
+    public static org.json.JSONArray getBookmarks() {
+        String raw = getString(KEY_BOOKMARKS, "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                return new org.json.JSONArray(raw);
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return new org.json.JSONArray();
+    }
+
+    public static boolean isBookmarked(long dialogId, int messageId) {
+        org.json.JSONArray arr = getBookmarks();
+        for (int i = 0; i < arr.length(); i++) {
+            org.json.JSONObject o = arr.optJSONObject(i);
+            if (o != null && o.optLong("dialogId") == dialogId && o.optInt("messageId") == messageId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Toggle a bookmark: add it when absent, remove it when already present.
+     * @return true if the message is bookmarked after this call, false if it was removed.
+     */
+    public static boolean toggleBookmark(long dialogId, int messageId, String snippet) {
+        org.json.JSONArray arr = getBookmarks();
+        org.json.JSONArray out = new org.json.JSONArray();
+        boolean removed = false;
+        for (int i = 0; i < arr.length(); i++) {
+            org.json.JSONObject o = arr.optJSONObject(i);
+            if (o == null) {
+                continue;
+            }
+            if (o.optLong("dialogId") == dialogId && o.optInt("messageId") == messageId) {
+                removed = true; // drop the existing entry
+                continue;
+            }
+            out.put(o);
+        }
+        if (!removed) {
+            try {
+                org.json.JSONObject o = new org.json.JSONObject();
+                o.put("dialogId", dialogId);
+                o.put("messageId", messageId);
+                o.put("snippet", snippet == null ? "" : snippet);
+                o.put("date", System.currentTimeMillis());
+                out.put(o);
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        putString(KEY_BOOKMARKS, out.toString());
+        return !removed;
+    }
+
+    /** Remove a single bookmark if present (used by the Bookmarks list's delete action). */
+    public static void removeBookmark(long dialogId, int messageId) {
+        org.json.JSONArray arr = getBookmarks();
+        org.json.JSONArray out = new org.json.JSONArray();
+        for (int i = 0; i < arr.length(); i++) {
+            org.json.JSONObject o = arr.optJSONObject(i);
+            if (o == null) {
+                continue;
+            }
+            if (o.optLong("dialogId") == dialogId && o.optInt("messageId") == messageId) {
+                continue;
+            }
+            out.put(o);
+        }
+        putString(KEY_BOOKMARKS, out.toString());
+    }
+
     // Typed toggles keep the static field and the persisted value in sync (XOR idiom)
     public static void toggleHideTabs() {
         editor.putBoolean("hideTabs", hideTabs ^= true).apply();
