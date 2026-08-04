@@ -133,6 +133,9 @@ import org.telegram.messenger.ImageLoader;
 import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaTranslator;
+import org.telegram.messenger.LuminaTranslators;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -1597,6 +1600,81 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
         builder.setOnPreDismissListener(di -> links.clear());
         BottomSheet sheet = builder.create();
         showDialog(sheet);
+    }
+
+    // LuminaGram - InstantView article translation (wave 7).
+    private final java.util.HashMap<TL_iv.PageBlock, TL_iv.RichText> articleOriginalText = new java.util.HashMap<>();
+    private boolean articleTranslated;
+
+    /**
+     * Translate (or restore) the currently loaded InstantView article's text blocks using the
+     * user-selected {@link LuminaTranslators#current()} provider, targeting the app language
+     * ({@link TranslateAlert2#getToLanguage()}). Minimal scope: only blocks carrying the base
+     * {@code PageBlock.text} rich-text (title, headers, subtitles, paragraphs, kicker, footer,
+     * preformatted, block/pull quotes). Captions, list items and details children are left as-is.
+     */
+    private void toggleArticleTranslation() {
+        if (pages == null || pages.length == 0 || pages[0] == null || parentActivity == null) {
+            return;
+        }
+        final PageLayout page = pages[0];
+        if (page.isWeb() || page.adapter == null || page.adapter.currentPage == null) {
+            return;
+        }
+        final WebpageAdapter adapter = page.adapter;
+
+        if (articleTranslated) {
+            for (java.util.Map.Entry<TL_iv.PageBlock, TL_iv.RichText> e : articleOriginalText.entrySet()) {
+                e.getKey().text = e.getValue();
+            }
+            articleOriginalText.clear();
+            articleTranslated = false;
+            adapter.notifyDataSetChanged();
+            return;
+        }
+
+        final String toLang = TranslateAlert2.getToLanguage();
+        final java.util.ArrayList<TL_iv.PageBlock> targets = new java.util.ArrayList<>();
+        for (int i = 0; i < adapter.blocks.size(); i++) {
+            TL_iv.PageBlock block = adapter.blocks.get(i);
+            if (block == null || block.text == null || block.text instanceof TL_iv.textEmpty) {
+                continue;
+            }
+            CharSequence plain = getPlainText(block.text);
+            if (plain == null || TextUtils.isEmpty(plain.toString().trim())) {
+                continue;
+            }
+            targets.add(block);
+        }
+        if (targets.isEmpty()) {
+            return;
+        }
+
+        Toast.makeText(parentActivity, LuminaLocale.getString(R.string.LuminaTranslatePreviewTranslating), Toast.LENGTH_SHORT).show();
+        articleTranslated = true;
+        final LuminaTranslator translator = LuminaTranslators.current();
+        for (int i = 0; i < targets.size(); i++) {
+            final TL_iv.PageBlock block = targets.get(i);
+            articleOriginalText.put(block, block.text);
+            final String src = getPlainText(block.text).toString();
+            translator.translate(src, toLang, new LuminaTranslator.Callback() {
+                @Override
+                public void onResult(String translated, String detectedSourceLang) {
+                    if (translated == null || pages == null || pages.length == 0 || pages[0] == null || pages[0].adapter != adapter) {
+                        return;
+                    }
+                    TL_iv.textPlain tp = new TL_iv.textPlain();
+                    tp.text = translated;
+                    block.text = tp;
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onError(boolean rateLimited, String message) {
+                    // Minimal: leave this block untranslated; other blocks proceed.
+                }
+            });
+        }
     }
 
     private void showPopup(View parent, int gravity, int x, int y) {
@@ -4883,6 +4961,21 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
                     LinearLayout settingsContainer = new LinearLayout(parentActivity);
                     settingsContainer.setPadding(0, 0, 0, dp(4));
                     settingsContainer.setOrientation(LinearLayout.VERTICAL);
+
+                    TextView translateButton = new TextView(parentActivity);
+                    translateButton.setBackgroundDrawable(Theme.createSelectorDrawable(getThemedColor(Theme.key_listSelector), 2));
+                    translateButton.setGravity((LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT) | Gravity.CENTER_VERTICAL);
+                    translateButton.setPadding(dp(18), 0, dp(18), 0);
+                    translateButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+                    translateButton.setTextColor(getThemedColor(Theme.key_windowBackgroundWhiteBlackText));
+                    translateButton.setText(articleTranslated ? LocaleController.getString(R.string.ShowOriginalButton) : LuminaLocale.getString(R.string.LuminaArticleTranslate));
+                    translateButton.setOnClickListener(vv -> {
+                        if (linkSheet != null) {
+                            linkSheet.dismiss();
+                        }
+                        toggleArticleTranslation();
+                    });
+                    settingsContainer.addView(translateButton, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 50));
 
                     HeaderCell headerCell = new HeaderCell(parentActivity, getResourcesProvider());
                     headerCell.setText(LocaleController.getString(R.string.FontSize));
