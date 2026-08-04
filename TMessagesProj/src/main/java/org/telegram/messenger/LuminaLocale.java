@@ -159,6 +159,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaQuickRepliesEdit", "编辑模板");
         zhHans.put("LuminaQuickRepliesInfo", "可插入到输入框的文本模板。在聊天中长按表情按钮即可选择，长按模板可拖动排序。");
         zhHans.put("LuminaQuickRepliesManage", "管理模板…");
+        zhHans.put("LuminaGoToFirstMessage", "跳到第一条消息");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -292,6 +293,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaQuickRepliesEdit", "編輯範本");
         zhHant.put("LuminaQuickRepliesInfo", "可插入到輸入框的文字範本。在聊天中長按表情按鈕即可選擇，長按範本可拖曳排序。");
         zhHant.put("LuminaQuickRepliesManage", "管理範本…");
+        zhHant.put("LuminaGoToFirstMessage", "跳到第一則訊息");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -425,6 +427,7 @@ public final class LuminaLocale {
         ar.put("LuminaQuickRepliesEdit", "تعديل القالب");
         ar.put("LuminaQuickRepliesInfo", "قوالب نصية يمكنك إدراجها في حقل الرسالة. اضغط مطولاً على زر الإيموجي في محادثة لاختيار أحدها، واضغط مطولاً على قالب لإعادة ترتيبه.");
         ar.put("LuminaQuickRepliesManage", "إدارة القوالب…");
+        ar.put("LuminaGoToFirstMessage", "الانتقال إلى أول رسالة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -558,6 +561,7 @@ public final class LuminaLocale {
         ru.put("LuminaQuickRepliesEdit", "Изменить шаблон");
         ru.put("LuminaQuickRepliesInfo", "Текстовые шаблоны для вставки в поле сообщения. Зажмите кнопку эмодзи в чате, чтобы выбрать шаблон, и зажмите шаблон, чтобы изменить порядок.");
         ru.put("LuminaQuickRepliesManage", "Управление шаблонами…");
+        ru.put("LuminaGoToFirstMessage", "Перейти к первому сообщению");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -691,6 +695,7 @@ public final class LuminaLocale {
         fa.put("LuminaQuickRepliesEdit", "ویرایش قالب");
         fa.put("LuminaQuickRepliesInfo", "قالب‌های متنی که می‌توانید در کادر پیام درج کنید. در گفتگو دکمه ایموجی را نگه دارید تا یکی را انتخاب کنید و برای مرتب‌سازی، قالب را نگه دارید.");
         fa.put("LuminaQuickRepliesManage", "مدیریت قالب‌ها…");
+        fa.put("LuminaGoToFirstMessage", "رفتن به اولین پیام");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -824,6 +829,7 @@ public final class LuminaLocale {
         tr.put("LuminaQuickRepliesEdit", "Şablonu düzenle");
         tr.put("LuminaQuickRepliesInfo", "Mesaj alanına ekleyebileceğiniz metin şablonları. Bir sohbette emoji düğmesine uzun basarak birini seçin; sıralamak için şablona uzun basın.");
         tr.put("LuminaQuickRepliesManage", "Şablonları yönet…");
+        tr.put("LuminaGoToFirstMessage", "İlk mesaja git");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -957,6 +963,7 @@ public final class LuminaLocale {
         es.put("LuminaQuickRepliesEdit", "Editar plantilla");
         es.put("LuminaQuickRepliesInfo", "Plantillas de texto que puedes insertar en el campo del mensaje. Mantén pulsado el botón de emojis en un chat para elegir una; mantén pulsada una plantilla para reordenarla.");
         es.put("LuminaQuickRepliesManage", "Gestionar plantillas…");
+        es.put("LuminaGoToFirstMessage", "Ir al primer mensaje");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1090,6 +1097,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaQuickRepliesEdit", "Editar modelo");
         ptBr.put("LuminaQuickRepliesInfo", "Modelos de texto que você pode inserir no campo de mensagem. Mantenha pressionado o botão de emoji em uma conversa para escolher um; mantenha pressionado um modelo para reordenar.");
         ptBr.put("LuminaQuickRepliesManage", "Gerenciar modelos…");
+        ptBr.put("LuminaGoToFirstMessage", "Ir para a primeira mensagem");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1223,6 +1231,7 @@ public final class LuminaLocale {
         id.put("LuminaQuickRepliesEdit", "Edit templat");
         id.put("LuminaQuickRepliesInfo", "Templat teks yang bisa kamu sisipkan ke kolom pesan. Tekan lama tombol emoji di obrolan untuk memilih salah satu; tekan lama templat untuk mengurutkan ulang.");
         id.put("LuminaQuickRepliesManage", "Kelola templat…");
+        id.put("LuminaGoToFirstMessage", "Ke pesan pertama");
         T.put("id", id);
     }
 

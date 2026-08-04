@@ -11311,4 +11311,5 @@
     <string name="LuminaQuickRepliesEdit">Edit template</string>
     <string name="LuminaQuickRepliesInfo">Text templates you can insert into the message field. Long-press the emoji button in a chat to pick one. Long-press a template to reorder.</string>
     <string name="LuminaQuickRepliesManage">Manage templates…</string>
+    <string name="LuminaGoToFirstMessage">Go to first message</string>
 </resources>
