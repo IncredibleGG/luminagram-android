@@ -395,6 +395,31 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // ---- LuminaGram decoy calculator lock (fail-open) ----------------------------
+        // Very first thing in onCreate, before any heavy init / setContentView. Only
+        // gates when the toggle is on AND a non-empty unlock code is set AND this process
+        // is still locked (LuminaDecoy.shouldGate). Any failure computing that decision,
+        // or presenting the decoy, falls through to the normal launch so the app can
+        // never become unopenable. See LuminaDecoy / LuminaCalculatorActivity.
+        boolean luminaDecoyGate;
+        try {
+            luminaDecoyGate = org.telegram.messenger.LuminaDecoy.shouldGate(this);
+        } catch (Throwable ignore) {
+            luminaDecoyGate = false;
+        }
+        if (luminaDecoyGate) {
+            try {
+                Intent luminaDecoyIntent = new Intent(this, LuminaCalculatorActivity.class);
+                luminaDecoyIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(luminaDecoyIntent);
+                super.onCreate(savedInstanceState);
+                finish();
+                return;
+            } catch (Throwable ignore) {
+                // Could not present the decoy (super.onCreate not reached if startActivity
+                // threw) — fall through so the user is never locked out of their own app.
+            }
+        }
         isActive = true;
         activeInstanceCount++;
         if (BuildVars.DEBUG_VERSION) {

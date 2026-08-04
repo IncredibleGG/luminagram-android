@@ -168,6 +168,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaMediaAutoPauseBgVideoInfo", "当你离开 LuminaGram 时，自动暂停正在播放的视频。");
         zhHans.put("LuminaMediaUnlockAudioSpeed", "长音频的倍速控制");
         zhHans.put("LuminaMediaUnlockAudioSpeedInfo", "为音乐和长音频文件显示播放倍速控制，而不仅仅是语音消息。");
+        zhHans.put("LuminaCalculatorError", "错误");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -310,6 +311,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaMediaAutoPauseBgVideoInfo", "當你離開 LuminaGram 時，自動暫停正在播放的影片。");
         zhHant.put("LuminaMediaUnlockAudioSpeed", "長音訊的倍速控制");
         zhHant.put("LuminaMediaUnlockAudioSpeedInfo", "為音樂和長音訊檔案顯示播放倍速控制，而不僅是語音訊息。");
+        zhHant.put("LuminaCalculatorError", "錯誤");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
