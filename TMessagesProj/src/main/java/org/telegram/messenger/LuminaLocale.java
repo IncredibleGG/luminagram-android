@@ -70,6 +70,19 @@ public final class LuminaLocale {
         zhHans.put("LuminaUpdateDownloading", "正在下载更新…");
         zhHans.put("LuminaUpdateFailed", "更新下载失败");
         zhHans.put("ShowTranslateButton", "显示翻译按钮");
+        zhHans.put("LuminaInfoDensity", "信息密度");
+        zhHans.put("LuminaShowDcId", "显示数据中心 ID");
+        zhHans.put("LuminaShowDcIdInfo", "在用户、群组和频道资料上显示存储头像的数据中心。同时在消息菜单中添加“详情”操作。");
+        zhHans.put("LuminaShowChatDate", "显示创建 / 加入日期");
+        zhHans.put("LuminaShowMessageDetails", "消息详情菜单");
+        zhHans.put("ProfileDcId", "数据中心");
+        zhHans.put("ProfileChatCreated", "创建于");
+        zhHans.put("ProfileChatJoined", "加入于");
+        zhHans.put("LuminaMessageDetails", "详情");
+        zhHans.put("LuminaDetailsDate", "日期");
+        zhHans.put("LuminaDetailsMessageId", "消息 ID");
+        zhHans.put("LuminaDetailsForwardedFrom", "转发自");
+        zhHans.put("LuminaDetailsOriginalDate", "原始日期");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -114,6 +127,19 @@ public final class LuminaLocale {
         zhHant.put("LuminaUpdateDownloading", "正在下載更新…");
         zhHant.put("LuminaUpdateFailed", "更新下載失敗");
         zhHant.put("ShowTranslateButton", "顯示翻譯按鈕");
+        zhHant.put("LuminaInfoDensity", "資訊密度");
+        zhHant.put("LuminaShowDcId", "顯示資料中心 ID");
+        zhHant.put("LuminaShowDcIdInfo", "在使用者、群組和頻道個人檔案上顯示儲存大頭貼的資料中心。同時在訊息選單中新增「詳細資訊」操作。");
+        zhHant.put("LuminaShowChatDate", "顯示建立 / 加入日期");
+        zhHant.put("LuminaShowMessageDetails", "訊息詳細資訊選單");
+        zhHant.put("ProfileDcId", "資料中心");
+        zhHant.put("ProfileChatCreated", "建立於");
+        zhHant.put("ProfileChatJoined", "加入於");
+        zhHant.put("LuminaMessageDetails", "詳細資訊");
+        zhHant.put("LuminaDetailsDate", "日期");
+        zhHant.put("LuminaDetailsMessageId", "訊息 ID");
+        zhHant.put("LuminaDetailsForwardedFrom", "轉發自");
+        zhHant.put("LuminaDetailsOriginalDate", "原始日期");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -158,6 +184,19 @@ public final class LuminaLocale {
         ar.put("LuminaUpdateDownloading", "جارٍ تنزيل التحديث…");
         ar.put("LuminaUpdateFailed", "فشل تنزيل التحديث");
         ar.put("ShowTranslateButton", "إظهار زر الترجمة");
+        ar.put("LuminaInfoDensity", "كثافة المعلومات");
+        ar.put("LuminaShowDcId", "إظهار معرّف مركز البيانات");
+        ar.put("LuminaShowDcIdInfo", "إظهار مركز البيانات الذي يخزّن صورة الملف الشخصي في ملفات المستخدمين والمجموعات والقنوات. كما يضيف إجراء «التفاصيل» إلى قائمة الرسائل.");
+        ar.put("LuminaShowChatDate", "إظهار تاريخ الإنشاء / الانضمام");
+        ar.put("LuminaShowMessageDetails", "قائمة تفاصيل الرسالة");
+        ar.put("ProfileDcId", "مركز البيانات");
+        ar.put("ProfileChatCreated", "أُنشئت في");
+        ar.put("ProfileChatJoined", "انضممت في");
+        ar.put("LuminaMessageDetails", "التفاصيل");
+        ar.put("LuminaDetailsDate", "التاريخ");
+        ar.put("LuminaDetailsMessageId", "معرّف الرسالة");
+        ar.put("LuminaDetailsForwardedFrom", "أُعيد توجيهها من");
+        ar.put("LuminaDetailsOriginalDate", "التاريخ الأصلي");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -202,6 +241,19 @@ public final class LuminaLocale {
         ru.put("LuminaUpdateDownloading", "Загрузка обновления…");
         ru.put("LuminaUpdateFailed", "Не удалось загрузить обновление");
         ru.put("ShowTranslateButton", "Показывать кнопку перевода");
+        ru.put("LuminaInfoDensity", "Плотность информации");
+        ru.put("LuminaShowDcId", "Показывать ID дата-центра");
+        ru.put("LuminaShowDcIdInfo", "Показывать дата-центр, где хранится фото профиля, в профилях пользователей, групп и каналов. Также добавляет действие «Подробности» в меню сообщения.");
+        ru.put("LuminaShowChatDate", "Показывать дату создания / вступления");
+        ru.put("LuminaShowMessageDetails", "Меню «Подробности» сообщения");
+        ru.put("ProfileDcId", "Дата-центр");
+        ru.put("ProfileChatCreated", "Создан");
+        ru.put("ProfileChatJoined", "Вы вступили");
+        ru.put("LuminaMessageDetails", "Подробности");
+        ru.put("LuminaDetailsDate", "Дата");
+        ru.put("LuminaDetailsMessageId", "ID сообщения");
+        ru.put("LuminaDetailsForwardedFrom", "Переслано от");
+        ru.put("LuminaDetailsOriginalDate", "Исходная дата");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -246,6 +298,19 @@ public final class LuminaLocale {
         fa.put("LuminaUpdateDownloading", "در حال دانلود به‌روزرسانی…");
         fa.put("LuminaUpdateFailed", "دانلود به‌روزرسانی ناموفق بود");
         fa.put("ShowTranslateButton", "نمایش دکمه ترجمه");
+        fa.put("LuminaInfoDensity", "چگالی اطلاعات");
+        fa.put("LuminaShowDcId", "نمایش شناسه مرکز داده");
+        fa.put("LuminaShowDcIdInfo", "نمایش مرکز داده‌ای که عکس نمایه را ذخیره می‌کند در نمایه کاربران، گروه‌ها و کانال‌ها. همچنین کنش «جزئیات» را به منوی پیام می‌افزاید.");
+        fa.put("LuminaShowChatDate", "نمایش تاریخ ساخت / پیوستن");
+        fa.put("LuminaShowMessageDetails", "منوی جزئیات پیام");
+        fa.put("ProfileDcId", "مرکز داده");
+        fa.put("ProfileChatCreated", "ساخته‌شده در");
+        fa.put("ProfileChatJoined", "پیوستید در");
+        fa.put("LuminaMessageDetails", "جزئیات");
+        fa.put("LuminaDetailsDate", "تاریخ");
+        fa.put("LuminaDetailsMessageId", "شناسه پیام");
+        fa.put("LuminaDetailsForwardedFrom", "هدایت‌شده از");
+        fa.put("LuminaDetailsOriginalDate", "تاریخ اصلی");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -290,6 +355,19 @@ public final class LuminaLocale {
         tr.put("LuminaUpdateDownloading", "Güncelleme indiriliyor…");
         tr.put("LuminaUpdateFailed", "Güncelleme indirilemedi");
         tr.put("ShowTranslateButton", "Çeviri düğmesini göster");
+        tr.put("LuminaInfoDensity", "Bilgi yoğunluğu");
+        tr.put("LuminaShowDcId", "Veri merkezi kimliğini göster");
+        tr.put("LuminaShowDcIdInfo", "Kullanıcı, grup ve kanal profillerinde profil fotoğrafını saklayan veri merkezini gösterir. Ayrıca mesaj menüsüne bir Ayrıntılar eylemi ekler.");
+        tr.put("LuminaShowChatDate", "Oluşturma / katılma tarihini göster");
+        tr.put("LuminaShowMessageDetails", "Mesaj ayrıntıları menüsü");
+        tr.put("ProfileDcId", "Veri merkezi");
+        tr.put("ProfileChatCreated", "Oluşturuldu");
+        tr.put("ProfileChatJoined", "Katıldınız");
+        tr.put("LuminaMessageDetails", "Ayrıntılar");
+        tr.put("LuminaDetailsDate", "Tarih");
+        tr.put("LuminaDetailsMessageId", "Mesaj kimliği");
+        tr.put("LuminaDetailsForwardedFrom", "Şuradan iletildi");
+        tr.put("LuminaDetailsOriginalDate", "Özgün tarih");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -334,6 +412,19 @@ public final class LuminaLocale {
         es.put("LuminaUpdateDownloading", "Descargando actualización…");
         es.put("LuminaUpdateFailed", "Error al descargar la actualización");
         es.put("ShowTranslateButton", "Mostrar botón de traducción");
+        es.put("LuminaInfoDensity", "Densidad de información");
+        es.put("LuminaShowDcId", "Mostrar ID del centro de datos");
+        es.put("LuminaShowDcIdInfo", "Muestra el centro de datos que almacena la foto de perfil en los perfiles de usuarios, grupos y canales. También añade una acción Detalles al menú del mensaje.");
+        es.put("LuminaShowChatDate", "Mostrar fecha de creación / ingreso");
+        es.put("LuminaShowMessageDetails", "Menú de detalles del mensaje");
+        es.put("ProfileDcId", "Centro de datos");
+        es.put("ProfileChatCreated", "Creado");
+        es.put("ProfileChatJoined", "Te uniste");
+        es.put("LuminaMessageDetails", "Detalles");
+        es.put("LuminaDetailsDate", "Fecha");
+        es.put("LuminaDetailsMessageId", "ID del mensaje");
+        es.put("LuminaDetailsForwardedFrom", "Reenviado de");
+        es.put("LuminaDetailsOriginalDate", "Fecha original");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -378,6 +469,19 @@ public final class LuminaLocale {
         ptBr.put("LuminaUpdateDownloading", "Baixando atualização…");
         ptBr.put("LuminaUpdateFailed", "Falha ao baixar a atualização");
         ptBr.put("ShowTranslateButton", "Mostrar botão de tradução");
+        ptBr.put("LuminaInfoDensity", "Densidade de informações");
+        ptBr.put("LuminaShowDcId", "Mostrar ID do datacenter");
+        ptBr.put("LuminaShowDcIdInfo", "Mostra o datacenter que armazena a foto do perfil nos perfis de usuários, grupos e canais. Também adiciona uma ação Detalhes ao menu da mensagem.");
+        ptBr.put("LuminaShowChatDate", "Mostrar data de criação / entrada");
+        ptBr.put("LuminaShowMessageDetails", "Menu de detalhes da mensagem");
+        ptBr.put("ProfileDcId", "Datacenter");
+        ptBr.put("ProfileChatCreated", "Criado");
+        ptBr.put("ProfileChatJoined", "Você entrou");
+        ptBr.put("LuminaMessageDetails", "Detalhes");
+        ptBr.put("LuminaDetailsDate", "Data");
+        ptBr.put("LuminaDetailsMessageId", "ID da mensagem");
+        ptBr.put("LuminaDetailsForwardedFrom", "Encaminhado de");
+        ptBr.put("LuminaDetailsOriginalDate", "Data original");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -422,6 +526,19 @@ public final class LuminaLocale {
         id.put("LuminaUpdateDownloading", "Mengunduh pembaruan…");
         id.put("LuminaUpdateFailed", "Gagal mengunduh pembaruan");
         id.put("ShowTranslateButton", "Tampilkan tombol terjemahan");
+        id.put("LuminaInfoDensity", "Kepadatan info");
+        id.put("LuminaShowDcId", "Tampilkan ID pusat data");
+        id.put("LuminaShowDcIdInfo", "Tampilkan pusat data yang menyimpan foto profil di profil pengguna, grup, dan kanal. Juga menambahkan tindakan Detail ke menu pesan.");
+        id.put("LuminaShowChatDate", "Tampilkan tanggal dibuat / bergabung");
+        id.put("LuminaShowMessageDetails", "Menu detail pesan");
+        id.put("ProfileDcId", "Pusat data");
+        id.put("ProfileChatCreated", "Dibuat");
+        id.put("ProfileChatJoined", "Anda bergabung");
+        id.put("LuminaMessageDetails", "Detail");
+        id.put("LuminaDetailsDate", "Tanggal");
+        id.put("LuminaDetailsMessageId", "ID pesan");
+        id.put("LuminaDetailsForwardedFrom", "Diteruskan dari");
+        id.put("LuminaDetailsOriginalDate", "Tanggal asli");
         T.put("id", id);
     }
 

@@ -650,6 +650,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int infoEndRowEmpty;
     private int phoneRow;
     private int registrationDateRow;
+    private int dcIdRow;
+    private int chatDateRow;
     private int noteRow;
     private int locationRow;
     private int userInfoRow;
@@ -10475,6 +10477,24 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
     }
 
+    // ---- LuminaGram info-density helpers ----
+    // Datacenter that stores the profile photo (OwlGram-style). Client-side, derived
+    // from the already-synced photo object; 0 when there is no photo / unknown.
+    private int getProfileDcId() {
+        if (userId != 0) {
+            TLRPC.User user = getMessagesController().getUser(userId);
+            if (user != null && user.photo != null) {
+                return user.photo.dc_id;
+            }
+        } else if (chatId != 0) {
+            TLRPC.Chat chat = currentChat != null ? currentChat : getMessagesController().getChat(chatId);
+            if (chat != null && chat.photo != null) {
+                return chat.photo.dc_id;
+            }
+        }
+        return 0;
+    }
+
     private void updateRowsIds() {
         updateNotifications(false);
 
@@ -10489,6 +10509,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         numberRow = -1;
         birthdayRow = -1;
         registrationDateRow = -1;
+        dcIdRow = -1;
+        chatDateRow = -1;
         setUsernameRow = -1;
         bioRow = -1;
         channelRow = -1;
@@ -10751,6 +10773,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         && getEstimatedRegistrationDate(userId) != null) {
                     registrationDateRow = rowCount++;
                 }
+                if (LuminaConfig.getBoolean("showDcId", false) && getProfileDcId() > 0) {
+                    dcIdRow = rowCount++;
+                }
                 if (userInfo != null) {
                     if (userInfo.birthday != null) {
                         birthdayRow = rowCount++;
@@ -10916,6 +10941,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 } else {
                     emptyRow = rowCount++;
                 }
+            }
+            if (LuminaConfig.getBoolean("showChatDate", false) && currentChat != null && currentChat.date > 0) {
+                chatDateRow = rowCount++;
+            }
+            if (LuminaConfig.getBoolean("showDcId", false) && getProfileDcId() > 0) {
+                dcIdRow = rowCount++;
             }
             if (actionsView == null) {
                 if (infoHeaderRow != -1) {
@@ -13521,6 +13552,18 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         String regDate = getEstimatedRegistrationDate(userId);
                         if (regDate == null) regDate = "—";
                         detailCell.setTextAndValue(regDate, LuminaLocale.getString(R.string.ProfileRegistrationDate), false);
+                    } else if (position == dcIdRow) {
+                        int dc = getProfileDcId();
+                        detailCell.setTextAndValue(dc > 0 ? "DC" + dc : "—", LuminaLocale.getString(R.string.ProfileDcId), false);
+                    } else if (position == chatDateRow) {
+                        String value = "—";
+                        if (currentChat != null && currentChat.date > 0) {
+                            try {
+                                value = new SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(new Date(currentChat.date * 1000L));
+                            } catch (Exception ignore) {}
+                        }
+                        boolean joined = currentChat != null && ChatObject.isChannel(currentChat) && !ChatObject.isNotInChat(currentChat);
+                        detailCell.setTextAndValue(value, LuminaLocale.getString(joined ? R.string.ProfileChatJoined : R.string.ProfileChatCreated), false);
                     } else if (position == phoneRow) {
                         String text;
                         TLRPC.User user = getMessagesController().getUser(userId);
@@ -14352,7 +14395,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                     position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                 return VIEW_TYPE_HEADER;
-            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow) {
+            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow || position == dcIdRow || position == chatDateRow) {
                 return VIEW_TYPE_TEXT_DETAIL;
             } else if (position == usernameRow || position == setUsernameRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE;

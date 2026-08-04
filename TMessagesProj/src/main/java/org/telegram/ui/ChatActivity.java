@@ -1248,6 +1248,7 @@ public class ChatActivity extends BaseFragment implements
     public final static int OPTION_FORWARD_NO_CAPTION = 201;
     public final static int OPTION_SAVE_TO_CLOUD = 202;
     public final static int OPTION_SELECT_AUTHOR = 203;
+    public final static int OPTION_DETAILS = 204;
 
     private final static int[] allowedNotificationsDuringChatListAnimations = new int[]{
             NotificationCenter.messagesRead,
@@ -33184,6 +33185,10 @@ public class ChatActivity extends BaseFragment implements
                 updateVisibleRows();
                 break;
             }
+            case OPTION_DETAILS: {
+                showMessageDetailsDialog(selectedObject);
+                break;
+            }
             case OPTION_FORWARD_NO_AUTHOR:
             case OPTION_FORWARD_NO_CAPTION:
             case OPTION_FORWARD: {
@@ -46011,6 +46016,61 @@ public class ChatActivity extends BaseFragment implements
                 options.add(OPTION_DELETE);
                 icons.add(deleteIconRes);
             }
+        }
+        // LuminaGram: client-side "Details" (exact timestamp, message id, forward origin)
+        if (LuminaConfig.getBoolean("showMessageDetails", true) && selectedObject != null && !selectedObject.isSponsored() && selectedObject.getId() != 0) {
+            items.add(LuminaLocale.getString(R.string.LuminaMessageDetails));
+            options.add(OPTION_DETAILS);
+            icons.add(R.drawable.msg_info);
+        }
+    }
+
+    // LuminaGram: read-only message details popup. Everything shown is already on the
+    // synced MessageObject; no network calls, no ToS-relevant behaviour change.
+    private void showMessageDetailsDialog(MessageObject msg) {
+        if (msg == null || msg.messageOwner == null || getParentActivity() == null) {
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(LuminaLocale.getString(R.string.LuminaDetailsDate)).append(": ").append(formatFullTimestamp(msg.messageOwner.date)).append("\n");
+        sb.append(LuminaLocale.getString(R.string.LuminaDetailsMessageId)).append(": ").append(msg.getId());
+        TLRPC.MessageFwdHeader fwd = msg.messageOwner.fwd_from;
+        if (fwd != null) {
+            String origin = null;
+            if (fwd.from_id != null) {
+                long did = DialogObject.getPeerDialogId(fwd.from_id);
+                if (did != 0) {
+                    origin = DialogObject.getName(currentAccount, did);
+                }
+            }
+            if (TextUtils.isEmpty(origin) && !TextUtils.isEmpty(fwd.from_name)) {
+                origin = fwd.from_name;
+            }
+            if (!TextUtils.isEmpty(fwd.post_author)) {
+                origin = TextUtils.isEmpty(origin) ? fwd.post_author : origin + " (" + fwd.post_author + ")";
+            }
+            if (!TextUtils.isEmpty(origin)) {
+                sb.append("\n").append(LuminaLocale.getString(R.string.LuminaDetailsForwardedFrom)).append(": ").append(origin);
+            }
+            if (fwd.date > 0) {
+                sb.append("\n").append(LuminaLocale.getString(R.string.LuminaDetailsOriginalDate)).append(": ").append(formatFullTimestamp(fwd.date));
+            }
+        }
+        final CharSequence text = sb.toString();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity())
+                .setTitle(LuminaLocale.getString(R.string.LuminaMessageDetails))
+                .setMessage(text)
+                .setPositiveButton(LocaleController.getString(R.string.OK), null)
+                .setNeutralButton(LocaleController.getString(R.string.Copy), (dialog, which) -> AndroidUtilities.addToClipboard(text));
+        showDialog(builder.create());
+    }
+
+    private static String formatFullTimestamp(int unixSeconds) {
+        try {
+            return new java.text.SimpleDateFormat("d MMM yyyy, HH:mm:ss", java.util.Locale.getDefault())
+                    .format(new java.util.Date(unixSeconds * 1000L));
+        } catch (Exception e) {
+            return String.valueOf(unixSeconds);
         }
     }
 

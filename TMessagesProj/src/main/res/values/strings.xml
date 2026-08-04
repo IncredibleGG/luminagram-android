@@ -11214,4 +11214,18 @@
     <string name="LuminaUpdateNow">Update</string>
     <string name="LuminaUpdateDownloading">Downloading update…</string>
     <string name="LuminaUpdateFailed">Update download failed</string>
+    <!-- LuminaGram info density (wave 1) -->
+    <string name="LuminaInfoDensity">Info density</string>
+    <string name="LuminaShowDcId">Show datacenter ID</string>
+    <string name="LuminaShowDcIdInfo">Show the datacenter that stores the profile photo on user, group and channel profiles. Also adds a Details action to the message menu.</string>
+    <string name="LuminaShowChatDate">Show creation / join date</string>
+    <string name="LuminaShowMessageDetails">Message details menu</string>
+    <string name="ProfileDcId">Datacenter</string>
+    <string name="ProfileChatCreated">Created</string>
+    <string name="ProfileChatJoined">Joined</string>
+    <string name="LuminaMessageDetails">Details</string>
+    <string name="LuminaDetailsDate">Date</string>
+    <string name="LuminaDetailsMessageId">Message ID</string>
+    <string name="LuminaDetailsForwardedFrom">Forwarded from</string>
+    <string name="LuminaDetailsOriginalDate">Original date</string>
 </resources>
