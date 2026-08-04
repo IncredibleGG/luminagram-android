@@ -114,6 +114,20 @@ public final class LuminaLocale {
         zhHans.put("AppIconSunset", "日落");
         zhHans.put("AppIconMidnight", "午夜");
         zhHans.put("AppIconMono", "单色");
+        zhHans.put("LuminaAppearanceTitle", "外观");
+        zhHans.put("LuminaAppearanceColorsHeader", "颜色");
+        zhHans.put("LuminaAppearanceMaterialYou", "Material You（动态取色）");
+        zhHans.put("LuminaAppearanceCustomAccent", "自定义强调色");
+        zhHans.put("LuminaAppearanceAccentColor", "强调色");
+        zhHans.put("LuminaAppearanceAccentDefault", "默认");
+        zhHans.put("LuminaAppearanceColorsInfo", "为应用强调色重新着色——链接、开关以及发送和操作按钮。在 Android 12+ 上，Material You 会根据壁纸配色自动取色；否则请在下方选择自定义强调色。");
+        zhHans.put("LuminaAppearanceFontHeader", "字体");
+        zhHans.put("LuminaAppearanceFont", "应用字体");
+        zhHans.put("LuminaAppearanceFontDefault", "Telegram 默认");
+        zhHans.put("LuminaAppearanceFontSystem", "系统");
+        zhHans.put("LuminaAppearanceFontSerif", "衬线体");
+        zhHans.put("LuminaAppearanceFontMono", "等宽");
+        zhHans.put("LuminaAppearanceFontInfo", "更换应用字体。新打开的界面立即生效；已打开的界面在重启应用后刷新。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -202,6 +216,20 @@ public final class LuminaLocale {
         zhHant.put("AppIconSunset", "日落");
         zhHant.put("AppIconMidnight", "午夜");
         zhHant.put("AppIconMono", "單色");
+        zhHant.put("LuminaAppearanceTitle", "外觀");
+        zhHant.put("LuminaAppearanceColorsHeader", "顏色");
+        zhHant.put("LuminaAppearanceMaterialYou", "Material You（動態取色）");
+        zhHant.put("LuminaAppearanceCustomAccent", "自訂強調色");
+        zhHant.put("LuminaAppearanceAccentColor", "強調色");
+        zhHant.put("LuminaAppearanceAccentDefault", "預設");
+        zhHant.put("LuminaAppearanceColorsInfo", "為應用程式強調色重新著色——連結、開關以及傳送和操作按鈕。在 Android 12+ 上，Material You 會根據桌布配色自動取色；否則請在下方選擇自訂強調色。");
+        zhHant.put("LuminaAppearanceFontHeader", "字型");
+        zhHant.put("LuminaAppearanceFont", "應用程式字型");
+        zhHant.put("LuminaAppearanceFontDefault", "Telegram 預設");
+        zhHant.put("LuminaAppearanceFontSystem", "系統");
+        zhHant.put("LuminaAppearanceFontSerif", "襯線體");
+        zhHant.put("LuminaAppearanceFontMono", "等寬");
+        zhHant.put("LuminaAppearanceFontInfo", "更換應用程式字型。新開啟的畫面立即生效；已開啟的畫面在重新啟動應用程式後更新。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -290,6 +318,20 @@ public final class LuminaLocale {
         ar.put("AppIconSunset", "الغروب");
         ar.put("AppIconMidnight", "منتصف الليل");
         ar.put("AppIconMono", "أحادي");
+        ar.put("LuminaAppearanceTitle", "المظهر");
+        ar.put("LuminaAppearanceColorsHeader", "الألوان");
+        ar.put("LuminaAppearanceMaterialYou", "Material You (ألوان ديناميكية)");
+        ar.put("LuminaAppearanceCustomAccent", "لون مميز مخصص");
+        ar.put("LuminaAppearanceAccentColor", "اللون المميز");
+        ar.put("LuminaAppearanceAccentDefault", "افتراضي");
+        ar.put("LuminaAppearanceColorsInfo", "يعيد تلوين اللون المميز للتطبيق — الروابط والمفاتيح وأزرار الكتابة والإجراءات. يشتق Material You اللون من ألوان خلفيتك على أندرويد 12+؛ وإلا فاختر لونًا مميزًا مخصصًا أدناه.");
+        ar.put("LuminaAppearanceFontHeader", "الخط");
+        ar.put("LuminaAppearanceFont", "خط التطبيق");
+        ar.put("LuminaAppearanceFontDefault", "افتراضي Telegram");
+        ar.put("LuminaAppearanceFontSystem", "النظام");
+        ar.put("LuminaAppearanceFontSerif", "Serif");
+        ar.put("LuminaAppearanceFontMono", "أحادي المسافة");
+        ar.put("LuminaAppearanceFontInfo", "يبدّل خط التطبيق. تُحدَّث الشاشات المفتوحة حديثًا فورًا؛ أما الشاشات المفتوحة مسبقًا فتُحدَّث بعد إعادة تشغيل التطبيق.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -378,6 +420,20 @@ public final class LuminaLocale {
         ru.put("AppIconSunset", "Закат");
         ru.put("AppIconMidnight", "Полночь");
         ru.put("AppIconMono", "Моно");
+        ru.put("LuminaAppearanceTitle", "Оформление");
+        ru.put("LuminaAppearanceColorsHeader", "Цвета");
+        ru.put("LuminaAppearanceMaterialYou", "Material You (динамические цвета)");
+        ru.put("LuminaAppearanceCustomAccent", "Свой акцентный цвет");
+        ru.put("LuminaAppearanceAccentColor", "Акцентный цвет");
+        ru.put("LuminaAppearanceAccentDefault", "По умолчанию");
+        ru.put("LuminaAppearanceColorsInfo", "Перекрашивает акцент приложения — ссылки, переключатели, кнопки отправки и действий. На Android 12+ Material You берёт цвет из палитры обоев; иначе выберите свой акцентный цвет ниже.");
+        ru.put("LuminaAppearanceFontHeader", "Шрифт");
+        ru.put("LuminaAppearanceFont", "Шрифт приложения");
+        ru.put("LuminaAppearanceFontDefault", "Стандартный Telegram");
+        ru.put("LuminaAppearanceFontSystem", "Системный");
+        ru.put("LuminaAppearanceFontSerif", "С засечками");
+        ru.put("LuminaAppearanceFontMono", "Моноширинный");
+        ru.put("LuminaAppearanceFontInfo", "Меняет шрифт приложения. Новые экраны обновляются сразу; уже открытые — после перезапуска приложения.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -466,6 +522,20 @@ public final class LuminaLocale {
         fa.put("AppIconSunset", "غروب");
         fa.put("AppIconMidnight", "نیمه‌شب");
         fa.put("AppIconMono", "تک‌رنگ");
+        fa.put("LuminaAppearanceTitle", "ظاهر");
+        fa.put("LuminaAppearanceColorsHeader", "رنگ‌ها");
+        fa.put("LuminaAppearanceMaterialYou", "Material You (رنگ‌های پویا)");
+        fa.put("LuminaAppearanceCustomAccent", "رنگ تأکید سفارشی");
+        fa.put("LuminaAppearanceAccentColor", "رنگ تأکید");
+        fa.put("LuminaAppearanceAccentDefault", "پیش‌فرض");
+        fa.put("LuminaAppearanceColorsInfo", "رنگ تأکید برنامه را تغییر می‌دهد — پیوندها، کلیدها و دکمه‌های نوشتن و عملیات. در اندروید ۱۲ به بالا، Material You رنگ را از پالت کاغذدیواری می‌گیرد؛ در غیر این صورت رنگ تأکید سفارشی را در پایین انتخاب کنید.");
+        fa.put("LuminaAppearanceFontHeader", "فونت");
+        fa.put("LuminaAppearanceFont", "فونت برنامه");
+        fa.put("LuminaAppearanceFontDefault", "پیش‌فرض تلگرام");
+        fa.put("LuminaAppearanceFontSystem", "سیستم");
+        fa.put("LuminaAppearanceFontSerif", "Serif");
+        fa.put("LuminaAppearanceFontMono", "تک‌فاصله");
+        fa.put("LuminaAppearanceFontInfo", "فونت برنامه را عوض می‌کند. صفحه‌های تازه‌بازشده فوراً به‌روز می‌شوند؛ صفحه‌های ازپیش‌باز پس از راه‌اندازی مجدد برنامه.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -554,6 +624,20 @@ public final class LuminaLocale {
         tr.put("AppIconSunset", "Gün batımı");
         tr.put("AppIconMidnight", "Gece yarısı");
         tr.put("AppIconMono", "Mono");
+        tr.put("LuminaAppearanceTitle", "Görünüm");
+        tr.put("LuminaAppearanceColorsHeader", "Renkler");
+        tr.put("LuminaAppearanceMaterialYou", "Material You (dinamik renkler)");
+        tr.put("LuminaAppearanceCustomAccent", "Özel vurgu rengi");
+        tr.put("LuminaAppearanceAccentColor", "Vurgu rengi");
+        tr.put("LuminaAppearanceAccentDefault", "Varsayılan");
+        tr.put("LuminaAppearanceColorsInfo", "Uygulama vurgu rengini yeniden renklendirir — bağlantılar, anahtarlar, yazma ve işlem düğmeleri. Android 12+ üzerinde Material You rengi duvar kağıdı paletinizden alır; aksi halde aşağıdan özel bir vurgu rengi seçin.");
+        tr.put("LuminaAppearanceFontHeader", "Yazı tipi");
+        tr.put("LuminaAppearanceFont", "Uygulama yazı tipi");
+        tr.put("LuminaAppearanceFontDefault", "Telegram varsayılanı");
+        tr.put("LuminaAppearanceFontSystem", "Sistem");
+        tr.put("LuminaAppearanceFontSerif", "Serif");
+        tr.put("LuminaAppearanceFontMono", "Tek aralıklı");
+        tr.put("LuminaAppearanceFontInfo", "Uygulama yazı tipini değiştirir. Yeni açılan ekranlar hemen güncellenir; zaten açık ekranlar uygulama yeniden başlatıldıktan sonra yenilenir.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -642,6 +726,20 @@ public final class LuminaLocale {
         es.put("AppIconSunset", "Atardecer");
         es.put("AppIconMidnight", "Medianoche");
         es.put("AppIconMono", "Mono");
+        es.put("LuminaAppearanceTitle", "Apariencia");
+        es.put("LuminaAppearanceColorsHeader", "Colores");
+        es.put("LuminaAppearanceMaterialYou", "Material You (colores dinámicos)");
+        es.put("LuminaAppearanceCustomAccent", "Color de acento personalizado");
+        es.put("LuminaAppearanceAccentColor", "Color de acento");
+        es.put("LuminaAppearanceAccentDefault", "Predeterminado");
+        es.put("LuminaAppearanceColorsInfo", "Cambia el color de acento de la app — enlaces, interruptores y los botones de redacción y acción. En Android 12+, Material You obtiene el color de la paleta de tu fondo de pantalla; si no, elige un color de acento personalizado abajo.");
+        es.put("LuminaAppearanceFontHeader", "Fuente");
+        es.put("LuminaAppearanceFont", "Fuente de la app");
+        es.put("LuminaAppearanceFontDefault", "Predeterminada de Telegram");
+        es.put("LuminaAppearanceFontSystem", "Sistema");
+        es.put("LuminaAppearanceFontSerif", "Serif");
+        es.put("LuminaAppearanceFontMono", "Monoespaciada");
+        es.put("LuminaAppearanceFontInfo", "Cambia la tipografía de la app. Las pantallas recién abiertas se actualizan al instante; las ya abiertas se actualizan tras reiniciar la app.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -730,6 +828,20 @@ public final class LuminaLocale {
         ptBr.put("AppIconSunset", "Pôr do sol");
         ptBr.put("AppIconMidnight", "Meia-noite");
         ptBr.put("AppIconMono", "Mono");
+        ptBr.put("LuminaAppearanceTitle", "Aparência");
+        ptBr.put("LuminaAppearanceColorsHeader", "Cores");
+        ptBr.put("LuminaAppearanceMaterialYou", "Material You (cores dinâmicas)");
+        ptBr.put("LuminaAppearanceCustomAccent", "Cor de destaque personalizada");
+        ptBr.put("LuminaAppearanceAccentColor", "Cor de destaque");
+        ptBr.put("LuminaAppearanceAccentDefault", "Padrão");
+        ptBr.put("LuminaAppearanceColorsInfo", "Recolore o destaque do app — links, interruptores e os botões de escrever e de ação. No Android 12+, o Material You extrai a cor da paleta do seu papel de parede; caso contrário, escolha uma cor de destaque personalizada abaixo.");
+        ptBr.put("LuminaAppearanceFontHeader", "Fonte");
+        ptBr.put("LuminaAppearanceFont", "Fonte do app");
+        ptBr.put("LuminaAppearanceFontDefault", "Padrão do Telegram");
+        ptBr.put("LuminaAppearanceFontSystem", "Sistema");
+        ptBr.put("LuminaAppearanceFontSerif", "Serifada");
+        ptBr.put("LuminaAppearanceFontMono", "Monoespaçada");
+        ptBr.put("LuminaAppearanceFontInfo", "Troca a fonte do app. Telas recém-abertas atualizam na hora; telas já abertas atualizam após reiniciar o app.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -818,6 +930,20 @@ public final class LuminaLocale {
         id.put("AppIconSunset", "Senja");
         id.put("AppIconMidnight", "Tengah malam");
         id.put("AppIconMono", "Mono");
+        id.put("LuminaAppearanceTitle", "Tampilan");
+        id.put("LuminaAppearanceColorsHeader", "Warna");
+        id.put("LuminaAppearanceMaterialYou", "Material You (warna dinamis)");
+        id.put("LuminaAppearanceCustomAccent", "Warna aksen kustom");
+        id.put("LuminaAppearanceAccentColor", "Warna aksen");
+        id.put("LuminaAppearanceAccentDefault", "Bawaan");
+        id.put("LuminaAppearanceColorsInfo", "Mewarnai ulang aksen aplikasi — tautan, sakelar, serta tombol tulis dan tindakan. Di Android 12+, Material You mengambil warna dari palet wallpaper Anda; jika tidak, pilih warna aksen kustom di bawah.");
+        id.put("LuminaAppearanceFontHeader", "Font");
+        id.put("LuminaAppearanceFont", "Font aplikasi");
+        id.put("LuminaAppearanceFontDefault", "Bawaan Telegram");
+        id.put("LuminaAppearanceFontSystem", "Sistem");
+        id.put("LuminaAppearanceFontSerif", "Serif");
+        id.put("LuminaAppearanceFontMono", "Monospace");
+        id.put("LuminaAppearanceFontInfo", "Mengganti font aplikasi. Layar yang baru dibuka diperbarui langsung; layar yang sudah terbuka diperbarui setelah aplikasi dimulai ulang.");
         T.put("id", id);
     }
 

@@ -9540,6 +9540,35 @@ public class Theme {
         return getColor(key, null, true);
     }
 
+    // ---- LuminaGram Wave 2: app-wide accent override -------------------------------
+    // 0 = disabled (stock theme). Otherwise an opaque ARGB color remapped onto the
+    // accent-bearing theme keys inside getColor(). Populated by LuminaConfig.applyAppearance().
+    public static int luminaAccentColor = 0;
+
+    private static int luminaAccentForKey(int key) {
+        if (key == key_windowBackgroundWhiteBlueText || key == key_windowBackgroundWhiteBlueHeader
+                || key == key_windowBackgroundWhiteBlueButton || key == key_windowBackgroundWhiteValueText
+                || key == key_windowBackgroundWhiteLinkText || key == key_switchTrackChecked
+                || key == key_switch2TrackChecked || key == key_radioBackgroundChecked
+                || key == key_checkboxSquareBackground || key == key_featuredStickers_addButton
+                || key == key_chats_actionBackground || key == key_dialogFloatingButton
+                || key == key_dialogTextBlue || key == key_dialogTextLink
+                || key == key_chat_fieldOverlayText) {
+            return 0xff000000 | luminaAccentColor;
+        }
+        if (key == key_chats_actionPressedBackground) {
+            return 0xff000000 | luminaDarken(luminaAccentColor);
+        }
+        return 0;
+    }
+
+    private static int luminaDarken(int color) {
+        int r = (int) (Color.red(color) * 0.85f);
+        int g = (int) (Color.green(color) * 0.85f);
+        int b = (int) (Color.blue(color) * 0.85f);
+        return Color.rgb(r, g, b);
+    }
+
     public static int getColor(int key, ResourcesProvider provider) {
         if (provider != null) {
             return provider.getColor(key);
@@ -9560,6 +9589,12 @@ public class Theme {
             int index = animatingColors.indexOfKey(key);
             if (index >= 0) {
                 return animatingColors.valueAt(index);
+            }
+        }
+        if (luminaAccentColor != 0) {
+            int luminaColor = luminaAccentForKey(key);
+            if (luminaColor != 0) {
+                return luminaColor;
             }
         }
         if (serviceBitmapShader != null && (key_chat_serviceText == key || key_chat_serviceLink == key || key_chat_serviceIcon == key

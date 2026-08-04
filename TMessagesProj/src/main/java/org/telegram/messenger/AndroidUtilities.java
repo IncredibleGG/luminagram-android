@@ -257,6 +257,8 @@ public class AndroidUtilities {
     public final static String TYPEFACE_MERRIWEATHER_BOLD = "fonts/mw_bold.ttf";
 
     public static Typeface mediumTypeface;
+    // Wave 2 app-font override: 0 = Telegram default, 1 = System, 2 = Serif, 3 = Monospace
+    public static int luminaFont = 0;
     public static ThreadLocal<byte[]> readBufferLocal = new ThreadLocal<>();
     public static ThreadLocal<byte[]> bufferLocal = new ThreadLocal<>();
 
@@ -2391,6 +2393,12 @@ public class AndroidUtilities {
     }
 
     public static Typeface getTypeface(String assetPath) {
+        if (luminaFont != 0 && assetPath != null) {
+            Typeface override = luminaTypefaceOverride(assetPath);
+            if (override != null) {
+                return override;
+            }
+        }
         synchronized (typefaceCache) {
             if (!typefaceCache.containsKey(assetPath)) {
                 try {
@@ -2419,6 +2427,49 @@ public class AndroidUtilities {
                 }
             }
             return typefaceCache.get(assetPath);
+        }
+    }
+
+    /**
+     * Wave 2 app-font override. When the user picks a non-default app font, swap the
+     * general-purpose Roboto text faces ("fonts/r*.ttf", excluding the monospace code
+     * font) for a system family, preserving the requested bold/italic style so headers
+     * and emphasis still render correctly. Returns null to fall through to the asset font.
+     */
+    private static Typeface luminaTypefaceOverride(String assetPath) {
+        if (!assetPath.startsWith("fonts/r") || assetPath.startsWith("fonts/rmono")) {
+            return null;
+        }
+        Typeface base;
+        switch (luminaFont) {
+            case 1:
+                base = Typeface.DEFAULT;
+                break;
+            case 2:
+                base = Typeface.SERIF;
+                break;
+            case 3:
+                base = Typeface.MONOSPACE;
+                break;
+            default:
+                return null;
+        }
+        boolean bold = assetPath.contains("medium") || assetPath.contains("bold");
+        boolean italic = assetPath.contains("italic");
+        int style;
+        if (bold && italic) {
+            style = Typeface.BOLD_ITALIC;
+        } else if (bold) {
+            style = Typeface.BOLD;
+        } else if (italic) {
+            style = Typeface.ITALIC;
+        } else {
+            style = Typeface.NORMAL;
+        }
+        try {
+            return Typeface.create(base, style);
+        } catch (Exception e) {
+            return null;
         }
     }
 

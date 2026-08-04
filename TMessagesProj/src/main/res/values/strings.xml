@@ -11262,4 +11262,18 @@
     <string name="LuminaSecurityDisguise">Disguise as Calculator</string>
     <string name="LuminaSecurityDisguiseInfo">Replace the app\'s launcher icon and name with a plain Calculator. Turn off to restore the normal LuminaGram icon.</string>
     <string name="LuminaDisguiseAppLabel">Calculator</string>
+    <string name="LuminaAppearanceTitle">Appearance</string>
+    <string name="LuminaAppearanceColorsHeader">Colors</string>
+    <string name="LuminaAppearanceMaterialYou">Material You (dynamic colors)</string>
+    <string name="LuminaAppearanceCustomAccent">Custom accent color</string>
+    <string name="LuminaAppearanceAccentColor">Accent color</string>
+    <string name="LuminaAppearanceAccentDefault">Default</string>
+    <string name="LuminaAppearanceColorsInfo">Recolors the app accent — links, switches and the compose and action buttons. Material You derives the accent from your wallpaper palette on Android 12+; otherwise pick a custom accent below.</string>
+    <string name="LuminaAppearanceFontHeader">Font</string>
+    <string name="LuminaAppearanceFont">App font</string>
+    <string name="LuminaAppearanceFontDefault">Telegram default</string>
+    <string name="LuminaAppearanceFontSystem">System</string>
+    <string name="LuminaAppearanceFontSerif">Serif</string>
+    <string name="LuminaAppearanceFontMono">Monospace</string>
+    <string name="LuminaAppearanceFontInfo">Swaps the app typeface. Newly opened screens update immediately; already-open screens refresh after restarting the app.</string>
 </resources>

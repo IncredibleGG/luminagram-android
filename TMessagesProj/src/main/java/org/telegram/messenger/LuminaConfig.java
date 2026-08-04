@@ -2,6 +2,7 @@ package org.telegram.messenger;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 /**
  * LuminaGram global feature-flag store.
@@ -26,6 +27,12 @@ public class LuminaConfig {
     public static boolean translateBeforeSend;
     public static boolean translateBeforeSendConfirm;
 
+    // ---- Appearance (Wave 2) ----
+    public static boolean materialYouEnabled;   // Android 12+ dynamic colors (Monet)
+    public static boolean customAccentEnabled;   // manual accent override (when Material You off)
+    public static int customAccentColor;         // 0 = none picked yet
+    public static int appFont;                   // 0 = Telegram default, 1 = System, 2 = Serif, 3 = Monospace
+
     static {
         loadConfig();
     }
@@ -44,8 +51,14 @@ public class LuminaConfig {
             compactChatList = preferences.getBoolean("compactChatList", false);
             translateBeforeSend = preferences.getBoolean("translateBeforeSend", false);
             translateBeforeSendConfirm = preferences.getBoolean("translateBeforeSendConfirm", false);
+            materialYouEnabled = preferences.getBoolean("materialYouEnabled", false);
+            customAccentEnabled = preferences.getBoolean("customAccentEnabled", false);
+            customAccentColor = preferences.getInt("customAccentColor", 0);
+            appFont = preferences.getInt("appFont", 0);
 
             configLoaded = true;
+            // Push the persisted appearance into the render hooks (Theme accent + font override).
+            applyAppearance();
         }
     }
 
@@ -77,5 +90,67 @@ public class LuminaConfig {
 
     public static void toggleTranslateBeforeSendConfirm() {
         editor.putBoolean("translateBeforeSendConfirm", translateBeforeSendConfirm ^= true).apply();
+    }
+
+    // ---- Appearance (Wave 2) ----
+
+    /** The Android 12+ Material You primary accent, or 0 when unavailable. */
+    public static int getMaterialYouAccent() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            try {
+                return ApplicationLoader.applicationContext.getColor(android.R.color.system_accent1_500) | 0xff000000;
+            } catch (Exception ignore) {
+            }
+        }
+        return 0;
+    }
+
+    /** Effective app accent: Material You wins, then a manual override, else 0 (no override). */
+    public static int getEffectiveAccent() {
+        if (materialYouEnabled) {
+            int c = getMaterialYouAccent();
+            if (c != 0) {
+                return c;
+            }
+        }
+        if (customAccentEnabled && customAccentColor != 0) {
+            return customAccentColor | 0xff000000;
+        }
+        return 0;
+    }
+
+    /** Publish the current appearance selection into the render hooks. */
+    public static void applyAppearance() {
+        try {
+            org.telegram.ui.ActionBar.Theme.luminaAccentColor = getEffectiveAccent();
+        } catch (Throwable ignore) {
+        }
+        try {
+            AndroidUtilities.luminaFont = appFont;
+            AndroidUtilities.mediumTypeface = null; // recompute bold() with the new family
+        } catch (Throwable ignore) {
+        }
+    }
+
+    public static void toggleMaterialYou() {
+        editor.putBoolean("materialYouEnabled", materialYouEnabled ^= true).apply();
+        applyAppearance();
+    }
+
+    public static void toggleCustomAccent() {
+        editor.putBoolean("customAccentEnabled", customAccentEnabled ^= true).apply();
+        applyAppearance();
+    }
+
+    public static void setCustomAccentColor(int color) {
+        customAccentColor = color;
+        editor.putInt("customAccentColor", color).apply();
+        applyAppearance();
+    }
+
+    public static void setAppFont(int font) {
+        appFont = font;
+        editor.putInt("appFont", font).apply();
+        applyAppearance();
     }
 }
