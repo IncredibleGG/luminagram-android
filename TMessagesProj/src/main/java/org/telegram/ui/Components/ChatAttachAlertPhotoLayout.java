@@ -69,6 +69,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
@@ -146,6 +147,8 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
     private PhotoAttachAdapter adapter;
     private EmptyTextProgressView progressView;
     private RecyclerViewItemRangeSelector itemRangeSelector;
+    private ItemTouchHelper photoReorderTouchHelper;
+    private Object photoReorderLastTargetKey;
     private int gridExtraSpace;
     private boolean shouldSelect;
     private int alertOnlyOnce;
@@ -694,6 +697,92 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
         }
     }
 
+    // Wave11: drag a SELECTED attachment to reorder the send order (selectedPhotosOrder).
+    private boolean isPhotoReorderAllowed() {
+        return parentAlert != null && !parentAlert.storyMediaPicker
+                && parentAlert.baseFragment instanceof ChatActivity && parentAlert.allowOrder
+                && selectedPhotosOrder.size() > 1;
+    }
+
+    private class PhotoReorderTouchHelperCallback extends ItemTouchHelper.Callback {
+        @Override
+        public boolean isLongPressDragEnabled() {
+            // Drag is started manually from the long-press handler so it never fights the range selector.
+            return false;
+        }
+
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            if (!isPhotoReorderAllowed() || !(viewHolder.itemView instanceof PhotoAttachPhotoCell)
+                    || !((PhotoAttachPhotoCell) viewHolder.itemView).isChecked()) {
+                return makeMovementFlags(0, 0);
+            }
+            return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, 0);
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder source, RecyclerView.ViewHolder target) {
+            // Only selected photo cells are valid drop targets; unselected/other cells are skipped.
+            if (!(source.itemView instanceof PhotoAttachPhotoCell) || !(target.itemView instanceof PhotoAttachPhotoCell)) {
+                return false;
+            }
+            PhotoAttachPhotoCell targetCell = (PhotoAttachPhotoCell) target.itemView;
+            if (!targetCell.isChecked()) {
+                return false;
+            }
+            MediaController.PhotoEntry fromEntry = ((PhotoAttachPhotoCell) source.itemView).getPhotoEntry();
+            MediaController.PhotoEntry toEntry = targetCell.getPhotoEntry();
+            if (fromEntry == null || toEntry == null) {
+                return false;
+            }
+            Object fromKey = fromEntry.imageId;
+            Object toKey = toEntry.imageId;
+            // Guard against ItemTouchHelper re-firing on the same target every frame (we never move views).
+            if (toKey.equals(photoReorderLastTargetKey)) {
+                return false;
+            }
+            int fromIdx = selectedPhotosOrder.indexOf(fromKey);
+            int toIdx = selectedPhotosOrder.indexOf(toKey);
+            if (fromIdx < 0 || toIdx < 0 || fromIdx == toIdx) {
+                return false;
+            }
+            selectedPhotosOrder.remove(fromIdx);
+            selectedPhotosOrder.add(toIdx, fromKey);
+            photoReorderLastTargetKey = toKey;
+            updateCheckedPhotoIndices();
+            // Return false so the RecyclerView layout is untouched (grid stays in gallery order); only the send order changed.
+            return false;
+        }
+
+        @Override
+        public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+            if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                photoReorderLastTargetKey = null;
+                gridView.hideSelector(true);
+                gridView.cancelClickRunnables(false);
+            }
+            super.onSelectedChanged(viewHolder, actionState);
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+        }
+
+        @Override
+        public boolean isItemViewSwipeEnabled() {
+            return false;
+        }
+
+        @Override
+        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            super.clearView(recyclerView, viewHolder);
+            photoReorderLastTargetKey = null;
+            if (parentAlert != null) {
+                parentAlert.applyCaption();
+            }
+        }
+    }
+
     private MediaController.PhotoEntry getPhotoEntryAtPosition(int position) {
         if (position < 0) {
             return null;
@@ -1078,7 +1167,12 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
                 return true;
             } else if (view instanceof PhotoAttachPhotoCell) {
                 PhotoAttachPhotoCell cell = (PhotoAttachPhotoCell) view;
-                itemRangeSelector.setIsActive(view, true, position, shouldSelect = !cell.isChecked());
+                if (cell.isChecked() && isPhotoReorderAllowed() && photoReorderTouchHelper != null) {
+                    photoReorderLastTargetKey = null;
+                    photoReorderTouchHelper.startDrag(gridView.getChildViewHolder(view));
+                } else {
+                    itemRangeSelector.setIsActive(view, true, position, shouldSelect = !cell.isChecked());
+                }
             }
             return false;
         });
@@ -1115,6 +1209,8 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
             }
         });
         gridView.addOnItemTouchListener(itemRangeSelector);
+        photoReorderTouchHelper = new ItemTouchHelper(new PhotoReorderTouchHelperCallback());
+        photoReorderTouchHelper.attachToRecyclerView(gridView);
 
         iBlur3Capture = gridView;
         iBlur3CaptureView = gridView;
