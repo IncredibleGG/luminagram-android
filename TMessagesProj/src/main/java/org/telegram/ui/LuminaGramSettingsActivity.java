@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.ActionBar;
@@ -26,7 +27,7 @@ public class LuminaGramSettingsActivity extends BaseFragment {
     public View createView(Context context) {
         actionBar.setBackButtonImage(R.drawable.ic_ab_back);
         actionBar.setAllowOverlayTitle(true);
-        actionBar.setTitle(LocaleController.getString(R.string.LuminaGramSettings));
+        actionBar.setTitle(LuminaLocale.getString(R.string.LuminaGramSettings));
         actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
             @Override
             public void onItemClick(int id) {
@@ -49,13 +50,13 @@ public class LuminaGramSettingsActivity extends BaseFragment {
     }
 
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
-        items.add(UItem.asHeader(LocaleController.getString(R.string.LuminaGramChatList)));
-        items.add(UItem.asSwitch(1, LocaleController.getString(R.string.LuminaHideTabs)).setChecked(LuminaConfig.hideTabs));
-        items.add(UItem.asSwitch(2, LocaleController.getString(R.string.LuminaHideStories)).setChecked(LuminaConfig.hideStories));
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaGramChatList)));
+        items.add(UItem.asSwitch(1, LuminaLocale.getString(R.string.LuminaHideTabs)).setChecked(LuminaConfig.hideTabs));
+        items.add(UItem.asSwitch(2, LuminaLocale.getString(R.string.LuminaHideStories)).setChecked(LuminaConfig.hideStories));
         items.add(UItem.asShadow(null));
-        items.add(UItem.asButton(10, LocaleController.getString(R.string.LuminaPrivacyTitle)));
-        items.add(UItem.asButton(11, LocaleController.getString(R.string.LuminaChatSettings)));
-        items.add(UItem.asButton(12, LocaleController.getString(R.string.LuminaTranslateTitle)));
+        items.add(UItem.asButton(10, LuminaLocale.getString(R.string.LuminaPrivacyTitle)));
+        items.add(UItem.asButton(11, LuminaLocale.getString(R.string.LuminaChatSettings)));
+        items.add(UItem.asButton(12, LuminaLocale.getString(R.string.LuminaTranslateTitle)));
         items.add(UItem.asShadow(null));
     }
 

@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
-import org.telegram.messenger.LuminaGate;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.ActionBar;
@@ -23,9 +23,6 @@ import java.util.ArrayList;
  * LuminaGram chat &amp; media enhancements settings.
  * Mirrors {@link LuminaGramSettingsActivity} (UItem / UniversalRecyclerView).
  * SAFE toggles are persisted via {@link LuminaConfig} generic accessors.
- * The two SENSITIVE rows (copyRestricted / saveRestrictedMedia) are the prefs
- * read by {@link LuminaGate}; they are only shown in the full build
- * ({@code LuminaGate.FULL}), so they never appear in the store APK.
  */
 public class LuminaChatActivity extends BaseFragment {
 
@@ -35,7 +32,7 @@ public class LuminaChatActivity extends BaseFragment {
     public View createView(Context context) {
         actionBar.setBackButtonImage(R.drawable.ic_ab_back);
         actionBar.setAllowOverlayTitle(true);
-        actionBar.setTitle(LocaleController.getString(R.string.LuminaChatSettings));
+        actionBar.setTitle(LuminaLocale.getString(R.string.LuminaChatSettings));
         actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
             @Override
             public void onItemClick(int id) {
@@ -58,23 +55,16 @@ public class LuminaChatActivity extends BaseFragment {
     }
 
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
-        items.add(UItem.asHeader(LocaleController.getString(R.string.LuminaMessageActions)));
-        items.add(UItem.asSwitch(1, LocaleController.getString(R.string.LuminaForwardNoAuthorTitle)).setChecked(LuminaConfig.getBoolean("forwardNoAuthor", false)));
-        items.add(UItem.asSwitch(2, LocaleController.getString(R.string.LuminaForwardNoCaptionTitle)).setChecked(LuminaConfig.getBoolean("forwardNoCaption", false)));
-        items.add(UItem.asSwitch(3, LocaleController.getString(R.string.LuminaSaveToCloudTitle)).setChecked(LuminaConfig.getBoolean("saveToCloud", true)));
-        items.add(UItem.asSwitch(4, LocaleController.getString(R.string.LuminaSelectFromAuthorTitle)).setChecked(LuminaConfig.getBoolean("selectFromAuthor", true)));
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMessageActions)));
+        items.add(UItem.asSwitch(1, LuminaLocale.getString(R.string.LuminaForwardNoAuthorTitle)).setChecked(LuminaConfig.getBoolean("forwardNoAuthor", false)));
+        items.add(UItem.asSwitch(2, LuminaLocale.getString(R.string.LuminaForwardNoCaptionTitle)).setChecked(LuminaConfig.getBoolean("forwardNoCaption", false)));
+        items.add(UItem.asSwitch(3, LuminaLocale.getString(R.string.LuminaSaveToCloudTitle)).setChecked(LuminaConfig.getBoolean("saveToCloud", true)));
+        items.add(UItem.asSwitch(4, LuminaLocale.getString(R.string.LuminaSelectFromAuthorTitle)).setChecked(LuminaConfig.getBoolean("selectFromAuthor", true)));
         items.add(UItem.asShadow(null));
 
-        items.add(UItem.asHeader(LocaleController.getString(R.string.LuminaMediaSaving)));
-        items.add(UItem.asSwitch(5, LocaleController.getString(R.string.LuminaSaveStickers)).setChecked(LuminaConfig.getBoolean("saveStickers", true)));
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMediaSaving)));
+        items.add(UItem.asSwitch(5, LuminaLocale.getString(R.string.LuminaSaveStickers)).setChecked(LuminaConfig.getBoolean("saveStickers", true)));
         items.add(UItem.asShadow(null));
-
-        if (LuminaGate.FULL) {
-            items.add(UItem.asHeader(LocaleController.getString(R.string.LuminaSensitive)));
-            items.add(UItem.asSwitch(6, LocaleController.getString(R.string.LuminaCopyRestricted)).setChecked(LuminaConfig.getBoolean("copyRestricted", false)));
-            items.add(UItem.asSwitch(7, LocaleController.getString(R.string.LuminaSaveRestrictedMedia)).setChecked(LuminaConfig.getBoolean("saveRestrictedMedia", false)));
-            items.add(UItem.asShadow(LocaleController.getString(R.string.LuminaSensitiveInfo)));
-        }
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -93,12 +83,6 @@ public class LuminaChatActivity extends BaseFragment {
                 break;
             case 5:
                 LuminaConfig.putBoolean("saveStickers", !LuminaConfig.getBoolean("saveStickers", true));
-                break;
-            case 6:
-                LuminaConfig.putBoolean("copyRestricted", !LuminaConfig.getBoolean("copyRestricted", false));
-                break;
-            case 7:
-                LuminaConfig.putBoolean("saveRestrictedMedia", !LuminaConfig.getBoolean("saveRestrictedMedia", false));
                 break;
         }
         if (listView != null && listView.adapter != null) {

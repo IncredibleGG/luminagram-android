@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.ActionBar;
@@ -42,7 +43,7 @@ public class LuminaPrivacyActivity extends BaseFragment {
     public View createView(Context context) {
         actionBar.setBackButtonImage(R.drawable.ic_ab_back);
         actionBar.setAllowOverlayTitle(true);
-        actionBar.setTitle(LocaleController.getString(R.string.LuminaPrivacyTitle));
+        actionBar.setTitle(LuminaLocale.getString(R.string.LuminaPrivacyTitle));
         actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
             @Override
             public void onItemClick(int id) {
@@ -65,19 +66,19 @@ public class LuminaPrivacyActivity extends BaseFragment {
     }
 
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
-        items.add(UItem.asHeader(LocaleController.getString(R.string.LuminaPrivacyGhostHeader)));
-        items.add(UItem.asSwitch(ID_READ, LocaleController.getString(R.string.LuminaPrivacySendReadReceipts))
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacyGhostHeader)));
+        items.add(UItem.asSwitch(ID_READ, LuminaLocale.getString(R.string.LuminaPrivacySendReadReceipts))
                 .setChecked(LuminaConfig.getBoolean("sendReadPackets", true)));
-        items.add(UItem.asSwitch(ID_TYPING, LocaleController.getString(R.string.LuminaPrivacySendTyping))
+        items.add(UItem.asSwitch(ID_TYPING, LuminaLocale.getString(R.string.LuminaPrivacySendTyping))
                 .setChecked(LuminaConfig.getBoolean("sendTyping", true)));
-        items.add(UItem.asSwitch(ID_ONLINE, LocaleController.getString(R.string.LuminaPrivacySendOnline))
+        items.add(UItem.asSwitch(ID_ONLINE, LuminaLocale.getString(R.string.LuminaPrivacySendOnline))
                 .setChecked(LuminaConfig.getBoolean("sendOnlineStatus", true)));
-        items.add(UItem.asShadow(LocaleController.getString(R.string.LuminaPrivacySendOnlineInfo)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacySendOnlineInfo)));
 
-        items.add(UItem.asHeader(LocaleController.getString(R.string.LuminaPrivacyProfileHeader)));
-        items.add(UItem.asSwitch(ID_REGDATE, LocaleController.getString(R.string.LuminaPrivacyShowRegistrationDate))
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacyProfileHeader)));
+        items.add(UItem.asSwitch(ID_REGDATE, LuminaLocale.getString(R.string.LuminaPrivacyShowRegistrationDate))
                 .setChecked(LuminaConfig.getBoolean("showRegistrationDate", true)));
-        items.add(UItem.asShadow(LocaleController.getString(R.string.LuminaPrivacyShowRegistrationDateInfo)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyShowRegistrationDateInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
