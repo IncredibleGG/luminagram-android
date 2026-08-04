@@ -11188,6 +11188,8 @@
     <string name="LuminaShowMutedCountInfo">Draws the unread badge of muted chats in the normal accent color instead of muted gray.</string>
     <string name="LuminaChatListOnlineDot">Online dot</string>
     <string name="LuminaChatListOnlineDotInfo">Shows a small green dot on the avatar of one-on-one chats whose contact is currently online.</string>
+    <string name="LuminaChatListRecencyDot">Last-seen recency dot</string>
+    <string name="LuminaChatListRecencyDotInfo">Colors the avatar dot in one-on-one chats by how recently the contact was last seen: green when online now, yellow within an hour, orange within a day. No dot for older or hidden last-seen. The online dot toggle still controls the green (online) case.</string>
     <!-- LuminaGram privacy / stealth -->
     <string name="LuminaPrivacyTitle">Privacy &amp; Stealth</string>
     <string name="LuminaPrivacyGhostHeader">Ghost mode</string>
