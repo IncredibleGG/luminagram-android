@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Components.AlertsCreator;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.UItem;
 import org.telegram.ui.Components.UniversalAdapter;
@@ -35,10 +37,12 @@ public class LuminaMediaActivity extends BaseFragment {
     private static final int ID_KEEP_ORIGINAL_FILENAME = 1;
     private static final int ID_AUTO_PAUSE_BG_VIDEO = 2;
     private static final int ID_UNLOCK_AUDIO_SPEED = 3;
+    private static final int ID_SAVE_MEDIA_FOLDER = 4;
 
     private static final String KEY_KEEP_ORIGINAL_FILENAME = "keepOriginalFilename";
     private static final String KEY_AUTO_PAUSE_BG_VIDEO = "autoPauseBgVideo";
     private static final String KEY_UNLOCK_AUDIO_SPEED = "unlockAudioSpeed";
+    private static final String KEY_SAVE_MEDIA_FOLDER = "saveMediaFolder";
 
     private UniversalRecyclerView listView;
 
@@ -82,9 +86,33 @@ public class LuminaMediaActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_UNLOCK_AUDIO_SPEED, LuminaLocale.getString(R.string.LuminaMediaUnlockAudioSpeed))
                 .setChecked(LuminaConfig.getBoolean(KEY_UNLOCK_AUDIO_SPEED, false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaMediaUnlockAudioSpeedInfo)));
+
+        String saveFolder = LuminaConfig.getString(KEY_SAVE_MEDIA_FOLDER, "");
+        items.add(UItem.asButton(ID_SAVE_MEDIA_FOLDER, LuminaLocale.getString(R.string.LuminaMediaSaveFolder),
+                saveFolder.isEmpty() ? "Telegram" : saveFolder));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaMediaSaveFolderInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
+        if (item.id == ID_SAVE_MEDIA_FOLDER) {
+            Context context = getParentActivity();
+            if (context == null) {
+                return;
+            }
+            String current = LuminaConfig.getString(KEY_SAVE_MEDIA_FOLDER, "");
+            AlertsCreator.createSimpleTextInputAlert(context, this,
+                    LuminaLocale.getString(R.string.LuminaMediaSaveFolder),
+                    LuminaLocale.getString(R.string.LuminaMediaSaveFolderInfo),
+                    LuminaLocale.getString(R.string.LuminaMediaSaveFolderHint),
+                    current, 48, LocaleController.getString(R.string.Save), getResourceProvider(),
+                    text -> {
+                        LuminaConfig.putString(KEY_SAVE_MEDIA_FOLDER, text == null ? "" : text.trim());
+                        if (listView != null && listView.adapter != null) {
+                            listView.adapter.update(true);
+                        }
+                    });
+            return;
+        }
         final String key;
         switch (item.id) {
             case ID_KEEP_ORIGINAL_FILENAME:

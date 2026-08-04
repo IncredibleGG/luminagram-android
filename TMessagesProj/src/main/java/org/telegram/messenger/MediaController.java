@@ -5534,12 +5534,14 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                         result = uri != null;
                     } else {
                         File destFile;
+                        String galleryAlbum = LuminaConfig.getString("saveMediaFolder", "");
+                        if (TextUtils.isEmpty(galleryAlbum)) galleryAlbum = "Telegram";
                         if (type == 0) {
-                            destFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Telegram");
+                            destFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), galleryAlbum);
                             destFile.mkdirs();
                             destFile = new File(destFile, AndroidUtilities.generateFileName(0, FileLoader.getFileExtension(sourceFile)));
                         } else if (type == 1) {
-                            destFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "Telegram");
+                            destFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), galleryAlbum);
                             destFile.mkdirs();
                             destFile = new File(destFile, AndroidUtilities.generateFileName(1, FileLoader.getFileExtension(sourceFile)));
                         } else {
@@ -5689,12 +5691,14 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         new Thread(() -> {
             Uri savedUri = null;
             boolean ok = false;
+            String galleryAlbum = LuminaConfig.getString("saveMediaFolder", "");
+            if (TextUtils.isEmpty(galleryAlbum)) galleryAlbum = "Telegram";
             try {
                 if (Build.VERSION.SDK_INT >= 29) {
                     final String filename = AndroidUtilities.generateFileName(0, "jpg");
                     final ContentValues cv = new ContentValues();
                     final Uri uriToInsert = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
-                    final File dirDest = new File(Environment.DIRECTORY_PICTURES, "Telegram");
+                    final File dirDest = new File(Environment.DIRECTORY_PICTURES, galleryAlbum);
                     cv.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
                     cv.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
                     cv.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
@@ -5716,7 +5720,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                         }
                     }
                 } else {
-                    final File destDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Telegram");
+                    final File destDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), galleryAlbum);
                     destDir.mkdirs();
                     File destFile = new File(destDir, AndroidUtilities.generateFileName(0, "jpg"));
                     if (!destFile.exists()) {
@@ -5827,6 +5831,8 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
     private static Uri saveFileInternal(int type, File sourceFile, String filename) {
         try {
             int selectedType = type;
+            String galleryAlbum = LuminaConfig.getString("saveMediaFolder", "");
+            if (TextUtils.isEmpty(galleryAlbum)) galleryAlbum = "Telegram";
             ContentValues contentValues = new ContentValues();
             String extension = FileLoader.getFileExtension(sourceFile);
             String mimeType = null;
@@ -5847,7 +5853,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                     filename = AndroidUtilities.generateFileName(0, extension);
                 }
                 uriToInsert = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
-                File dirDest = new File(Environment.DIRECTORY_PICTURES, "Telegram");
+                File dirDest = new File(Environment.DIRECTORY_PICTURES, galleryAlbum);
                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
                 contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
                 contentValues.put(MediaStore.Images.Media.MIME_TYPE, mimeType);
@@ -5855,7 +5861,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                 if (filename == null) {
                     filename = AndroidUtilities.generateFileName(1, extension);
                 }
-                File dirDest = new File(Environment.DIRECTORY_MOVIES, "Telegram");
+                File dirDest = new File(Environment.DIRECTORY_MOVIES, galleryAlbum);
                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, dirDest + File.separator);
                 uriToInsert = MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
                 contentValues.put(MediaStore.Video.Media.DISPLAY_NAME, filename);

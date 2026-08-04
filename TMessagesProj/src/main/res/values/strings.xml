@@ -11348,6 +11348,9 @@
     <string name="LuminaMediaAutoPauseBgVideoInfo">Automatically pause the playing video when you leave LuminaGram.</string>
     <string name="LuminaMediaUnlockAudioSpeed">Speed control for long audio</string>
     <string name="LuminaMediaUnlockAudioSpeedInfo">Show the playback-speed control for music and long audio files, not just voice messages.</string>
+    <string name="LuminaMediaSaveFolder">Save media to folder</string>
+    <string name="LuminaMediaSaveFolderInfo">Photos and videos you save to your gallery go into an album with this name (under Pictures and Movies) instead of the default Telegram folder. Leave it empty to use the Telegram folder.</string>
+    <string name="LuminaMediaSaveFolderHint">Folder name</string>
     <!-- LuminaGram confirm before sending voice / round-video -->
     <string name="LuminaConfirmSendVoiceVideoTitle">Send this message?</string>
     <string name="LuminaConfirmSendVoiceVideoMessage">Send this voice or video message?</string>
