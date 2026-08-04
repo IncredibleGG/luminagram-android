@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
@@ -11,6 +12,7 @@ import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.messenger.browser.Browser;
 import org.telegram.ui.ActionBar.ActionBar;
+import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.LayoutHelper;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 public class LuminaGramSettingsActivity extends BaseFragment {
 
     private UniversalRecyclerView listView;
+    private boolean onboardingHandled;
 
     @Override
     public View createView(Context context) {
@@ -140,6 +143,37 @@ public class LuminaGramSettingsActivity extends BaseFragment {
         }
         if (listView != null && listView.adapter != null) {
             listView.adapter.update(true);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // First-run setup card: the first time this settings hub is opened after
+        // install, show a short welcome dialog highlighting LuminaGram's features.
+        // Gated once-per-install on the LuminaConfig "onboardingShown" flag. Posted
+        // with a small delay so the open transition has finished before showDialog()
+        // runs (showDialog() is rejected while a transition animation is in progress).
+        if (!onboardingHandled && !LuminaConfig.getBoolean("onboardingShown", false)) {
+            onboardingHandled = true;
+            AndroidUtilities.runOnUIThread(this::showOnboardingCard, 400);
+        }
+    }
+
+    private void showOnboardingCard() {
+        if (getParentActivity() == null || LuminaConfig.getBoolean("onboardingShown", false)) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaOnboardingTitle));
+        builder.setMessage(LuminaLocale.getString(R.string.LuminaOnboardingMessage));
+        builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaOnboardingGotIt), null);
+        // Deep-link into the Privacy & Stealth page (reuses its existing localized title).
+        builder.setNeutralButton(LuminaLocale.getString(R.string.LuminaPrivacyTitle),
+                (dialog, which) -> presentFragment(new LuminaPrivacyActivity()));
+        // Persist the once-per-install gate only when the card actually appeared.
+        if (showDialog(builder.create()) != null) {
+            LuminaConfig.putBoolean("onboardingShown", true);
         }
     }
 }

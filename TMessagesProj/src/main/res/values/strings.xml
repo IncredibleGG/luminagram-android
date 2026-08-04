@@ -11174,6 +11174,9 @@
     <string name="ArticleAIAddToPage">Add to Page</string>
     <string name="LuminaGramSettings">LuminaGram Settings</string>
     <string name="LuminaGramSettingsInfo">Exclusive features</string>
+    <string name="LuminaOnboardingTitle">Welcome to LuminaGram</string>
+    <string name="LuminaOnboardingMessage">LuminaGram adds private, exclusive tools on top of Telegram:\n\n• Translate — translate any chat, or auto-translate messages before you send.\n• Dual language — show the original text next to its translation.\n• Disguise &amp; decoy lock — hide the app behind a calculator with its own unlock code.\n• Privacy — ghost mode hides your typing, online status and read receipts.\n\nTap any row below to set these up.</string>
+    <string name="LuminaOnboardingGotIt">Got it</string>
     <string name="LuminaGramChatList">Chat list</string>
     <string name="LuminaHideTabs">Hide folder tabs</string>
     <string name="LuminaHideStories">Hide stories</string>

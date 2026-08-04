@@ -281,6 +281,9 @@ public final class LuminaLocale {
         zhHans.put("LuminaBackupImportFailed", "无法读取备份文件。");
         zhHans.put("LuminaBackupInvalidFile", "这不是有效的 LuminaGram 备份文件。");
         zhHans.put("LuminaBackupWrongPassphrase", "口令错误,或文件已损坏。");
+        zhHans.put("LuminaOnboardingTitle", "欢迎使用 LuminaGram");
+        zhHans.put("LuminaOnboardingMessage", "LuminaGram 在 Telegram 之上增加了专属的私密工具：\n\n• 翻译 — 翻译任意聊天，或在发送前自动翻译消息。\n• 双语显示 — 在译文旁同时显示原文。\n• 伪装与诱饵锁 — 将应用伪装成计算器，并使用独立的解锁码隐藏应用。\n• 隐私 — 幽灵模式可隐藏你的输入、在线状态和已读回执。\n\n点击下方任意项即可开始设置。");
+        zhHans.put("LuminaOnboardingGotIt", "知道了");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -536,6 +539,9 @@ public final class LuminaLocale {
         zhHant.put("LuminaBackupImportFailed", "無法讀取備份檔案。");
         zhHant.put("LuminaBackupInvalidFile", "這不是有效的 LuminaGram 備份檔案。");
         zhHant.put("LuminaBackupWrongPassphrase", "密碼錯誤,或檔案已損毀。");
+        zhHant.put("LuminaOnboardingTitle", "歡迎使用 LuminaGram");
+        zhHant.put("LuminaOnboardingMessage", "LuminaGram 在 Telegram 之上加入了專屬的私密工具：\n\n• 翻譯 — 翻譯任何聊天，或在傳送前自動翻譯訊息。\n• 雙語顯示 — 在譯文旁同時顯示原文。\n• 偽裝與誘餅鎖 — 將應用程式偽裝成計算機，並以獨立的解鎖碼隱藏應用程式。\n• 隱私 — 幽靈模式可隱藏你的輸入、上線狀態與已讀回執。\n\n點擊下方任一項即可開始設定。");
+        zhHant.put("LuminaOnboardingGotIt", "知道了");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -790,6 +796,9 @@ public final class LuminaLocale {
         ar.put("LuminaBackupImportFailed", "تعذّر قراءة ملف النسخة الاحتياطية.");
         ar.put("LuminaBackupInvalidFile", "هذا ليس ملف نسخة احتياطية صالحًا لـ LuminaGram.");
         ar.put("LuminaBackupWrongPassphrase", "عبارة المرور خاطئة، أو الملف تالف.");
+        ar.put("LuminaOnboardingTitle", "مرحبًا بك في LuminaGram");
+        ar.put("LuminaOnboardingMessage", "يضيف LuminaGram أدوات خاصة وحصرية فوق Telegram:\n\n• الترجمة — ترجم أي محادثة أو ترجم الرسائل تلقائيًا قبل إرسالها.\n• عرض لغتين — أظهر النص الأصلي بجانب ترجمته.\n• التمويه وقفل خادع — أخفِ التطبيق خلف آلة حاسبة برمز فتح خاص به.\n• الخصوصية — يُخفي الوضع الشبح كتابتك وحالة اتصالك وإيصالات القراءة.\n\nانقر على أي عنصر بالأسفل لإعداد ذلك.");
+        ar.put("LuminaOnboardingGotIt", "حسنًا");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1044,6 +1053,9 @@ public final class LuminaLocale {
         ru.put("LuminaBackupImportFailed", "Не удалось прочитать файл резервной копии.");
         ru.put("LuminaBackupInvalidFile", "Это недействительный файл резервной копии LuminaGram.");
         ru.put("LuminaBackupWrongPassphrase", "Неверная парольная фраза или файл повреждён.");
+        ru.put("LuminaOnboardingTitle", "Добро пожаловать в LuminaGram");
+        ru.put("LuminaOnboardingMessage", "LuminaGram добавляет приватные эксклюзивные инструменты поверх Telegram:\n\n• Перевод — переводите любой чат или автоматически переводите сообщения перед отправкой.\n• Два языка — показывайте оригинал рядом с переводом.\n• Маскировка и ложная блокировка — спрячьте приложение за калькулятором с отдельным кодом разблокировки.\n• Конфиденциальность — режим невидимки скрывает набор текста, статус в сети и отметки о прочтении.\n\nНажмите любой пункт ниже, чтобы настроить это.");
+        ru.put("LuminaOnboardingGotIt", "Понятно");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1298,6 +1310,9 @@ public final class LuminaLocale {
         fa.put("LuminaBackupImportFailed", "خواندن فایل پشتیبان ممکن نشد.");
         fa.put("LuminaBackupInvalidFile", "این یک فایل پشتیبان معتبر LuminaGram نیست.");
         fa.put("LuminaBackupWrongPassphrase", "عبارت عبور نادرست است یا فایل آسیب دیده است.");
+        fa.put("LuminaOnboardingTitle", "به LuminaGram خوش آمدید");
+        fa.put("LuminaOnboardingMessage", "LuminaGram ابزارهای خصوصی و ویژه‌ای را روی Telegram اضافه می‌کند:\n\n• ترجمه — هر گفتگو را ترجمه کنید یا پیام‌ها را پیش از ارسال به‌طور خودکار ترجمه کنید.\n• دو زبانه — متن اصلی را در کنار ترجمه‌اش نمایش دهید.\n• استتار و قفل فریبنده — برنامه را پشت یک ماشین‌حساب با رمز باز کردن مخصوص خود پنهان کنید.\n• حریم خصوصی — حالت شبح تایپ کردن، وضعیت آنلاین و رسیدهای خواندن شما را پنهان می‌کند.\n\nبرای تنظیم این موارد، روی هر ردیف پایین ضربه بزنید.");
+        fa.put("LuminaOnboardingGotIt", "متوجه شدم");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1552,6 +1567,9 @@ public final class LuminaLocale {
         tr.put("LuminaBackupImportFailed", "Yedek dosyası okunamadı.");
         tr.put("LuminaBackupInvalidFile", "Bu geçerli bir LuminaGram yedek dosyası değil.");
         tr.put("LuminaBackupWrongPassphrase", "Yanlış parola veya dosya hasarlı.");
+        tr.put("LuminaOnboardingTitle", "LuminaGram'a hoş geldiniz");
+        tr.put("LuminaOnboardingMessage", "LuminaGram, Telegram'ın üzerine özel ve ayrıcalıklı araçlar ekler:\n\n• Çeviri — herhangi bir sohbeti çevirin veya mesajları göndermeden önce otomatik çevirin.\n• Çift dil — orijinal metni çevirisinin yanında gösterin.\n• Gizleme ve sahte kilit — uygulamayı kendi kilit açma koduyla bir hesap makinesinin arkasına gizleyin.\n• Gizlilik — hayalet modu yazma durumunuzu, çevrimiçi durumunuzu ve okundu bilgilerini gizler.\n\nBunları ayarlamak için aşağıdaki herhangi bir satıra dokunun.");
+        tr.put("LuminaOnboardingGotIt", "Anladım");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1806,6 +1824,9 @@ public final class LuminaLocale {
         es.put("LuminaBackupImportFailed", "No se pudo leer el archivo de copia.");
         es.put("LuminaBackupInvalidFile", "Este no es un archivo de copia de LuminaGram válido.");
         es.put("LuminaBackupWrongPassphrase", "Frase de contraseña incorrecta o el archivo está dañado.");
+        es.put("LuminaOnboardingTitle", "Te damos la bienvenida a LuminaGram");
+        es.put("LuminaOnboardingMessage", "LuminaGram añade herramientas privadas y exclusivas sobre Telegram:\n\n• Traducción — traduce cualquier chat o traduce los mensajes automáticamente antes de enviarlos.\n• Doble idioma — muestra el texto original junto a su traducción.\n• Disfraz y bloqueo señuelo — oculta la app tras una calculadora con su propio código de desbloqueo.\n• Privacidad — el modo fantasma oculta tu escritura, tu estado en línea y las confirmaciones de lectura.\n\nToca cualquier fila de abajo para configurarlo.");
+        es.put("LuminaOnboardingGotIt", "Entendido");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2060,6 +2081,9 @@ public final class LuminaLocale {
         ptBr.put("LuminaBackupImportFailed", "Não foi possível ler o arquivo de backup.");
         ptBr.put("LuminaBackupInvalidFile", "Este não é um arquivo de backup válido do LuminaGram.");
         ptBr.put("LuminaBackupWrongPassphrase", "Frase secreta incorreta ou o arquivo está corrompido.");
+        ptBr.put("LuminaOnboardingTitle", "Boas-vindas ao LuminaGram");
+        ptBr.put("LuminaOnboardingMessage", "O LuminaGram adiciona ferramentas privadas e exclusivas sobre o Telegram:\n\n• Tradução — traduza qualquer conversa ou traduza mensagens automaticamente antes de enviar.\n• Dois idiomas — mostre o texto original ao lado da tradução.\n• Disfarce e bloqueio falso — esconda o app atrás de uma calculadora com um código de desbloqueio próprio.\n• Privacidade — o modo fantasma oculta sua digitação, seu status on-line e as confirmações de leitura.\n\nToque em qualquer item abaixo para configurar.");
+        ptBr.put("LuminaOnboardingGotIt", "Entendi");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2314,6 +2338,9 @@ public final class LuminaLocale {
         id.put("LuminaBackupImportFailed", "Tidak dapat membaca berkas cadangan.");
         id.put("LuminaBackupInvalidFile", "Ini bukan berkas cadangan LuminaGram yang valid.");
         id.put("LuminaBackupWrongPassphrase", "Frasa sandi salah, atau berkas rusak.");
+        id.put("LuminaOnboardingTitle", "Selamat datang di LuminaGram");
+        id.put("LuminaOnboardingMessage", "LuminaGram menambahkan alat pribadi dan eksklusif di atas Telegram:\n\n• Terjemahan — terjemahkan obrolan apa pun, atau terjemahkan pesan secara otomatis sebelum dikirim.\n• Dwibahasa — tampilkan teks asli di samping terjemahannya.\n• Penyamaran dan kunci umpan — sembunyikan aplikasi di balik kalkulator dengan kode buka kunci tersendiri.\n• Privasi — mode hantu menyembunyikan aktivitas mengetik, status online, dan tanda telah dibaca Anda.\n\nKetuk baris mana pun di bawah untuk mengaturnya.");
+        id.put("LuminaOnboardingGotIt", "Mengerti");
         T.put("id", id);
     }
 
