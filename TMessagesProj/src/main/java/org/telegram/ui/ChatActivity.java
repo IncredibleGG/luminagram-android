@@ -21880,6 +21880,7 @@ public class ChatActivity extends BaseFragment implements
                     return;
                 }
                 processNewMessages(arr);
+                luminaCheckScamKeywordWarning(arr);
             } else if (ChatObject.isChannel(currentChat) && !currentChat.megagroup && chatInfo != null && did == -chatInfo.linked_chat_id) {
                 for (int a = 0, N = arr.size(); a < N; a++) {
                     MessageObject messageObject = arr.get(a);
@@ -25216,6 +25217,63 @@ public class ChatActivity extends BaseFragment implements
     private Runnable updateStreamingTopic;
 
     private ArrayList<MessageObject> notPushedSponsoredMessages;
+    // LuminaGram: scam keyword warning (anti-scam, wave19).
+    // When enabled (LuminaConfig "scamKeywordWarning", default OFF), show ONE gentle,
+    // non-blocking bulletin per chat session if an incoming text from a NON-CONTACT in a
+    // one-on-one chat matches a built-in (English) scam-phrase list. Never blocks/edits messages.
+    private boolean luminaScamWarningShown;
+    private static final String[] LUMINA_SCAM_KEYWORDS = {
+        "money transfer", "wire transfer", "bank transfer", "western union", "moneygram",
+        "send me money", "transfer the money", "gift card", "itunes card", "google play card",
+        "steam card", "amazon card", "investment opportunity", "crypto investment",
+        "bitcoin investment", "guaranteed profit", "guaranteed return", "double your money",
+        "high returns", "trading signal", "mining pool", "verification fee", "processing fee",
+        "release fee", "activation fee", "customs fee", "unlock fee", "send the code",
+        "send me the code", "verification code", "one-time code", "otp code", "seed phrase",
+        "recovery phrase", "private key", "soulmate", "widower", "oil rig", "stranded abroad",
+    };
+
+    private void luminaCheckScamKeywordWarning(ArrayList<MessageObject> arr) {
+        if (luminaScamWarningShown) {
+            return;
+        }
+        if (!LuminaConfig.getBoolean("scamKeywordWarning", false)) {
+            return;
+        }
+        // Only one-on-one chats with a non-contact user (no groups/channels/self).
+        if (currentUser == null || currentChat != null || currentUser.self || currentUser.contact) {
+            return;
+        }
+        if (getContactsController().isContact(currentUser.id)) {
+            return;
+        }
+        if (arr == null || arr.isEmpty()) {
+            return;
+        }
+        for (int a = 0; a < arr.size(); a++) {
+            MessageObject mo = arr.get(a);
+            if (mo == null || mo.isOut() || mo.messageOwner == null) {
+                continue;
+            }
+            String text = mo.messageOwner.message;
+            if (text == null || text.length() == 0) {
+                continue;
+            }
+            String lower = text.toLowerCase(Locale.ROOT);
+            for (int i = 0; i < LUMINA_SCAM_KEYWORDS.length; i++) {
+                if (lower.contains(LUMINA_SCAM_KEYWORDS[i])) {
+                    luminaScamWarningShown = true;
+                    if (BulletinFactory.canShowBulletin(ChatActivity.this)) {
+                        BulletinFactory.of(ChatActivity.this)
+                                .createSimpleBulletin(R.raw.chats_infotip, LuminaLocale.getString(R.string.LuminaScamKeywordWarning), 4)
+                                .show();
+                    }
+                    return;
+                }
+            }
+        }
+    }
+
     private void processNewMessages(ArrayList<MessageObject> arr) {
         processNewMessages(arr, true);
     }

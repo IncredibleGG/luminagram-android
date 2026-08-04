@@ -299,6 +299,9 @@ public final class LuminaLocale {
         zhHans.put("LuminaUndoSendWindow", "撤销发送窗口");
         zhHans.put("LuminaUndoSendWindowInfo", "开启后，发送纯文字消息时会先暂缓几秒并显示“撤销”按钮。点按撤销可将文字放回输入框；否则将正常发送。媒体、语音、定时、已编辑和转发的消息不受影响。");
         zhHans.put("LuminaUndoSendBulletin", "正在发送消息…");
+        zhHans.put("LuminaPrivacyScamKeywordWarning", "诈骗关键词警告");
+        zhHans.put("LuminaPrivacyScamKeywordWarningInfo", "当不在你联系人中的人发来的消息提到常见诈骗手段（汇款、礼品卡、加密货币“投资”、验证费或索要验证码）时，显示一次性提醒，提醒你保持警惕。消息永远不会被拦截或修改。检查在你的设备上离线运行。");
+        zhHans.put("LuminaScamKeywordWarning", "⚠ 这条消息来自不在你联系人中的人，且提到了钱款或验证——小心诈骗。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -572,6 +575,9 @@ public final class LuminaLocale {
         zhHant.put("LuminaUndoSendWindow", "復原發送視窗");
         zhHant.put("LuminaUndoSendWindowInfo", "開啟後，傳送純文字訊息時會先暫緩幾秒並顯示「復原」按鈕。點按復原可將文字放回輸入框；否則會正常傳送。媒體、語音、定時、已編輯和轉發的訊息不受影響。");
         zhHant.put("LuminaUndoSendBulletin", "正在傳送訊息…");
+        zhHant.put("LuminaPrivacyScamKeywordWarning", "詐騙關鍵字警告");
+        zhHant.put("LuminaPrivacyScamKeywordWarningInfo", "當不在你聯絡人中的人傳來的訊息提到常見詐騙手法（匯款、禮品卡、加密貨幣「投資」、驗證費或索取驗證碼）時，顯示一次性提醒，提醒你保持警覺。訊息永遠不會被攜截或修改。檢查在你的裝置上離線執行。");
+        zhHant.put("LuminaScamKeywordWarning", "⚠ 這則訊息來自不在你聯絡人中的人，且提到金錢或驗證——小心詐騙。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -844,6 +850,9 @@ public final class LuminaLocale {
         ar.put("LuminaUndoSendWindow", "نافذة التراجع عن الإرسال");
         ar.put("LuminaUndoSendWindowInfo", "عند التفعيل، يتم الاحتفاظ برسالة نصية عادية لبضع ثوانٍ مع زر تراجع. اضغط تراجع لإعادة النص إلى مربع الكتابة، وإلا فسيتم إرسالها كالمعتاد. الوسائط والرسائل الصوتية والمجدولة والمحررة والمعاد توجيهها لا تتأثر.");
         ar.put("LuminaUndoSendBulletin", "جارٍ إرسال الرسالة…");
+        ar.put("LuminaPrivacyScamKeywordWarning", "تحذير من كلمات الاحتيال");
+        ar.put("LuminaPrivacyScamKeywordWarningInfo", "عندما تذكر رسالة من شخص ليس ضمن جهات اتصالك أساليب احتيال شائعة — تحويل الأموال، بطاقات الهدايا، «استثمار» العملات المشفّرة، رسوم التحقق أو طلب الرموز — يظهر تذكير لمرة واحدة لتوخّي الحذر. لا يتم حظر الرسالة أو تغييرها أبدًا. تُجرى الفحوص دون اتصال على جهازك.");
+        ar.put("LuminaScamKeywordWarning", "⚠ تذكر هذه الرسالة أموالًا أو تحققًا وهي من شخص ليس ضمن جهات اتصالك — احذر من الاحتيال.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1116,6 +1125,9 @@ public final class LuminaLocale {
         ru.put("LuminaUndoSendWindow", "Окно отмены отправки");
         ru.put("LuminaUndoSendWindowInfo", "Когда включено, отправка обычного текстового сообщения задерживается на несколько секунд с кнопкой «Отмена». Нажмите «Отмена», чтобы вернуть текст в поле ввода, иначе оно отправится как обычно. Медиа, голосовые, отложенные, изменённые и пересланные сообщения не затрагиваются.");
         ru.put("LuminaUndoSendBulletin", "Отправка сообщения…");
+        ru.put("LuminaPrivacyScamKeywordWarning", "Предупреждение о мошенничестве");
+        ru.put("LuminaPrivacyScamKeywordWarningInfo", "Когда в сообщении от человека не из ваших контактов упоминаются типичные уловки мошенников — переводы денег, подарочные карты, «инвестиции» в криптовалюту, плата за верификацию или просьба прислать код — показывается однократное напоминание быть осторожнее. Сообщение никогда не блокируется и не изменяется. Проверка выполняется офлайн на вашем устройстве.");
+        ru.put("LuminaScamKeywordWarning", "⚠ Это сообщение упоминает деньги или верификацию и пришло от человека не из ваших контактов — остерегайтесь мошенничества.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1388,6 +1400,9 @@ public final class LuminaLocale {
         fa.put("LuminaUndoSendWindow", "پنجره لغو ارسال");
         fa.put("LuminaUndoSendWindowInfo", "وقتی روشن باشد، ارسال یک پیام متنی ساده چند ثانیه با دکمه لغو نگه داشته می‌شود. برای بازگرداندن متن به کادر نوشتن روی لغو بزنید؛ در غیر این صورت به‌طور عادی ارسال می‌شود. رسانه‌ها، پیام‌های صوتی، زمان‌بندی‌شده، ویرایش‌شده و بازفرست‌شده تأثیری نمی‌پذیرند.");
         fa.put("LuminaUndoSendBulletin", "در حال ارسال پیام…");
+        fa.put("LuminaPrivacyScamKeywordWarning", "هشدار واژگان کلاه‌برداری");
+        fa.put("LuminaPrivacyScamKeywordWarningInfo", "وقتی پیامی از شخصی که در مخاطبان شما نیست به ترفندهای رایج کلاه‌برداری اشاره کند — انتقال پول، کارت هدیه، «سرمایه‌گذاری» رمزارز، هزینهٔ تأیید یا درخواست کد — یک یادآوری یک‌باره برای احتیاط نمایش داده می‌شود. پیام هرگز مسدود یا تغییر داده نمی‌شود. بررسی‌ها به‌صورت آفلاین روی دستگاه شما انجام می‌شود.");
+        fa.put("LuminaScamKeywordWarning", "⚠ این پیام به پول یا تأیید اشاره دارد و از شخصی است که در مخاطبان شما نیست — مراقب کلاه‌برداری باشید.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1660,6 +1675,9 @@ public final class LuminaLocale {
         tr.put("LuminaUndoSendWindow", "Göndermeyi geri alma penceresi");
         tr.put("LuminaUndoSendWindowInfo", "Açıkken, düz bir metin mesajı göndermek birkaç saniye Geri Al düğmesiyle bekletilir. Metni yazma kutusuna geri getirmek için Geri Al'a dokunun; aksi halde normal şekilde gönderilir. Medya, sesli, zamanlanmış, düzenlenmiş ve iletilen mesajlar etkilenmez.");
         tr.put("LuminaUndoSendBulletin", "Mesaj gönderiliyor…");
+        tr.put("LuminaPrivacyScamKeywordWarning", "Dolandırıcılık kelime uyarısı");
+        tr.put("LuminaPrivacyScamKeywordWarningInfo", "Kişilerinizde olmayan birinden gelen bir mesaj yaygın dolandırıcılık taktiklerinden söz ettiğinde — para transferi, hediye kartı, kripto “yatırımı”, doğrulama ücreti veya kod isteme — dikkatli olmanız için tek seferlik bir hatırlatma gösterilir. Mesaj asla engellenmez veya değiştirilmez. Kontroller cihazınızda çevrimdışı çalışır.");
+        tr.put("LuminaScamKeywordWarning", "⚠ Bu mesaj para veya doğrulamadan söz ediyor ve kişilerinizde olmayan birinden geliyor — dolandırıcılığa karşı dikkatli olun.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1932,6 +1950,9 @@ public final class LuminaLocale {
         es.put("LuminaUndoSendWindow", "Ventana para deshacer el envío");
         es.put("LuminaUndoSendWindowInfo", "Cuando está activado, enviar un mensaje de texto simple lo retiene unos segundos con un botón Deshacer. Toca Deshacer para devolver el texto al cuadro de escritura; de lo contrario, se envía normalmente. No afecta a multimedia, notas de voz ni a los mensajes programados, editados o reenviados.");
         es.put("LuminaUndoSendBulletin", "Enviando mensaje…");
+        es.put("LuminaPrivacyScamKeywordWarning", "Aviso de palabras de estafa");
+        es.put("LuminaPrivacyScamKeywordWarningInfo", "Cuando un mensaje de alguien que no está en tus contactos menciona tácticas de estafa habituales —transferencias de dinero, tarjetas de regalo, «inversiones» en criptomonedas, tarifas de verificación o pedir códigos— se muestra un recordatorio único para que tengas cuidado. El mensaje nunca se bloquea ni se modifica. Las comprobaciones se realizan sin conexión en tu dispositivo.");
+        es.put("LuminaScamKeywordWarning", "⚠ Este mensaje menciona dinero o verificación y proviene de alguien que no está en tus contactos: ten cuidado con las estafas.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2204,6 +2225,9 @@ public final class LuminaLocale {
         ptBr.put("LuminaUndoSendWindow", "Janela para desfazer o envio");
         ptBr.put("LuminaUndoSendWindowInfo", "Quando ativado, enviar uma mensagem de texto simples a retém por alguns segundos com um botão Desfazer. Toque em Desfazer para trazer o texto de volta à caixa de digitação; caso contrário, ela é enviada normalmente. Mídia, mensagens de voz, agendadas, editadas e encaminhadas não são afetadas.");
         ptBr.put("LuminaUndoSendBulletin", "Enviando mensagem…");
+        ptBr.put("LuminaPrivacyScamKeywordWarning", "Aviso de palavras de golpe");
+        ptBr.put("LuminaPrivacyScamKeywordWarningInfo", "Quando uma mensagem de alguém que não está nos seus contatos menciona táticas comuns de golpe — transferências de dinheiro, cartões-presente, “investimentos” em cripto, taxas de verificação ou pedir códigos — é exibido um lembrete único para você ter cuidado. A mensagem nunca é bloqueada nem alterada. As verificações são feitas off-line no seu dispositivo.");
+        ptBr.put("LuminaScamKeywordWarning", "⚠ Esta mensagem menciona dinheiro ou verificação e vem de alguém que não está nos seus contatos — cuidado com golpes.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2476,6 +2500,9 @@ public final class LuminaLocale {
         id.put("LuminaUndoSendWindow", "Jendela urungkan kirim");
         id.put("LuminaUndoSendWindowInfo", "Saat aktif, mengirim pesan teks biasa akan ditahan beberapa detik dengan tombol Urungkan. Ketuk Urungkan untuk mengembalikan teks ke kotak tulis; jika tidak, pesan akan dikirim seperti biasa. Media, pesan suara, terjadwal, yang diedit, dan diteruskan tidak terpengaruh.");
         id.put("LuminaUndoSendBulletin", "Mengirim pesan…");
+        id.put("LuminaPrivacyScamKeywordWarning", "Peringatan kata penipuan");
+        id.put("LuminaPrivacyScamKeywordWarningInfo", "Saat pesan dari seseorang yang tidak ada di kontak Anda menyebutkan taktik penipuan umum — transfer uang, kartu hadiah, “investasi” kripto, biaya verifikasi, atau meminta kode — sebuah pengingat sekali muncul agar Anda berhati-hati. Pesan tidak pernah diblokir atau diubah. Pemeriksaan berjalan luring di perangkat Anda.");
+        id.put("LuminaScamKeywordWarning", "⚠ Pesan ini menyebutkan uang atau verifikasi dan berasal dari seseorang yang tidak ada di kontak Anda — waspadalah terhadap penipuan.");
         T.put("id", id);
     }
 

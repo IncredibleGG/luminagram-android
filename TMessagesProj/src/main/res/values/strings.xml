@@ -11241,6 +11241,10 @@
     <!-- LuminaGram incognito keyboard (wave18) -->
     <string name="LuminaPrivacyIncognitoKeyboard">Incognito keyboard</string>
     <string name="LuminaPrivacyIncognitoKeyboardInfo">Ask your keyboard not to learn from or personalize what you type in the message box. Support depends on your keyboard app, and some keyboards ignore the request.</string>
+    <!-- LuminaGram scam keyword warning (anti-scam, wave19) -->
+    <string name="LuminaPrivacyScamKeywordWarning">Scam keyword warning</string>
+    <string name="LuminaPrivacyScamKeywordWarningInfo">When a message from someone not in your contacts mentions common scam tactics — money transfers, gift cards, crypto “investments”, verification fees or asking for codes — show a one-time reminder to stay cautious. The message is never blocked or changed. Checks run offline on your device.</string>
+    <string name="LuminaScamKeywordWarning">⚠ This message mentions money or verification and comes from someone not in your contacts — be careful of scams.</string>
     <!-- LuminaGram hide notification content (wave9) -->
     <string name="LuminaPrivacyNotificationsHeader">Notifications</string>
     <string name="LuminaPrivacyHideNotifContent">Hide notification content</string>
