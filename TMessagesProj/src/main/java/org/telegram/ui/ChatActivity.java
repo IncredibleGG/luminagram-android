@@ -24250,6 +24250,14 @@ public class ChatActivity extends BaseFragment implements
                 return;
             }
 
+            // LuminaGram: auto-enable translation when dual-language display is on, so INCOMING
+            // messages are translated and shown as original(big)+translation(small).
+            if (LuminaConfig.getBoolean("dualLanguageDisplay", false)
+                    && !getMessagesController().getTranslateController().isTranslatingDialog(dialogId)
+                    && !getMessagesController().getTranslateController().isTranslateDialogHidden(dialogId)) {
+                getMessagesController().getTranslateController().toggleTranslatingDialog(dialogId, true);
+            }
+
             updateTopPanel(true);
             updateTranslateItemVisibility();
         } else if (id == NotificationCenter.onReceivedChannelDifference) {
