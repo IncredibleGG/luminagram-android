@@ -71,6 +71,17 @@ public class LuminaConfig {
         editor.putBoolean(key, value).apply();
     }
 
+    // Generic string accessors — used by the multi-provider translation settings
+    // (provider id, per-provider API keys, base URL, model, prompt). Values live only
+    // in the app-private "luminagram" prefs and are never logged.
+    public static String getString(String key, String def) {
+        return preferences.getString(key, def);
+    }
+
+    public static void putString(String key, String value) {
+        editor.putString(key, value).apply();
+    }
+
     // Typed toggles keep the static field and the persisted value in sync (XOR idiom)
     public static void toggleHideTabs() {
         editor.putBoolean("hideTabs", hideTabs ^= true).apply();

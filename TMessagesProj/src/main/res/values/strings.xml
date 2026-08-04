@@ -11213,6 +11213,18 @@
     <string name="LuminaTranslateBeforeSendConfirmInfo">When on, a preview of the translation appears before sending, so you can choose to send the translation or the original. When off, the translation is sent directly with a single tap.</string>
     <string name="LuminaTranslateBeforeSendEnabled">Translate before send: on</string>
     <string name="LuminaTranslateBeforeSendDisabled">Translate before send: off</string>
+    <!-- LuminaGram multi-provider translation -->
+    <string name="LuminaTranslateProviderHeader">Translation provider</string>
+    <string name="LuminaTranslateProvider">Provider</string>
+    <string name="LuminaTranslateApiKey">API key</string>
+    <string name="LuminaTranslateApiKeyNotSet">Not set</string>
+    <string name="LuminaTranslateBaseUrl">Base URL</string>
+    <string name="LuminaTranslateModel">Model</string>
+    <string name="LuminaTranslateSystemPrompt">System prompt</string>
+    <string name="LuminaTranslateTest">Test translation</string>
+    <string name="LuminaTranslateTestFailed">Test failed</string>
+    <string name="LuminaTranslateNoKey">API key required</string>
+    <string name="LuminaTranslateProviderSecurityInfo">API keys are stored only on this device and sent solely to the provider you choose, over HTTPS. They are never shared with Telegram.</string>
     <string name="LuminaChatSettings">Chat &amp; media</string>
     <string name="LuminaMessageActions">Message actions</string>
     <string name="LuminaForwardNoAuthorTitle">Forward without author</string>

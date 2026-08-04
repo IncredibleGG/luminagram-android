@@ -133,6 +133,8 @@ import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaTranslator;
+import org.telegram.messenger.LuminaTranslators;
 import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
@@ -659,7 +661,7 @@ public class ChatActivityEnterView extends FrameLayout implements
     private TextView luminaPreviewOriginalView;
     private TextView luminaPreviewTranslationView;
     private Runnable luminaPreviewRunnable;
-    private int luminaPreviewReqToken = -1;
+    private int luminaPreviewGeneration = 0;
     private String luminaPreviewTranslatedFor;
     private String luminaPreviewTranslatedText;
     private BotKeyboardView botKeyboardView;
@@ -7904,31 +7906,48 @@ public class ChatActivityEnterView extends FrameLayout implements
             return;
         }
         final String toLang = TranslateAlert2.getToLanguage();
-        final TLRPC.TL_messages_translateText req = new TLRPC.TL_messages_translateText();
-        req.flags |= 2;
-        final TLRPC.TL_textWithEntities textWithEntities = new TLRPC.TL_textWithEntities();
-        textWithEntities.text = original;
-        req.text.add(textWithEntities);
-        req.to_lang = TranslateController.normalizeLanguage(toLang);
-        ConnectionsManager.getInstance(currentAccount).sendRequest(req, (res, err) -> AndroidUtilities.runOnUIThread(() -> {
-            String translated = null;
-            if (res instanceof TLRPC.TL_messages_translateResult) {
-                final ArrayList<TLRPC.TL_textWithEntities> result = ((TLRPC.TL_messages_translateResult) res).result;
-                if (result != null && !result.isEmpty() && result.get(0) != null) {
-                    translated = result.get(0).text;
+        // Route through the selected provider (Telegram / Google / DeepL / LLM). On a
+        // provider error, fall back to Telegram, then to send-as-typed — a bad key or a
+        // dead endpoint must never block sending. Callbacks arrive on the UI thread.
+        final LuminaTranslator provider = LuminaTranslators.current();
+        provider.translate(original, toLang, new LuminaTranslator.Callback() {
+            @Override
+            public void onResult(String translated, String detected) {
+                luminaHandleTranslateResult(original, translated, toLang, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            }
+
+            @Override
+            public void onError(boolean rateLimited, String message) {
+                if (!"telegram".equals(provider.id())) {
+                    LuminaTranslators.byId("telegram").translate(original, toLang, new LuminaTranslator.Callback() {
+                        @Override
+                        public void onResult(String translated, String detected) {
+                            luminaHandleTranslateResult(original, translated, toLang, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+                        }
+
+                        @Override
+                        public void onError(boolean rl, String msg) {
+                            luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+                        }
+                    });
+                } else {
+                    luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
                 }
             }
-            if (translated == null || translated.trim().length() == 0 || translated.equals(original)) {
-                // Translation unavailable or a no-op (same language): send the text as typed.
-                luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
-            } else if (LuminaConfig.translateBeforeSendConfirm && !livePreviewVisible) {
-                // Confirm-before-send on and no live panel: fall back to the preview dialog.
-                luminaShowTranslatePreview(original, translated, toLang, notify, scheduleDate, scheduleRepeatPeriod, payStars);
-            } else {
-                // Live panel visible (panel = confirmation) or confirm off: send the translation.
-                luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
-            }
-        }));
+        });
+    }
+
+    private void luminaHandleTranslateResult(final String original, final String translated, final String toLang, final boolean livePreviewVisible, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        if (translated == null || translated.trim().length() == 0 || translated.equals(original)) {
+            // Translation unavailable or a no-op (same language): send the text as typed.
+            luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        } else if (LuminaConfig.translateBeforeSendConfirm && !livePreviewVisible) {
+            // Confirm-before-send on and no live panel: fall back to the preview dialog.
+            luminaShowTranslatePreview(original, translated, toLang, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        } else {
+            // Live panel visible (panel = confirmation) or confirm off: send the translation.
+            luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        }
     }
 
     private void luminaShowTranslatePreview(final String original, final String translated, final String toLang, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
@@ -8001,10 +8020,8 @@ public class ChatActivityEnterView extends FrameLayout implements
         if (luminaPreviewRunnable != null) {
             AndroidUtilities.cancelRunOnUIThread(luminaPreviewRunnable);
         }
-        if (luminaPreviewReqToken != -1) {
-            ConnectionsManager.getInstance(currentAccount).cancelRequest(luminaPreviewReqToken, false);
-            luminaPreviewReqToken = -1;
-        }
+        // Invalidate any in-flight preview translation callback.
+        luminaPreviewGeneration++;
         final String pending = text;
         luminaPreviewRunnable = () -> {
             luminaPreviewRunnable = null;
@@ -8018,35 +8035,40 @@ public class ChatActivityEnterView extends FrameLayout implements
             return;
         }
         final String toLang = TranslateAlert2.getToLanguage();
-        final TLRPC.TL_messages_translateText req = new TLRPC.TL_messages_translateText();
-        req.flags |= 2;
-        final TLRPC.TL_textWithEntities twe = new TLRPC.TL_textWithEntities();
-        twe.text = source;
-        req.text.add(twe);
-        req.to_lang = TranslateController.normalizeLanguage(toLang);
-        luminaPreviewReqToken = ConnectionsManager.getInstance(currentAccount).sendRequest(req, (res, err) -> AndroidUtilities.runOnUIThread(() -> {
-            luminaPreviewReqToken = -1;
-            String translated = null;
-            if (res instanceof TLRPC.TL_messages_translateResult) {
-                final ArrayList<TLRPC.TL_textWithEntities> result = ((TLRPC.TL_messages_translateResult) res).result;
-                if (result != null && !result.isEmpty() && result.get(0) != null) {
-                    translated = result.get(0).text;
-                }
+        // A monotonically increasing generation stands in for the old cancellable RPC
+        // token: any callback whose generation is stale (newer text typed, or the panel
+        // hidden) is simply dropped. Callbacks arrive on the UI thread.
+        final int gen = ++luminaPreviewGeneration;
+        LuminaTranslators.current().translate(source, toLang, new LuminaTranslator.Callback() {
+            @Override
+            public void onResult(String translated, String detected) {
+                luminaApplyPreviewResult(source, translated, gen);
             }
-            if (translated == null || translated.trim().length() == 0) {
-                translated = source;
+
+            @Override
+            public void onError(boolean rateLimited, String message) {
+                luminaApplyPreviewResult(source, null, gen);
             }
-            luminaPreviewTranslatedFor = source;
-            luminaPreviewTranslatedText = translated;
-            // Apply only if the field still holds the same text and the panel is visible.
-            if (luminaPreviewPanel != null && luminaPreviewPanel.getVisibility() == View.VISIBLE && messageEditText != null) {
-                final CharSequence cur = messageEditText.getTextToUse();
-                final String curText = cur == null ? "" : cur.toString().trim();
-                if (source.equals(curText)) {
-                    luminaPreviewTranslationView.setText(luminaPreviewTranslatedText);
-                }
+        });
+    }
+
+    private void luminaApplyPreviewResult(final String source, String translated, final int gen) {
+        if (gen != luminaPreviewGeneration) {
+            return; // superseded by newer text or a cancel/hide
+        }
+        if (translated == null || translated.trim().length() == 0) {
+            translated = source;
+        }
+        luminaPreviewTranslatedFor = source;
+        luminaPreviewTranslatedText = translated;
+        // Apply only if the field still holds the same text and the panel is visible.
+        if (luminaPreviewPanel != null && luminaPreviewPanel.getVisibility() == View.VISIBLE && messageEditText != null) {
+            final CharSequence cur = messageEditText.getTextToUse();
+            final String curText = cur == null ? "" : cur.toString().trim();
+            if (source.equals(curText)) {
+                luminaPreviewTranslationView.setText(luminaPreviewTranslatedText);
             }
-        }));
+        }
     }
 
     private void luminaShowTranslatePreviewPanel() {
@@ -8069,10 +8091,8 @@ public class ChatActivityEnterView extends FrameLayout implements
             AndroidUtilities.cancelRunOnUIThread(luminaPreviewRunnable);
             luminaPreviewRunnable = null;
         }
-        if (luminaPreviewReqToken != -1) {
-            ConnectionsManager.getInstance(currentAccount).cancelRequest(luminaPreviewReqToken, false);
-            luminaPreviewReqToken = -1;
-        }
+        // Invalidate any in-flight preview translation callback.
+        luminaPreviewGeneration++;
         luminaPreviewTranslatedFor = null;
         luminaPreviewTranslatedText = null;
         if (luminaPreviewPanel != null && luminaPreviewPanel.getVisibility() != View.GONE) {
