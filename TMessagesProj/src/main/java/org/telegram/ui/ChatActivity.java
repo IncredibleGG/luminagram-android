@@ -39945,11 +39945,27 @@ public class ChatActivity extends BaseFragment implements
                 didLongPressCopyButton(((TLRPC.TL_keyboardButtonCopy) button).copy_text);
                 return;
             }
+            // LuminaGram: long-press an inline URL button copies its link to the clipboard.
             if (button instanceof TLRPC.TL_keyboardButtonUrl) {
-                openClickableLink(null, button.url, true, cell, cell.getMessageObject(), false);
-                try {
-                    cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
-                } catch (Exception ignore) {}
+                if (!TextUtils.isEmpty(button.url)) {
+                    AndroidUtilities.addToClipboard(button.url);
+                    BulletinFactory.of(ChatActivity.this).createCopyBulletin(LuminaLocale.getString(R.string.LuminaBotButtonLinkCopied)).show();
+                    try {
+                        cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    } catch (Exception ignore) {}
+                }
+                return;
+            }
+            // LuminaGram: long-press an inline callback button copies its callback data to the clipboard.
+            if (button instanceof TLRPC.TL_keyboardButtonCallback) {
+                if (button.data != null && button.data.length > 0) {
+                    AndroidUtilities.addToClipboard(new String(button.data, java.nio.charset.StandardCharsets.UTF_8));
+                    BulletinFactory.of(ChatActivity.this).createCopyBulletin(LuminaLocale.getString(R.string.LuminaBotButtonDataCopied)).show();
+                    try {
+                        cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    } catch (Exception ignore) {}
+                }
+                return;
             }
         }
 

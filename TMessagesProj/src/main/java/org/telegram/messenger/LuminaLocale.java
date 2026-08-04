@@ -204,6 +204,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaHideOwnPhoneMasked", "已隐藏");
         zhHans.put("MarkFolderAsRead", "将文件夹标为已读");
         zhHans.put("MarkFolderAsReadAlert", "将此文件夹中的所有聊天标为已读？");
+        zhHans.put("LuminaBotButtonLinkCopied", "链接已复制到剪贴板");
+        zhHans.put("LuminaBotButtonDataCopied", "回调数据已复制到剪贴板");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -382,6 +384,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaHideOwnPhoneMasked", "已隱藏");
         zhHant.put("MarkFolderAsRead", "將資料夾標為已讀");
         zhHant.put("MarkFolderAsReadAlert", "將此資料夾中的所有聊天標為已讀？");
+        zhHant.put("LuminaBotButtonLinkCopied", "連結已複製到剪貼簿");
+        zhHant.put("LuminaBotButtonDataCopied", "回呼資料已複製到剪貼簿");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -559,6 +563,8 @@ public final class LuminaLocale {
         ar.put("LuminaHideOwnPhoneMasked", "مخفي");
         ar.put("MarkFolderAsRead", "تحديد المجلد كمقروء");
         ar.put("MarkFolderAsReadAlert", "هل تريد تحديد كل الدردشات في هذا المجلد كمقروءة؟");
+        ar.put("LuminaBotButtonLinkCopied", "تم نسخ الرابط إلى الحافظة");
+        ar.put("LuminaBotButtonDataCopied", "تم نسخ بيانات الاستدعاء إلى الحافظة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -736,6 +742,8 @@ public final class LuminaLocale {
         ru.put("LuminaHideOwnPhoneMasked", "Скрыт");
         ru.put("MarkFolderAsRead", "Отметить папку как прочитанную");
         ru.put("MarkFolderAsReadAlert", "Отметить все чаты в этой папке как прочитанные?");
+        ru.put("LuminaBotButtonLinkCopied", "Ссылка скопирована в буфер обмена");
+        ru.put("LuminaBotButtonDataCopied", "Данные обратного вызова скопированы в буфер обмена");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -913,6 +921,8 @@ public final class LuminaLocale {
         fa.put("LuminaHideOwnPhoneMasked", "پنهان");
         fa.put("MarkFolderAsRead", "علامت‌گذاری پوشه به‌عنوان خوانده‌شده");
         fa.put("MarkFolderAsReadAlert", "همه گفتگوهای این پوشه به‌عنوان خوانده‌شده علامت‌گذاری شوند؟");
+        fa.put("LuminaBotButtonLinkCopied", "پیوند در کلیپ‌بورد کپی شد");
+        fa.put("LuminaBotButtonDataCopied", "داده‌های فراخوانی در کلیپ‌بورد کپی شد");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1090,6 +1100,8 @@ public final class LuminaLocale {
         tr.put("LuminaHideOwnPhoneMasked", "Gizli");
         tr.put("MarkFolderAsRead", "Klasörü okundu olarak işaretle");
         tr.put("MarkFolderAsReadAlert", "Bu klasördeki tüm sohbetler okundu olarak işaretlensin mi?");
+        tr.put("LuminaBotButtonLinkCopied", "Bağlantı panoya kopyalandı");
+        tr.put("LuminaBotButtonDataCopied", "Geri çağırma verisi panoya kopyalandı");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1267,6 +1279,8 @@ public final class LuminaLocale {
         es.put("LuminaHideOwnPhoneMasked", "Oculto");
         es.put("MarkFolderAsRead", "Marcar carpeta como leída");
         es.put("MarkFolderAsReadAlert", "¿Marcar todos los chats de esta carpeta como leídos?");
+        es.put("LuminaBotButtonLinkCopied", "Enlace copiado al portapapeles");
+        es.put("LuminaBotButtonDataCopied", "Datos de devolución de llamada copiados al portapapeles");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1444,6 +1458,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaHideOwnPhoneMasked", "Oculto");
         ptBr.put("MarkFolderAsRead", "Marcar pasta como lida");
         ptBr.put("MarkFolderAsReadAlert", "Marcar todos os chats desta pasta como lidos?");
+        ptBr.put("LuminaBotButtonLinkCopied", "Link copiado para a área de transferência");
+        ptBr.put("LuminaBotButtonDataCopied", "Dados de retorno de chamada copiados para a área de transferência");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1621,6 +1637,8 @@ public final class LuminaLocale {
         id.put("LuminaHideOwnPhoneMasked", "Disembunyikan");
         id.put("MarkFolderAsRead", "Tandai folder sebagai sudah dibaca");
         id.put("MarkFolderAsReadAlert", "Tandai semua obrolan di folder ini sebagai sudah dibaca?");
+        id.put("LuminaBotButtonLinkCopied", "Tautan disalin ke papan klip");
+        id.put("LuminaBotButtonDataCopied", "Data callback disalin ke papan klip");
         T.put("id", id);
     }
 

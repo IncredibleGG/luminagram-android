@@ -11364,4 +11364,7 @@
     <!-- LuminaGram: mark all chats in the current folder as read -->
     <string name="MarkFolderAsRead">Mark folder as read</string>
     <string name="MarkFolderAsReadAlert">Mark all chats in this folder as read?</string>
+    <!-- LuminaGram copy inline bot-button link/data on long-press -->
+    <string name="LuminaBotButtonLinkCopied">Link copied to clipboard</string>
+    <string name="LuminaBotButtonDataCopied">Callback data copied to clipboard</string>
 </resources>
