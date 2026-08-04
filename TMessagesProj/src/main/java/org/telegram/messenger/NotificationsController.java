@@ -4816,11 +4816,28 @@ public class NotificationsController extends BaseController implements Notificat
         }
     }
 
+    // LuminaGram (wave9): when "hideNotifContent" is on, replace the resolved
+    // title/body/preview with a generic app-name + "New message" so neither the
+    // sender nor any message content is shown, for every message type.
+    private void applyHiddenNotificationContent(NotificationCompat.Builder builder) {
+        String title = LocaleController.getString(R.string.AppName);
+        String body = LuminaLocale.getString(R.string.LuminaHiddenNotificationText);
+        builder.setContentTitle(title);
+        builder.setContentText(body);
+        builder.setTicker(body);
+        builder.setSubText(null);
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(body));
+        builder.setLargeIcon((Bitmap) null);
+    }
+
     @SuppressLint("InlinedApi")
     private void showExtraNotifications(NotificationCompat.Builder notificationBuilder, String summary, long lastDialogId, long lastTopicId, String chatName, long[] vibrationPattern, int ledColor, Uri sound, int importance, boolean isDefault, boolean isInApp, boolean isSilent, int chatType) {
         FileLog.d("showExtraNotifications pushMessages.size()=" + pushMessages.size());
         if (Build.VERSION.SDK_INT >= 26) {
             notificationBuilder.setChannelId(validateChannelId(lastDialogId, lastTopicId, chatName, vibrationPattern, ledColor, sound, importance, isDefault, isInApp, isSilent, chatType));
+        }
+        if (LuminaConfig.getBoolean("hideNotifContent", false)) {
+            applyHiddenNotificationContent(notificationBuilder);
         }
         Notification mainNotification = notificationBuilder.build();
         if (Build.VERSION.SDK_INT <= 19) {
@@ -5685,6 +5702,9 @@ public class NotificationsController extends BaseController implements Notificat
                 setNotificationChannel(mainNotification, builder, useSummaryNotification);
             }
             FileLog.d("showExtraNotifications: holders.add " + dialogId);
+            if (LuminaConfig.getBoolean("hideNotifContent", false)) {
+                applyHiddenNotificationContent(builder);
+            }
             holders.add(new NotificationHolder(internalId, dialogId, dialogKey.story, topicId, name, user, chat, builder));
             wearNotificationsIds.put(dialogId, internalId);
         }
