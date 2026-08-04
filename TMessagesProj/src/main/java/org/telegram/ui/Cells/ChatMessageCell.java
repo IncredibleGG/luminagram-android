@@ -122,6 +122,7 @@ import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -9666,6 +9667,13 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         if (photoHeight > maxHeight) {
                             photoWidth *= maxHeight / photoHeight;
                             photoHeight = (int) maxHeight;
+                        }
+                        // LuminaGram: user-adjustable sticker render size (percent, default 100 = unchanged).
+                        // Gated so 100% leaves photoWidth/photoHeight byte-identical; animated emoji/dice are handled above and unaffected.
+                        int stickerScale = LuminaConfig.getInt("stickerScale", 100);
+                        if (stickerScale != 100) {
+                            photoWidth = (int) (photoWidth * stickerScale / 100f);
+                            photoHeight = (int) (photoHeight * stickerScale / 100f);
                         }
                     }
                     Object parentObject = messageObject;
