@@ -74,6 +74,7 @@ import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
@@ -1017,7 +1018,11 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
     }
 
     private int getCollapsedHeight() {
-        int height = dp(useForceThreeLines || SharedConfig.useThreeLinesLayout ? heightThreeLines : heightDefault);
+        int luminaBaseHeight = useForceThreeLines || SharedConfig.useThreeLinesLayout ? heightThreeLines : heightDefault;
+        if (LuminaConfig.getBoolean("compactChatList", false) && !isForumCell()) {
+            luminaBaseHeight -= 6; // LuminaGram compact chat list: denser rows
+        }
+        int height = dp(luminaBaseHeight);
         if (useSeparator || true) {
             height += 1;
         }
@@ -2325,7 +2330,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
         }
 
         nameAdditionalsForChannelSubscriber = 0;
-        final boolean reserveMuteSlot = (dialogMuted || isHiddenInCommunity || drawUnmute || dialogMutedProgress > 0) && !drawVerified && drawScam == 0;
+        final boolean reserveMuteSlot = (dialogMuted || isHiddenInCommunity || drawUnmute || dialogMutedProgress > 0) && !drawVerified && drawScam == 0 && !LuminaConfig.getBoolean("hideMuteIcon", false);
         if (drawPremium && emojiStatus.getDrawable() != null) {
             int w = dp(6 + 24 + 6);
             if (reserveMuteSlot) {
@@ -4404,7 +4409,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                 }
             }
             boolean drawMuted = drawUnmute || dialogMuted || isHiddenInCommunity;
-            if (dialogsType != 2 && (drawMuted || dialogMutedProgress > 0) && !drawVerified && drawScam == 0) {
+            if (dialogsType != 2 && (drawMuted || dialogMutedProgress > 0) && !drawVerified && drawScam == 0 && !LuminaConfig.getBoolean("hideMuteIcon", false)) {
                 if (drawMuted && dialogMutedProgress != 1f) {
                     dialogMutedProgress += 16 / 150f;
                     if (dialogMutedProgress > 1f) {
@@ -4916,6 +4921,9 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
     }
 
     private boolean isCounterMuted() {
+        if (LuminaConfig.getBoolean("showMutedCount", false)) {
+            return false; // LuminaGram: always render unread count as unmuted (accent color)
+        }
         if (isDialogCommunity()) {
             return !hasUnmutedCommunityDialogs;
         } else if (isTopic) {
