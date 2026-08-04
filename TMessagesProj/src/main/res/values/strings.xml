@@ -11252,6 +11252,7 @@
     <string name="LuminaForwardNoCaptionTitle">Forward without caption</string>
     <string name="LuminaSaveToCloudTitle">Save to Saved Messages</string>
     <string name="LuminaSelectFromAuthorTitle">Select all from author</string>
+    <string name="LuminaHideKeyboardOnScroll">Hide keyboard on scroll</string>
     <string name="LuminaMediaSaving">Media</string>
     <string name="LuminaSaveStickers">Save stickers</string>
     <string name="LuminaSendAsFileDefault">Send media as file</string>

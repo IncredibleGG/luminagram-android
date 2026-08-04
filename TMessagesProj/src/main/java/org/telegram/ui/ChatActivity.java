@@ -6768,6 +6768,15 @@ public class ChatActivity extends BaseFragment implements
                         scrollingFloatingTopic = true;
                         checkTextureViewPosition = true;
                         scrollingChatListView = true;
+                        // LuminaGram: hide keyboard on scroll (active user drag). Gated, default OFF.
+                        if (LuminaConfig.getBoolean("hideKeyboardOnScroll", false) && chatActivityEnterView != null) {
+                            if (chatActivityEnterView.isKeyboardVisible()) {
+                                chatActivityEnterView.closeKeyboard();
+                            }
+                            if (chatActivityEnterView.isPopupShowing()) {
+                                chatActivityEnterView.hidePopup(false);
+                            }
+                        }
                     }
                     if (SharedConfig.getDevicePerformanceClass() == SharedConfig.PERFORMANCE_CLASS_LOW) {
                         scrolling = false;

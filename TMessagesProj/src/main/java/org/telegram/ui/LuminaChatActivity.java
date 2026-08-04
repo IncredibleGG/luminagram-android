@@ -60,6 +60,7 @@ public class LuminaChatActivity extends BaseFragment {
         items.add(UItem.asSwitch(2, LuminaLocale.getString(R.string.LuminaForwardNoCaptionTitle)).setChecked(LuminaConfig.getBoolean("forwardNoCaption", false)));
         items.add(UItem.asSwitch(3, LuminaLocale.getString(R.string.LuminaSaveToCloudTitle)).setChecked(LuminaConfig.getBoolean("saveToCloud", true)));
         items.add(UItem.asSwitch(4, LuminaLocale.getString(R.string.LuminaSelectFromAuthorTitle)).setChecked(LuminaConfig.getBoolean("selectFromAuthor", true)));
+        items.add(UItem.asSwitch(11, LuminaLocale.getString(R.string.LuminaHideKeyboardOnScroll)).setChecked(LuminaConfig.getBoolean("hideKeyboardOnScroll", false)));
         items.add(UItem.asShadow(null));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMediaSaving)));
@@ -94,6 +95,9 @@ public class LuminaChatActivity extends BaseFragment {
                 break;
             case 10:
                 LuminaConfig.putBoolean("sendAsFileDefault", !LuminaConfig.getBoolean("sendAsFileDefault", false));
+                break;
+            case 11:
+                LuminaConfig.putBoolean("hideKeyboardOnScroll", !LuminaConfig.getBoolean("hideKeyboardOnScroll", false));
                 break;
             case 6:
                 LuminaConfig.putBoolean("showDcId", !LuminaConfig.getBoolean("showDcId", false));
