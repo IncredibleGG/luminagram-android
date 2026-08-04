@@ -188,6 +188,16 @@ public final class LuminaLocale {
         zhHans.put("LuminaUnblockAllAlert", "解除拉黑所有已屏蔽的用户？");
         zhHans.put("LuminaConfirmSendVoiceVideoTitle", "发送这条消息？");
         zhHans.put("LuminaConfirmSendVoiceVideoMessage", "要发送这条语音或视频消息吗？");
+        zhHans.put("LuminaInterfaceTitle", "界面");
+        zhHans.put("LuminaInterfaceEmojiHeader", "表情符号");
+        zhHans.put("LuminaInterfaceSystemEmoji", "使用系统表情符号");
+        zhHans.put("LuminaInterfaceSystemEmojiInfo", "使用设备内置的表情符号，而非 Telegram 自带的表情。");
+        zhHans.put("LuminaInterfaceMessagingHeader", "消息");
+        zhHans.put("LuminaInterfaceConfirmVoiceVideo", "发送语音 / 视频消息前确认");
+        zhHans.put("LuminaInterfaceConfirmVoiceVideoInfo", "在发送录制的语音或视频消息前询问确认。");
+        zhHans.put("LuminaInterfaceNumbersHeader", "数字");
+        zhHans.put("LuminaInterfaceExactNumbers", "显示精确数字（不使用 1.2K 缩写）");
+        zhHans.put("LuminaInterfaceExactNumbersInfo", "显示完整计数，如 1,234,567，而非 1.2M 之类的缩写形式。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -350,6 +360,16 @@ public final class LuminaLocale {
         zhHant.put("LuminaUnblockAllAlert", "解除封鎖所有已封鎖的使用者？");
         zhHant.put("LuminaConfirmSendVoiceVideoTitle", "傳送這則訊息？");
         zhHant.put("LuminaConfirmSendVoiceVideoMessage", "要傳送這則語音或視訊訊息嗎？");
+        zhHant.put("LuminaInterfaceTitle", "介面");
+        zhHant.put("LuminaInterfaceEmojiHeader", "表情符號");
+        zhHant.put("LuminaInterfaceSystemEmoji", "使用系統表情符號");
+        zhHant.put("LuminaInterfaceSystemEmojiInfo", "使用裝置內建的表情符號，而非 Telegram 內建的表情。");
+        zhHant.put("LuminaInterfaceMessagingHeader", "訊息");
+        zhHant.put("LuminaInterfaceConfirmVoiceVideo", "傳送語音 / 影片訊息前確認");
+        zhHant.put("LuminaInterfaceConfirmVoiceVideoInfo", "在傳送錄製的語音或影片訊息前詢問確認。");
+        zhHant.put("LuminaInterfaceNumbersHeader", "數字");
+        zhHant.put("LuminaInterfaceExactNumbers", "顯示精確數字（不使用 1.2K 縮寫）");
+        zhHant.put("LuminaInterfaceExactNumbersInfo", "顯示完整計數，如 1,234,567，而非 1.2M 之類的縮寫形式。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -511,6 +531,16 @@ public final class LuminaLocale {
         ar.put("LuminaUnblockAllAlert", "إلغاء حظر جميع المستخدمين المحظورين؟");
         ar.put("LuminaConfirmSendVoiceVideoTitle", "إرسال هذه الرسالة؟");
         ar.put("LuminaConfirmSendVoiceVideoMessage", "هل تريد إرسال هذه الرسالة الصوتية أو المرئية؟");
+        ar.put("LuminaInterfaceTitle", "الواجهة");
+        ar.put("LuminaInterfaceEmojiHeader", "الرموز التعبيرية");
+        ar.put("LuminaInterfaceSystemEmoji", "استخدام الرموز التعبيرية للنظام");
+        ar.put("LuminaInterfaceSystemEmojiInfo", "استخدم الرموز التعبيرية المدمجة في جهازك بدلاً من مجموعة تيليجرام.");
+        ar.put("LuminaInterfaceMessagingHeader", "المراسلة");
+        ar.put("LuminaInterfaceConfirmVoiceVideo", "التأكيد قبل إرسال رسالة صوتية / مرئية");
+        ar.put("LuminaInterfaceConfirmVoiceVideoInfo", "اطلب التأكيد قبل إرسال رسالة صوتية أو مرئية مسجلة.");
+        ar.put("LuminaInterfaceNumbersHeader", "الأرقام");
+        ar.put("LuminaInterfaceExactNumbers", "إظهار الأرقام الدقيقة (بدون اختصار 1.2K)");
+        ar.put("LuminaInterfaceExactNumbersInfo", "إظهار الأعداد الكاملة مثل 1,234,567 بدلاً من الصيغ المختصرة مثل 1.2M.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -672,6 +702,16 @@ public final class LuminaLocale {
         ru.put("LuminaUnblockAllAlert", "Разблокировать всех заблокированных пользователей?");
         ru.put("LuminaConfirmSendVoiceVideoTitle", "Отправить это сообщение?");
         ru.put("LuminaConfirmSendVoiceVideoMessage", "Отправить это голосовое или видеосообщение?");
+        ru.put("LuminaInterfaceTitle", "Интерфейс");
+        ru.put("LuminaInterfaceEmojiHeader", "Эмодзи");
+        ru.put("LuminaInterfaceSystemEmoji", "Использовать системные эмодзи");
+        ru.put("LuminaInterfaceSystemEmojiInfo", "Использовать встроенные эмодзи устройства вместо набора Telegram.");
+        ru.put("LuminaInterfaceMessagingHeader", "Сообщения");
+        ru.put("LuminaInterfaceConfirmVoiceVideo", "Подтверждать отправку голосовых / видеосообщений");
+        ru.put("LuminaInterfaceConfirmVoiceVideoInfo", "Запрашивать подтверждение перед отправкой записанного голосового или видеосообщения.");
+        ru.put("LuminaInterfaceNumbersHeader", "Числа");
+        ru.put("LuminaInterfaceExactNumbers", "Показывать точные числа (без округления 1.2K)");
+        ru.put("LuminaInterfaceExactNumbersInfo", "Показывать полные значения, например 1 234 567, вместо сокращённых форм вроде 1.2M.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -833,6 +873,16 @@ public final class LuminaLocale {
         fa.put("LuminaUnblockAllAlert", "رفع مسدودیت همهٔ کاربران مسدودشده؟");
         fa.put("LuminaConfirmSendVoiceVideoTitle", "این پیام ارسال شود؟");
         fa.put("LuminaConfirmSendVoiceVideoMessage", "این پیام صوتی یا ویدیویی ارسال شود؟");
+        fa.put("LuminaInterfaceTitle", "رابط کاربری");
+        fa.put("LuminaInterfaceEmojiHeader", "ایموجی");
+        fa.put("LuminaInterfaceSystemEmoji", "استفاده از ایموجی سیستم");
+        fa.put("LuminaInterfaceSystemEmojiInfo", "به جای مجموعه تلگرام، از ایموجی‌های داخلی دستگاه خود استفاده کنید.");
+        fa.put("LuminaInterfaceMessagingHeader", "پیام‌رسانی");
+        fa.put("LuminaInterfaceConfirmVoiceVideo", "تأیید پیش از ارسال پیام صوتی / تصویری");
+        fa.put("LuminaInterfaceConfirmVoiceVideoInfo", "پیش از ارسال پیام صوتی یا تصویری ضبط‌شده، تأیید بخواه.");
+        fa.put("LuminaInterfaceNumbersHeader", "اعداد");
+        fa.put("LuminaInterfaceExactNumbers", "نمایش اعداد دقیق (بدون خلاصه‌سازی 1.2K)");
+        fa.put("LuminaInterfaceExactNumbersInfo", "نمایش اعداد کامل مانند 1,234,567 به جای شکل‌های خلاصه مانند 1.2M.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -994,6 +1044,16 @@ public final class LuminaLocale {
         tr.put("LuminaUnblockAllAlert", "Engellenen tüm kullanıcıların engeli kaldırılsın mı?");
         tr.put("LuminaConfirmSendVoiceVideoTitle", "Bu mesaj gönderilsin mi?");
         tr.put("LuminaConfirmSendVoiceVideoMessage", "Bu sesli veya görüntülü mesaj gönderilsin mi?");
+        tr.put("LuminaInterfaceTitle", "Arayüz");
+        tr.put("LuminaInterfaceEmojiHeader", "Emoji");
+        tr.put("LuminaInterfaceSystemEmoji", "Sistem emojilerini kullan");
+        tr.put("LuminaInterfaceSystemEmojiInfo", "Telegram seti yerine cihazınızın yerleşik emojilerini kullanın.");
+        tr.put("LuminaInterfaceMessagingHeader", "Mesajlaşma");
+        tr.put("LuminaInterfaceConfirmVoiceVideo", "Sesli / görüntülü mesaj göndermeden önce onayla");
+        tr.put("LuminaInterfaceConfirmVoiceVideoInfo", "Kaydedilen bir sesli veya görüntülü mesaj gönderilmeden önce onay iste.");
+        tr.put("LuminaInterfaceNumbersHeader", "Sayılar");
+        tr.put("LuminaInterfaceExactNumbers", "Tam sayıları göster (1.2K yuvarlaması yok)");
+        tr.put("LuminaInterfaceExactNumbersInfo", "1.2M gibi kısaltmalar yerine 1.234.567 gibi tam sayıları göster.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1155,6 +1215,16 @@ public final class LuminaLocale {
         es.put("LuminaUnblockAllAlert", "¿Desbloquear a todos los usuarios bloqueados?");
         es.put("LuminaConfirmSendVoiceVideoTitle", "¿Enviar este mensaje?");
         es.put("LuminaConfirmSendVoiceVideoMessage", "¿Enviar este mensaje de voz o de video?");
+        es.put("LuminaInterfaceTitle", "Interfaz");
+        es.put("LuminaInterfaceEmojiHeader", "Emojis");
+        es.put("LuminaInterfaceSystemEmoji", "Usar emojis del sistema");
+        es.put("LuminaInterfaceSystemEmojiInfo", "Usa los emojis integrados de tu dispositivo en lugar del conjunto de Telegram.");
+        es.put("LuminaInterfaceMessagingHeader", "Mensajería");
+        es.put("LuminaInterfaceConfirmVoiceVideo", "Confirmar antes de enviar mensaje de voz / vídeo");
+        es.put("LuminaInterfaceConfirmVoiceVideoInfo", "Pedir confirmación antes de enviar un mensaje de voz o vídeo grabado.");
+        es.put("LuminaInterfaceNumbersHeader", "Números");
+        es.put("LuminaInterfaceExactNumbers", "Mostrar números exactos (sin redondeo 1.2K)");
+        es.put("LuminaInterfaceExactNumbersInfo", "Mostrar cifras completas como 1.234.567 en lugar de formas abreviadas como 1.2M.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1316,6 +1386,16 @@ public final class LuminaLocale {
         ptBr.put("LuminaUnblockAllAlert", "Desbloquear todos os usuários bloqueados?");
         ptBr.put("LuminaConfirmSendVoiceVideoTitle", "Enviar esta mensagem?");
         ptBr.put("LuminaConfirmSendVoiceVideoMessage", "Enviar esta mensagem de voz ou vídeo?");
+        ptBr.put("LuminaInterfaceTitle", "Interface");
+        ptBr.put("LuminaInterfaceEmojiHeader", "Emojis");
+        ptBr.put("LuminaInterfaceSystemEmoji", "Usar emojis do sistema");
+        ptBr.put("LuminaInterfaceSystemEmojiInfo", "Use os emojis integrados do seu dispositivo em vez do conjunto do Telegram.");
+        ptBr.put("LuminaInterfaceMessagingHeader", "Mensagens");
+        ptBr.put("LuminaInterfaceConfirmVoiceVideo", "Confirmar antes de enviar mensagem de voz / vídeo");
+        ptBr.put("LuminaInterfaceConfirmVoiceVideoInfo", "Pedir confirmação antes de enviar uma mensagem de voz ou vídeo gravada.");
+        ptBr.put("LuminaInterfaceNumbersHeader", "Números");
+        ptBr.put("LuminaInterfaceExactNumbers", "Mostrar números exatos (sem arredondamento 1.2K)");
+        ptBr.put("LuminaInterfaceExactNumbersInfo", "Mostrar contagens completas como 1.234.567 em vez de formas abreviadas como 1.2M.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1477,6 +1557,16 @@ public final class LuminaLocale {
         id.put("LuminaUnblockAllAlert", "Buka blokir semua pengguna yang diblokir?");
         id.put("LuminaConfirmSendVoiceVideoTitle", "Kirim pesan ini?");
         id.put("LuminaConfirmSendVoiceVideoMessage", "Kirim pesan suara atau video ini?");
+        id.put("LuminaInterfaceTitle", "Antarmuka");
+        id.put("LuminaInterfaceEmojiHeader", "Emoji");
+        id.put("LuminaInterfaceSystemEmoji", "Gunakan emoji sistem");
+        id.put("LuminaInterfaceSystemEmojiInfo", "Gunakan emoji bawaan perangkat Anda alih-alih set Telegram.");
+        id.put("LuminaInterfaceMessagingHeader", "Perpesanan");
+        id.put("LuminaInterfaceConfirmVoiceVideo", "Konfirmasi sebelum mengirim pesan suara / video");
+        id.put("LuminaInterfaceConfirmVoiceVideoInfo", "Minta konfirmasi sebelum pesan suara atau video yang direkam dikirim.");
+        id.put("LuminaInterfaceNumbersHeader", "Angka");
+        id.put("LuminaInterfaceExactNumbers", "Tampilkan angka persis (tanpa pembulatan 1.2K)");
+        id.put("LuminaInterfaceExactNumbersInfo", "Tampilkan jumlah penuh seperti 1.234.567 alih-alih bentuk singkat seperti 1.2M.");
         T.put("id", id);
     }
 

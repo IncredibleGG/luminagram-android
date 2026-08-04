@@ -4128,6 +4128,15 @@ public class AndroidUtilities {
     public static final String[] numbersSignatureArray = {"", "K", "M", "B", "T", "P"};
 
     public static String formatWholeNumber(int v, int dif) {
+        // LuminaGram: when "Show exact numbers" is enabled, return the full count
+        // (comma-grouped) instead of the shortened 1.2K/3.4M form. Guarded so any
+        // early-init hiccup falls through to the normal output - zero change when off.
+        try {
+            if (LuminaConfig.getBoolean("disableNumberRounding", false)) {
+                return formatCount(v);
+            }
+        } catch (Throwable ignore) {
+        }
         if (v == 0) {
             return "0";
         }

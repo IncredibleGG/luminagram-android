@@ -11346,4 +11346,15 @@
     <string name="LuminaConfirmSendVoiceVideoMessage">Send this voice or video message?</string>
     <!-- LuminaGram decoy calculator lock -->
     <string name="LuminaCalculatorError">Error</string>
+    <!-- LuminaGram interface & display preferences (Wave 6) -->
+    <string name="LuminaInterfaceTitle">Interface</string>
+    <string name="LuminaInterfaceEmojiHeader">Emoji</string>
+    <string name="LuminaInterfaceSystemEmoji">Use system emoji</string>
+    <string name="LuminaInterfaceSystemEmojiInfo">Use your device\'s built-in emoji instead of the bundled Telegram set.</string>
+    <string name="LuminaInterfaceMessagingHeader">Messaging</string>
+    <string name="LuminaInterfaceConfirmVoiceVideo">Confirm before sending voice / video message</string>
+    <string name="LuminaInterfaceConfirmVoiceVideoInfo">Ask for confirmation before a recorded voice or video message is sent.</string>
+    <string name="LuminaInterfaceNumbersHeader">Numbers</string>
+    <string name="LuminaInterfaceExactNumbers">Show exact numbers (no 1.2K rounding)</string>
+    <string name="LuminaInterfaceExactNumbersInfo">Show full counts like 1,234,567 instead of shortened forms such as 1.2M.</string>
 </resources>
