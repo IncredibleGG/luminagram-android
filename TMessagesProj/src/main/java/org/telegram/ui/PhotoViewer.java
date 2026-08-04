@@ -156,6 +156,7 @@ import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
 import org.telegram.messenger.AccountInstance;
 import org.telegram.messenger.AndroidUtilities;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.AnimationNotificationsLocker;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.Bitmaps;
@@ -1064,6 +1065,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     private VideoPlayer videoPlayer;
     private PipSource pipSource;
     private boolean manuallyPaused;
+    private boolean pausedByBackground;
     private Runnable videoPlayRunnable;
     private boolean previousHasTransform;
     private float previousCropPx;
@@ -18780,6 +18782,13 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (photoPaintView != null) {
             photoPaintView.onResume();
         }
+        // LuminaGram: resume video that was auto-paused when the app was backgrounded
+        if (pausedByBackground) {
+            pausedByBackground = false;
+            if (LuminaConfig.getBoolean("autoPauseBgVideo", false) && !manuallyPaused) {
+                playVideoOrWeb();
+            }
+        }
     }
 
     public void onConfigurationChanged(Configuration newConfig) {}
@@ -18794,6 +18803,15 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         }
         if (videoPlayer != null && playerLooping) {
             videoPlayer.setLooping(allowLoopingOnPause());
+        }
+        // LuminaGram: auto-pause full-screen video when the app is backgrounded
+        if (LuminaConfig.getBoolean("autoPauseBgVideo", false)
+                && !AndroidUtilities.isInPictureInPictureMode(parentActivity)
+                && !PipVideoOverlay.isVisible()
+                && isVideoPlaying()) {
+            pausedByBackground = true;
+            manuallyPaused = false;
+            pauseVideoOrWeb();
         }
     }
 
