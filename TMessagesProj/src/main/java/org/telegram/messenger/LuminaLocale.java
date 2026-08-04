@@ -281,6 +281,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaBackupImportFailed", "无法读取备份文件。");
         zhHans.put("LuminaBackupInvalidFile", "这不是有效的 LuminaGram 备份文件。");
         zhHans.put("LuminaBackupWrongPassphrase", "口令错误,或文件已损坏。");
+        zhHans.put("LuminaPhotoUploadDate", "上传于 %1$s");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -536,6 +537,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaBackupImportFailed", "無法讀取備份檔案。");
         zhHant.put("LuminaBackupInvalidFile", "這不是有效的 LuminaGram 備份檔案。");
         zhHant.put("LuminaBackupWrongPassphrase", "密碼錯誤,或檔案已損毀。");
+        zhHant.put("LuminaPhotoUploadDate", "上傳於 %1$s");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -790,6 +792,7 @@ public final class LuminaLocale {
         ar.put("LuminaBackupImportFailed", "تعذّر قراءة ملف النسخة الاحتياطية.");
         ar.put("LuminaBackupInvalidFile", "هذا ليس ملف نسخة احتياطية صالحًا لـ LuminaGram.");
         ar.put("LuminaBackupWrongPassphrase", "عبارة المرور خاطئة، أو الملف تالف.");
+        ar.put("LuminaPhotoUploadDate", "تم الرفع في %1$s");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1044,6 +1047,7 @@ public final class LuminaLocale {
         ru.put("LuminaBackupImportFailed", "Не удалось прочитать файл резервной копии.");
         ru.put("LuminaBackupInvalidFile", "Это недействительный файл резервной копии LuminaGram.");
         ru.put("LuminaBackupWrongPassphrase", "Неверная парольная фраза или файл повреждён.");
+        ru.put("LuminaPhotoUploadDate", "Загружено %1$s");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1298,6 +1302,7 @@ public final class LuminaLocale {
         fa.put("LuminaBackupImportFailed", "خواندن فایل پشتیبان ممکن نشد.");
         fa.put("LuminaBackupInvalidFile", "این یک فایل پشتیبان معتبر LuminaGram نیست.");
         fa.put("LuminaBackupWrongPassphrase", "عبارت عبور نادرست است یا فایل آسیب دیده است.");
+        fa.put("LuminaPhotoUploadDate", "بارگذاری در %1$s");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1552,6 +1557,7 @@ public final class LuminaLocale {
         tr.put("LuminaBackupImportFailed", "Yedek dosyası okunamadı.");
         tr.put("LuminaBackupInvalidFile", "Bu geçerli bir LuminaGram yedek dosyası değil.");
         tr.put("LuminaBackupWrongPassphrase", "Yanlış parola veya dosya hasarlı.");
+        tr.put("LuminaPhotoUploadDate", "%1$s tarihinde yüklendi");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1806,6 +1812,7 @@ public final class LuminaLocale {
         es.put("LuminaBackupImportFailed", "No se pudo leer el archivo de copia.");
         es.put("LuminaBackupInvalidFile", "Este no es un archivo de copia de LuminaGram válido.");
         es.put("LuminaBackupWrongPassphrase", "Frase de contraseña incorrecta o el archivo está dañado.");
+        es.put("LuminaPhotoUploadDate", "Subida el %1$s");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2060,6 +2067,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaBackupImportFailed", "Não foi possível ler o arquivo de backup.");
         ptBr.put("LuminaBackupInvalidFile", "Este não é um arquivo de backup válido do LuminaGram.");
         ptBr.put("LuminaBackupWrongPassphrase", "Frase secreta incorreta ou o arquivo está corrompido.");
+        ptBr.put("LuminaPhotoUploadDate", "Enviada em %1$s");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2314,6 +2322,7 @@ public final class LuminaLocale {
         id.put("LuminaBackupImportFailed", "Tidak dapat membaca berkas cadangan.");
         id.put("LuminaBackupInvalidFile", "Ini bukan berkas cadangan LuminaGram yang valid.");
         id.put("LuminaBackupWrongPassphrase", "Frasa sandi salah, atau berkas rusak.");
+        id.put("LuminaPhotoUploadDate", "Diunggah %1$s");
         T.put("id", id);
     }
 
