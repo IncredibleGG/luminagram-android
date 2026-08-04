@@ -3715,8 +3715,16 @@ public class MessageObject {
             if (type == TYPE_ARTICLE) {
                 generateLayout(null);
             } else if (translatedText != null) {
-                applyNewText(translatedText.text);
-                generateCaption();
+                if (luminaKeepOriginalAsMain()) {
+                    // LuminaGram dual-language: keep the ORIGINAL as the main (big) text and let
+                    // ChatMessageCell draw the translation as a small dimmed sub-line. Do NOT swap
+                    // the main text to the translation. When the toggle is off (default) the else
+                    // branch runs and behaviour is 100% unchanged.
+                    generateCaption();
+                } else {
+                    applyNewText(translatedText.text);
+                    generateCaption();
+                }
             }
             return replyUpdated || true;
         } else if (messageOwner != null && (force || translated || summarized)) {
@@ -3731,6 +3739,63 @@ public class MessageObject {
             return replyUpdated || true;
         }
         return replyUpdated || false;
+    }
+
+    // LuminaGram: true when dual-language display should keep the ORIGINAL message as the main
+    // (big) text - only for plain text bubbles (no link/game/invoice preview, not sponsored,
+    // story mention, giveaway or restricted). Gated behind dualLanguageDisplay (default off).
+    private boolean luminaKeepOriginalAsMain() {
+        if (!LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+            return false;
+        }
+        if (messageOwner == null || type != TYPE_TEXT) {
+            return false;
+        }
+        if (isSponsored() || isStoryMention() || isGiveawayOrGiveawayResults() || isRestrictedMessage) {
+            return false;
+        }
+        TLRPC.MessageMedia media = getMedia(messageOwner);
+        if (media instanceof TLRPC.TL_messageMediaWebPage
+                || media instanceof TLRPC.TL_messageMediaGame
+                || media instanceof TLRPC.TL_messageMediaInvoice) {
+            return false;
+        }
+        return true;
+    }
+
+    // LuminaGram dual-language: set once an OUTGOING translate-before-send message has had its
+    // main (big) text swapped to the ORIGINAL. ChatMessageCell reads it to pick the sub-line
+    // source and to avoid re-applying on every bind.
+    public boolean luminaDualOriginalApplied = false;
+
+    // LuminaGram dual-language: for OUTGOING translate-before-send messages, swap the main text
+    // to the ORIGINAL (from the capture agent) so the sent translation can be drawn as a small
+    // dimmed sub-line by ChatMessageCell. No-op unless dual-language display is on and the message
+    // is a plain outgoing translated-send. When the toggle is off it restores the sent translation
+    // as the main text if it had been swapped.
+    public void luminaApplyOutgoingDualOriginal() {
+        if (messageOwner == null) {
+            return;
+        }
+        if (!LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+            if (luminaDualOriginalApplied) {
+                luminaDualOriginalApplied = false;
+                applyNewText(messageOwner.message);
+            }
+            return;
+        }
+        if (luminaDualOriginalApplied) {
+            return;
+        }
+        if (!isOutOwner() || !luminaKeepOriginalAsMain()) {
+            return;
+        }
+        String original = LuminaTBS.getOriginal(this);
+        if (TextUtils.isEmpty(original)) {
+            return;
+        }
+        luminaDualOriginalApplied = true;
+        applyNewText(original);
     }
 
     public void applyNewText() {
