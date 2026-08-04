@@ -11311,4 +11311,13 @@
     <string name="LuminaQuickRepliesEdit">Edit template</string>
     <string name="LuminaQuickRepliesInfo">Text templates you can insert into the message field. Long-press the emoji button in a chat to pick one. Long-press a template to reorder.</string>
     <string name="LuminaQuickRepliesManage">Manage templates…</string>
+    <!-- LuminaGram media and download preferences -->
+    <string name="LuminaMediaTitle">Media</string>
+    <string name="LuminaMediaHeader">Downloads</string>
+    <string name="LuminaMediaKeepOriginalFilename">Keep original filename on download</string>
+    <string name="LuminaMediaKeepOriginalFilenameInfo">When saving a file to your device, use the sender\'s original filename instead of an internal name.</string>
+    <string name="LuminaMediaAutoPauseBgVideo">Pause video when app goes to background</string>
+    <string name="LuminaMediaAutoPauseBgVideoInfo">Automatically pause the playing video when you leave LuminaGram.</string>
+    <string name="LuminaMediaUnlockAudioSpeed">Speed control for long audio</string>
+    <string name="LuminaMediaUnlockAudioSpeedInfo">Show the playback-speed control for music and long audio files, not just voice messages.</string>
 </resources>
