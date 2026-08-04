@@ -11477,5 +11477,24 @@
     <string name="LuminaPrivateNoteEmpty">Tap to add a private note</string>
     <string name="LuminaPrivateNoteHint">Note (only you can see this)</string>
     <string name="LuminaPrivateNoteTagsHint">Tags, comma separated</string>
+    <!-- LuminaGram local profile card (Wave 19) — a local "about me" card, shared as plain text -->
+    <string name="LuminaProfileCardTitle">Profile card</string>
+    <string name="LuminaProfileCardHeader">My card</string>
+    <string name="LuminaProfileCardTagline">Tagline</string>
+    <string name="LuminaProfileCardTaglineHint">A short headline about you</string>
+    <string name="LuminaProfileCardLanguages">Languages I speak</string>
+    <string name="LuminaProfileCardLanguagesHint">e.g. English, 中文, Español</string>
+    <string name="LuminaProfileCardInterests">Interests / tags</string>
+    <string name="LuminaProfileCardInterestsHint">e.g. music, hiking, coding</string>
+    <string name="LuminaProfileCardBio">Short bio</string>
+    <string name="LuminaProfileCardBioHint">A few words about yourself</string>
+    <string name="LuminaProfileCardTapToSet">Tap to set</string>
+    <string name="LuminaProfileCardInfo">This card is stored only on this device and is never sent to Telegram. It does not change your Telegram profile.</string>
+    <string name="LuminaProfileCardShareHeader">Share</string>
+    <string name="LuminaProfileCardShare">Share card</string>
+    <string name="LuminaProfileCardCopy">Copy to clipboard</string>
+    <string name="LuminaProfileCardShareInfo">Build a plain-text summary of your card, then share it or copy it and paste it into any chat.</string>
+    <string name="LuminaProfileCardCopied">Card copied</string>
+    <string name="LuminaProfileCardEmptyShare">Fill in your card first</string>
 </resources>
 

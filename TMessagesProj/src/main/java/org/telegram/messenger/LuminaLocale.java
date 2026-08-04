@@ -302,6 +302,24 @@ public final class LuminaLocale {
         zhHans.put("LuminaPrivacyScamKeywordWarning", "诈骗关键词警告");
         zhHans.put("LuminaPrivacyScamKeywordWarningInfo", "当不在你联系人中的人发来的消息提到常见诈骗手段（汇款、礼品卡、加密货币“投资”、验证费或索要验证码）时，显示一次性提醒，提醒你保持警惕。消息永远不会被拦截或修改。检查在你的设备上离线运行。");
         zhHans.put("LuminaScamKeywordWarning", "⚠ 这条消息来自不在你联系人中的人，且提到了钱款或验证——小心诈骗。");
+        zhHans.put("LuminaProfileCardTitle", "个人名片");
+        zhHans.put("LuminaProfileCardHeader", "我的名片");
+        zhHans.put("LuminaProfileCardTagline", "标语");
+        zhHans.put("LuminaProfileCardTaglineHint", "一句话介绍你自己");
+        zhHans.put("LuminaProfileCardLanguages", "我会说的语言");
+        zhHans.put("LuminaProfileCardLanguagesHint", "例如：中文、English、Español");
+        zhHans.put("LuminaProfileCardInterests", "兴趣 / 标签");
+        zhHans.put("LuminaProfileCardInterestsHint", "例如：音乐、徒步、编程");
+        zhHans.put("LuminaProfileCardBio", "简介");
+        zhHans.put("LuminaProfileCardBioHint", "简单介绍一下你自己");
+        zhHans.put("LuminaProfileCardTapToSet", "点击设置");
+        zhHans.put("LuminaProfileCardInfo", "此名片仅保存在本设备上，绝不会发送给 Telegram，也不会更改你的 Telegram 个人资料。");
+        zhHans.put("LuminaProfileCardShareHeader", "分享");
+        zhHans.put("LuminaProfileCardShare", "分享名片");
+        zhHans.put("LuminaProfileCardCopy", "复制到剪贴板");
+        zhHans.put("LuminaProfileCardShareInfo", "将名片生成为纯文本摘要，然后分享，或复制后粘贴到任意聊天中。");
+        zhHans.put("LuminaProfileCardCopied", "名片已复制");
+        zhHans.put("LuminaProfileCardEmptyShare", "请先填写你的名片");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -578,6 +596,24 @@ public final class LuminaLocale {
         zhHant.put("LuminaPrivacyScamKeywordWarning", "詐騙關鍵字警告");
         zhHant.put("LuminaPrivacyScamKeywordWarningInfo", "當不在你聯絡人中的人傳來的訊息提到常見詐騙手法（匯款、禮品卡、加密貨幣「投資」、驗證費或索取驗證碼）時，顯示一次性提醒，提醒你保持警覺。訊息永遠不會被攜截或修改。檢查在你的裝置上離線執行。");
         zhHant.put("LuminaScamKeywordWarning", "⚠ 這則訊息來自不在你聯絡人中的人，且提到金錢或驗證——小心詐騙。");
+        zhHant.put("LuminaProfileCardTitle", "個人名片");
+        zhHant.put("LuminaProfileCardHeader", "我的名片");
+        zhHant.put("LuminaProfileCardTagline", "標語");
+        zhHant.put("LuminaProfileCardTaglineHint", "一句話介紹你自己");
+        zhHant.put("LuminaProfileCardLanguages", "我會說的語言");
+        zhHant.put("LuminaProfileCardLanguagesHint", "例如：中文、English、Español");
+        zhHant.put("LuminaProfileCardInterests", "興趣 / 標籤");
+        zhHant.put("LuminaProfileCardInterestsHint", "例如：音樂、健行、程式設計");
+        zhHant.put("LuminaProfileCardBio", "簡介");
+        zhHant.put("LuminaProfileCardBioHint", "簡單介紹一下你自己");
+        zhHant.put("LuminaProfileCardTapToSet", "點按設定");
+        zhHant.put("LuminaProfileCardInfo", "此名片僅儲存在本裝置上，絕不會傳送給 Telegram，也不會更改你的 Telegram 個人資料。");
+        zhHant.put("LuminaProfileCardShareHeader", "分享");
+        zhHant.put("LuminaProfileCardShare", "分享名片");
+        zhHant.put("LuminaProfileCardCopy", "複製到剪貼簿");
+        zhHant.put("LuminaProfileCardShareInfo", "將名片產生為純文字摘要，然後分享，或複製後貼到任意聊天中。");
+        zhHant.put("LuminaProfileCardCopied", "名片已複製");
+        zhHant.put("LuminaProfileCardEmptyShare", "請先填寫你的名片");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -853,6 +889,24 @@ public final class LuminaLocale {
         ar.put("LuminaPrivacyScamKeywordWarning", "تحذير من كلمات الاحتيال");
         ar.put("LuminaPrivacyScamKeywordWarningInfo", "عندما تذكر رسالة من شخص ليس ضمن جهات اتصالك أساليب احتيال شائعة — تحويل الأموال، بطاقات الهدايا، «استثمار» العملات المشفّرة، رسوم التحقق أو طلب الرموز — يظهر تذكير لمرة واحدة لتوخّي الحذر. لا يتم حظر الرسالة أو تغييرها أبدًا. تُجرى الفحوص دون اتصال على جهازك.");
         ar.put("LuminaScamKeywordWarning", "⚠ تذكر هذه الرسالة أموالًا أو تحققًا وهي من شخص ليس ضمن جهات اتصالك — احذر من الاحتيال.");
+        ar.put("LuminaProfileCardTitle", "بطاقة التعريف");
+        ar.put("LuminaProfileCardHeader", "بطاقتي");
+        ar.put("LuminaProfileCardTagline", "شعار");
+        ar.put("LuminaProfileCardTaglineHint", "عبارة قصيرة تعرّف بك");
+        ar.put("LuminaProfileCardLanguages", "اللغات التي أتحدثها");
+        ar.put("LuminaProfileCardLanguagesHint", "مثال: العربية، English، Español");
+        ar.put("LuminaProfileCardInterests", "الاهتمامات / الوسوم");
+        ar.put("LuminaProfileCardInterestsHint", "مثال: الموسيقى، المشي، البرمجة");
+        ar.put("LuminaProfileCardBio", "نبذة قصيرة");
+        ar.put("LuminaProfileCardBioHint", "بضع كلمات عن نفسك");
+        ar.put("LuminaProfileCardTapToSet", "اضغط للتعيين");
+        ar.put("LuminaProfileCardInfo", "تُحفظ هذه البطاقة على هذا الجهاز فقط ولا تُرسَل أبدًا إلى تيليجرام، ولا تغيّر ملفك الشخصي في تيليجرام.");
+        ar.put("LuminaProfileCardShareHeader", "المشاركة");
+        ar.put("LuminaProfileCardShare", "مشاركة البطاقة");
+        ar.put("LuminaProfileCardCopy", "نسخ إلى الحافظة");
+        ar.put("LuminaProfileCardShareInfo", "أنشئ ملخصًا نصيًا لبطاقتك ثم شاركه، أو انسخه والصقه في أي محادثة.");
+        ar.put("LuminaProfileCardCopied", "تم نسخ البطاقة");
+        ar.put("LuminaProfileCardEmptyShare", "املأ بطاقتك أولاً");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1128,6 +1182,24 @@ public final class LuminaLocale {
         ru.put("LuminaPrivacyScamKeywordWarning", "Предупреждение о мошенничестве");
         ru.put("LuminaPrivacyScamKeywordWarningInfo", "Когда в сообщении от человека не из ваших контактов упоминаются типичные уловки мошенников — переводы денег, подарочные карты, «инвестиции» в криптовалюту, плата за верификацию или просьба прислать код — показывается однократное напоминание быть осторожнее. Сообщение никогда не блокируется и не изменяется. Проверка выполняется офлайн на вашем устройстве.");
         ru.put("LuminaScamKeywordWarning", "⚠ Это сообщение упоминает деньги или верификацию и пришло от человека не из ваших контактов — остерегайтесь мошенничества.");
+        ru.put("LuminaProfileCardTitle", "Визитка");
+        ru.put("LuminaProfileCardHeader", "Моя визитка");
+        ru.put("LuminaProfileCardTagline", "Слоган");
+        ru.put("LuminaProfileCardTaglineHint", "Короткая фраза о себе");
+        ru.put("LuminaProfileCardLanguages", "Языки, на которых я говорю");
+        ru.put("LuminaProfileCardLanguagesHint", "например: Русский, English, Español");
+        ru.put("LuminaProfileCardInterests", "Интересы / теги");
+        ru.put("LuminaProfileCardInterestsHint", "например: музыка, походы, программирование");
+        ru.put("LuminaProfileCardBio", "О себе");
+        ru.put("LuminaProfileCardBioHint", "Несколько слов о себе");
+        ru.put("LuminaProfileCardTapToSet", "Нажмите, чтобы задать");
+        ru.put("LuminaProfileCardInfo", "Эта визитка хранится только на этом устройстве и никогда не отправляется в Telegram. Она не меняет ваш профиль Telegram.");
+        ru.put("LuminaProfileCardShareHeader", "Поделиться");
+        ru.put("LuminaProfileCardShare", "Поделиться визиткой");
+        ru.put("LuminaProfileCardCopy", "Скопировать в буфер обмена");
+        ru.put("LuminaProfileCardShareInfo", "Создайте текстовую сводку визитки, затем поделитесь ею или скопируйте и вставьте в любой чат.");
+        ru.put("LuminaProfileCardCopied", "Визитка скопирована");
+        ru.put("LuminaProfileCardEmptyShare", "Сначала заполните визитку");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1403,6 +1475,24 @@ public final class LuminaLocale {
         fa.put("LuminaPrivacyScamKeywordWarning", "هشدار واژگان کلاه‌برداری");
         fa.put("LuminaPrivacyScamKeywordWarningInfo", "وقتی پیامی از شخصی که در مخاطبان شما نیست به ترفندهای رایج کلاه‌برداری اشاره کند — انتقال پول، کارت هدیه، «سرمایه‌گذاری» رمزارز، هزینهٔ تأیید یا درخواست کد — یک یادآوری یک‌باره برای احتیاط نمایش داده می‌شود. پیام هرگز مسدود یا تغییر داده نمی‌شود. بررسی‌ها به‌صورت آفلاین روی دستگاه شما انجام می‌شود.");
         fa.put("LuminaScamKeywordWarning", "⚠ این پیام به پول یا تأیید اشاره دارد و از شخصی است که در مخاطبان شما نیست — مراقب کلاه‌برداری باشید.");
+        fa.put("LuminaProfileCardTitle", "کارت معرفی");
+        fa.put("LuminaProfileCardHeader", "کارت من");
+        fa.put("LuminaProfileCardTagline", "شعار");
+        fa.put("LuminaProfileCardTaglineHint", "یک جملهٔ کوتاه دربارهٔ خودت");
+        fa.put("LuminaProfileCardLanguages", "زبان‌هایی که صحبت می‌کنم");
+        fa.put("LuminaProfileCardLanguagesHint", "مثال: فارسی، English، Español");
+        fa.put("LuminaProfileCardInterests", "علاقه‌مندی‌ها / برچسب‌ها");
+        fa.put("LuminaProfileCardInterestsHint", "مثال: موسیقی، کوه‌نوردی، برنامه‌نویسی");
+        fa.put("LuminaProfileCardBio", "معرفی کوتاه");
+        fa.put("LuminaProfileCardBioHint", "چند کلمه دربارهٔ خودت");
+        fa.put("LuminaProfileCardTapToSet", "برای تنظیم بزنید");
+        fa.put("LuminaProfileCardInfo", "این کارت فقط روی همین دستگاه ذخیره می‌شود و هرگز به تلگرام ارسال نمی‌شود؛ نمایهٔ تلگرام شما را هم تغییر نمی‌دهد.");
+        fa.put("LuminaProfileCardShareHeader", "هم‌رسانی");
+        fa.put("LuminaProfileCardShare", "هم‌رسانی کارت");
+        fa.put("LuminaProfileCardCopy", "کپی در بریده‌دان");
+        fa.put("LuminaProfileCardShareInfo", "یک خلاصهٔ متنی از کارت خود بسازید، سپس آن را هم‌رسانی کنید یا کپی کرده و در هر گفتگویی بچسبانید.");
+        fa.put("LuminaProfileCardCopied", "کارت کپی شد");
+        fa.put("LuminaProfileCardEmptyShare", "ابتدا کارت خود را پر کنید");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1678,6 +1768,24 @@ public final class LuminaLocale {
         tr.put("LuminaPrivacyScamKeywordWarning", "Dolandırıcılık kelime uyarısı");
         tr.put("LuminaPrivacyScamKeywordWarningInfo", "Kişilerinizde olmayan birinden gelen bir mesaj yaygın dolandırıcılık taktiklerinden söz ettiğinde — para transferi, hediye kartı, kripto “yatırımı”, doğrulama ücreti veya kod isteme — dikkatli olmanız için tek seferlik bir hatırlatma gösterilir. Mesaj asla engellenmez veya değiştirilmez. Kontroller cihazınızda çevrimdışı çalışır.");
         tr.put("LuminaScamKeywordWarning", "⚠ Bu mesaj para veya doğrulamadan söz ediyor ve kişilerinizde olmayan birinden geliyor — dolandırıcılığa karşı dikkatli olun.");
+        tr.put("LuminaProfileCardTitle", "Profil kartı");
+        tr.put("LuminaProfileCardHeader", "Kartım");
+        tr.put("LuminaProfileCardTagline", "Slogan");
+        tr.put("LuminaProfileCardTaglineHint", "Kendinle ilgili kısa bir söz");
+        tr.put("LuminaProfileCardLanguages", "Konuştuğum diller");
+        tr.put("LuminaProfileCardLanguagesHint", "örn. Türkçe, English, Español");
+        tr.put("LuminaProfileCardInterests", "İlgi alanları / etiketler");
+        tr.put("LuminaProfileCardInterestsHint", "örn. müzik, doğa yürüyüşü, kodlama");
+        tr.put("LuminaProfileCardBio", "Kısa özgeçmiş");
+        tr.put("LuminaProfileCardBioHint", "Kendinle ilgili birkaç kelime");
+        tr.put("LuminaProfileCardTapToSet", "Ayarlamak için dokunun");
+        tr.put("LuminaProfileCardInfo", "Bu kart yalnızca bu cihazda saklanır ve asla Telegram'a gönderilmez. Telegram profilinizi değiştirmez.");
+        tr.put("LuminaProfileCardShareHeader", "Paylaş");
+        tr.put("LuminaProfileCardShare", "Kartı paylaş");
+        tr.put("LuminaProfileCardCopy", "Panoya kopyala");
+        tr.put("LuminaProfileCardShareInfo", "Kartınızın düz metin özetini oluşturun, ardından paylaşın ya da kopyalayıp herhangi bir sohbete yapıştırın.");
+        tr.put("LuminaProfileCardCopied", "Kart kopyalandı");
+        tr.put("LuminaProfileCardEmptyShare", "Önce kartınızı doldurun");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1953,6 +2061,24 @@ public final class LuminaLocale {
         es.put("LuminaPrivacyScamKeywordWarning", "Aviso de palabras de estafa");
         es.put("LuminaPrivacyScamKeywordWarningInfo", "Cuando un mensaje de alguien que no está en tus contactos menciona tácticas de estafa habituales —transferencias de dinero, tarjetas de regalo, «inversiones» en criptomonedas, tarifas de verificación o pedir códigos— se muestra un recordatorio único para que tengas cuidado. El mensaje nunca se bloquea ni se modifica. Las comprobaciones se realizan sin conexión en tu dispositivo.");
         es.put("LuminaScamKeywordWarning", "⚠ Este mensaje menciona dinero o verificación y proviene de alguien que no está en tus contactos: ten cuidado con las estafas.");
+        es.put("LuminaProfileCardTitle", "Tarjeta de perfil");
+        es.put("LuminaProfileCardHeader", "Mi tarjeta");
+        es.put("LuminaProfileCardTagline", "Lema");
+        es.put("LuminaProfileCardTaglineHint", "Una frase corta sobre ti");
+        es.put("LuminaProfileCardLanguages", "Idiomas que hablo");
+        es.put("LuminaProfileCardLanguagesHint", "p. ej. Español, English, 中文");
+        es.put("LuminaProfileCardInterests", "Intereses / etiquetas");
+        es.put("LuminaProfileCardInterestsHint", "p. ej. música, senderismo, programación");
+        es.put("LuminaProfileCardBio", "Biografía breve");
+        es.put("LuminaProfileCardBioHint", "Unas palabras sobre ti");
+        es.put("LuminaProfileCardTapToSet", "Toca para configurar");
+        es.put("LuminaProfileCardInfo", "Esta tarjeta se guarda solo en este dispositivo y nunca se envía a Telegram. No cambia tu perfil de Telegram.");
+        es.put("LuminaProfileCardShareHeader", "Compartir");
+        es.put("LuminaProfileCardShare", "Compartir tarjeta");
+        es.put("LuminaProfileCardCopy", "Copiar al portapapeles");
+        es.put("LuminaProfileCardShareInfo", "Crea un resumen en texto de tu tarjeta y compártelo, o cópialo y pégalo en cualquier chat.");
+        es.put("LuminaProfileCardCopied", "Tarjeta copiada");
+        es.put("LuminaProfileCardEmptyShare", "Primero completa tu tarjeta");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2228,6 +2354,24 @@ public final class LuminaLocale {
         ptBr.put("LuminaPrivacyScamKeywordWarning", "Aviso de palavras de golpe");
         ptBr.put("LuminaPrivacyScamKeywordWarningInfo", "Quando uma mensagem de alguém que não está nos seus contatos menciona táticas comuns de golpe — transferências de dinheiro, cartões-presente, “investimentos” em cripto, taxas de verificação ou pedir códigos — é exibido um lembrete único para você ter cuidado. A mensagem nunca é bloqueada nem alterada. As verificações são feitas off-line no seu dispositivo.");
         ptBr.put("LuminaScamKeywordWarning", "⚠ Esta mensagem menciona dinheiro ou verificação e vem de alguém que não está nos seus contatos — cuidado com golpes.");
+        ptBr.put("LuminaProfileCardTitle", "Cartão de perfil");
+        ptBr.put("LuminaProfileCardHeader", "Meu cartão");
+        ptBr.put("LuminaProfileCardTagline", "Lema");
+        ptBr.put("LuminaProfileCardTaglineHint", "Uma frase curta sobre você");
+        ptBr.put("LuminaProfileCardLanguages", "Idiomas que falo");
+        ptBr.put("LuminaProfileCardLanguagesHint", "ex.: Português, English, Español");
+        ptBr.put("LuminaProfileCardInterests", "Interesses / tags");
+        ptBr.put("LuminaProfileCardInterestsHint", "ex.: música, trilhas, programação");
+        ptBr.put("LuminaProfileCardBio", "Biografia curta");
+        ptBr.put("LuminaProfileCardBioHint", "Algumas palavras sobre você");
+        ptBr.put("LuminaProfileCardTapToSet", "Toque para definir");
+        ptBr.put("LuminaProfileCardInfo", "Este cartão fica salvo apenas neste dispositivo e nunca é enviado ao Telegram. Ele não altera o seu perfil do Telegram.");
+        ptBr.put("LuminaProfileCardShareHeader", "Compartilhar");
+        ptBr.put("LuminaProfileCardShare", "Compartilhar cartão");
+        ptBr.put("LuminaProfileCardCopy", "Copiar para a área de transferência");
+        ptBr.put("LuminaProfileCardShareInfo", "Gere um resumo em texto do seu cartão e compartilhe, ou copie e cole em qualquer conversa.");
+        ptBr.put("LuminaProfileCardCopied", "Cartão copiado");
+        ptBr.put("LuminaProfileCardEmptyShare", "Preencha seu cartão primeiro");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2503,6 +2647,24 @@ public final class LuminaLocale {
         id.put("LuminaPrivacyScamKeywordWarning", "Peringatan kata penipuan");
         id.put("LuminaPrivacyScamKeywordWarningInfo", "Saat pesan dari seseorang yang tidak ada di kontak Anda menyebutkan taktik penipuan umum — transfer uang, kartu hadiah, “investasi” kripto, biaya verifikasi, atau meminta kode — sebuah pengingat sekali muncul agar Anda berhati-hati. Pesan tidak pernah diblokir atau diubah. Pemeriksaan berjalan luring di perangkat Anda.");
         id.put("LuminaScamKeywordWarning", "⚠ Pesan ini menyebutkan uang atau verifikasi dan berasal dari seseorang yang tidak ada di kontak Anda — waspadalah terhadap penipuan.");
+        id.put("LuminaProfileCardTitle", "Kartu profil");
+        id.put("LuminaProfileCardHeader", "Kartu saya");
+        id.put("LuminaProfileCardTagline", "Slogan");
+        id.put("LuminaProfileCardTaglineHint", "Kalimat singkat tentang dirimu");
+        id.put("LuminaProfileCardLanguages", "Bahasa yang saya kuasai");
+        id.put("LuminaProfileCardLanguagesHint", "mis. Indonesia, English, 中文");
+        id.put("LuminaProfileCardInterests", "Minat / tag");
+        id.put("LuminaProfileCardInterestsHint", "mis. musik, mendaki, coding");
+        id.put("LuminaProfileCardBio", "Bio singkat");
+        id.put("LuminaProfileCardBioHint", "Beberapa kata tentang dirimu");
+        id.put("LuminaProfileCardTapToSet", "Ketuk untuk mengatur");
+        id.put("LuminaProfileCardInfo", "Kartu ini hanya disimpan di perangkat ini dan tidak pernah dikirim ke Telegram. Kartu ini tidak mengubah profil Telegram-mu.");
+        id.put("LuminaProfileCardShareHeader", "Bagikan");
+        id.put("LuminaProfileCardShare", "Bagikan kartu");
+        id.put("LuminaProfileCardCopy", "Salin ke papan klip");
+        id.put("LuminaProfileCardShareInfo", "Buat ringkasan teks kartumu, lalu bagikan, atau salin dan tempel ke obrolan mana pun.");
+        id.put("LuminaProfileCardCopied", "Kartu disalin");
+        id.put("LuminaProfileCardEmptyShare", "Isi kartumu terlebih dahulu");
         T.put("id", id);
     }
 
