@@ -11339,6 +11339,9 @@
     <string name="LuminaMediaAutoPauseBgVideoInfo">Automatically pause the playing video when you leave LuminaGram.</string>
     <string name="LuminaMediaUnlockAudioSpeed">Speed control for long audio</string>
     <string name="LuminaMediaUnlockAudioSpeedInfo">Show the playback-speed control for music and long audio files, not just voice messages.</string>
+    <!-- LuminaGram confirm before sending voice / round-video -->
+    <string name="LuminaConfirmSendVoiceVideoTitle">Send this message?</string>
+    <string name="LuminaConfirmSendVoiceVideoMessage">Send this voice or video message?</string>
     <!-- LuminaGram decoy calculator lock -->
     <string name="LuminaCalculatorError">Error</string>
 </resources>

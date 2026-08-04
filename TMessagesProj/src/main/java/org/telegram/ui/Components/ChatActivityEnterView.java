@@ -2983,6 +2983,19 @@ public class ChatActivityEnterView extends FrameLayout implements
                                     });
                                     return true;
                                 }
+                                if (LuminaConfig.getBoolean("confirmSendVoiceVideo", false) && !isInScheduleMode()) {
+                                    luminaConfirmSendVoiceVideo(() -> {
+                                        delegate.needStartRecordVideo(1, true, 0, 0, voiceOnce ? 0x7FFFFFFF : 0, effectId, 0);
+                                        sendButton.setEffect(effectId = 0);
+                                        recordingAudioVideo = false;
+                                        messageTransitionIsRunning = false;
+                                        AndroidUtilities.runOnUIThread(moveToSendStateRunnable = () -> {
+                                            moveToSendStateRunnable = null;
+                                            updateRecordInterface(RECORD_STATE_SENDING, true);
+                                        }, 200);
+                                    });
+                                    return true;
+                                }
                                 delegate.needStartRecordVideo(1, true, 0, 0, voiceOnce ? 0x7FFFFFFF : 0, effectId, 0);
                                 sendButton.setEffect(effectId = 0);
                             } else {
@@ -3007,6 +3020,19 @@ public class ChatActivityEnterView extends FrameLayout implements
                                     }
                                     AlertsCreator.ensurePaidMessageConfirmation(currentAccount, dialog_id, 1, payStars -> {
                                         sendMessageInternal(true, 0, 0, payStars, false);
+                                    });
+                                    return true;
+                                }
+                                if (LuminaConfig.getBoolean("confirmSendVoiceVideo", false) && !isInScheduleMode()) {
+                                    luminaConfirmSendVoiceVideo(() -> {
+                                        MediaController.getInstance().stopRecording(1, true, 0, voiceOnce, 0);
+                                        delegate.needStartRecordAudio(0);
+                                        recordingAudioVideo = false;
+                                        messageTransitionIsRunning = false;
+                                        AndroidUtilities.runOnUIThread(moveToSendStateRunnable = () -> {
+                                            moveToSendStateRunnable = null;
+                                            updateRecordInterface(RECORD_STATE_SENDING, true);
+                                        }, 200);
                                     });
                                     return true;
                                 }
@@ -3105,6 +3131,20 @@ public class ChatActivityEnterView extends FrameLayout implements
                                     });
                                     return true;
                                 }
+                                if (LuminaConfig.getBoolean("confirmSendVoiceVideo", false) && !isInScheduleMode()) {
+                                    luminaConfirmSendVoiceVideo(() -> {
+                                        CameraController.getInstance().cancelOnInitRunnable(onFinishInitCameraRunnable);
+                                        delegate.needStartRecordVideo(1, true, 0, 0, voiceOnce ? 0x7FFFFFFF : 0, effectId, 0);
+                                        sendButton.setEffect(effectId = 0);
+                                        recordingAudioVideo = false;
+                                        messageTransitionIsRunning = false;
+                                        AndroidUtilities.runOnUIThread(moveToSendStateRunnable = () -> {
+                                            moveToSendStateRunnable = null;
+                                            updateRecordInterface(RECORD_STATE_SENDING, true);
+                                        }, shouldDrawBackground ? 500 : 0);
+                                    });
+                                    return true;
+                                }
                                 CameraController.getInstance().cancelOnInitRunnable(onFinishInitCameraRunnable);
                                 delegate.needStartRecordVideo(1, true, 0, 0, voiceOnce ? 0x7FFFFFFF : 0, effectId, 0);
                                 sendButton.setEffect(effectId = 0);
@@ -3122,6 +3162,19 @@ public class ChatActivityEnterView extends FrameLayout implements
                                     }
                                     AlertsCreator.ensurePaidMessageConfirmation(currentAccount, dialog_id, 1, payStars -> {
                                         sendMessageInternal(true, 0, 0, payStars, false);
+                                    });
+                                    return true;
+                                }
+                                if (LuminaConfig.getBoolean("confirmSendVoiceVideo", false) && !isInScheduleMode()) {
+                                    luminaConfirmSendVoiceVideo(() -> {
+                                        delegate.needStartRecordAudio(0);
+                                        MediaController.getInstance().stopRecording(1, true, 0, voiceOnce, 0);
+                                        recordingAudioVideo = false;
+                                        messageTransitionIsRunning = false;
+                                        AndroidUtilities.runOnUIThread(moveToSendStateRunnable = () -> {
+                                            moveToSendStateRunnable = null;
+                                            updateRecordInterface(RECORD_STATE_SENDING, true);
+                                        }, shouldDrawBackground ? 500 : 0);
                                     });
                                     return true;
                                 }
@@ -7996,6 +8049,37 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
         }
         updateSendButtonPaid();
+    }
+
+    // ===== LuminaGram: confirm before sending voice / round-video =====
+
+    // Gated by LuminaConfig "confirmSendVoiceVideo" at the record send-sites. Shows a
+    // Send / Cancel dialog; "Send" runs the original dispatch (passed as onSend),
+    // "Cancel" (button, back or tap-outside) discards the active recording exactly like
+    // the existing cancelRecordingAudioVideo() path. Exactly one outcome runs.
+    private void luminaConfirmSendVoiceVideo(Runnable onSend) {
+        if (getContext() == null) {
+            onSend.run();
+            return;
+        }
+        final boolean[] sent = new boolean[1];
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), resourcesProvider);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaConfirmSendVoiceVideoTitle));
+        builder.setMessage(LuminaLocale.getString(R.string.LuminaConfirmSendVoiceVideoMessage));
+        builder.setPositiveButton(LocaleController.getString(R.string.Send), (dialog, which) -> {
+            sent[0] = true;
+            onSend.run();
+        });
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        // Any non-send dismissal (Cancel button, back press, tap-outside) discards the
+        // active recording just like cancelRecordingAudioVideo() does elsewhere, so the
+        // recorder is never left running.
+        builder.setOnDismissListener(dialog -> {
+            if (!sent[0]) {
+                cancelRecordingAudioVideo();
+            }
+        });
+        builder.show();
     }
 
     // ===== LuminaGram: quick reply templates =====
