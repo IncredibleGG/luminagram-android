@@ -60,6 +60,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaTranslateTitle", "自动翻译");
         zhHans.put("LuminaTranslateHeader", "翻译");
         zhHans.put("LuminaTranslateTo", "翻译为");
+        zhHans.put("LuminaDualLanguageDisplay", "翻译时显示原文");
         zhHans.put("LuminaChatSettings", "聊天与媒体");
         zhHans.put("LuminaMessageActions", "消息操作");
         zhHans.put("LuminaForwardNoAuthorTitle", "转发时隐藏作者");
@@ -293,6 +294,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaTranslateTitle", "自動翻譯");
         zhHant.put("LuminaTranslateHeader", "翻譯");
         zhHant.put("LuminaTranslateTo", "翻譯成");
+        zhHant.put("LuminaDualLanguageDisplay", "翻譯時顯示原文");
         zhHant.put("LuminaChatSettings", "聊天與媒體");
         zhHant.put("LuminaMessageActions", "訊息操作");
         zhHant.put("LuminaForwardNoAuthorTitle", "轉發時隱藏作者");
@@ -526,6 +528,7 @@ public final class LuminaLocale {
         ar.put("LuminaTranslateTitle", "الترجمة التلقائية");
         ar.put("LuminaTranslateHeader", "الترجمة");
         ar.put("LuminaTranslateTo", "الترجمة إلى");
+        ar.put("LuminaDualLanguageDisplay", "إظهار النص الأصلي مع الترجمة");
         ar.put("LuminaChatSettings", "الدردشة والوسائط");
         ar.put("LuminaMessageActions", "إجراءات الرسائل");
         ar.put("LuminaForwardNoAuthorTitle", "إعادة التوجيه دون المؤلف");
@@ -758,6 +761,7 @@ public final class LuminaLocale {
         ru.put("LuminaTranslateTitle", "Автоперевод");
         ru.put("LuminaTranslateHeader", "Перевод");
         ru.put("LuminaTranslateTo", "Переводить на");
+        ru.put("LuminaDualLanguageDisplay", "Показывать оригинал с переводом");
         ru.put("LuminaChatSettings", "Чаты и медиа");
         ru.put("LuminaMessageActions", "Действия с сообщениями");
         ru.put("LuminaForwardNoAuthorTitle", "Пересылать без автора");
@@ -990,6 +994,7 @@ public final class LuminaLocale {
         fa.put("LuminaTranslateTitle", "ترجمه خودکار");
         fa.put("LuminaTranslateHeader", "ترجمه");
         fa.put("LuminaTranslateTo", "ترجمه به");
+        fa.put("LuminaDualLanguageDisplay", "نمایش متن اصلی همراه با ترجمه");
         fa.put("LuminaChatSettings", "گفتگو و رسانه");
         fa.put("LuminaMessageActions", "کنش‌های پیام");
         fa.put("LuminaForwardNoAuthorTitle", "هدایت بدون نویسنده");
@@ -1222,6 +1227,7 @@ public final class LuminaLocale {
         tr.put("LuminaTranslateTitle", "Otomatik çeviri");
         tr.put("LuminaTranslateHeader", "Çeviri");
         tr.put("LuminaTranslateTo", "Şu dile çevir");
+        tr.put("LuminaDualLanguageDisplay", "Çeviriyle birlikte orijinali göster");
         tr.put("LuminaChatSettings", "Sohbet ve medya");
         tr.put("LuminaMessageActions", "Mesaj işlemleri");
         tr.put("LuminaForwardNoAuthorTitle", "Yazarı olmadan ilet");
@@ -1454,6 +1460,7 @@ public final class LuminaLocale {
         es.put("LuminaTranslateTitle", "Autotraducción");
         es.put("LuminaTranslateHeader", "Traducción");
         es.put("LuminaTranslateTo", "Traducir a");
+        es.put("LuminaDualLanguageDisplay", "Mostrar el original con la traducción");
         es.put("LuminaChatSettings", "Chat y multimedia");
         es.put("LuminaMessageActions", "Acciones de mensajes");
         es.put("LuminaForwardNoAuthorTitle", "Reenviar sin autor");
@@ -1686,6 +1693,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaTranslateTitle", "Tradução automática");
         ptBr.put("LuminaTranslateHeader", "Tradução");
         ptBr.put("LuminaTranslateTo", "Traduzir para");
+        ptBr.put("LuminaDualLanguageDisplay", "Mostrar o original com a tradução");
         ptBr.put("LuminaChatSettings", "Conversa e mídia");
         ptBr.put("LuminaMessageActions", "Ações de mensagens");
         ptBr.put("LuminaForwardNoAuthorTitle", "Encaminhar sem autor");
@@ -1918,6 +1926,7 @@ public final class LuminaLocale {
         id.put("LuminaTranslateTitle", "Terjemah otomatis");
         id.put("LuminaTranslateHeader", "Terjemahan");
         id.put("LuminaTranslateTo", "Terjemahkan ke");
+        id.put("LuminaDualLanguageDisplay", "Tampilkan teks asli dengan terjemahan");
         id.put("LuminaChatSettings", "Obrolan & media");
         id.put("LuminaMessageActions", "Tindakan pesan");
         id.put("LuminaForwardNoAuthorTitle", "Teruskan tanpa penulis");

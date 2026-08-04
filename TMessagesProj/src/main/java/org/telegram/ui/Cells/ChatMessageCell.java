@@ -1175,6 +1175,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     private boolean hasGamePreview;
     private boolean hasInvoicePreview;
     private boolean hasInvoicePrice;
+    // LuminaGram: dual-language inline display - original text under the translation.
+    private StaticLayout dualLanguageLayout;
+    private int dualLanguageHeight;
+    private int dualLanguageWidth;
+    private static TextPaint dualLanguageTextPaint;
     public int linkPreviewHeight;
     private int mediaOffsetY;
     private int descriptionY;
@@ -7011,6 +7016,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             hasGamePreview = false;
             hasInvoicePreview = false;
             hasInvoicePrice = false;
+            dualLanguageLayout = null;
+            dualLanguageHeight = 0;
+            dualLanguageWidth = 0;
             closeExplanationX = -1;
             closeExplanationY = -1;
             instantPressed = commentButtonPressed = false;
@@ -7723,12 +7731,16 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 } else {
                     backgroundWidth = messageObject.textWidth + getExtraTextX() * 2 + (hasGamePreview || hasInvoicePreview ? dp(10) : 0);
                 }
+                buildDualLanguageLayout(messageObject, maxWidth);
+                if (dualLanguageWidth > 0) {
+                    backgroundWidth = Math.max(backgroundWidth, dualLanguageWidth + getExtraTextX() * 2 + dp(2));
+                }
                 if (messageObject.isSponsored()) {
                     totalHeight = dp(22.5f);
                 } else if (messageObject.type == MessageObject.TYPE_ARTICLE) {
                     totalHeight = messageObject.richLayout.getHeight() + dp(19.5f) + namesOffset;
                 } else {
-                    totalHeight = messageObject.textHeight() + dp(19.5f) + namesOffset;
+                    totalHeight = messageObject.textHeight() + dualLanguageHeight + dp(19.5f) + namesOffset;
                 }
 
                 if (!reactionsLayoutInBubble.isSmall) {
@@ -16707,6 +16719,70 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         } else {
             drawMessageText(textX, textY, canvas, currentMessageObject.textLayoutBlocks, currentMessageObject.textXOffset, true, 1.0f, true, false, false);
         }
+        drawDualLanguageOriginal(canvas, textY);
+    }
+
+    // LuminaGram: build a dimmed layout of the original message text when dual-language
+    // display is enabled and the message is translated. Plain text bubbles only
+    // (no link/game/invoice preview) - those layouts position media relative to the
+    // translated text height and are intentionally left unchanged.
+    private void buildDualLanguageLayout(MessageObject messageObject, int maxWidth) {
+        dualLanguageLayout = null;
+        dualLanguageHeight = 0;
+        dualLanguageWidth = 0;
+        if (messageObject == null || messageObject.messageOwner == null) {
+            return;
+        }
+        if (!LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+            return;
+        }
+        if (!messageObject.translated || messageObject.type != MessageObject.TYPE_TEXT) {
+            return;
+        }
+        if (hasLinkPreview || hasGamePreview || hasInvoicePreview) {
+            return;
+        }
+        CharSequence original = messageObject.messageOwner.message;
+        if (TextUtils.isEmpty(original)) {
+            return;
+        }
+        if (maxWidth <= 0) {
+            maxWidth = messageObject.textWidth > 0 ? messageObject.textWidth : dp(200);
+        }
+        if (dualLanguageTextPaint == null) {
+            dualLanguageTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        }
+        dualLanguageTextPaint.setTypeface(Theme.chat_msgTextPaint != null ? Theme.chat_msgTextPaint.getTypeface() : null);
+        float baseSize = Theme.chat_msgTextPaint != null ? Theme.chat_msgTextPaint.getTextSize() : dp(16);
+        dualLanguageTextPaint.setTextSize(Math.max(dp(12), baseSize - dp(2)));
+        try {
+            CharSequence text = Emoji.replaceEmoji(original, dualLanguageTextPaint.getFontMetricsInt(), false);
+            dualLanguageLayout = new StaticLayout(text, dualLanguageTextPaint, maxWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+            int w = 0;
+            for (int i = 0; i < dualLanguageLayout.getLineCount(); i++) {
+                w = Math.max(w, (int) Math.ceil(dualLanguageLayout.getLineWidth(i)));
+            }
+            dualLanguageWidth = w;
+            dualLanguageHeight = dualLanguageLayout.getHeight() + dp(6);
+        } catch (Exception e) {
+            FileLog.e(e);
+            dualLanguageLayout = null;
+            dualLanguageHeight = 0;
+            dualLanguageWidth = 0;
+        }
+    }
+
+    // LuminaGram: draw the original-text sub-line beneath the translated text.
+    private void drawDualLanguageOriginal(Canvas canvas, float textY) {
+        if (dualLanguageLayout == null || dualLanguageTextPaint == null || currentMessageObject == null || currentMessageObject.isSponsored()) {
+            return;
+        }
+        int color = getThemedColor(currentMessageObject.isOutOwner() ? Theme.key_chat_messageTextOut : Theme.key_chat_messageTextIn);
+        dualLanguageTextPaint.setColor(ColorUtils.setAlphaComponent(color, 150));
+        canvas.save();
+        canvas.translate(textX, textY + currentMessageObject.textHeight() + dp(6));
+        dualLanguageLayout.draw(canvas);
+        canvas.restore();
     }
 
     public void drawMessageText(Canvas canvas, ArrayList<MessageObject.TextLayoutBlock> textLayoutBlocks, boolean origin, float alpha, boolean drawOnlyText) {
