@@ -32,6 +32,7 @@ public class LuminaTranslateActivity extends BaseFragment {
     private static final int ITEM_TARGET_LANGUAGE = 1;
     private static final int ITEM_SHOW_BUTTON = 2;
     private static final int ITEM_TRANSLATE_BEFORE_SEND = 3;
+    private static final int ITEM_TRANSLATE_BEFORE_SEND_CONFIRM = 4;
 
     private UniversalRecyclerView listView;
 
@@ -74,7 +75,9 @@ public class LuminaTranslateActivity extends BaseFragment {
                 .setChecked(getMessagesController().getTranslateController().isContextTranslateEnabled()));
         items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND, LuminaLocale.getString(R.string.LuminaTranslateBeforeSend))
                 .setChecked(LuminaConfig.translateBeforeSend));
-        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaTranslateBeforeSendInfo)));
+        items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND_CONFIRM, LuminaLocale.getString(R.string.LuminaTranslateBeforeSendConfirm))
+                .setChecked(LuminaConfig.translateBeforeSendConfirm));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaTranslateBeforeSendConfirmInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -89,6 +92,10 @@ public class LuminaTranslateActivity extends BaseFragment {
                 break;
             case ITEM_TRANSLATE_BEFORE_SEND:
                 LuminaConfig.toggleTranslateBeforeSend();
+                update();
+                break;
+            case ITEM_TRANSLATE_BEFORE_SEND_CONFIRM:
+                LuminaConfig.toggleTranslateBeforeSendConfirm();
                 update();
                 break;
         }

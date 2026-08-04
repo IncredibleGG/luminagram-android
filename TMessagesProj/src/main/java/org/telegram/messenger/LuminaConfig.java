@@ -24,6 +24,7 @@ public class LuminaConfig {
 
     // ---- Translation ----
     public static boolean translateBeforeSend;
+    public static boolean translateBeforeSendConfirm;
 
     static {
         loadConfig();
@@ -42,6 +43,7 @@ public class LuminaConfig {
             hideStories = preferences.getBoolean("hideStories", false);
             compactChatList = preferences.getBoolean("compactChatList", false);
             translateBeforeSend = preferences.getBoolean("translateBeforeSend", false);
+            translateBeforeSendConfirm = preferences.getBoolean("translateBeforeSendConfirm", false);
 
             configLoaded = true;
         }
@@ -71,5 +73,9 @@ public class LuminaConfig {
 
     public static void toggleTranslateBeforeSend() {
         editor.putBoolean("translateBeforeSend", translateBeforeSend ^= true).apply();
+    }
+
+    public static void toggleTranslateBeforeSendConfirm() {
+        editor.putBoolean("translateBeforeSendConfirm", translateBeforeSendConfirm ^= true).apply();
     }
 }

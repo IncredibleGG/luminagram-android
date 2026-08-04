@@ -75,6 +75,10 @@ public final class LuminaLocale {
         zhHans.put("LuminaSendTranslation", "发送译文");
         zhHans.put("LuminaSendOriginal", "发送原文");
         zhHans.put("LuminaTranslateOriginalLabel", "原文");
+        zhHans.put("LuminaTranslateBeforeSendConfirm", "发送前二次确认");
+        zhHans.put("LuminaTranslateBeforeSendConfirmInfo", "开启后，发送前会显示译文预览，你可以选择发送译文或原文。关闭后，译文将一键直接发送。");
+        zhHans.put("LuminaTranslateBeforeSendEnabled", "发送前翻译：开");
+        zhHans.put("LuminaTranslateBeforeSendDisabled", "发送前翻译：关");
         zhHans.put("LuminaPrivacySecurityHeader", "安全");
         zhHans.put("LuminaPrivacySecureScreen", "在最近任务中模糊显示");
         zhHans.put("LuminaPrivacySecureScreenInfo", "在任务切换器中隐藏应用内容，并禁止在 LuminaGram 内截屏（对整个应用启用 FLAG_SECURE）。");
@@ -154,6 +158,10 @@ public final class LuminaLocale {
         zhHant.put("LuminaSendTranslation", "傳送譯文");
         zhHant.put("LuminaSendOriginal", "傳送原文");
         zhHant.put("LuminaTranslateOriginalLabel", "原文");
+        zhHant.put("LuminaTranslateBeforeSendConfirm", "傳送前二次確認");
+        zhHant.put("LuminaTranslateBeforeSendConfirmInfo", "開啟後，傳送前會顯示譯文預覽，你可以選擇傳送譯文或原文。關閉後，譯文將一鍵直接傳送。");
+        zhHant.put("LuminaTranslateBeforeSendEnabled", "傳送前翻譯：開");
+        zhHant.put("LuminaTranslateBeforeSendDisabled", "傳送前翻譯：關");
         zhHant.put("LuminaPrivacySecurityHeader", "安全");
         zhHant.put("LuminaPrivacySecureScreen", "在最近工作中模糊顯示");
         zhHant.put("LuminaPrivacySecureScreenInfo", "在工作切換器中隱藏應用程式內容，並禁止在 LuminaGram 內截圖（對整個應用程式啟用 FLAG_SECURE）。");
@@ -233,6 +241,10 @@ public final class LuminaLocale {
         ar.put("LuminaSendTranslation", "إرسال الترجمة");
         ar.put("LuminaSendOriginal", "إرسال النص الأصلي");
         ar.put("LuminaTranslateOriginalLabel", "النص الأصلي");
+        ar.put("LuminaTranslateBeforeSendConfirm", "التأكيد قبل الإرسال");
+        ar.put("LuminaTranslateBeforeSendConfirmInfo", "عند التفعيل، تظهر معاينة للترجمة قبل الإرسال لتختار إرسال الترجمة أو النص الأصلي. عند الإيقاف، تُرسَل الترجمة مباشرةً بنقرة واحدة.");
+        ar.put("LuminaTranslateBeforeSendEnabled", "الترجمة قبل الإرسال: تشغيل");
+        ar.put("LuminaTranslateBeforeSendDisabled", "الترجمة قبل الإرسال: إيقاف");
         ar.put("LuminaPrivacySecurityHeader", "الأمان");
         ar.put("LuminaPrivacySecureScreen", "تعتيم التطبيق في قائمة التطبيقات الأخيرة");
         ar.put("LuminaPrivacySecureScreenInfo", "يُخفي محتوى التطبيق في مبدّل المهام ويمنع التقاط لقطات الشاشة داخل LuminaGram (يُطبّق FLAG_SECURE على التطبيق بالكامل).");
@@ -312,6 +324,10 @@ public final class LuminaLocale {
         ru.put("LuminaSendTranslation", "Отправить перевод");
         ru.put("LuminaSendOriginal", "Отправить оригинал");
         ru.put("LuminaTranslateOriginalLabel", "Оригинал");
+        ru.put("LuminaTranslateBeforeSendConfirm", "Подтверждать перед отправкой");
+        ru.put("LuminaTranslateBeforeSendConfirmInfo", "Когда включено, перед отправкой показывается предпросмотр перевода, чтобы вы могли отправить перевод или оригинал. Когда выключено, перевод отправляется сразу одним касанием.");
+        ru.put("LuminaTranslateBeforeSendEnabled", "Перевод перед отправкой: вкл.");
+        ru.put("LuminaTranslateBeforeSendDisabled", "Перевод перед отправкой: выкл.");
         ru.put("LuminaPrivacySecurityHeader", "Безопасность");
         ru.put("LuminaPrivacySecureScreen", "Размывать приложение в недавних");
         ru.put("LuminaPrivacySecureScreenInfo", "Скрывает содержимое приложения в списке недавних и блокирует скриншоты в LuminaGram (применяет FLAG_SECURE ко всему приложению).");
@@ -391,6 +407,10 @@ public final class LuminaLocale {
         fa.put("LuminaSendTranslation", "ارسال ترجمه");
         fa.put("LuminaSendOriginal", "ارسال متن اصلی");
         fa.put("LuminaTranslateOriginalLabel", "متن اصلی");
+        fa.put("LuminaTranslateBeforeSendConfirm", "تأیید پیش از ارسال");
+        fa.put("LuminaTranslateBeforeSendConfirmInfo", "وقتی روشن باشد، پیش از ارسال پیش‌نمایش ترجمه نمایش داده می‌شود تا بتوانید ترجمه یا متن اصلی را بفرستید. وقتی خاموش باشد، ترجمه با یک ضربه مستقیم ارسال می‌شود.");
+        fa.put("LuminaTranslateBeforeSendEnabled", "ترجمه پیش از ارسال: روشن");
+        fa.put("LuminaTranslateBeforeSendDisabled", "ترجمه پیش از ارسال: خاموش");
         fa.put("LuminaPrivacySecurityHeader", "امنیت");
         fa.put("LuminaPrivacySecureScreen", "محو برنامه در فهرست اخیر");
         fa.put("LuminaPrivacySecureScreenInfo", "محتوای برنامه را در جابه‌جاگر برنامه‌ها پنهان می‌کند و از گرفتن اسکرین‌شات در LuminaGram جلوگیری می‌کند (FLAG_SECURE برای کل برنامه اعمال می‌شود).");
@@ -470,6 +490,10 @@ public final class LuminaLocale {
         tr.put("LuminaSendTranslation", "Çeviriyi gönder");
         tr.put("LuminaSendOriginal", "Orijinali gönder");
         tr.put("LuminaTranslateOriginalLabel", "Orijinal");
+        tr.put("LuminaTranslateBeforeSendConfirm", "Göndermeden önce onayla");
+        tr.put("LuminaTranslateBeforeSendConfirmInfo", "Açıkken, göndermeden önce çevirinin bir önizlemesi görünür; çeviriyi ya da orijinali gönderebilirsiniz. Kapalıyken çeviri tek dokunuşla doğrudan gönderilir.");
+        tr.put("LuminaTranslateBeforeSendEnabled", "Göndermeden önce çevir: açık");
+        tr.put("LuminaTranslateBeforeSendDisabled", "Göndermeden önce çevir: kapalı");
         tr.put("LuminaPrivacySecurityHeader", "Güvenlik");
         tr.put("LuminaPrivacySecureScreen", "Son uygulamalarda bulanıklaştır");
         tr.put("LuminaPrivacySecureScreenInfo", "Uygulama içeriğini görev değiştiricide gizler ve LuminaGram içinde ekran görüntüsü alınmasını engeller (FLAG_SECURE tüm uygulamaya uygulanır).");
@@ -549,6 +573,10 @@ public final class LuminaLocale {
         es.put("LuminaSendTranslation", "Enviar traducción");
         es.put("LuminaSendOriginal", "Enviar original");
         es.put("LuminaTranslateOriginalLabel", "Original");
+        es.put("LuminaTranslateBeforeSendConfirm", "Confirmar antes de enviar");
+        es.put("LuminaTranslateBeforeSendConfirmInfo", "Cuando está activado, aparece una vista previa de la traducción antes de enviar, para que elijas enviar la traducción o el original. Cuando está desactivado, la traducción se envía directamente con un solo toque.");
+        es.put("LuminaTranslateBeforeSendEnabled", "Traducir antes de enviar: activado");
+        es.put("LuminaTranslateBeforeSendDisabled", "Traducir antes de enviar: desactivado");
         es.put("LuminaPrivacySecurityHeader", "Seguridad");
         es.put("LuminaPrivacySecureScreen", "Difuminar la app en recientes");
         es.put("LuminaPrivacySecureScreenInfo", "Oculta el contenido de la app en el selector de tareas y bloquea las capturas de pantalla dentro de LuminaGram (aplica FLAG_SECURE en toda la app).");
@@ -628,6 +656,10 @@ public final class LuminaLocale {
         ptBr.put("LuminaSendTranslation", "Enviar tradução");
         ptBr.put("LuminaSendOriginal", "Enviar original");
         ptBr.put("LuminaTranslateOriginalLabel", "Original");
+        ptBr.put("LuminaTranslateBeforeSendConfirm", "Confirmar antes de enviar");
+        ptBr.put("LuminaTranslateBeforeSendConfirmInfo", "Quando ativado, uma prévia da tradução aparece antes de enviar, para você escolher enviar a tradução ou o original. Quando desativado, a tradução é enviada diretamente com um único toque.");
+        ptBr.put("LuminaTranslateBeforeSendEnabled", "Traduzir antes de enviar: ativado");
+        ptBr.put("LuminaTranslateBeforeSendDisabled", "Traduzir antes de enviar: desativado");
         ptBr.put("LuminaPrivacySecurityHeader", "Segurança");
         ptBr.put("LuminaPrivacySecureScreen", "Desfocar o app em recentes");
         ptBr.put("LuminaPrivacySecureScreenInfo", "Oculta o conteúdo do app no alternador de tarefas e bloqueia capturas de tela dentro do LuminaGram (aplica FLAG_SECURE em todo o app).");
@@ -707,6 +739,10 @@ public final class LuminaLocale {
         id.put("LuminaSendTranslation", "Kirim terjemahan");
         id.put("LuminaSendOriginal", "Kirim asli");
         id.put("LuminaTranslateOriginalLabel", "Asli");
+        id.put("LuminaTranslateBeforeSendConfirm", "Konfirmasi sebelum kirim");
+        id.put("LuminaTranslateBeforeSendConfirmInfo", "Saat aktif, pratinjau terjemahan muncul sebelum mengirim, sehingga Anda dapat memilih mengirim terjemahan atau teks asli. Saat nonaktif, terjemahan langsung dikirim dengan satu ketukan.");
+        id.put("LuminaTranslateBeforeSendEnabled", "Terjemahkan sebelum kirim: aktif");
+        id.put("LuminaTranslateBeforeSendDisabled", "Terjemahkan sebelum kirim: nonaktif");
         id.put("LuminaPrivacySecurityHeader", "Keamanan");
         id.put("LuminaPrivacySecureScreen", "Buramkan aplikasi di layar terkini");
         id.put("LuminaPrivacySecureScreenInfo", "Menyembunyikan konten aplikasi di pengalih tugas dan memblokir tangkapan layar di dalam LuminaGram (menerapkan FLAG_SECURE ke seluruh aplikasi).");

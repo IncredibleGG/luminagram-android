@@ -11204,6 +11204,10 @@
     <string name="LuminaSendTranslation">Send translation</string>
     <string name="LuminaSendOriginal">Send original</string>
     <string name="LuminaTranslateOriginalLabel">Original</string>
+    <string name="LuminaTranslateBeforeSendConfirm">Confirm before send</string>
+    <string name="LuminaTranslateBeforeSendConfirmInfo">When on, a preview of the translation appears before sending, so you can choose to send the translation or the original. When off, the translation is sent directly with a single tap.</string>
+    <string name="LuminaTranslateBeforeSendEnabled">Translate before send: on</string>
+    <string name="LuminaTranslateBeforeSendDisabled">Translate before send: off</string>
     <string name="LuminaChatSettings">Chat &amp; media</string>
     <string name="LuminaMessageActions">Message actions</string>
     <string name="LuminaForwardNoAuthorTitle">Forward without author</string>

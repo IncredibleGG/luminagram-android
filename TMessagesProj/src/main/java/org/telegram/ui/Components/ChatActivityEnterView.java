@@ -5089,6 +5089,20 @@ public class ChatActivityEnterView extends FrameLayout implements
                 }
             });
         }
+        // LuminaGram: quick toggle for translate-before-send, right in the send long-press menu.
+        options.add(R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaTranslateBeforeSend), () -> {
+            LuminaConfig.toggleTranslateBeforeSend();
+            if (parentFragment != null) {
+                BulletinFactory.of(parentFragment).createSimpleBulletin(
+                        R.raw.msg_translate,
+                        LuminaLocale.getString(LuminaConfig.translateBeforeSend ? R.string.LuminaTranslateBeforeSendEnabled : R.string.LuminaTranslateBeforeSendDisabled)
+                ).show();
+            }
+            if (messageSendPreview != null) {
+                messageSendPreview.dismiss(false);
+                messageSendPreview = null;
+            }
+        });
         options.setupSelectors();
         if (sendWhenOnlineButton != null) {
             TLRPC.User user = parentFragment == null ? null : parentFragment.getCurrentUser();
@@ -7860,8 +7874,12 @@ public class ChatActivityEnterView extends FrameLayout implements
             if (translated == null || translated.trim().length() == 0 || translated.equals(original)) {
                 // Translation unavailable or a no-op (same language): send the text as typed.
                 luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
-            } else {
+            } else if (LuminaConfig.translateBeforeSendConfirm) {
+                // Confirm-before-send on: preview Original -> Translation and let the user choose.
                 luminaShowTranslatePreview(original, translated, toLang, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            } else {
+                // Default (confirm off): one-tap send of the translation.
+                luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
             }
         }));
     }
