@@ -146,6 +146,7 @@ import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LanguageDetector;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
@@ -13519,7 +13520,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else if (position == registrationDateRow) {
                         String regDate = getEstimatedRegistrationDate(userId);
                         if (regDate == null) regDate = "—";
-                        detailCell.setTextAndValue(regDate, LocaleController.getString(R.string.ProfileRegistrationDate), false);
+                        detailCell.setTextAndValue(regDate, LuminaLocale.getString(R.string.ProfileRegistrationDate), false);
                     } else if (position == phoneRow) {
                         String text;
                         TLRPC.User user = getMessagesController().getUser(userId);

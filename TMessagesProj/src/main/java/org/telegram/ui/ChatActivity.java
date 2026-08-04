@@ -184,7 +184,7 @@ import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.messenger.LuminaConfig;
-import org.telegram.messenger.LuminaGate;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.Utilities;
 import org.telegram.messenger.VideoEditedInfo;
 import org.telegram.messenger.browser.Browser;
@@ -3494,7 +3494,7 @@ public class ChatActivity extends BaseFragment implements
             if (chatActivity != null && chatActivity.getDialogId() == UserObject.VERIFY) {
                 return true;
             }
-            return chatActivity == null || LuminaGate.allowCopyRestricted() || !(
+            return chatActivity == null || !(
                 chatActivity.getDialogId() < 0 && chatActivity.getMessagesController().isPeerNoForwards(chatActivity.getDialogId()) ||
                 selectedView != null && selectedView.getMessageObject() != null && (selectedView.getMessageObject().messageOwner != null && selectedView.getMessageObject().messageOwner.noforwards)
             );
@@ -45425,9 +45425,6 @@ public class ChatActivity extends BaseFragment implements
         allowPin = allowPin && message.getId() > 0 && (message.messageOwner.action == null || message.messageOwner.action instanceof TLRPC.TL_messageActionEmpty) && !message.isExpiredStory() && message.type != MessageObject.TYPE_STORY_MENTION;
         boolean noforwards = isEphemeral || isPeerNoForwards() || message.messageOwner.noforwards || getDialogId() == UserObject.VERIFY;
         boolean noforwardsOrPaidMedia = noforwards || message.type == MessageObject.TYPE_PAID_MEDIA;
-        // LuminaGram: relax the local-save gate for media when the sensitive toggle is on (full build only); keep paid media blocked
-        final boolean luminaSaveRestricted = LuminaGate.allowSaveRestricted() && message.type != MessageObject.TYPE_PAID_MEDIA;
-        final boolean saveNoforwardsOrPaidMedia = noforwardsOrPaidMedia && !luminaSaveRestricted;
         boolean allowUnpin = !isEphemeral && message.getDialogId() != mergeDialogId && allowPin && (pinnedMessageObjects.containsKey(message.getId()) || groupedMessages != null && !groupedMessages.messages.isEmpty() && pinnedMessageObjects.containsKey(groupedMessages.messages.get(0).getId())) && !message.isExpiredStory();
         boolean allowEdit = !isEphemeral && message.canEditMessage(currentChat) && !chatActivityEnterView.hasAudioToSend() && message.getDialogId() != mergeDialogId && message.type != MessageObject.TYPE_STORY && message.type != MessageObject.TYPE_POLL;
         if (allowEdit && groupedMessages != null) {
@@ -45615,7 +45612,7 @@ public class ChatActivity extends BaseFragment implements
                     options.add(OPTION_REPLY);
                     icons.add(R.drawable.menu_reply);
                 }
-                if ((selectedObject.type == MessageObject.TYPE_TEXT || selectedObject.type == MessageObject.TYPE_ARTICLE || selectedObject.isDice() || selectedObject.isAnimatedEmoji() || selectedObject.isAnimatedEmojiStickers() || getMessageCaption(selectedObject, selectedObjectGroup) != null) && (!noforwardsOrPaidMedia || isEphemeral || LuminaGate.allowCopyRestricted()) && !selectedObject.sponsoredCanReport) {
+                if ((selectedObject.type == MessageObject.TYPE_TEXT || selectedObject.type == MessageObject.TYPE_ARTICLE || selectedObject.isDice() || selectedObject.isAnimatedEmoji() || selectedObject.isAnimatedEmojiStickers() || getMessageCaption(selectedObject, selectedObjectGroup) != null) && (!noforwardsOrPaidMedia || isEphemeral) && !selectedObject.sponsoredCanReport) {
                     items.add(LocaleController.getString(R.string.Copy));
                     options.add(OPTION_COPY);
                     icons.add(R.drawable.msg_copy);
@@ -45642,7 +45639,7 @@ public class ChatActivity extends BaseFragment implements
                 if (type == 2) {
                     if (chatMode != MODE_SCHEDULED) {
 
-                        if (selectedObject.type == MessageObject.TYPE_POLL && !saveNoforwardsOrPaidMedia) {
+                        if (selectedObject.type == MessageObject.TYPE_POLL && !noforwardsOrPaidMedia) {
                             TLRPC.MessageMedia media = MessageObject.getMedia(selectedObject);
                             if (media instanceof TLRPC.TL_messageMediaPoll) {
                                 TLRPC.TL_messageMediaPoll mediaPoll = (TLRPC.TL_messageMediaPoll) media;
@@ -45698,24 +45695,24 @@ public class ChatActivity extends BaseFragment implements
                                     icons.add(R.drawable.msg_addbot);
                                 }
                             }
-                        } else if (selectedObject.isMusic() && !saveNoforwardsOrPaidMedia && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
+                        } else if (selectedObject.isMusic() && !noforwardsOrPaidMedia && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
                             items.add(LocaleController.getString(R.string.SaveToMusic));
                             options.add(OPTION_SAVE_TO_DOWNLOADS_OR_MUSIC);
                             icons.add(R.drawable.msg_download);
-                        } else if (selectedObject.isDocument() && !saveNoforwardsOrPaidMedia && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
+                        } else if (selectedObject.isDocument() && !noforwardsOrPaidMedia && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
                             items.add(LocaleController.getString(R.string.SaveToDownloads));
                             options.add(OPTION_SAVE_TO_DOWNLOADS_OR_MUSIC);
                             icons.add(R.drawable.msg_download);
                         }
                     }
-                } else if (type == 3 && !saveNoforwardsOrPaidMedia) {
+                } else if (type == 3 && !noforwardsOrPaidMedia) {
                     if (selectedObject.messageOwner.media instanceof TLRPC.TL_messageMediaWebPage && MessageObject.isNewGifDocument(selectedObject.messageOwner.media.webpage.document)) {
                         items.add(LocaleController.getString(R.string.SaveToGIFs));
                         options.add(OPTION_ADD_TO_GIFS);
                         icons.add(R.drawable.msg_gif);
                     }
                 } else if (type == 4) {
-                    if (!saveNoforwardsOrPaidMedia && !selectedObject.hasRevealedExtendedMedia()) {
+                    if (!noforwardsOrPaidMedia && !selectedObject.hasRevealedExtendedMedia()) {
                         if (selectedObject.isVideo()) {
                             if (!selectedObject.needDrawBluredPreview()) {
                                 items.add(LocaleController.getString(R.string.SaveToGallery));
@@ -45756,7 +45753,7 @@ public class ChatActivity extends BaseFragment implements
                     items.add(LocaleController.getString(R.string.ApplyLocalizationFile));
                     options.add(OPTION_APPLY_LOCALIZATION_OR_THEME);
                     icons.add(R.drawable.msg_language);
-                    if (!saveNoforwardsOrPaidMedia && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
+                    if (!noforwardsOrPaidMedia && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
                         items.add(LocaleController.getString(R.string.SaveToDownloads));
                         options.add(OPTION_SAVE_TO_DOWNLOADS_OR_MUSIC);
                         icons.add(R.drawable.msg_download);
@@ -45768,7 +45765,7 @@ public class ChatActivity extends BaseFragment implements
                     items.add(LocaleController.getString(R.string.ApplyThemeFile));
                     options.add(OPTION_APPLY_LOCALIZATION_OR_THEME);
                     icons.add(R.drawable.msg_theme);
-                    if (!saveNoforwardsOrPaidMedia && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
+                    if (!noforwardsOrPaidMedia && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
                         items.add(LocaleController.getString(R.string.SaveToDownloads));
                         options.add(OPTION_SAVE_TO_DOWNLOADS_OR_MUSIC);
                         icons.add(R.drawable.msg_download);
@@ -45776,7 +45773,7 @@ public class ChatActivity extends BaseFragment implements
                         options.add(OPTION_SHARE);
                         icons.add(R.drawable.msg_shareout);
                     }
-                } else if (type == 6 && !saveNoforwardsOrPaidMedia && !selectedObject.hasRevealedExtendedMedia()) {
+                } else if (type == 6 && !noforwardsOrPaidMedia && !selectedObject.hasRevealedExtendedMedia()) {
                     if (!selectedObject.needDrawBluredPreview() && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
                         items.add(LocaleController.getString(R.string.SaveToGallery));
                         options.add(OPTION_SAVE_TO_GALLERY2);
@@ -45846,7 +45843,7 @@ public class ChatActivity extends BaseFragment implements
                     }
                 }
                 if (LuminaConfig.getBoolean("selectFromAuthor", true) && currentChat != null && message.getId() > 0 && selectedObject.getFromChatId() > 0 && !selectedObject.isSponsored()) {
-                    items.add(LocaleController.getString(R.string.LuminaSelectFromAuthor));
+                    items.add(LuminaLocale.getString(R.string.LuminaSelectFromAuthor));
                     options.add(OPTION_SELECT_AUTHOR);
                     icons.add(R.drawable.msg_select);
                 }
@@ -45858,17 +45855,17 @@ public class ChatActivity extends BaseFragment implements
                     options.add(OPTION_FORWARD);
                     icons.add(R.drawable.msg_forward);
                     if (LuminaConfig.getBoolean("forwardNoAuthor", false)) {
-                        items.add(LocaleController.getString(R.string.LuminaForwardNoAuthor));
+                        items.add(LuminaLocale.getString(R.string.LuminaForwardNoAuthor));
                         options.add(OPTION_FORWARD_NO_AUTHOR);
                         icons.add(R.drawable.msg_forward);
                     }
                     if (LuminaConfig.getBoolean("forwardNoCaption", false)) {
-                        items.add(LocaleController.getString(R.string.LuminaForwardNoCaption));
+                        items.add(LuminaLocale.getString(R.string.LuminaForwardNoCaption));
                         options.add(OPTION_FORWARD_NO_CAPTION);
                         icons.add(R.drawable.msg_forward);
                     }
                     if (LuminaConfig.getBoolean("saveToCloud", true) && !UserObject.isUserSelf(currentUser)) {
-                        items.add(LocaleController.getString(R.string.LuminaSaveToCloud));
+                        items.add(LuminaLocale.getString(R.string.LuminaSaveToCloud));
                         options.add(OPTION_SAVE_TO_CLOUD);
                         icons.add(R.drawable.msg_saved);
                     }

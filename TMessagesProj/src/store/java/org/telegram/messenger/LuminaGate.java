@@ -2,9 +2,9 @@ package org.telegram.messenger;
 
 /**
  * LuminaGate — STORE flavor.
- * Google-Play-safe build: every ToS-sensitive capability is hard-disabled and its
- * decision logic is absent (methods are constant `false`). The full build ships a
- * different LuminaGate under src/full.
+ * Google-Play-safe build: no ToS-sensitive capability exists. Retained only as the
+ * build discriminator and a hard-disabled allowSaveRestricted() (referenced by
+ * PhotoViewer).
  */
 public class LuminaGate {
 
@@ -12,14 +12,6 @@ public class LuminaGate {
     public static final boolean FULL = false;
 
     public static boolean allowSaveRestricted() {
-        return false;
-    }
-
-    public static boolean allowCopyRestricted() {
-        return false;
-    }
-
-    public static boolean unlockPremiumTranslate() {
         return false;
     }
 }
