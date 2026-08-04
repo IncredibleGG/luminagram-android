@@ -265,6 +265,11 @@ public class TranslateController extends BaseController {
     public String getDialogTranslateTo(long dialogId) {
         String lang = translateDialogLanguage.get(dialogId);
         if (lang == null) {
+            // LuminaGram (Wave 8): restore the per-dialog target language chosen
+            // previously so reopening a chat keeps its translation target.
+            lang = getStoredDialogTranslateTo(dialogId);
+        }
+        if (lang == null) {
             lang = TranslateAlert2.getToLanguage();
             if (lang == null || lang.equals(getDialogDetectedLanguage(dialogId))) {
                 lang = currentLanguage();
@@ -276,10 +281,51 @@ public class TranslateController extends BaseController {
         return lang;
     }
 
+    // LuminaGram (Wave 8): per-chat translation target-language memory.
+    // The chosen target language is remembered per dialog in the app-private
+    // "luminagram" prefs as a JSON map { "<dialogId>": "<lang>" } under this key,
+    // so reopening a chat restores its previous target instead of the app default.
+    // Purely local -- nothing is ever sent to Telegram.
+    private static final String KEY_DIALOG_TRANSLATE_LANG = "dialogTranslateLang";
+
+    private String getStoredDialogTranslateTo(long dialogId) {
+        String raw = LuminaConfig.getString(KEY_DIALOG_TRANSLATE_LANG, null);
+        if (raw == null || raw.length() == 0) {
+            return null;
+        }
+        try {
+            org.json.JSONObject map = new org.json.JSONObject(raw);
+            String lang = map.optString(Long.toString(dialogId), null);
+            if (lang != null && lang.length() > 0) {
+                return lang;
+            }
+        } catch (Exception ignore) {
+        }
+        return null;
+    }
+
+    private void storeDialogTranslateTo(long dialogId, String language) {
+        if (language == null || language.length() == 0) {
+            return;
+        }
+        try {
+            String raw = LuminaConfig.getString(KEY_DIALOG_TRANSLATE_LANG, null);
+            org.json.JSONObject map = (raw != null && raw.length() > 0)
+                    ? new org.json.JSONObject(raw) : new org.json.JSONObject();
+            map.put(Long.toString(dialogId), language);
+            LuminaConfig.putString(KEY_DIALOG_TRANSLATE_LANG, map.toString());
+        } catch (Exception ignore) {
+        }
+    }
+
     public void setDialogTranslateTo(long dialogId, String language) {
         if (TextUtils.equals(getDialogTranslateTo(dialogId), language)) {
             return;
         }
+
+        // LuminaGram (Wave 8): remember this target language for the dialog so it is
+        // restored when the chat is reopened (see getDialogTranslateTo).
+        storeDialogTranslateTo(dialogId, language);
 
         boolean wasTranslating = isTranslatingDialog(dialogId);
 
