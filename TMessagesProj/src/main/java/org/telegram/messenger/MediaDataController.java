@@ -8704,6 +8704,21 @@ public class MediaDataController extends BaseController {
         if (langCodes == null) {
             return;
         }
+        // LuminaGram: always also load English ("en") emoji keywords so emoji search by
+        // English words works regardless of UI/keyboard locale. The keyword lookup in
+        // getEmojiSuggestions is not lang-scoped, so once "en" is downloaded English
+        // search works everywhere. Dedup: skip the extra fetch when the requested
+        // langCodes already include English.
+        boolean luminaHasEnglish = false;
+        for (int a = 0; a < langCodes.length; a++) {
+            if ("en".equals(langCodes[a])) {
+                luminaHasEnglish = true;
+                break;
+            }
+        }
+        if (!luminaHasEnglish) {
+            fetchNewEmojiKeywords(new String[]{"en"}, doNotFetchTwice);
+        }
         for (int a = 0; a < langCodes.length; a++) {
             String langCode = langCodes[a];
             if (TextUtils.isEmpty(langCode)) {
