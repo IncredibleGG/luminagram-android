@@ -5072,7 +5072,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
             if (user != null && !MessagesController.isSupportUser(user) && !user.bot) {
                 boolean isOnline = isOnline();
                 wasDrawnOnline = isOnline;
-                if (isOnline || onlineProgress != 0) {
+                if ((isOnline || onlineProgress != 0) && LuminaConfig.getBoolean("chatListOnlineDot", false)) {
                     int top = (int) (storyParams.originalAvatarRect.bottom - dp(useForceThreeLines || SharedConfig.useThreeLinesLayout ? 6 : 8));
                     int left;
                     if (LocaleController.isRTL) {

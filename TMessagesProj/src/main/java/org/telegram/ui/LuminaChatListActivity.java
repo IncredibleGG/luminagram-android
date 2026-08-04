@@ -39,6 +39,7 @@ public class LuminaChatListActivity extends BaseFragment {
     private static final int ID_COMPACT = 1;
     private static final int ID_HIDE_MUTE = 2;
     private static final int ID_SHOW_COUNT = 3;
+    private static final int ID_ONLINE_DOT = 4;
 
     private UniversalRecyclerView listView;
 
@@ -81,6 +82,9 @@ public class LuminaChatListActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_SHOW_COUNT, LuminaLocale.getString(R.string.LuminaShowMutedCount))
                 .setChecked(LuminaConfig.getBoolean("showMutedCount", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaShowMutedCountInfo)));
+        items.add(UItem.asSwitch(ID_ONLINE_DOT, LuminaLocale.getString(R.string.LuminaChatListOnlineDot))
+                .setChecked(LuminaConfig.getBoolean("chatListOnlineDot", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaChatListOnlineDotInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -93,6 +97,9 @@ public class LuminaChatListActivity extends BaseFragment {
                 break;
             case ID_SHOW_COUNT:
                 LuminaConfig.putBoolean("showMutedCount", !LuminaConfig.getBoolean("showMutedCount", false));
+                break;
+            case ID_ONLINE_DOT:
+                LuminaConfig.putBoolean("chatListOnlineDot", !LuminaConfig.getBoolean("chatListOnlineDot", false));
                 break;
         }
         if (listView != null && listView.adapter != null) {

@@ -43,6 +43,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaHideMuteIconInfo", "隐藏列表中已静音聊天旁边的小铃铛图标。");
         zhHans.put("LuminaShowMutedCount", "始终显示未读计数");
         zhHans.put("LuminaShowMutedCountInfo", "将已静音聊天的未读角标以正常强调色显示，而非静音灰色。");
+        zhHans.put("LuminaChatListOnlineDot", "在线圆点");
+        zhHans.put("LuminaChatListOnlineDotInfo", "在单聊头像上显示一个小绿点，表示对方当前在线。");
         zhHans.put("LuminaPrivacyTitle", "隐私与隐身");
         zhHans.put("LuminaPrivacyGhostHeader", "幽灵模式");
         zhHans.put("LuminaPrivacySendReadReceipts", "发送已读回执");
@@ -245,6 +247,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaHideMuteIconInfo", "隱藏列表中已靜音聊天旁邊的小鈴鐸圖示。");
         zhHant.put("LuminaShowMutedCount", "永遠顯示未讀計數");
         zhHant.put("LuminaShowMutedCountInfo", "將已靜音聊天的未讀角標以正常強調色顯示，而非靜音灰色。");
+        zhHant.put("LuminaChatListOnlineDot", "線上圓點");
+        zhHant.put("LuminaChatListOnlineDotInfo", "在單聊頭像上顯示一個小綠點，表示對方目前在線。");
         zhHant.put("LuminaPrivacyTitle", "隱私與隱身");
         zhHant.put("LuminaPrivacyGhostHeader", "幽靈模式");
         zhHant.put("LuminaPrivacySendReadReceipts", "傳送已讀回條");
@@ -447,6 +451,8 @@ public final class LuminaLocale {
         ar.put("LuminaHideMuteIconInfo", "يخفي أيقونة الجرس الصغيرة الظاهرة بجوار الدردشات المكتومة في القائمة.");
         ar.put("LuminaShowMutedCount", "إظهار عدد غير المقروء دائمًا");
         ar.put("LuminaShowMutedCountInfo", "يرسم شارة غير المقروء للدردشات المكتومة باللون المميّز العادي بدلاً من الرمادي المكتوم.");
+        ar.put("LuminaChatListOnlineDot", "نقطة الاتصال");
+        ar.put("LuminaChatListOnlineDotInfo", "يعرض نقطة خضراء صغيرة على صورة المحادثات الفردية التي يكون المستخدم فيها متصلاً الآن.");
         ar.put("LuminaPrivacyTitle", "الخصوصية والتخفّي");
         ar.put("LuminaPrivacyGhostHeader", "الوضع الشبح");
         ar.put("LuminaPrivacySendReadReceipts", "إرسال إيصالات القراءة");
@@ -648,6 +654,8 @@ public final class LuminaLocale {
         ru.put("LuminaHideMuteIconInfo", "Скрывает маленький значок колокольчика рядом с чатами без звука в списке.");
         ru.put("LuminaShowMutedCount", "Всегда показывать счётчик непрочитанных");
         ru.put("LuminaShowMutedCountInfo", "Рисует счётчик непрочитанных у чатов без звука обычным акцентным цветом вместо приглушённого серого.");
+        ru.put("LuminaChatListOnlineDot", "Точка «в сети»");
+        ru.put("LuminaChatListOnlineDotInfo", "Показывает маленькую зелёную точку на аватаре личных чатов, собеседник которых сейчас в сети.");
         ru.put("LuminaPrivacyTitle", "Конфиденциальность и скрытность");
         ru.put("LuminaPrivacyGhostHeader", "Режим невидимки");
         ru.put("LuminaPrivacySendReadReceipts", "Отправлять отчёты о прочтении");
@@ -849,6 +857,8 @@ public final class LuminaLocale {
         fa.put("LuminaHideMuteIconInfo", "آیکون زنگوله کوچک کنار گفتگوهای بی‌صداشده در فهرست را پنهان می‌کند.");
         fa.put("LuminaShowMutedCount", "همیشه نمایش شمار نخوانده");
         fa.put("LuminaShowMutedCountInfo", "نشان نخوانده گفتگوهای بی‌صدا را به‌جای خاکستری کم‌رنگ با رنگ تأکید عادی نمایش می‌دهد.");
+        fa.put("LuminaChatListOnlineDot", "نقطهٔ آنلاین");
+        fa.put("LuminaChatListOnlineDotInfo", "یک نقطهٔ سبز کوچک روی تصویر گفتگوهای خصوصی که طرف مقابل هم‌اکنون آنلاین است نمایش می‌دهد.");
         fa.put("LuminaPrivacyTitle", "حریم خصوصی و ناپیدایی");
         fa.put("LuminaPrivacyGhostHeader", "حالت شبح");
         fa.put("LuminaPrivacySendReadReceipts", "ارسال رسید خواندن");
@@ -1050,6 +1060,8 @@ public final class LuminaLocale {
         tr.put("LuminaHideMuteIconInfo", "Listede sessize alınmış sohbetlerin yanında görünen küçük zil simgesini gizler.");
         tr.put("LuminaShowMutedCount", "Okunmamış sayısını her zaman göster");
         tr.put("LuminaShowMutedCountInfo", "Sessize alınmış sohbetlerin okunmamış rozetini sessiz gri yerine normal vurgu renginde çizer.");
+        tr.put("LuminaChatListOnlineDot", "Çevrimiçi noktası");
+        tr.put("LuminaChatListOnlineDotInfo", "Karşı tarafın şu anda çevrimiçi olduğu birebir sohbetlerin avatarında küçük yeşil bir nokta gösterir.");
         tr.put("LuminaPrivacyTitle", "Gizlilik ve Görünmezlik");
         tr.put("LuminaPrivacyGhostHeader", "Hayalet modu");
         tr.put("LuminaPrivacySendReadReceipts", "Okundu bilgisi gönder");
@@ -1251,6 +1263,8 @@ public final class LuminaLocale {
         es.put("LuminaHideMuteIconInfo", "Oculta el pequeño icono de campana que aparece junto a los chats silenciados en la lista.");
         es.put("LuminaShowMutedCount", "Mostrar siempre el contador de no leídos");
         es.put("LuminaShowMutedCountInfo", "Dibuja la insignia de no leídos de los chats silenciados con el color de acento normal en lugar del gris silenciado.");
+        es.put("LuminaChatListOnlineDot", "Punto de conexión");
+        es.put("LuminaChatListOnlineDotInfo", "Muestra un pequeño punto verde en el avatar de los chats privados cuyo contacto está conectado en este momento.");
         es.put("LuminaPrivacyTitle", "Privacidad y sigilo");
         es.put("LuminaPrivacyGhostHeader", "Modo fantasma");
         es.put("LuminaPrivacySendReadReceipts", "Enviar confirmaciones de lectura");
@@ -1452,6 +1466,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaHideMuteIconInfo", "Oculta o pequeno ícone de sino exibido ao lado das conversas silenciadas na lista.");
         ptBr.put("LuminaShowMutedCount", "Sempre mostrar contador de não lidas");
         ptBr.put("LuminaShowMutedCountInfo", "Desenha o selo de não lidas das conversas silenciadas na cor de destaque normal em vez do cinza silenciado.");
+        ptBr.put("LuminaChatListOnlineDot", "Ponto on-line");
+        ptBr.put("LuminaChatListOnlineDotInfo", "Mostra um pequeno ponto verde no avatar das conversas privadas cujo contato está on-line no momento.");
         ptBr.put("LuminaPrivacyTitle", "Privacidade e discrição");
         ptBr.put("LuminaPrivacyGhostHeader", "Modo fantasma");
         ptBr.put("LuminaPrivacySendReadReceipts", "Enviar confirmações de leitura");
@@ -1653,6 +1669,8 @@ public final class LuminaLocale {
         id.put("LuminaHideMuteIconInfo", "Menyembunyikan ikon lonceng kecil di samping obrolan yang dibisukan dalam daftar.");
         id.put("LuminaShowMutedCount", "Selalu tampilkan jumlah belum dibaca");
         id.put("LuminaShowMutedCountInfo", "Menggambar lencana belum dibaca untuk obrolan yang dibisukan dengan warna aksen normal, bukan abu-abu bisu.");
+        id.put("LuminaChatListOnlineDot", "Titik daring");
+        id.put("LuminaChatListOnlineDotInfo", "Menampilkan titik hijau kecil pada avatar obrolan pribadi yang kontaknya sedang daring.");
         id.put("LuminaPrivacyTitle", "Privasi & Siluman");
         id.put("LuminaPrivacyGhostHeader", "Mode hantu");
         id.put("LuminaPrivacySendReadReceipts", "Kirim tanda telah dibaca");
