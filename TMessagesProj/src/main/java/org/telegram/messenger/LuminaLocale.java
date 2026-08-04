@@ -184,6 +184,9 @@ public final class LuminaLocale {
         zhHans.put("LuminaDisguiseDecoyCodeNotSet", "未设置");
         zhHans.put("LuminaDisguiseDecoyCodeDialogTitle", "解锁码");
         zhHans.put("LuminaDisguiseDecoyInfo", "开启后，应用将以可用的计算器形式打开；输入此解锁码可显示真正的应用。此密码与 Telegram 内置密码相互独立。");
+        zhHans.put("LuminaPrivacyHideOwnPhone", "隐藏我的手机号");
+        zhHans.put("LuminaPrivacyHideOwnPhoneInfo", "在本应用中你自己的个人资料上隐藏手机号。这不会改变谁能在 Telegram 上看到你的号码。");
+        zhHans.put("LuminaHideOwnPhoneMasked", "已隐藏");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -342,6 +345,9 @@ public final class LuminaLocale {
         zhHant.put("LuminaDisguiseDecoyCodeNotSet", "未設定");
         zhHant.put("LuminaDisguiseDecoyCodeDialogTitle", "解鎖碼");
         zhHant.put("LuminaDisguiseDecoyInfo", "開啟後，應用會以可用的計算機形式開啟；輸入此解鎖碼即可顯示真正的應用。此密碼與 Telegram 內建密碼互相獨立。");
+        zhHant.put("LuminaPrivacyHideOwnPhone", "隱藏我的電話號碼");
+        zhHant.put("LuminaPrivacyHideOwnPhoneInfo", "在本應用中你自己的個人資料上隱藏電話號碼。這不會改變誰能在 Telegram 上看到你的號碼。");
+        zhHant.put("LuminaHideOwnPhoneMasked", "已隱藏");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -499,6 +505,9 @@ public final class LuminaLocale {
         ar.put("LuminaDisguiseDecoyCodeNotSet", "غير مُعيَّن");
         ar.put("LuminaDisguiseDecoyCodeDialogTitle", "رمز الفتح");
         ar.put("LuminaDisguiseDecoyInfo", "عند التفعيل، يفتح التطبيق كآلة حاسبة تعمل فعليًا؛ وإدخال هذا الرمز يكشف التطبيق. هذا الرمز منفصل عن رمز مرور Telegram المدمج.");
+        ar.put("LuminaPrivacyHideOwnPhone", "إخفاء رقم هاتفي");
+        ar.put("LuminaPrivacyHideOwnPhoneInfo", "إخفاء رقم هاتفك في ملفك الشخصي داخل هذا التطبيق. لا يغيّر هذا من يمكنه رؤية رقمك على تيليجرام.");
+        ar.put("LuminaHideOwnPhoneMasked", "مخفي");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -656,6 +665,9 @@ public final class LuminaLocale {
         ru.put("LuminaDisguiseDecoyCodeNotSet", "Не задан");
         ru.put("LuminaDisguiseDecoyCodeDialogTitle", "Код разблокировки");
         ru.put("LuminaDisguiseDecoyInfo", "При включении приложение открывается как рабочий калькулятор; ввод этого кода открывает приложение. Этот код независим от встроенного код-пароля Telegram.");
+        ru.put("LuminaPrivacyHideOwnPhone", "Скрыть мой номер телефона");
+        ru.put("LuminaPrivacyHideOwnPhoneInfo", "Скрывает ваш номер телефона в вашем профиле в этом приложении. Это не меняет, кто может видеть ваш номер в Telegram.");
+        ru.put("LuminaHideOwnPhoneMasked", "Скрыт");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -813,6 +825,9 @@ public final class LuminaLocale {
         fa.put("LuminaDisguiseDecoyCodeNotSet", "تنظیم‌نشده");
         fa.put("LuminaDisguiseDecoyCodeDialogTitle", "کد باز کردن");
         fa.put("LuminaDisguiseDecoyInfo", "با فعال‌سازی، برنامه به‌صورت یک ماشین‌حساب واقعی باز می‌شود؛ واردکردن این کد برنامه را آشکار می‌کند. این رمز جدا از رمز داخلی Telegram است.");
+        fa.put("LuminaPrivacyHideOwnPhone", "پنهان کردن شمارهٔ تلفن من");
+        fa.put("LuminaPrivacyHideOwnPhoneInfo", "شمارهٔ تلفن شما را در نمایهٔ خودتان در این برنامه پنهان می‌کند. این کار تغییری در اینکه چه کسی می‌تواند شمارهٔ شما را در تلگرام ببیند ایجاد نمی‌کند.");
+        fa.put("LuminaHideOwnPhoneMasked", "پنهان");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -970,6 +985,9 @@ public final class LuminaLocale {
         tr.put("LuminaDisguiseDecoyCodeNotSet", "Ayarlı değil");
         tr.put("LuminaDisguiseDecoyCodeDialogTitle", "Kilit açma kodu");
         tr.put("LuminaDisguiseDecoyInfo", "Açıkken uygulama çalışan bir hesap makinesi olarak açılır; bu kodu girmek uygulamayı ortaya çıkarır. Bu parola Telegram'ın yerleşik parolasından ayrıdır.");
+        tr.put("LuminaPrivacyHideOwnPhone", "Telefon numaramı gizle");
+        tr.put("LuminaPrivacyHideOwnPhoneInfo", "Telefon numaranızı bu uygulamadaki kendi profilinizde gizler. Bu, Telegram'da numaranızı kimin görebileceğini değiştirmez.");
+        tr.put("LuminaHideOwnPhoneMasked", "Gizli");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1127,6 +1145,9 @@ public final class LuminaLocale {
         es.put("LuminaDisguiseDecoyCodeNotSet", "Sin establecer");
         es.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueo");
         es.put("LuminaDisguiseDecoyInfo", "Cuando está activado, la app se abre como una calculadora funcional; introducir este código revela la app. Esta contraseña es independiente del código de acceso integrado de Telegram.");
+        es.put("LuminaPrivacyHideOwnPhone", "Ocultar mi número de teléfono");
+        es.put("LuminaPrivacyHideOwnPhoneInfo", "Oculta tu número de teléfono en tu propio perfil en esta aplicación. Esto no cambia quién puede ver tu número en Telegram.");
+        es.put("LuminaHideOwnPhoneMasked", "Oculto");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1284,6 +1305,9 @@ public final class LuminaLocale {
         ptBr.put("LuminaDisguiseDecoyCodeNotSet", "Não definido");
         ptBr.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueio");
         ptBr.put("LuminaDisguiseDecoyInfo", "Quando ativado, o app abre como uma calculadora funcional; digitar este código revela o app. Esta senha é separada da senha interna do Telegram.");
+        ptBr.put("LuminaPrivacyHideOwnPhone", "Ocultar meu número de telefone");
+        ptBr.put("LuminaPrivacyHideOwnPhoneInfo", "Oculta seu número de telefone no seu próprio perfil neste aplicativo. Isso não altera quem pode ver seu número no Telegram.");
+        ptBr.put("LuminaHideOwnPhoneMasked", "Oculto");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1441,6 +1465,9 @@ public final class LuminaLocale {
         id.put("LuminaDisguiseDecoyCodeNotSet", "Belum diatur");
         id.put("LuminaDisguiseDecoyCodeDialogTitle", "Kode buka kunci");
         id.put("LuminaDisguiseDecoyInfo", "Saat aktif, aplikasi terbuka sebagai kalkulator yang berfungsi; memasukkan kode ini menampilkan aplikasi. Sandi ini terpisah dari sandi bawaan Telegram.");
+        id.put("LuminaPrivacyHideOwnPhone", "Sembunyikan nomor telepon saya");
+        id.put("LuminaPrivacyHideOwnPhoneInfo", "Sembunyikan nomor telepon Anda di profil Anda sendiri di aplikasi ini. Ini tidak mengubah siapa yang dapat melihat nomor Anda di Telegram.");
+        id.put("LuminaHideOwnPhoneMasked", "Disembunyikan");
         T.put("id", id);
     }
 

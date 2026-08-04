@@ -13579,6 +13579,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                             phoneNumber = null;
                         }
                         isFragmentPhoneNumber = phoneNumber != null && phoneNumber.matches("888\\d{8}");
+                        // LuminaGram: hide own phone number on own profile when enabled
+                        if (userId == getUserConfig().getClientUserId() && LuminaConfig.getBoolean("hideOwnPhone", false)) {
+                            text = LuminaLocale.getString(R.string.LuminaHideOwnPhoneMasked);
+                            isFragmentPhoneNumber = false;
+                        }
                         detailCell.setTextAndValue(text, LocaleController.getString(isFragmentPhoneNumber ? R.string.AnonymousNumber : R.string.PhoneMobile), false);
                     } else if (position == noteRow) {
                         final TLRPC.UserFull userInfo = getMessagesController().getUserFull(userId);
@@ -13669,6 +13674,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                             value = PhoneFormat.getInstance().format("+" + user.phone);
                         } else {
                             value = LocaleController.getString(R.string.NumberUnknown);
+                        }
+                        // LuminaGram: hide own phone number on own profile when enabled
+                        if (LuminaConfig.getBoolean("hideOwnPhone", false)) {
+                            value = LuminaLocale.getString(R.string.LuminaHideOwnPhoneMasked);
                         }
                         detailCell.setTextAndValue(value, LocaleController.getString(R.string.TapToChangePhone), true);
                         detailCell.setContentDescriptionValueFirst(false);
