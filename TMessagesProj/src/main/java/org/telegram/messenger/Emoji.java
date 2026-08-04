@@ -654,7 +654,7 @@ public class Emoji {
     }
 
     public static CharSequence replaceEmoji(CharSequence cs, Paint.FontMetricsInt fontMetrics, boolean createNew, int[] emojiOnly, int alignment, float scale, int minusLimit) {
-        if (SharedConfig.useSystemEmoji || cs == null || cs.length() == 0) {
+        if (SharedConfig.useSystemEmoji || LuminaConfig.getBoolean("systemEmoji", false) || cs == null || cs.length() == 0) {
             return cs;
         }
         Spannable s;
