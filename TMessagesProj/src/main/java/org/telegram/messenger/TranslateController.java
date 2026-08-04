@@ -270,6 +270,23 @@ public class TranslateController extends BaseController {
             lang = getStoredDialogTranslateTo(dialogId);
         }
         if (lang == null) {
+            // LuminaGram (Wave 11): auto target-language per contact.
+            // With no explicit target stored for this dialog, derive it from the
+            // dialog's DETECTED source language: if the peer writes a language other
+            // than the app/user language, translate INTO the app language so incoming
+            // foreign text is auto-targeted at the user. Gated by "autoTargetLanguage"
+            // (default ON). If detection is unavailable (detected == null) we leave
+            // lang null and fall through to the existing default -- behavior unchanged.
+            if (LuminaConfig.getBoolean("autoTargetLanguage", true)) {
+                final String detected = getDialogDetectedLanguage(dialogId);
+                final String appLang = currentLanguage();
+                if (detected != null && detected.length() > 0
+                        && appLang != null && !detected.equals(appLang)) {
+                    lang = appLang;
+                }
+            }
+        }
+        if (lang == null) {
             lang = TranslateAlert2.getToLanguage();
             if (lang == null || lang.equals(getDialogDetectedLanguage(dialogId))) {
                 lang = currentLanguage();
