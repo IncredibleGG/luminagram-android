@@ -11212,6 +11212,11 @@
     <string name="LuminaPrivacyDisableLinkPreviewInfo">New messages you compose default to sending without a link preview, so servers are not asked to resolve pasted links.</string>
     <string name="LuminaPrivacyStripMetadata">Strip photo location &amp; metadata</string>
     <string name="LuminaPrivacyStripMetadataInfo">Removes GPS and other EXIF metadata from photos sent as files. Compressed photos never include this data.</string>
+    <!-- LuminaGram hide notification content (wave9) -->
+    <string name="LuminaPrivacyNotificationsHeader">Notifications</string>
+    <string name="LuminaPrivacyHideNotifContent">Hide notification content</string>
+    <string name="LuminaPrivacyHideNotifContentInfo">When on, every notification shows only the app name and a generic “New message” — the sender and message preview stay hidden.</string>
+    <string name="LuminaHiddenNotificationText">New message</string>
     <string name="LuminaTranslateTitle">Auto-translate</string>
     <string name="LuminaTranslateHeader">Translation</string>
     <string name="LuminaTranslateTo">Translate to</string>

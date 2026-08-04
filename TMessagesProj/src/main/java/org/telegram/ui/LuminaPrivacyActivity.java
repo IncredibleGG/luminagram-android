@@ -40,6 +40,7 @@ public class LuminaPrivacyActivity extends BaseFragment {
     private static final int ID_DISABLE_LINK_PREVIEW = 6;
     private static final int ID_STRIP_METADATA = 7;
     private static final int ID_HIDE_OWN_PHONE = 8;
+    private static final int ID_HIDE_NOTIF_CONTENT = 9;
 
     private UniversalRecyclerView listView;
 
@@ -97,6 +98,11 @@ public class LuminaPrivacyActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_STRIP_METADATA, LuminaLocale.getString(R.string.LuminaPrivacyStripMetadata))
                 .setChecked(LuminaConfig.getBoolean("stripPhotoMetadata", true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyStripMetadataInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacyNotificationsHeader)));
+        items.add(UItem.asSwitch(ID_HIDE_NOTIF_CONTENT, LuminaLocale.getString(R.string.LuminaPrivacyHideNotifContent))
+                .setChecked(LuminaConfig.getBoolean("hideNotifContent", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyHideNotifContentInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -125,6 +131,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
                 break;
             case ID_STRIP_METADATA:
                 LuminaConfig.putBoolean("stripPhotoMetadata", !LuminaConfig.getBoolean("stripPhotoMetadata", true));
+                break;
+            case ID_HIDE_NOTIF_CONTENT:
+                LuminaConfig.putBoolean("hideNotifContent", !LuminaConfig.getBoolean("hideNotifContent", false));
                 break;
         }
         if (listView != null && listView.adapter != null) {
