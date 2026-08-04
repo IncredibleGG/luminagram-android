@@ -100,6 +100,7 @@ import org.telegram.messenger.Emoji;
 import org.telegram.messenger.FileLog;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -4411,14 +4412,19 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
         }
         applyCaption();
 
+        // LuminaGram: when "send media as file by default" is on, route the attach-panel
+        // photo/video default send through document mode (forceDocument). The user can still
+        // pick compressed per-send from the media preview. Gated & default-off.
+        final boolean luminaSendAsFile = (currentAttachLayout == photoLayout || currentAttachLayout == photoPreviewLayout)
+                && LuminaConfig.getBoolean("sendAsFileDefault", false);
         if (animatorEphemeralMessageVisibility.getValue()) {
             setButtonPressed(true);
-            delegate.didPressedButton(7, true, notify, scheduleDate, scheduleRepeatPeriod, effectId, invertMedia, false, 0);
+            delegate.didPressedButton(7, true, notify, scheduleDate, scheduleRepeatPeriod, effectId, invertMedia, luminaSendAsFile, 0);
             return true;
         } else {
             return AlertsCreator.ensurePaidMessageConfirmation(currentAccount, getDialogId(), (currentAttachLayout == null ? 1 : currentAttachLayout.getSelectedItemsCount()) + getAdditionalMessagesCount(), payStars -> {
                 setButtonPressed(true);
-                delegate.didPressedButton(7, true, notify, scheduleDate, scheduleRepeatPeriod, effectId, invertMedia, false, payStars);
+                delegate.didPressedButton(7, true, notify, scheduleDate, scheduleRepeatPeriod, effectId, invertMedia, luminaSendAsFile, payStars);
             });
         }
     }

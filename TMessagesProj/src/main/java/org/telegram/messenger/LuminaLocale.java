@@ -66,6 +66,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaSelectFromAuthorTitle", "选择该作者的全部消息");
         zhHans.put("LuminaMediaSaving", "媒体");
         zhHans.put("LuminaSaveStickers", "保存贴纸");
+        zhHans.put("LuminaSendAsFileDefault", "以文件形式发送媒体");
+        zhHans.put("LuminaSendAsFileDefaultInfo", "开启后，从附件面板发送的照片和视频默认以未压缩的文件形式发送。你仍可在预览中选择压缩发送。");
         zhHans.put("LuminaForwardNoAuthor", "转发时隐藏作者");
         zhHans.put("LuminaForwardNoCaption", "转发时移除说明文字");
         zhHans.put("LuminaSaveToCloud", "保存到收藏夹");
@@ -268,6 +270,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaSelectFromAuthorTitle", "選擇該作者的所有訊息");
         zhHant.put("LuminaMediaSaving", "媒體");
         zhHant.put("LuminaSaveStickers", "儲存貼圖");
+        zhHant.put("LuminaSendAsFileDefault", "以檔案形式傳送媒體");
+        zhHant.put("LuminaSendAsFileDefaultInfo", "開啟後，從附件面板傳送的相片和影片預設以未壓縮的檔案形式傳送。你仍可在預覽中選擇壓縮傳送。");
         zhHant.put("LuminaForwardNoAuthor", "轉發時隱藏作者");
         zhHant.put("LuminaForwardNoCaption", "轉發時移除說明文字");
         zhHant.put("LuminaSaveToCloud", "儲存至「儲存的訊息」");
@@ -470,6 +474,8 @@ public final class LuminaLocale {
         ar.put("LuminaSelectFromAuthorTitle", "تحديد كل رسائل المؤلف");
         ar.put("LuminaMediaSaving", "الوسائط");
         ar.put("LuminaSaveStickers", "حفظ الملصقات");
+        ar.put("LuminaSendAsFileDefault", "إرسال الوسائط كملف");
+        ar.put("LuminaSendAsFileDefaultInfo", "عند التفعيل، تُرسل الصور ومقاطع الفيديو من لوحة المرفقات كملفات غير مضغوطة افتراضيًا. لا يزال بإمكانك إرسالها مضغوطة من المعاينة.");
         ar.put("LuminaForwardNoAuthor", "إعادة التوجيه دون المؤلف");
         ar.put("LuminaForwardNoCaption", "إعادة التوجيه دون التعليق");
         ar.put("LuminaSaveToCloud", "الحفظ في الرسائل المحفوظة");
@@ -671,6 +677,8 @@ public final class LuminaLocale {
         ru.put("LuminaSelectFromAuthorTitle", "Выбрать все сообщения автора");
         ru.put("LuminaMediaSaving", "Медиа");
         ru.put("LuminaSaveStickers", "Сохранять стикеры");
+        ru.put("LuminaSendAsFileDefault", "Отправлять медиа как файл");
+        ru.put("LuminaSendAsFileDefaultInfo", "Когда включено, фото и видео из панели вложений по умолчанию отправляются без сжатия как файлы. Вы всё ещё можете отправить их сжатыми из предпросмотра.");
         ru.put("LuminaForwardNoAuthor", "Пересылать без автора");
         ru.put("LuminaForwardNoCaption", "Пересылать без подписи");
         ru.put("LuminaSaveToCloud", "Сохранить в «Избранное»");
@@ -872,6 +880,8 @@ public final class LuminaLocale {
         fa.put("LuminaSelectFromAuthorTitle", "انتخاب همه پیام‌های این نویسنده");
         fa.put("LuminaMediaSaving", "رسانه");
         fa.put("LuminaSaveStickers", "ذخیره برچسب‌ها");
+        fa.put("LuminaSendAsFileDefault", "ارسال رسانه به‌صورت فایل");
+        fa.put("LuminaSendAsFileDefaultInfo", "وقتی روشن باشد، عکس‌ها و ویدیوها از پنل پیوست به‌طور پیش‌فرض به‌صورت فایل و بدون فشرده‌سازی ارسال می‌شوند. همچنان می‌توانید آن‌ها را از پیش‌نمایش فشرده ارسال کنید.");
         fa.put("LuminaForwardNoAuthor", "هدایت بدون نویسنده");
         fa.put("LuminaForwardNoCaption", "هدایت بدون شرح");
         fa.put("LuminaSaveToCloud", "ذخیره در پیام‌های ذخیره‌شده");
@@ -1073,6 +1083,8 @@ public final class LuminaLocale {
         tr.put("LuminaSelectFromAuthorTitle", "Yazarın tüm mesajlarını seç");
         tr.put("LuminaMediaSaving", "Medya");
         tr.put("LuminaSaveStickers", "Çıkartmaları kaydet");
+        tr.put("LuminaSendAsFileDefault", "Medyayı dosya olarak gönder");
+        tr.put("LuminaSendAsFileDefaultInfo", "Açıkken, ek panelinden gönderilen fotoğraf ve videolar varsayılan olarak sıkıştırılmadan dosya olarak gönderilir. Önizlemeden yine de sıkıştırılmış olarak gönderebilirsiniz.");
         tr.put("LuminaForwardNoAuthor", "Yazarı olmadan ilet");
         tr.put("LuminaForwardNoCaption", "Açıklaması olmadan ilet");
         tr.put("LuminaSaveToCloud", "Kayıtlı Mesajlar'a kaydet");
@@ -1274,6 +1286,8 @@ public final class LuminaLocale {
         es.put("LuminaSelectFromAuthorTitle", "Seleccionar todo del autor");
         es.put("LuminaMediaSaving", "Multimedia");
         es.put("LuminaSaveStickers", "Guardar stickers");
+        es.put("LuminaSendAsFileDefault", "Enviar multimedia como archivo");
+        es.put("LuminaSendAsFileDefaultInfo", "Cuando está activado, las fotos y los videos del panel de adjuntos se envían sin comprimir como archivos de forma predeterminada. Aún puedes enviarlos comprimidos desde la vista previa.");
         es.put("LuminaForwardNoAuthor", "Reenviar sin autor");
         es.put("LuminaForwardNoCaption", "Reenviar sin descripción");
         es.put("LuminaSaveToCloud", "Guardar en Mensajes Guardados");
@@ -1475,6 +1489,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaSelectFromAuthorTitle", "Selecionar tudo do autor");
         ptBr.put("LuminaMediaSaving", "Mídia");
         ptBr.put("LuminaSaveStickers", "Salvar figurinhas");
+        ptBr.put("LuminaSendAsFileDefault", "Enviar mídia como arquivo");
+        ptBr.put("LuminaSendAsFileDefaultInfo", "Quando ativado, fotos e vídeos do painel de anexos são enviados sem compressão como arquivos por padrão. Você ainda pode enviá-los comprimidos pela pré-visualização.");
         ptBr.put("LuminaForwardNoAuthor", "Encaminhar sem autor");
         ptBr.put("LuminaForwardNoCaption", "Encaminhar sem legenda");
         ptBr.put("LuminaSaveToCloud", "Salvar em Mensagens Salvas");
@@ -1676,6 +1692,8 @@ public final class LuminaLocale {
         id.put("LuminaSelectFromAuthorTitle", "Pilih semua dari penulis");
         id.put("LuminaMediaSaving", "Media");
         id.put("LuminaSaveStickers", "Simpan stiker");
+        id.put("LuminaSendAsFileDefault", "Kirim media sebagai file");
+        id.put("LuminaSendAsFileDefaultInfo", "Saat aktif, foto dan video dari panel lampiran dikirim tanpa kompresi sebagai file secara default. Anda masih dapat mengirimnya terkompresi dari pratinjau.");
         id.put("LuminaForwardNoAuthor", "Teruskan tanpa penulis");
         id.put("LuminaForwardNoCaption", "Teruskan tanpa keterangan");
         id.put("LuminaSaveToCloud", "Simpan ke Pesan Tersimpan");
