@@ -11290,6 +11290,24 @@
     <string name="LuminaSecurityDisguise">Disguise as Calculator</string>
     <string name="LuminaSecurityDisguiseInfo">Replace the app\'s launcher icon and name with a plain Calculator. Turn off to restore the normal LuminaGram icon.</string>
     <string name="LuminaDisguiseAppLabel">Calculator</string>
+    <!-- LuminaGram app disguise + decoy lock -->
+    <string name="LuminaDisguiseNotesLabel">Notes</string>
+    <string name="LuminaDisguiseClockLabel">Clock</string>
+    <string name="LuminaDisguiseTitle">App disguise</string>
+    <string name="LuminaDisguiseSectionHeader">App disguise</string>
+    <string name="LuminaDisguiseEnable">Enable app disguise</string>
+    <string name="LuminaDisguisePresetDefault">Default (LuminaGram)</string>
+    <string name="LuminaDisguisePresetCalculator">Calculator</string>
+    <string name="LuminaDisguisePresetNotes">Notes</string>
+    <string name="LuminaDisguisePresetClock">Clock</string>
+    <string name="LuminaDisguiseInfo">Choose how the app appears on your home screen. When on, the launcher icon and app name are replaced by the selected app.</string>
+    <string name="LuminaDisguiseDecoyHeader">Decoy lock (calculator)</string>
+    <string name="LuminaDisguiseDecoyEnable">Enable decoy lock</string>
+    <string name="LuminaDisguiseDecoySetCode">Set unlock code</string>
+    <string name="LuminaDisguiseDecoyCodeSet">Set</string>
+    <string name="LuminaDisguiseDecoyCodeNotSet">Not set</string>
+    <string name="LuminaDisguiseDecoyCodeDialogTitle">Unlock code</string>
+    <string name="LuminaDisguiseDecoyInfo">When on, the app opens as a working calculator; entering this code reveals the app. This passcode is separate from Telegram\'s built-in passcode.</string>
     <string name="LuminaAppearanceTitle">Appearance</string>
     <string name="LuminaAppearanceColorsHeader">Colors</string>
     <string name="LuminaAppearanceMaterialYou">Material You (dynamic colors)</string>

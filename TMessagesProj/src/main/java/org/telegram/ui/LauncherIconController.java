@@ -47,7 +47,14 @@ public class LauncherIconController {
         // LuminaGram disguise: Calculator camouflage alias. The launcher icon/label come
         // from the CalculatorIcon <activity-alias> in the manifest; the preview fields here
         // reuse existing adaptive assets so the shared app-icon system keeps compiling.
-        CALCULATOR("CalculatorIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseAppLabel);
+        CALCULATOR("CalculatorIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseAppLabel),
+        // LuminaGram disguise: Notes / Clock camouflage aliases (preset switcher in LuminaDisguiseActivity).
+        // The launcher icon + label come from the matching <activity-alias> in the manifest; the preview
+        // fields here reuse existing adaptive assets so the shared app-icon system keeps compiling and so
+        // tryFixLauncherIconIfNeeded() recognises an active Notes/Clock disguise instead of re-enabling
+        // the real icon behind it.
+        NOTES("NotesIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseNotesLabel),
+        CLOCK("ClockIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseClockLabel);
 
         public final String key;
         public final int background;
