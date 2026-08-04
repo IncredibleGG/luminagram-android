@@ -43,6 +43,7 @@ public class LuminaPrivacyActivity extends BaseFragment {
     private static final int ID_HIDE_NOTIF_CONTENT = 9;
     private static final int ID_LINK_SAFETY = 10;
     private static final int ID_CRYPTO_CLIPBOARD_GUARD = 11;
+    private static final int ID_INCOGNITO_KEYBOARD = 12;
 
     private UniversalRecyclerView listView;
 
@@ -106,6 +107,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_CRYPTO_CLIPBOARD_GUARD, LuminaLocale.getString(R.string.LuminaPrivacyCryptoClipboardGuard))
                 .setChecked(LuminaConfig.getBoolean("cryptoClipboardGuard", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyCryptoClipboardGuardInfo)));
+        items.add(UItem.asSwitch(ID_INCOGNITO_KEYBOARD, LuminaLocale.getString(R.string.LuminaPrivacyIncognitoKeyboard))
+                .setChecked(LuminaConfig.getBoolean("incognitoKeyboard", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyIncognitoKeyboardInfo)));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacyNotificationsHeader)));
         items.add(UItem.asSwitch(ID_HIDE_NOTIF_CONTENT, LuminaLocale.getString(R.string.LuminaPrivacyHideNotifContent))
@@ -148,6 +152,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
                 break;
             case ID_CRYPTO_CLIPBOARD_GUARD:
                 LuminaConfig.putBoolean("cryptoClipboardGuard", !LuminaConfig.getBoolean("cryptoClipboardGuard", false));
+                break;
+            case ID_INCOGNITO_KEYBOARD:
+                LuminaConfig.putBoolean("incognitoKeyboard", !LuminaConfig.getBoolean("incognitoKeyboard", false));
                 break;
         }
         if (listView != null && listView.adapter != null) {

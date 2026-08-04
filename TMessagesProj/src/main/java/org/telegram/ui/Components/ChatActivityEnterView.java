@@ -5833,7 +5833,8 @@ public class ChatActivityEnterView extends FrameLayout implements
         TLRPC.EncryptedChat encryptedChat = parentFragment != null ? parentFragment.getCurrentEncryptedChat() : null;
         messageEditText.setAllowTextEntitiesIntersection(supportsSendingNewEntities());
         int flags = EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-        if (isKeyboardSupportIncognitoMode() && encryptedChat != null) {
+        boolean luminaIncognitoKeyboard = LuminaConfig.getBoolean("incognitoKeyboard", false);
+        if (isKeyboardSupportIncognitoMode() && (encryptedChat != null || luminaIncognitoKeyboard)) {
             flags |= EditorInfoCompat.IME_FLAG_NO_PERSONALIZED_LEARNING;
         }
         messageEditText.setIncludeFontPadding(false);
