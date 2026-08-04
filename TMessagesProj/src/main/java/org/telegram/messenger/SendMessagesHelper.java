@@ -9165,6 +9165,10 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
                 extension = null;
             }
         }
+        String luminaStripped = MediaController.stripGpsForUpload(path);
+        if (luminaStripped != null) {
+            path = luminaStripped;
+        }
         final File f = new File(path);
         if (!f.exists() || f.length() == 0) {
             return ERROR_TYPE_UNSUPPORTED;
