@@ -65,6 +65,12 @@ public class LuminaChatActivity extends BaseFragment {
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMediaSaving)));
         items.add(UItem.asSwitch(5, LuminaLocale.getString(R.string.LuminaSaveStickers)).setChecked(LuminaConfig.getBoolean("saveStickers", true)));
         items.add(UItem.asShadow(null));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaInfoDensity)));
+        items.add(UItem.asSwitch(6, LuminaLocale.getString(R.string.LuminaShowDcId)).setChecked(LuminaConfig.getBoolean("showDcId", false)));
+        items.add(UItem.asSwitch(7, LuminaLocale.getString(R.string.LuminaShowChatDate)).setChecked(LuminaConfig.getBoolean("showChatDate", false)));
+        items.add(UItem.asSwitch(8, LuminaLocale.getString(R.string.LuminaShowMessageDetails)).setChecked(LuminaConfig.getBoolean("showMessageDetails", true)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaShowDcIdInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -83,6 +89,15 @@ public class LuminaChatActivity extends BaseFragment {
                 break;
             case 5:
                 LuminaConfig.putBoolean("saveStickers", !LuminaConfig.getBoolean("saveStickers", true));
+                break;
+            case 6:
+                LuminaConfig.putBoolean("showDcId", !LuminaConfig.getBoolean("showDcId", false));
+                break;
+            case 7:
+                LuminaConfig.putBoolean("showChatDate", !LuminaConfig.getBoolean("showChatDate", false));
+                break;
+            case 8:
+                LuminaConfig.putBoolean("showMessageDetails", !LuminaConfig.getBoolean("showMessageDetails", true));
                 break;
         }
         if (listView != null && listView.adapter != null) {
