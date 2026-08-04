@@ -954,6 +954,11 @@ public class MediaDataController extends BaseController {
         }));
     }
 
+    // LuminaGram: raise retained recent stickers/GIFs cap (gate: moreRecentStickers, default on)
+    private static int luminaBoost(int base, int floor) {
+        return LuminaConfig.getBoolean("moreRecentStickers", true) ? Math.max(base, floor) : base;
+    }
+
     public void addRecentSticker(int type, Object parentObject, TLRPC.Document document, int date, boolean remove) {
         if (type == TYPE_GREETINGS || !MessageObject.isStickerDocument(document) && !MessageObject.isAnimatedStickerDocument(document, true)) {
             return;
@@ -1016,7 +1021,7 @@ public class MediaDataController extends BaseController {
                     }
                 });
             }
-            maxCount = getMessagesController().maxRecentStickersCount;
+            maxCount = luminaBoost(getMessagesController().maxRecentStickersCount, 200);
         }
         if (recentStickers[type].size() > maxCount || remove) {
             TLRPC.Document old = remove ? document : recentStickers[type].remove(recentStickers[type].size() - 1);
@@ -1111,7 +1116,8 @@ public class MediaDataController extends BaseController {
         if (!found) {
             recentGifs.add(0, document);
         }
-        if ((recentGifs.size() > getMessagesController().savedGifsLimitDefault && !UserConfig.getInstance(currentAccount).isPremium()) || recentGifs.size() > getMessagesController().savedGifsLimitPremium) {
+        int gifLimit = luminaBoost(UserConfig.getInstance(currentAccount).isPremium() ? getMessagesController().savedGifsLimitPremium : getMessagesController().savedGifsLimitDefault, 500);
+        if (recentGifs.size() > gifLimit) {
             TLRPC.Document old = recentGifs.remove(recentGifs.size() - 1);
             getMessagesStorage().getStorageQueue().postRunnable(() -> {
                 try {
@@ -2084,14 +2090,14 @@ public class MediaDataController extends BaseController {
                     SQLiteDatabase database = getMessagesStorage().getDatabase();
                     int maxCount;
                     if (gif) {
-                        maxCount = getMessagesController().maxRecentGifsCount;
+                        maxCount = luminaBoost(getMessagesController().maxRecentGifsCount, 500);
                     } else {
                         if (type == TYPE_GREETINGS || type == TYPE_PREMIUM_STICKERS) {
                             maxCount = 200;
                         } else if (type == TYPE_FAVE) {
                             maxCount = getMessagesController().maxFaveStickersCount;
                         } else {
-                            maxCount = getMessagesController().maxRecentStickersCount;
+                            maxCount = luminaBoost(getMessagesController().maxRecentStickersCount, 200);
                         }
                     }
                     database.beginTransaction();
