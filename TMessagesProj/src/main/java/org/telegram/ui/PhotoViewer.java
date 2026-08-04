@@ -176,6 +176,7 @@ import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.LuminaGate;
 import org.telegram.messenger.MediaDataController;
@@ -2196,6 +2197,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     private final static int gallery_menu_chromecast = 24;
     private final static int gallery_menu_create_sticker = 25;
     private final static int gallery_menu_delete2 = 26;
+    private final static int gallery_menu_save_frame = 27;
 
     private final static int ads_sponsor_info = 101;
     private final static int ads_about = 102;
@@ -5744,6 +5746,45 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     }
                     loopItem.setEnabledByColor(playerLooping, 0xFFFFFFFF, 0xFF73B4EC);
                     loopItem.setSelectorColor(playerLooping ? 0x0F73B4EC : 0x0fffffff);
+                } else if (id == gallery_menu_save_frame) {
+                    if (videoPlayer == null) {
+                        return;
+                    }
+                    final Utilities.Callback<Bitmap> saveFrame = frame -> {
+                        if (frame == null) {
+                            return;
+                        }
+                        final String framePath = getTempFileAbsolutePath();
+                        Utilities.globalQueue.postRunnable(() -> {
+                            boolean ok = false;
+                            try {
+                                FileOutputStream stream = new FileOutputStream(new File(framePath));
+                                frame.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+                                stream.close();
+                                ok = true;
+                            } catch (Exception e) {
+                                FileLog.e(e);
+                            }
+                            final boolean success = ok;
+                            AndroidUtilities.runOnUIThread(() -> {
+                                if (success && parentActivity != null) {
+                                    MediaController.saveFile(framePath, parentActivity, 0, null, null, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, false, 0xf9222222, 0xffffffff).show());
+                                }
+                            });
+                        });
+                    };
+                    try {
+                        if (usedSurfaceView) {
+                            if (videoSurfaceView != null && videoSurfaceView.getWidth() > 0 && videoSurfaceView.getHeight() > 0) {
+                                Bitmap frameBitmap = Bitmaps.createBitmap(videoSurfaceView.getWidth(), videoSurfaceView.getHeight(), Bitmap.Config.ARGB_8888);
+                                AndroidUtilities.getBitmapFromSurface(videoSurfaceView, frameBitmap, () -> saveFrame.run(frameBitmap));
+                            }
+                        } else if (videoTextureView != null && videoTextureView.getWidth() > 0 && videoTextureView.getHeight() > 0) {
+                            saveFrame.run(videoTextureView.getBitmap(videoTextureView.getWidth(), videoTextureView.getHeight()));
+                        }
+                    } catch (Throwable e) {
+                        FileLog.e(e);
+                    }
                 } else if (id == gallery_menu_report) {
                     TLRPC.Photo photo = null;
                     if (currentFileLocation != null && currentFileLocation.photo != null) {
@@ -5813,6 +5854,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         videoItem.getPopupLayout().addView(videoQualityLayout);
         loopItem = videoItem.addSubItem(gallery_menu_loop, R.drawable.menu_video_loop, LocaleController.getString(R.string.VideoPlayerLoop));
         loopItem.setSelectorColor(0x0fffffff);
+        ActionBarMenuSubItem saveFrameItem = videoItem.addSubItem(gallery_menu_save_frame, R.drawable.msg_gallery, LuminaLocale.getString(R.string.SaveCurrentFrame));
+        saveFrameItem.setSelectorColor(0x0fffffff);
         castItemButton = new CastMediaRouteButton(activityContext) {
             @Override
             public void stateUpdated(boolean connected) {
