@@ -68,6 +68,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -148,6 +149,7 @@ import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaContactNotes;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -243,6 +245,7 @@ import org.telegram.ui.Components.IdenticonDrawable;
 import org.telegram.ui.Components.ImageUpdater;
 import org.telegram.ui.Components.InstantCameraView;
 import org.telegram.ui.Components.ItemOptions;
+import org.telegram.ui.Components.EditTextBoldCursor;
 import org.telegram.ui.Components.JoinGroupAlert;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.LinkSpanDrawable;
@@ -652,6 +655,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int registrationDateRow;
     private int dcIdRow;
     private int chatDateRow;
+    private int luminaPrivateNoteRow;
     private int noteRow;
     private int locationRow;
     private int userInfoRow;
@@ -4630,6 +4634,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
             } else if (position == noteRow) {
                 editNotes(view, position);
+            } else if (position == luminaPrivateNoteRow) {
+                editLuminaPrivateNote();
             } else {
                 processOnClickOrPress(position, view, x, y);
             }
@@ -10510,6 +10516,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         birthdayRow = -1;
         registrationDateRow = -1;
         dcIdRow = -1;
+        luminaPrivateNoteRow = -1;
         chatDateRow = -1;
         setUsernameRow = -1;
         bioRow = -1;
@@ -10775,6 +10782,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
                 if (LuminaConfig.getBoolean("showDcId", false) && getProfileDcId() > 0) {
                     dcIdRow = rowCount++;
+                }
+                // LuminaGram: local, on-device private note & tags for this contact (never sent to Telegram).
+                if (userId != 0 && !myProfile) {
+                    luminaPrivateNoteRow = rowCount++;
                 }
                 if (userInfo != null) {
                     if (userInfo.birthday != null) {
@@ -13555,6 +13566,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else if (position == dcIdRow) {
                         int dc = getProfileDcId();
                         detailCell.setTextAndValue(dc > 0 ? "DC" + dc : "—", LuminaLocale.getString(R.string.ProfileDcId), false);
+                    } else if (position == luminaPrivateNoteRow) {
+                        String summary = LuminaContactNotes.getSummary(userId);
+                        if (summary == null || summary.length() == 0) {
+                            summary = LuminaLocale.getString(R.string.LuminaPrivateNoteEmpty);
+                        }
+                        detailCell.setTextAndValue(summary, LuminaLocale.getString(R.string.LuminaPrivateNote), false);
                     } else if (position == chatDateRow) {
                         String value = "—";
                         if (currentChat != null && currentChat.date > 0) {
@@ -14404,7 +14421,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                     position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                 return VIEW_TYPE_HEADER;
-            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow || position == dcIdRow || position == chatDateRow) {
+            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow || position == dcIdRow || position == luminaPrivateNoteRow || position == chatDateRow) {
                 return VIEW_TYPE_TEXT_DETAIL;
             } else if (position == usernameRow || position == setUsernameRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE;
@@ -16336,6 +16353,63 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 //                    }
         }
 
+    }
+
+    // LuminaGram: editor for the LOCAL private note & tags. Values persist only on this
+    // device via LuminaContactNotes (app-private prefs) and are never sent to Telegram.
+    private void editLuminaPrivateNote() {
+        final Context context = getParentActivity();
+        if (context == null || userId == 0) {
+            return;
+        }
+
+        final EditTextBoldCursor noteField = new EditTextBoldCursor(context);
+        noteField.setTextSize(16);
+        noteField.setTextColor(Theme.getColor(Theme.key_dialogTextBlack));
+        noteField.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint));
+        noteField.setCursorColor(Theme.getColor(Theme.key_dialogTextBlack));
+        noteField.setCursorSize(dp(20));
+        noteField.setCursorWidth(1.5f);
+        noteField.setBackgroundDrawable(null);
+        noteField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        noteField.setSingleLine(false);
+        noteField.setMinLines(3);
+        noteField.setMaxLines(6);
+        noteField.setGravity(Gravity.TOP | Gravity.LEFT);
+        noteField.setHint(LuminaLocale.getString(R.string.LuminaPrivateNoteHint));
+        noteField.setText(LuminaContactNotes.getNote(userId));
+
+        final EditTextBoldCursor tagsField = new EditTextBoldCursor(context);
+        tagsField.setTextSize(16);
+        tagsField.setTextColor(Theme.getColor(Theme.key_dialogTextBlack));
+        tagsField.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint));
+        tagsField.setCursorColor(Theme.getColor(Theme.key_dialogTextBlack));
+        tagsField.setCursorSize(dp(20));
+        tagsField.setCursorWidth(1.5f);
+        tagsField.setBackgroundDrawable(null);
+        tagsField.setInputType(InputType.TYPE_CLASS_TEXT);
+        tagsField.setSingleLine(true);
+        tagsField.setGravity(Gravity.TOP | Gravity.LEFT);
+        tagsField.setHint(LuminaLocale.getString(R.string.LuminaPrivateNoteTagsHint));
+        tagsField.setText(LuminaContactNotes.getTags(userId));
+
+        final LinearLayout container = new LinearLayout(context);
+        container.setOrientation(LinearLayout.VERTICAL);
+        container.addView(noteField, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 24, 8, 24, 0));
+        container.addView(tagsField, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 24, 14, 24, 4));
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaPrivateNote));
+        builder.setView(container);
+        builder.setPositiveButton(LocaleController.getString(R.string.Save), (dialog, which) -> {
+            AndroidUtilities.hideKeyboard(noteField);
+            LuminaContactNotes.setNote(userId, noteField.getText().toString(), tagsField.getText().toString());
+            if (listAdapter != null && luminaPrivateNoteRow >= 0) {
+                listAdapter.notifyItemChanged(luminaPrivateNoteRow);
+            }
+        });
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        showDialog(builder.create());
     }
 
     private boolean editNotes(View view, int position) {

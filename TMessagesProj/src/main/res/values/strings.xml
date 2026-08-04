@@ -11421,5 +11421,10 @@
     <string name="LuminaStickerImportEmpty">No sticker set links found.</string>
     <string name="LuminaClearAllCache">Clear all cache</string>
     <string name="LuminaClearAllCacheConfirm">This will remove all cached media, files and temporary data from this device. Your messages and account are not affected.</string>
+    <!-- LuminaGram private contact notes &amp; tags (local, on-device only) -->
+    <string name="LuminaPrivateNote">Private note</string>
+    <string name="LuminaPrivateNoteEmpty">Tap to add a private note</string>
+    <string name="LuminaPrivateNoteHint">Note (only you can see this)</string>
+    <string name="LuminaPrivateNoteTagsHint">Tags, comma separated</string>
 </resources>
 
