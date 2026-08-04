@@ -6757,6 +6757,18 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         lastWidth = getParentWidth();
         isRoundVideo = messageObject != null && messageObject.isRoundVideo();
         mediaSpoilerRevealProgress = 0f;
+        // LuminaGram (wave18): spoiler-by-default for incoming media.
+        // When "spoilerIncomingMedia" is ON, treat an incoming photo/video as media-spoilered so the
+        // EXISTING blur overlay + tap-to-reveal path applies (drives hasMediaSpoilers()). Gated, default-off.
+        if (LuminaConfig.getBoolean("spoilerIncomingMedia", false)
+                && messageObject != null && !messageObject.isOutOwner()
+                && !messageObject.needDrawBluredPreview()
+                && !messageObject.isRoundVideo()
+                && (messageObject.isPhoto() || messageObject.isVideo())
+                && messageObject.messageOwner != null && messageObject.messageOwner.media != null
+                && !messageObject.messageOwner.media.spoiler) {
+            messageObject.messageOwner.media.spoiler = true;
+        }
         TLRPC.Message newReply = messageObject.hasValidReplyMessageObject() ? messageObject.replyMessageObject.messageOwner : null;
         boolean messageIdChanged = currentMessageObject == null || currentMessageObject.getId() != messageObject.getId();
         boolean messageChanged = currentMessageObject != messageObject || messageObject.forceUpdate || (isRoundVideo && isPlayingRound != (MediaController.getInstance().isPlayingMessage(currentMessageObject) && delegate != null && !delegate.keyboardIsOpened()));

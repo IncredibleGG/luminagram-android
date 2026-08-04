@@ -68,6 +68,10 @@ public class LuminaChatActivity extends BaseFragment {
         items.add(UItem.asSwitch(10, LuminaLocale.getString(R.string.LuminaSendAsFileDefault)).setChecked(LuminaConfig.getBoolean("sendAsFileDefault", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSendAsFileDefaultInfo)));
 
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMediaPrivacy)));
+        items.add(UItem.asSwitch(12, LuminaLocale.getString(R.string.LuminaSpoilerIncomingMedia)).setChecked(LuminaConfig.getBoolean("spoilerIncomingMedia", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSpoilerIncomingMediaInfo)));
+
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaInfoDensity)));
         items.add(UItem.asSwitch(6, LuminaLocale.getString(R.string.LuminaShowDcId)).setChecked(LuminaConfig.getBoolean("showDcId", false)));
         items.add(UItem.asSwitch(7, LuminaLocale.getString(R.string.LuminaShowChatDate)).setChecked(LuminaConfig.getBoolean("showChatDate", false)));
@@ -98,6 +102,9 @@ public class LuminaChatActivity extends BaseFragment {
                 break;
             case 11:
                 LuminaConfig.putBoolean("hideKeyboardOnScroll", !LuminaConfig.getBoolean("hideKeyboardOnScroll", false));
+                break;
+            case 12:
+                LuminaConfig.putBoolean("spoilerIncomingMedia", !LuminaConfig.getBoolean("spoilerIncomingMedia", false));
                 break;
             case 6:
                 LuminaConfig.putBoolean("showDcId", !LuminaConfig.getBoolean("showDcId", false));
