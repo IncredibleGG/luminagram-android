@@ -11225,6 +11225,7 @@
     <string name="LuminaTranslateBeforeSendEnabled">Translate before send: on</string>
     <string name="LuminaTranslateBeforeSendDisabled">Translate before send: off</string>
     <string name="LuminaArticleTranslate">Translate article</string>
+    <string name="LuminaTranslateSelection">Translate</string>
     <!-- LuminaGram multi-provider translation -->
     <string name="LuminaTranslateProviderHeader">Translation provider</string>
     <string name="LuminaTranslateProvider">Provider</string>
