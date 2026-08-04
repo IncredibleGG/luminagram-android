@@ -66,6 +66,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaForwardNoCaptionTitle", "转发时移除说明文字");
         zhHans.put("LuminaSaveToCloudTitle", "保存到收藏夹");
         zhHans.put("LuminaSelectFromAuthorTitle", "选择该作者的全部消息");
+        zhHans.put("LuminaHideKeyboardOnScroll", "滚动时隐藏键盘");
         zhHans.put("LuminaMediaSaving", "媒体");
         zhHans.put("LuminaSaveStickers", "保存贴纸");
         zhHans.put("LuminaSendAsFileDefault", "以文件形式发送媒体");
@@ -276,6 +277,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaForwardNoCaptionTitle", "轉發時移除說明文字");
         zhHant.put("LuminaSaveToCloudTitle", "儲存至「儲存的訊息」");
         zhHant.put("LuminaSelectFromAuthorTitle", "選擇該作者的所有訊息");
+        zhHant.put("LuminaHideKeyboardOnScroll", "捲動時隱藏鍵盤");
         zhHant.put("LuminaMediaSaving", "媒體");
         zhHant.put("LuminaSaveStickers", "儲存貼圖");
         zhHant.put("LuminaSendAsFileDefault", "以檔案形式傳送媒體");
@@ -486,6 +488,7 @@ public final class LuminaLocale {
         ar.put("LuminaForwardNoCaptionTitle", "إعادة التوجيه دون التعليق");
         ar.put("LuminaSaveToCloudTitle", "الحفظ في الرسائل المحفوظة");
         ar.put("LuminaSelectFromAuthorTitle", "تحديد كل رسائل المؤلف");
+        ar.put("LuminaHideKeyboardOnScroll", "إخفاء لوحة المفاتيح عند التمرير");
         ar.put("LuminaMediaSaving", "الوسائط");
         ar.put("LuminaSaveStickers", "حفظ الملصقات");
         ar.put("LuminaSendAsFileDefault", "إرسال الوسائط كملف");
@@ -695,6 +698,7 @@ public final class LuminaLocale {
         ru.put("LuminaForwardNoCaptionTitle", "Пересылать без подписи");
         ru.put("LuminaSaveToCloudTitle", "Сохранить в «Избранное»");
         ru.put("LuminaSelectFromAuthorTitle", "Выбрать все сообщения автора");
+        ru.put("LuminaHideKeyboardOnScroll", "Скрывать клавиатуру при прокрутке");
         ru.put("LuminaMediaSaving", "Медиа");
         ru.put("LuminaSaveStickers", "Сохранять стикеры");
         ru.put("LuminaSendAsFileDefault", "Отправлять медиа как файл");
@@ -904,6 +908,7 @@ public final class LuminaLocale {
         fa.put("LuminaForwardNoCaptionTitle", "هدایت بدون شرح");
         fa.put("LuminaSaveToCloudTitle", "ذخیره در پیام‌های ذخیره‌شده");
         fa.put("LuminaSelectFromAuthorTitle", "انتخاب همه پیام‌های این نویسنده");
+        fa.put("LuminaHideKeyboardOnScroll", "پنهان کردن صفحه‌کلید هنگام پیمایش");
         fa.put("LuminaMediaSaving", "رسانه");
         fa.put("LuminaSaveStickers", "ذخیره برچسب‌ها");
         fa.put("LuminaSendAsFileDefault", "ارسال رسانه به‌صورت فایل");
@@ -1113,6 +1118,7 @@ public final class LuminaLocale {
         tr.put("LuminaForwardNoCaptionTitle", "Açıklaması olmadan ilet");
         tr.put("LuminaSaveToCloudTitle", "Kayıtlı Mesajlar'a kaydet");
         tr.put("LuminaSelectFromAuthorTitle", "Yazarın tüm mesajlarını seç");
+        tr.put("LuminaHideKeyboardOnScroll", "Kaydırırken klavyeyi gizle");
         tr.put("LuminaMediaSaving", "Medya");
         tr.put("LuminaSaveStickers", "Çıkartmaları kaydet");
         tr.put("LuminaSendAsFileDefault", "Medyayı dosya olarak gönder");
@@ -1322,6 +1328,7 @@ public final class LuminaLocale {
         es.put("LuminaForwardNoCaptionTitle", "Reenviar sin descripción");
         es.put("LuminaSaveToCloudTitle", "Guardar en Mensajes Guardados");
         es.put("LuminaSelectFromAuthorTitle", "Seleccionar todo del autor");
+        es.put("LuminaHideKeyboardOnScroll", "Ocultar teclado al desplazar");
         es.put("LuminaMediaSaving", "Multimedia");
         es.put("LuminaSaveStickers", "Guardar stickers");
         es.put("LuminaSendAsFileDefault", "Enviar multimedia como archivo");
@@ -1531,6 +1538,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaForwardNoCaptionTitle", "Encaminhar sem legenda");
         ptBr.put("LuminaSaveToCloudTitle", "Salvar em Mensagens Salvas");
         ptBr.put("LuminaSelectFromAuthorTitle", "Selecionar tudo do autor");
+        ptBr.put("LuminaHideKeyboardOnScroll", "Ocultar teclado ao rolar");
         ptBr.put("LuminaMediaSaving", "Mídia");
         ptBr.put("LuminaSaveStickers", "Salvar figurinhas");
         ptBr.put("LuminaSendAsFileDefault", "Enviar mídia como arquivo");
@@ -1740,6 +1748,7 @@ public final class LuminaLocale {
         id.put("LuminaForwardNoCaptionTitle", "Teruskan tanpa keterangan");
         id.put("LuminaSaveToCloudTitle", "Simpan ke Pesan Tersimpan");
         id.put("LuminaSelectFromAuthorTitle", "Pilih semua dari penulis");
+        id.put("LuminaHideKeyboardOnScroll", "Sembunyikan keyboard saat menggulir");
         id.put("LuminaMediaSaving", "Media");
         id.put("LuminaSaveStickers", "Simpan stiker");
         id.put("LuminaSendAsFileDefault", "Kirim media sebagai file");
