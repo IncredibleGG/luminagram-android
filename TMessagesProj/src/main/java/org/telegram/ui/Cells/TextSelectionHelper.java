@@ -51,12 +51,16 @@ import org.telegram.messenger.Emoji;
 import org.telegram.messenger.FileLog;
 import org.telegram.messenger.LanguageDetector;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaTranslator;
+import org.telegram.messenger.LuminaTranslators;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.R;
 import org.telegram.messenger.RichMessageLayout;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.Utilities;
 import org.telegram.ui.ActionBar.ActionBarPopupWindow;
+import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.FloatingActionMode;
 import org.telegram.ui.ActionBar.FloatingToolbar;
 import org.telegram.ui.iv.RichTextCell;
@@ -64,6 +68,7 @@ import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.ArticleViewer;
 import org.telegram.ui.Components.AnimatedEmojiSpan;
 import org.telegram.ui.Components.CornerPath;
+import org.telegram.ui.Components.TranslateAlert2;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.RestrictedLanguagesSelectActivity;
@@ -1534,6 +1539,56 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
     }
 
     private static final int TRANSLATE = 3;
+    private static final int LUMINA_TRANSLATE_SELECTION = 4;
+
+    // LuminaGram: translate just the current text selection through the user's chosen
+    // provider (LuminaTranslators.current()) and show the result in a simple alert. This
+    // is independent of Telegram's own message-translate flow (onTranslateListener), which
+    // is only wired in the article/instant-view reader; in chat bubbles that listener is
+    // null, so this is the only in-selection translate available there.
+    private void translateSelection() {
+        final CharSequence sel = getSelectedText();
+        if (sel == null) {
+            return;
+        }
+        final String text = sel.toString();
+        if (text.trim().length() == 0) {
+            return;
+        }
+        final Context context = textSelectionOverlay != null
+                ? textSelectionOverlay.getContext()
+                : (parentView != null ? parentView.getContext() : null);
+        if (context == null) {
+            return;
+        }
+        LuminaTranslators.current().translate(text, TranslateAlert2.getToLanguage(), new LuminaTranslator.Callback() {
+            @Override
+            public void onResult(String translated, String detectedSourceLang) {
+                showTranslationResult(context, translated);
+            }
+
+            @Override
+            public void onError(boolean rateLimited, String message) {
+                showTranslationResult(context, message != null && message.length() > 0
+                        ? message
+                        : LocaleController.getString(R.string.LuminaTranslateTestFailed));
+            }
+        });
+    }
+
+    // LuminaTranslator callbacks are documented to arrive on the UI thread, so the dialog
+    // can be built directly here.
+    private void showTranslationResult(Context context, CharSequence message) {
+        if (context == null || message == null) {
+            return;
+        }
+        new AlertDialog.Builder(context, resourcesProvider)
+                .setTitle(LuminaLocale.getString(R.string.LuminaTranslateSelection))
+                .setMessage(message)
+                .setPositiveButton(LocaleController.getString(R.string.OK), null)
+                .show();
+    }
+
     private ActionMode.Callback createActionCallback() {
         final ActionMode.Callback callback = new ActionMode.Callback() {
             @Override
@@ -1541,6 +1596,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                 menu.add(Menu.NONE, android.R.id.copy, 0, android.R.string.copy);
                 menu.add(Menu.NONE, R.id.menu_quote, 1, LocaleController.getString(R.string.Quote));
                 menu.add(Menu.NONE, TRANSLATE, 2, LocaleController.getString(R.string.TranslateMessage));
+                menu.add(Menu.NONE, LUMINA_TRANSLATE_SELECTION, 2, LuminaLocale.getString(R.string.LuminaTranslateSelection));
                 menu.add(Menu.NONE, android.R.id.cut, 3, android.R.string.cut);
                 menu.add(Menu.NONE, android.R.id.paste, 4, android.R.string.paste);
                 menu.add(Menu.NONE, android.R.id.selectAll, 5, android.R.string.selectAll);
@@ -1577,6 +1633,13 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                 MenuItem pasteItem = menu.findItem(android.R.id.paste);
                 if (pasteItem != null) {
                     pasteItem.setVisible(canPaste() && clipboardHasContent());
+                }
+                MenuItem luminaTranslateItem = menu.findItem(LUMINA_TRANSLATE_SELECTION);
+                if (luminaTranslateItem != null) {
+                    CharSequence luminaSel = getSelectedText();
+                    // Show only where Telegram's own translate is not wired (chat bubbles /
+                    // input); the article reader sets onTranslateListener and handles it there.
+                    luminaTranslateItem.setVisible(onTranslateListener == null && luminaSel != null && luminaSel.length() > 0);
                 }
                 if (onTranslateListener != null && LanguageDetector.hasSupport() && getSelectedText() != null) {
                     LanguageDetector.detectLanguage(getSelectedText().toString(), lng -> {
@@ -1641,6 +1704,10 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                         String translateToLanguage = LocaleController.getInstance().getCurrentLocale().getLanguage();
                         onTranslateListener.run(getSelectedText(), translateFromLanguage, translateToLanguage, () -> showActions());
                     }
+                    hideActions();
+                    return true;
+                } else if (itemId == LUMINA_TRANSLATE_SELECTION) {
+                    translateSelection();
                     hideActions();
                     return true;
                 } else if (itemId == R.id.menu_quote) {

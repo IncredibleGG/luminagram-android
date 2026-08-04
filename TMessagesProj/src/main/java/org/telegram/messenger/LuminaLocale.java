@@ -198,6 +198,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaInterfaceNumbersHeader", "数字");
         zhHans.put("LuminaInterfaceExactNumbers", "显示精确数字（不使用 1.2K 缩写）");
         zhHans.put("LuminaInterfaceExactNumbersInfo", "显示完整计数，如 1,234,567，而非 1.2M 之类的缩写形式。");
+        zhHans.put("LuminaTranslateSelection", "翻译");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -370,6 +371,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaInterfaceNumbersHeader", "數字");
         zhHant.put("LuminaInterfaceExactNumbers", "顯示精確數字（不使用 1.2K 縮寫）");
         zhHant.put("LuminaInterfaceExactNumbersInfo", "顯示完整計數，如 1,234,567，而非 1.2M 之類的縮寫形式。");
+        zhHant.put("LuminaTranslateSelection", "翻譯");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -541,6 +543,7 @@ public final class LuminaLocale {
         ar.put("LuminaInterfaceNumbersHeader", "الأرقام");
         ar.put("LuminaInterfaceExactNumbers", "إظهار الأرقام الدقيقة (بدون اختصار 1.2K)");
         ar.put("LuminaInterfaceExactNumbersInfo", "إظهار الأعداد الكاملة مثل 1,234,567 بدلاً من الصيغ المختصرة مثل 1.2M.");
+        ar.put("LuminaTranslateSelection", "ترجمة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -712,6 +715,7 @@ public final class LuminaLocale {
         ru.put("LuminaInterfaceNumbersHeader", "Числа");
         ru.put("LuminaInterfaceExactNumbers", "Показывать точные числа (без округления 1.2K)");
         ru.put("LuminaInterfaceExactNumbersInfo", "Показывать полные значения, например 1 234 567, вместо сокращённых форм вроде 1.2M.");
+        ru.put("LuminaTranslateSelection", "Перевести");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -883,6 +887,7 @@ public final class LuminaLocale {
         fa.put("LuminaInterfaceNumbersHeader", "اعداد");
         fa.put("LuminaInterfaceExactNumbers", "نمایش اعداد دقیق (بدون خلاصه‌سازی 1.2K)");
         fa.put("LuminaInterfaceExactNumbersInfo", "نمایش اعداد کامل مانند 1,234,567 به جای شکل‌های خلاصه مانند 1.2M.");
+        fa.put("LuminaTranslateSelection", "ترجمه");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1054,6 +1059,7 @@ public final class LuminaLocale {
         tr.put("LuminaInterfaceNumbersHeader", "Sayılar");
         tr.put("LuminaInterfaceExactNumbers", "Tam sayıları göster (1.2K yuvarlaması yok)");
         tr.put("LuminaInterfaceExactNumbersInfo", "1.2M gibi kısaltmalar yerine 1.234.567 gibi tam sayıları göster.");
+        tr.put("LuminaTranslateSelection", "Çevir");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1225,6 +1231,7 @@ public final class LuminaLocale {
         es.put("LuminaInterfaceNumbersHeader", "Números");
         es.put("LuminaInterfaceExactNumbers", "Mostrar números exactos (sin redondeo 1.2K)");
         es.put("LuminaInterfaceExactNumbersInfo", "Mostrar cifras completas como 1.234.567 en lugar de formas abreviadas como 1.2M.");
+        es.put("LuminaTranslateSelection", "Traducir");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1396,6 +1403,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaInterfaceNumbersHeader", "Números");
         ptBr.put("LuminaInterfaceExactNumbers", "Mostrar números exatos (sem arredondamento 1.2K)");
         ptBr.put("LuminaInterfaceExactNumbersInfo", "Mostrar contagens completas como 1.234.567 em vez de formas abreviadas como 1.2M.");
+        ptBr.put("LuminaTranslateSelection", "Traduzir");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1567,6 +1575,7 @@ public final class LuminaLocale {
         id.put("LuminaInterfaceNumbersHeader", "Angka");
         id.put("LuminaInterfaceExactNumbers", "Tampilkan angka persis (tanpa pembulatan 1.2K)");
         id.put("LuminaInterfaceExactNumbersInfo", "Tampilkan jumlah penuh seperti 1.234.567 alih-alih bentuk singkat seperti 1.2M.");
+        id.put("LuminaTranslateSelection", "Terjemahkan");
         T.put("id", id);
     }
 
