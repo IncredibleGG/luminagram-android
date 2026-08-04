@@ -653,6 +653,15 @@ public class ChatActivityEnterView extends FrameLayout implements
     private SendButton doneButton;
     private AnimatorSet doneButtonAnimation;
     protected View topView;
+    // LuminaGram: live translate-before-send preview panel shown above the input row.
+    private static final int LUMINA_PREVIEW_HEIGHT = 52; // dp
+    private LinearLayout luminaPreviewPanel;
+    private TextView luminaPreviewOriginalView;
+    private TextView luminaPreviewTranslationView;
+    private Runnable luminaPreviewRunnable;
+    private int luminaPreviewReqToken = -1;
+    private String luminaPreviewTranslatedFor;
+    private String luminaPreviewTranslatedText;
     private BotKeyboardView botKeyboardView;
     private ImageView notifyButton;
     @Nullable
@@ -5092,6 +5101,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         // LuminaGram: quick toggle for translate-before-send, right in the send long-press menu.
         options.add(R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaTranslateBeforeSend), () -> {
             LuminaConfig.toggleTranslateBeforeSend();
+            luminaUpdateTranslatePreview();
             if (parentFragment != null) {
                 BulletinFactory.of(parentFragment).createSimpleBulletin(
                         R.raw.msg_translate,
@@ -5788,6 +5798,27 @@ public class ChatActivityEnterView extends FrameLayout implements
         richDraftPreview.setPadding(dp(8), dp(9), dp(8), dp(10));
         richDraftPreview.setOnClickListener(v -> openRichEditor());
         messageEditTextContainer.addView(richDraftPreview, 2, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 52 - 8, 0, (isChat ? 50 : 2) - 8, 1.5f));
+
+        // LuminaGram: compact live translate preview (original on top, translation below).
+        luminaPreviewPanel = new LinearLayout(getContext());
+        luminaPreviewPanel.setOrientation(LinearLayout.VERTICAL);
+        luminaPreviewPanel.setPadding(dp(2), dp(5), dp(2), dp(4));
+        luminaPreviewPanel.setVisibility(View.GONE);
+        luminaPreviewOriginalView = new TextView(getContext());
+        luminaPreviewOriginalView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        luminaPreviewOriginalView.setTextColor(getThemedColor(Theme.key_chat_messagePanelHint));
+        luminaPreviewOriginalView.setSingleLine(true);
+        luminaPreviewOriginalView.setMaxLines(1);
+        luminaPreviewOriginalView.setEllipsize(TextUtils.TruncateAt.END);
+        luminaPreviewPanel.addView(luminaPreviewOriginalView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        luminaPreviewTranslationView = new TextView(getContext());
+        luminaPreviewTranslationView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        luminaPreviewTranslationView.setTextColor(getThemedColor(Theme.key_chat_messagePanelText));
+        luminaPreviewTranslationView.setSingleLine(true);
+        luminaPreviewTranslationView.setMaxLines(1);
+        luminaPreviewTranslationView.setEllipsize(TextUtils.TruncateAt.END);
+        luminaPreviewPanel.addView(luminaPreviewTranslationView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 2, 0, 0));
+        messageEditTextContainer.addView(luminaPreviewPanel, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LUMINA_PREVIEW_HEIGHT, Gravity.TOP | Gravity.LEFT, 52, 0, isChat ? 50 : 2, 0));
         messageEditText.setOnKeyListener(new OnKeyListener() {
 
             @Override
@@ -6017,6 +6048,14 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
         });
         messageEditText.addTextChangedListener(new EditTextSuggestionsFix());
+        // LuminaGram: keep the live translate preview in sync with the field contents.
+        messageEditText.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(Editable s) {
+                luminaUpdateTranslatePreview();
+            }
+        });
         messageEditText.setEnabled(messageEditTextEnabled);
         if (messageEditTextWatchers != null) {
             for (TextWatcher textWatcher : messageEditTextWatchers) {
@@ -7856,6 +7895,14 @@ public class ChatActivityEnterView extends FrameLayout implements
     // thread), previewed (original -> translation) and only the confirmed text is sent.
     private void luminaTranslateBeforeSend(CharSequence outgoing, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
         final String original = outgoing.toString();
+        final boolean livePreviewVisible = luminaPreviewPanel != null && luminaPreviewPanel.getVisibility() == View.VISIBLE;
+        // The live preview already shows a ready translation for exactly this text: the panel IS the
+        // confirmation, so send that translation straight away (no extra request, no dialog).
+        if (livePreviewVisible && luminaPreviewTranslatedText != null
+                && luminaPreviewTranslatedFor != null && luminaPreviewTranslatedFor.equals(original.trim())) {
+            luminaSendPreparedText(luminaPreviewTranslatedText, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
         final String toLang = TranslateAlert2.getToLanguage();
         final TLRPC.TL_messages_translateText req = new TLRPC.TL_messages_translateText();
         req.flags |= 2;
@@ -7874,11 +7921,11 @@ public class ChatActivityEnterView extends FrameLayout implements
             if (translated == null || translated.trim().length() == 0 || translated.equals(original)) {
                 // Translation unavailable or a no-op (same language): send the text as typed.
                 luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
-            } else if (LuminaConfig.translateBeforeSendConfirm) {
-                // Confirm-before-send on: preview Original -> Translation and let the user choose.
+            } else if (LuminaConfig.translateBeforeSendConfirm && !livePreviewVisible) {
+                // Confirm-before-send on and no live panel: fall back to the preview dialog.
                 luminaShowTranslatePreview(original, translated, toLang, notify, scheduleDate, scheduleRepeatPeriod, payStars);
             } else {
-                // Default (confirm off): one-tap send of the translation.
+                // Live panel visible (panel = confirmation) or confirm off: send the translation.
                 luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
             }
         }));
@@ -7924,6 +7971,119 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
         }
         updateSendButtonPaid();
+    }
+
+    // LuminaGram: refresh the live translate preview from the current field contents.
+    private void luminaUpdateTranslatePreview() {
+        if (luminaPreviewPanel == null || messageEditText == null) {
+            return;
+        }
+        final boolean enabled = LuminaConfig.translateBeforeSend && editingMessageObject == null && !recordingAudioVideo;
+        final CharSequence cs = messageEditText.getTextToUse();
+        final String text = cs == null ? "" : cs.toString().trim();
+        if (!enabled || text.length() == 0) {
+            luminaHideTranslatePreview();
+            return;
+        }
+        luminaShowTranslatePreviewPanel();
+        luminaPreviewOriginalView.setText(text);
+        if (text.equals(luminaPreviewTranslatedFor) && luminaPreviewTranslatedText != null) {
+            // Already have a translation for this exact text.
+            luminaPreviewTranslationView.setText(luminaPreviewTranslatedText);
+            if (luminaPreviewRunnable != null) {
+                AndroidUtilities.cancelRunOnUIThread(luminaPreviewRunnable);
+                luminaPreviewRunnable = null;
+            }
+            return;
+        }
+        luminaPreviewTranslationView.setText(LuminaLocale.getString(R.string.LuminaTranslatePreviewTranslating));
+        // Debounce, and cancel any in-flight request: the text is still changing.
+        if (luminaPreviewRunnable != null) {
+            AndroidUtilities.cancelRunOnUIThread(luminaPreviewRunnable);
+        }
+        if (luminaPreviewReqToken != -1) {
+            ConnectionsManager.getInstance(currentAccount).cancelRequest(luminaPreviewReqToken, false);
+            luminaPreviewReqToken = -1;
+        }
+        final String pending = text;
+        luminaPreviewRunnable = () -> {
+            luminaPreviewRunnable = null;
+            luminaRequestPreviewTranslation(pending);
+        };
+        AndroidUtilities.runOnUIThread(luminaPreviewRunnable, 500);
+    }
+
+    private void luminaRequestPreviewTranslation(final String source) {
+        if (source == null || source.length() == 0) {
+            return;
+        }
+        final String toLang = TranslateAlert2.getToLanguage();
+        final TLRPC.TL_messages_translateText req = new TLRPC.TL_messages_translateText();
+        req.flags |= 2;
+        final TLRPC.TL_textWithEntities twe = new TLRPC.TL_textWithEntities();
+        twe.text = source;
+        req.text.add(twe);
+        req.to_lang = TranslateController.normalizeLanguage(toLang);
+        luminaPreviewReqToken = ConnectionsManager.getInstance(currentAccount).sendRequest(req, (res, err) -> AndroidUtilities.runOnUIThread(() -> {
+            luminaPreviewReqToken = -1;
+            String translated = null;
+            if (res instanceof TLRPC.TL_messages_translateResult) {
+                final ArrayList<TLRPC.TL_textWithEntities> result = ((TLRPC.TL_messages_translateResult) res).result;
+                if (result != null && !result.isEmpty() && result.get(0) != null) {
+                    translated = result.get(0).text;
+                }
+            }
+            if (translated == null || translated.trim().length() == 0) {
+                translated = source;
+            }
+            luminaPreviewTranslatedFor = source;
+            luminaPreviewTranslatedText = translated;
+            // Apply only if the field still holds the same text and the panel is visible.
+            if (luminaPreviewPanel != null && luminaPreviewPanel.getVisibility() == View.VISIBLE && messageEditText != null) {
+                final CharSequence cur = messageEditText.getTextToUse();
+                final String curText = cur == null ? "" : cur.toString().trim();
+                if (source.equals(curText)) {
+                    luminaPreviewTranslationView.setText(luminaPreviewTranslatedText);
+                }
+            }
+        }));
+    }
+
+    private void luminaShowTranslatePreviewPanel() {
+        if (luminaPreviewPanel == null) {
+            return;
+        }
+        if (luminaPreviewPanel.getVisibility() != View.VISIBLE) {
+            luminaPreviewPanel.setVisibility(View.VISIBLE);
+            if (messageEditText != null && messageEditText.getLayoutParams() instanceof MarginLayoutParams) {
+                ((MarginLayoutParams) messageEditText.getLayoutParams()).topMargin = dp(LUMINA_PREVIEW_HEIGHT);
+            }
+            if (messageEditTextContainer != null) {
+                messageEditTextContainer.requestLayout();
+            }
+        }
+    }
+
+    private void luminaHideTranslatePreview() {
+        if (luminaPreviewRunnable != null) {
+            AndroidUtilities.cancelRunOnUIThread(luminaPreviewRunnable);
+            luminaPreviewRunnable = null;
+        }
+        if (luminaPreviewReqToken != -1) {
+            ConnectionsManager.getInstance(currentAccount).cancelRequest(luminaPreviewReqToken, false);
+            luminaPreviewReqToken = -1;
+        }
+        luminaPreviewTranslatedFor = null;
+        luminaPreviewTranslatedText = null;
+        if (luminaPreviewPanel != null && luminaPreviewPanel.getVisibility() != View.GONE) {
+            luminaPreviewPanel.setVisibility(View.GONE);
+            if (messageEditText != null && messageEditText.getLayoutParams() instanceof MarginLayoutParams) {
+                ((MarginLayoutParams) messageEditText.getLayoutParams()).topMargin = 0;
+            }
+            if (messageEditTextContainer != null) {
+                messageEditTextContainer.requestLayout();
+            }
+        }
     }
 
     public long getSendMonoForumPeerId() {
