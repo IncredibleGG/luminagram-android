@@ -259,6 +259,22 @@ public final class LuminaLocale {
         zhHans.put("LuminaPrivateNoteEmpty", "点按以添加私密备注");
         zhHans.put("LuminaPrivateNoteHint", "备注（仅你可见）");
         zhHans.put("LuminaPrivateNoteTagsHint", "标签，以逗号分隔");
+        zhHans.put("LuminaBackupTitle", "加密备份");
+        zhHans.put("LuminaBackupExportHeader", "导出");
+        zhHans.put("LuminaBackupExport", "导出加密备份");
+        zhHans.put("LuminaBackupExportInfo", "将你所有的 LuminaGram 数据——书签、联系人备注、快捷回复、文本替换以及全部设置——保存到一个用你设定的口令加密的文件中。请妥善保管口令:没有它将无法打开备份。任何数据都不会发送给 Telegram。");
+        zhHans.put("LuminaBackupImportHeader", "恢复");
+        zhHans.put("LuminaBackupImport", "导入备份");
+        zhHans.put("LuminaBackupImportInfo", "选择一个备份文件并输入其口令,以恢复你的 LuminaGram 数据。键名相同的条目将被覆盖。");
+        zhHans.put("LuminaBackupExportPassphraseTitle", "设置口令");
+        zhHans.put("LuminaBackupPassphraseTitle", "输入口令");
+        zhHans.put("LuminaBackupPassphraseHint", "口令");
+        zhHans.put("LuminaBackupPassphraseTooShort", "请设置至少 4 个字符的口令。");
+        zhHans.put("LuminaBackupExportFailed", "无法创建备份文件。");
+        zhHans.put("LuminaBackupImportSuccess", "备份已恢复。请重启 LuminaGram 以应用全部更改。");
+        zhHans.put("LuminaBackupImportFailed", "无法读取备份文件。");
+        zhHans.put("LuminaBackupInvalidFile", "这不是有效的 LuminaGram 备份文件。");
+        zhHans.put("LuminaBackupWrongPassphrase", "口令错误,或文件已损坏。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -492,6 +508,22 @@ public final class LuminaLocale {
         zhHant.put("LuminaPrivateNoteEmpty", "點按以新增私密備註");
         zhHant.put("LuminaPrivateNoteHint", "備註（僅你可見）");
         zhHant.put("LuminaPrivateNoteTagsHint", "標籤，以逗號分隔");
+        zhHant.put("LuminaBackupTitle", "加密備份");
+        zhHant.put("LuminaBackupExportHeader", "匯出");
+        zhHant.put("LuminaBackupExport", "匯出加密備份");
+        zhHant.put("LuminaBackupExportInfo", "將你所有的 LuminaGram 資料——書籤、聯絡人備註、快速回覆、文字取代以及所有設定——儲存到一個以你設定的密碼加密的檔案中。請妥善保管密碼:沒有它將無法開啟備份。任何資料都不會傳送給 Telegram。");
+        zhHant.put("LuminaBackupImportHeader", "還原");
+        zhHant.put("LuminaBackupImport", "匯入備份");
+        zhHant.put("LuminaBackupImportInfo", "選擇一個備份檔案並輸入其密碼,以還原你的 LuminaGram 資料。鍵名相同的項目將被覆蓋。");
+        zhHant.put("LuminaBackupExportPassphraseTitle", "設定密碼");
+        zhHant.put("LuminaBackupPassphraseTitle", "輸入密碼");
+        zhHant.put("LuminaBackupPassphraseHint", "密碼");
+        zhHant.put("LuminaBackupPassphraseTooShort", "請設定至少 4 個字元的密碼。");
+        zhHant.put("LuminaBackupExportFailed", "無法建立備份檔案。");
+        zhHant.put("LuminaBackupImportSuccess", "備份已還原。請重新啟動 LuminaGram 以套用所有變更。");
+        zhHant.put("LuminaBackupImportFailed", "無法讀取備份檔案。");
+        zhHant.put("LuminaBackupInvalidFile", "這不是有效的 LuminaGram 備份檔案。");
+        zhHant.put("LuminaBackupWrongPassphrase", "密碼錯誤,或檔案已損毀。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -724,6 +756,22 @@ public final class LuminaLocale {
         ar.put("LuminaPrivateNoteEmpty", "اضغط لإضافة ملاحظة خاصة");
         ar.put("LuminaPrivateNoteHint", "ملاحظة (يمكنك أنت وحدك رؤيتها)");
         ar.put("LuminaPrivateNoteTagsHint", "وسوم مفصولة بفواصل");
+        ar.put("LuminaBackupTitle", "نسخة احتياطية مشفّرة");
+        ar.put("LuminaBackupExportHeader", "تصدير");
+        ar.put("LuminaBackupExport", "تصدير نسخة احتياطية مشفّرة");
+        ar.put("LuminaBackupExportInfo", "احفظ كل بيانات LuminaGram — الإشارات المرجعية وملاحظات جهات الاتصال والردود السريعة واستبدالات النص وجميع الإعدادات — في ملف مشفّر بعبارة مرور تختارها. احتفظ بعبارة المرور في مكان آمن: بدونها لا يمكن فتح النسخة الاحتياطية. لا يُرسَل أي شيء إلى Telegram.");
+        ar.put("LuminaBackupImportHeader", "استعادة");
+        ar.put("LuminaBackupImport", "استيراد نسخة احتياطية");
+        ar.put("LuminaBackupImportInfo", "اختر ملف نسخة احتياطية وأدخل عبارة المرور الخاصة به لاستعادة بيانات LuminaGram. سيتم استبدال العناصر التي تحمل المفاتيح نفسها.");
+        ar.put("LuminaBackupExportPassphraseTitle", "تعيين عبارة مرور");
+        ar.put("LuminaBackupPassphraseTitle", "أدخل عبارة المرور");
+        ar.put("LuminaBackupPassphraseHint", "عبارة المرور");
+        ar.put("LuminaBackupPassphraseTooShort", "اختر عبارة مرور من 4 أحرف على الأقل.");
+        ar.put("LuminaBackupExportFailed", "تعذّر إنشاء ملف النسخة الاحتياطية.");
+        ar.put("LuminaBackupImportSuccess", "تمت استعادة النسخة الاحتياطية. أعد تشغيل LuminaGram لتطبيق كل شيء.");
+        ar.put("LuminaBackupImportFailed", "تعذّر قراءة ملف النسخة الاحتياطية.");
+        ar.put("LuminaBackupInvalidFile", "هذا ليس ملف نسخة احتياطية صالحًا لـ LuminaGram.");
+        ar.put("LuminaBackupWrongPassphrase", "عبارة المرور خاطئة، أو الملف تالف.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -956,6 +1004,22 @@ public final class LuminaLocale {
         ru.put("LuminaPrivateNoteEmpty", "Нажмите, чтобы добавить личную заметку");
         ru.put("LuminaPrivateNoteHint", "Заметка (видна только вам)");
         ru.put("LuminaPrivateNoteTagsHint", "Теги через запятую");
+        ru.put("LuminaBackupTitle", "Зашифрованная резервная копия");
+        ru.put("LuminaBackupExportHeader", "Экспорт");
+        ru.put("LuminaBackupExport", "Экспортировать зашифрованную копию");
+        ru.put("LuminaBackupExportInfo", "Сохраните все данные LuminaGram — закладки, заметки о контактах, быстрые ответы, замены текста и все настройки — в файл, зашифрованный выбранной вами парольной фразой. Храните парольную фразу в надёжном месте: без неё копию нельзя открыть. Ничего не отправляется в Telegram.");
+        ru.put("LuminaBackupImportHeader", "Восстановление");
+        ru.put("LuminaBackupImport", "Импортировать копию");
+        ru.put("LuminaBackupImportInfo", "Выберите файл резервной копии и введите его парольную фразу, чтобы восстановить данные LuminaGram. Записи с такими же ключами будут перезаписаны.");
+        ru.put("LuminaBackupExportPassphraseTitle", "Задайте парольную фразу");
+        ru.put("LuminaBackupPassphraseTitle", "Введите парольную фразу");
+        ru.put("LuminaBackupPassphraseHint", "Парольная фраза");
+        ru.put("LuminaBackupPassphraseTooShort", "Выберите парольную фразу не короче 4 символов.");
+        ru.put("LuminaBackupExportFailed", "Не удалось создать файл резервной копии.");
+        ru.put("LuminaBackupImportSuccess", "Копия восстановлена. Перезапустите LuminaGram, чтобы применить все изменения.");
+        ru.put("LuminaBackupImportFailed", "Не удалось прочитать файл резервной копии.");
+        ru.put("LuminaBackupInvalidFile", "Это недействительный файл резервной копии LuminaGram.");
+        ru.put("LuminaBackupWrongPassphrase", "Неверная парольная фраза или файл повреждён.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1188,6 +1252,22 @@ public final class LuminaLocale {
         fa.put("LuminaPrivateNoteEmpty", "برای افزودن یادداشت خصوصی ضربه بزنید");
         fa.put("LuminaPrivateNoteHint", "یادداشت (فقط شما می‌بینید)");
         fa.put("LuminaPrivateNoteTagsHint", "برچسب‌ها، جدا شده با کاما");
+        fa.put("LuminaBackupTitle", "پشتیبان رمزگذاری‌شده");
+        fa.put("LuminaBackupExportHeader", "خروجی");
+        fa.put("LuminaBackupExport", "خروجی گرفتن پشتیبان رمزگذاری‌شده");
+        fa.put("LuminaBackupExportInfo", "همهٔ داده‌های LuminaGram — نشانک‌ها، یادداشت‌های مخاطبان، پاسخ‌های سریع، جایگزینی‌های متن و همهٔ تنظیمات — را در فایلی که با عبارت عبور انتخابی شما رمزگذاری شده ذخیره کنید. عبارت عبور را ایمن نگه دارید: بدون آن نمی‌توان پشتیبان را باز کرد. چیزی به تلگرام ارسال نمی‌شود.");
+        fa.put("LuminaBackupImportHeader", "بازیابی");
+        fa.put("LuminaBackupImport", "وارد کردن پشتیبان");
+        fa.put("LuminaBackupImportInfo", "یک فایل پشتیبان انتخاب کنید و عبارت عبور آن را وارد کنید تا داده‌های LuminaGram بازیابی شود. مواردی با کلیدهای یکسان بازنویسی می‌شوند.");
+        fa.put("LuminaBackupExportPassphraseTitle", "تعیین عبارت عبور");
+        fa.put("LuminaBackupPassphraseTitle", "عبارت عبور را وارد کنید");
+        fa.put("LuminaBackupPassphraseHint", "عبارت عبور");
+        fa.put("LuminaBackupPassphraseTooShort", "عبارت عبوری با حداقل ۴ نویسه انتخاب کنید.");
+        fa.put("LuminaBackupExportFailed", "ایجاد فایل پشتیبان ممکن نشد.");
+        fa.put("LuminaBackupImportSuccess", "پشتیبان بازیابی شد. برای اعمال همهٔ تغییرات، LuminaGram را دوباره راه‌اندازی کنید.");
+        fa.put("LuminaBackupImportFailed", "خواندن فایل پشتیبان ممکن نشد.");
+        fa.put("LuminaBackupInvalidFile", "این یک فایل پشتیبان معتبر LuminaGram نیست.");
+        fa.put("LuminaBackupWrongPassphrase", "عبارت عبور نادرست است یا فایل آسیب دیده است.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1420,6 +1500,22 @@ public final class LuminaLocale {
         tr.put("LuminaPrivateNoteEmpty", "Özel not eklemek için dokunun");
         tr.put("LuminaPrivateNoteHint", "Not (yalnızca siz görebilirsiniz)");
         tr.put("LuminaPrivateNoteTagsHint", "Etiketler, virgülle ayrılmış");
+        tr.put("LuminaBackupTitle", "Şifreli yedek");
+        tr.put("LuminaBackupExportHeader", "Dışa aktar");
+        tr.put("LuminaBackupExport", "Şifreli yedeği dışa aktar");
+        tr.put("LuminaBackupExportInfo", "Tüm LuminaGram verilerinizi — yer imleri, kişi notları, hızlı yanıtlar, metin değiştirmeleri ve tüm ayarlar — seçtiğiniz bir parolayla şifrelenmiş bir dosyaya kaydedin. Parolayı güvende tutun: parola olmadan yedek açılamaz. Telegram'a hiçbir şey gönderilmez.");
+        tr.put("LuminaBackupImportHeader", "Geri yükle");
+        tr.put("LuminaBackupImport", "Yedeği içe aktar");
+        tr.put("LuminaBackupImportInfo", "LuminaGram verilerinizi geri yüklemek için bir yedek dosyası seçin ve parolasını girin. Aynı anahtarlara sahip girdilerin üzerine yazılır.");
+        tr.put("LuminaBackupExportPassphraseTitle", "Bir parola belirleyin");
+        tr.put("LuminaBackupPassphraseTitle", "Parolayı girin");
+        tr.put("LuminaBackupPassphraseHint", "Parola");
+        tr.put("LuminaBackupPassphraseTooShort", "En az 4 karakterlik bir parola seçin.");
+        tr.put("LuminaBackupExportFailed", "Yedek dosyası oluşturulamadı.");
+        tr.put("LuminaBackupImportSuccess", "Yedek geri yüklendi. Her şeyi uygulamak için LuminaGram'ı yeniden başlatın.");
+        tr.put("LuminaBackupImportFailed", "Yedek dosyası okunamadı.");
+        tr.put("LuminaBackupInvalidFile", "Bu geçerli bir LuminaGram yedek dosyası değil.");
+        tr.put("LuminaBackupWrongPassphrase", "Yanlış parola veya dosya hasarlı.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1652,6 +1748,22 @@ public final class LuminaLocale {
         es.put("LuminaPrivateNoteEmpty", "Toca para añadir una nota privada");
         es.put("LuminaPrivateNoteHint", "Nota (solo tú puedes verla)");
         es.put("LuminaPrivateNoteTagsHint", "Etiquetas separadas por comas");
+        es.put("LuminaBackupTitle", "Copia de seguridad cifrada");
+        es.put("LuminaBackupExportHeader", "Exportar");
+        es.put("LuminaBackupExport", "Exportar copia cifrada");
+        es.put("LuminaBackupExportInfo", "Guarda todos tus datos de LuminaGram —marcadores, notas de contactos, respuestas rápidas, reemplazos de texto y todos los ajustes— en un archivo cifrado con una frase de contraseña que tú elijas. Guarda la frase en un lugar seguro: sin ella no se puede abrir la copia. No se envía nada a Telegram.");
+        es.put("LuminaBackupImportHeader", "Restaurar");
+        es.put("LuminaBackupImport", "Importar copia");
+        es.put("LuminaBackupImportInfo", "Elige un archivo de copia e introduce su frase de contraseña para restaurar tus datos de LuminaGram. Las entradas con las mismas claves se sobrescriben.");
+        es.put("LuminaBackupExportPassphraseTitle", "Establece una frase de contraseña");
+        es.put("LuminaBackupPassphraseTitle", "Introduce la frase de contraseña");
+        es.put("LuminaBackupPassphraseHint", "Frase de contraseña");
+        es.put("LuminaBackupPassphraseTooShort", "Elige una frase de contraseña de al menos 4 caracteres.");
+        es.put("LuminaBackupExportFailed", "No se pudo crear el archivo de copia.");
+        es.put("LuminaBackupImportSuccess", "Copia restaurada. Reinicia LuminaGram para aplicar todo.");
+        es.put("LuminaBackupImportFailed", "No se pudo leer el archivo de copia.");
+        es.put("LuminaBackupInvalidFile", "Este no es un archivo de copia de LuminaGram válido.");
+        es.put("LuminaBackupWrongPassphrase", "Frase de contraseña incorrecta o el archivo está dañado.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1884,6 +1996,22 @@ public final class LuminaLocale {
         ptBr.put("LuminaPrivateNoteEmpty", "Toque para adicionar uma nota privada");
         ptBr.put("LuminaPrivateNoteHint", "Nota (só você pode ver)");
         ptBr.put("LuminaPrivateNoteTagsHint", "Tags separadas por vírgula");
+        ptBr.put("LuminaBackupTitle", "Backup criptografado");
+        ptBr.put("LuminaBackupExportHeader", "Exportar");
+        ptBr.put("LuminaBackupExport", "Exportar backup criptografado");
+        ptBr.put("LuminaBackupExportInfo", "Salve todos os seus dados do LuminaGram — favoritos, notas de contatos, respostas rápidas, substituições de texto e todas as configurações — em um arquivo criptografado com uma frase secreta que você escolher. Guarde a frase secreta em local seguro: sem ela o backup não pode ser aberto. Nada é enviado ao Telegram.");
+        ptBr.put("LuminaBackupImportHeader", "Restaurar");
+        ptBr.put("LuminaBackupImport", "Importar backup");
+        ptBr.put("LuminaBackupImportInfo", "Escolha um arquivo de backup e digite a frase secreta dele para restaurar seus dados do LuminaGram. Entradas com as mesmas chaves são substituídas.");
+        ptBr.put("LuminaBackupExportPassphraseTitle", "Defina uma frase secreta");
+        ptBr.put("LuminaBackupPassphraseTitle", "Digite a frase secreta");
+        ptBr.put("LuminaBackupPassphraseHint", "Frase secreta");
+        ptBr.put("LuminaBackupPassphraseTooShort", "Escolha uma frase secreta com pelo menos 4 caracteres.");
+        ptBr.put("LuminaBackupExportFailed", "Não foi possível criar o arquivo de backup.");
+        ptBr.put("LuminaBackupImportSuccess", "Backup restaurado. Reinicie o LuminaGram para aplicar tudo.");
+        ptBr.put("LuminaBackupImportFailed", "Não foi possível ler o arquivo de backup.");
+        ptBr.put("LuminaBackupInvalidFile", "Este não é um arquivo de backup válido do LuminaGram.");
+        ptBr.put("LuminaBackupWrongPassphrase", "Frase secreta incorreta ou o arquivo está corrompido.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2116,6 +2244,22 @@ public final class LuminaLocale {
         id.put("LuminaPrivateNoteEmpty", "Ketuk untuk menambah catatan pribadi");
         id.put("LuminaPrivateNoteHint", "Catatan (hanya Anda yang bisa melihat)");
         id.put("LuminaPrivateNoteTagsHint", "Tag, dipisahkan koma");
+        id.put("LuminaBackupTitle", "Cadangan terenkripsi");
+        id.put("LuminaBackupExportHeader", "Ekspor");
+        id.put("LuminaBackupExport", "Ekspor cadangan terenkripsi");
+        id.put("LuminaBackupExportInfo", "Simpan semua data LuminaGram Anda — markah, catatan kontak, balasan cepat, penggantian teks, dan semua pengaturan — ke sebuah berkas yang dienkripsi dengan frasa sandi pilihan Anda. Simpan frasa sandi di tempat aman: tanpa itu cadangan tidak dapat dibuka. Tidak ada yang dikirim ke Telegram.");
+        id.put("LuminaBackupImportHeader", "Pulihkan");
+        id.put("LuminaBackupImport", "Impor cadangan");
+        id.put("LuminaBackupImportInfo", "Pilih berkas cadangan dan masukkan frasa sandinya untuk memulihkan data LuminaGram Anda. Entri dengan kunci yang sama akan ditimpa.");
+        id.put("LuminaBackupExportPassphraseTitle", "Tetapkan frasa sandi");
+        id.put("LuminaBackupPassphraseTitle", "Masukkan frasa sandi");
+        id.put("LuminaBackupPassphraseHint", "Frasa sandi");
+        id.put("LuminaBackupPassphraseTooShort", "Pilih frasa sandi minimal 4 karakter.");
+        id.put("LuminaBackupExportFailed", "Tidak dapat membuat berkas cadangan.");
+        id.put("LuminaBackupImportSuccess", "Cadangan dipulihkan. Mulai ulang LuminaGram untuk menerapkan semuanya.");
+        id.put("LuminaBackupImportFailed", "Tidak dapat membaca berkas cadangan.");
+        id.put("LuminaBackupInvalidFile", "Ini bukan berkas cadangan LuminaGram yang valid.");
+        id.put("LuminaBackupWrongPassphrase", "Frasa sandi salah, atau berkas rusak.");
         T.put("id", id);
     }
 

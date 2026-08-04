@@ -310,4 +310,119 @@ public class LuminaConfig {
         editor.putInt("appFont", font).apply();
         applyAppearance();
     }
+
+    // ---- Encrypted local backup (Wave 11) ----
+    // Helpers for LuminaBackupActivity's export/import. Everything LuminaGram stores
+    // lives in the single app-private "luminagram" prefs file, so a backup is simply a
+    // type-tagged snapshot of preferences.getAll() — bookmarks, contactNotes, quickReplies,
+    // textReplacements and every toggle/int/string key, including future ones. Nothing is
+    // ever sent to Telegram; the snapshot is encrypted with a passphrase before it leaves
+    // the app (see LuminaBackupActivity).
+
+    /**
+     * Snapshot every key in the "luminagram" prefs as a type-tagged JSON object. Each
+     * entry maps a key to {@code {"t":<type>,"v":<value>}} where type is one of
+     * b(oolean)/i(nt)/l(ong)/f(loat)/s(tring)/ss(string-set). Never null.
+     */
+    public static org.json.JSONObject exportAll() {
+        org.json.JSONObject out = new org.json.JSONObject();
+        try {
+            java.util.Map<String, ?> all = preferences.getAll();
+            for (java.util.Map.Entry<String, ?> e : all.entrySet()) {
+                Object val = e.getValue();
+                if (val == null) {
+                    continue;
+                }
+                org.json.JSONObject entry = new org.json.JSONObject();
+                if (val instanceof Boolean) {
+                    entry.put("t", "b").put("v", ((Boolean) val).booleanValue());
+                } else if (val instanceof Integer) {
+                    entry.put("t", "i").put("v", ((Integer) val).intValue());
+                } else if (val instanceof Long) {
+                    entry.put("t", "l").put("v", ((Long) val).longValue());
+                } else if (val instanceof Float) {
+                    entry.put("t", "f").put("v", (double) ((Float) val).floatValue());
+                } else if (val instanceof String) {
+                    entry.put("t", "s").put("v", (String) val);
+                } else if (val instanceof java.util.Set) {
+                    org.json.JSONArray a = new org.json.JSONArray();
+                    for (Object s : (java.util.Set<?>) val) {
+                        a.put(String.valueOf(s));
+                    }
+                    entry.put("t", "ss").put("v", a);
+                } else {
+                    continue; // unknown type: skip it rather than guess
+                }
+                out.put(e.getKey(), entry);
+            }
+        } catch (org.json.JSONException ignore) {
+        }
+        return out;
+    }
+
+    /**
+     * Restore keys produced by {@link #exportAll()} back into the "luminagram" prefs,
+     * writing each value with its original type. Returns the number of keys applied.
+     * Cached static fields are refreshed via {@link #reloadFromPreferences()} afterward
+     * so a restored appearance/toggle takes effect without a restart.
+     */
+    public static int importAll(org.json.JSONObject data) {
+        if (data == null) {
+            return 0;
+        }
+        int applied = 0;
+        java.util.Iterator<String> keys = data.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            org.json.JSONObject entry = data.optJSONObject(key);
+            if (entry == null) {
+                continue;
+            }
+            String t = entry.optString("t", "s");
+            try {
+                switch (t) {
+                    case "b":
+                        editor.putBoolean(key, entry.optBoolean("v", false));
+                        break;
+                    case "i":
+                        editor.putInt(key, entry.optInt("v", 0));
+                        break;
+                    case "l":
+                        editor.putLong(key, entry.optLong("v", 0L));
+                        break;
+                    case "f":
+                        editor.putFloat(key, (float) entry.optDouble("v", 0));
+                        break;
+                    case "ss": {
+                        org.json.JSONArray a = entry.optJSONArray("v");
+                        java.util.HashSet<String> set = new java.util.HashSet<>();
+                        if (a != null) {
+                            for (int i = 0; i < a.length(); i++) {
+                                set.add(a.optString(i));
+                            }
+                        }
+                        editor.putStringSet(key, set);
+                        break;
+                    }
+                    default:
+                        editor.putString(key, entry.optString("v", ""));
+                        break;
+                }
+                applied++;
+            } catch (Exception ignore) {
+                // Malformed entry: skip it, never abort the whole restore.
+            }
+        }
+        editor.apply();
+        reloadFromPreferences();
+        return applied;
+    }
+
+    /** Re-read every cached field from the "luminagram" prefs (used after an import). */
+    public static void reloadFromPreferences() {
+        synchronized (sync) {
+            configLoaded = false;
+            loadConfig();
+        }
+    }
 }
