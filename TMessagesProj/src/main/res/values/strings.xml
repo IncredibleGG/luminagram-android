@@ -11191,6 +11191,11 @@
     <string name="LuminaTranslateTo">Translate to</string>
     <string name="LuminaAutoTranslateAll">Auto-translate all chats</string>
     <string name="LuminaAutoTranslateAllInfo">Automatically translate incoming messages in every chat, bypassing the premium requirement. Chats you have turned off individually stay off.</string>
+    <string name="LuminaTranslateBeforeSend">Translate before send</string>
+    <string name="LuminaTranslateBeforeSendInfo">When on, your typed message is translated to the target language. You can preview the translation before it is sent.</string>
+    <string name="LuminaSendTranslation">Send translation</string>
+    <string name="LuminaSendOriginal">Send original</string>
+    <string name="LuminaTranslateOriginalLabel">Original</string>
     <string name="LuminaChatSettings">Chat &amp; media</string>
     <string name="LuminaMessageActions">Message actions</string>
     <string name="LuminaForwardNoAuthorTitle">Forward without author</string>

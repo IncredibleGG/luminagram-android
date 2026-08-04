@@ -131,6 +131,9 @@ import org.telegram.messenger.FileLog;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -7327,6 +7330,11 @@ public class ChatActivityEnterView extends FrameLayout implements
             if (checkPremiumAnimatedEmoji(currentAccount, dialog_id, parentFragment, null, message)) {
                 return;
             }
+            if (LuminaConfig.translateBeforeSend && parentFragment != null && message != null && message.toString().trim().length() > 0) {
+                luminaTranslateBeforeSend(message, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+                updateSendButtonPaid();
+                return;
+            }
             if (processSendingText(message, notify, scheduleDate, scheduleRepeatPeriod, payStars)) {
                 if (delegate.hasForwardingMessages() || (scheduleDate != 0 && !isInScheduleMode()) || isInScheduleMode()) {
                     if (messageEditText != null) {
@@ -7825,6 +7833,78 @@ public class ChatActivityEnterView extends FrameLayout implements
             return true;
         }
         return false;
+    }
+
+    // ===== LuminaGram: translate-before-send =====
+    // When enabled, the outgoing typed text is translated to the user's chosen target
+    // language (reusing Telegram's own TL_messages_translateText endpoint on a network
+    // thread), previewed (original -> translation) and only the confirmed text is sent.
+    private void luminaTranslateBeforeSend(CharSequence outgoing, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        final String original = outgoing.toString();
+        final String toLang = TranslateAlert2.getToLanguage();
+        final TLRPC.TL_messages_translateText req = new TLRPC.TL_messages_translateText();
+        req.flags |= 2;
+        final TLRPC.TL_textWithEntities textWithEntities = new TLRPC.TL_textWithEntities();
+        textWithEntities.text = original;
+        req.text.add(textWithEntities);
+        req.to_lang = TranslateController.normalizeLanguage(toLang);
+        ConnectionsManager.getInstance(currentAccount).sendRequest(req, (res, err) -> AndroidUtilities.runOnUIThread(() -> {
+            String translated = null;
+            if (res instanceof TLRPC.TL_messages_translateResult) {
+                final ArrayList<TLRPC.TL_textWithEntities> result = ((TLRPC.TL_messages_translateResult) res).result;
+                if (result != null && !result.isEmpty() && result.get(0) != null) {
+                    translated = result.get(0).text;
+                }
+            }
+            if (translated == null || translated.trim().length() == 0 || translated.equals(original)) {
+                // Translation unavailable or a no-op (same language): send the text as typed.
+                luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            } else {
+                luminaShowTranslatePreview(original, translated, toLang, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            }
+        }));
+    }
+
+    private void luminaShowTranslatePreview(final String original, final String translated, final String toLang, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        final Context context = getContext();
+        if (context == null || parentActivity == null) {
+            luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        String langName = TranslateAlert2.capitalFirst(TranslateAlert2.languageName(toLang));
+        if (langName == null) {
+            langName = toLang;
+        }
+        final SpannableStringBuilder body = new SpannableStringBuilder();
+        luminaAppendLabeled(body, LuminaLocale.getString(R.string.LuminaTranslateOriginalLabel), original);
+        body.append("\n\n");
+        luminaAppendLabeled(body, langName, translated);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context, resourcesProvider);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaTranslateBeforeSend));
+        builder.setMessage(body);
+        builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaSendTranslation), (dialog, which) -> luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars));
+        builder.setNeutralButton(LuminaLocale.getString(R.string.LuminaSendOriginal), (dialog, which) -> luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars));
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        builder.show();
+    }
+
+    private static void luminaAppendLabeled(SpannableStringBuilder sb, String label, String value) {
+        final int start = sb.length();
+        sb.append(label);
+        sb.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, sb.length(), android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        sb.append("\n").append(value);
+    }
+
+    private void luminaSendPreparedText(CharSequence text, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
+        if (processSendingText(text, notify, scheduleDate, scheduleRepeatPeriod, payStars)) {
+            if (messageEditText != null) {
+                messageEditText.setText("");
+            }
+            if (delegate != null) {
+                delegate.onMessageSend(text, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            }
+        }
+        updateSendButtonPaid();
     }
 
     public long getSendMonoForumPeerId() {

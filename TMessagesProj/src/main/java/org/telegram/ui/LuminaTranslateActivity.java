@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
@@ -30,6 +31,7 @@ public class LuminaTranslateActivity extends BaseFragment {
 
     private static final int ITEM_TARGET_LANGUAGE = 1;
     private static final int ITEM_SHOW_BUTTON = 2;
+    private static final int ITEM_TRANSLATE_BEFORE_SEND = 3;
 
     private UniversalRecyclerView listView;
 
@@ -70,7 +72,9 @@ public class LuminaTranslateActivity extends BaseFragment {
         items.add(UItem.asButton(ITEM_TARGET_LANGUAGE, LuminaLocale.getString(R.string.LuminaTranslateTo), currentTargetLanguageName()));
         items.add(UItem.asSwitch(ITEM_SHOW_BUTTON, LuminaLocale.getString(R.string.ShowTranslateButton))
                 .setChecked(getMessagesController().getTranslateController().isContextTranslateEnabled()));
-        items.add(UItem.asShadow(null));
+        items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND, LuminaLocale.getString(R.string.LuminaTranslateBeforeSend))
+                .setChecked(LuminaConfig.translateBeforeSend));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaTranslateBeforeSendInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -81,6 +85,10 @@ public class LuminaTranslateActivity extends BaseFragment {
             case ITEM_SHOW_BUTTON:
                 TranslateController tc = getMessagesController().getTranslateController();
                 tc.setContextTranslateEnabled(!tc.isContextTranslateEnabled());
+                update();
+                break;
+            case ITEM_TRANSLATE_BEFORE_SEND:
+                LuminaConfig.toggleTranslateBeforeSend();
                 update();
                 break;
         }

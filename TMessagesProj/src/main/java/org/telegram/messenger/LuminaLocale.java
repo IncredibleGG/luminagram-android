@@ -70,6 +70,11 @@ public final class LuminaLocale {
         zhHans.put("LuminaUpdateDownloading", "正在下载更新…");
         zhHans.put("LuminaUpdateFailed", "更新下载失败");
         zhHans.put("ShowTranslateButton", "显示翻译按钮");
+        zhHans.put("LuminaTranslateBeforeSend", "发送前翻译");
+        zhHans.put("LuminaTranslateBeforeSendInfo", "开启后，你输入的消息会翻译成目标语言。发送前可以预览译文。");
+        zhHans.put("LuminaSendTranslation", "发送译文");
+        zhHans.put("LuminaSendOriginal", "发送原文");
+        zhHans.put("LuminaTranslateOriginalLabel", "原文");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -114,6 +119,11 @@ public final class LuminaLocale {
         zhHant.put("LuminaUpdateDownloading", "正在下載更新…");
         zhHant.put("LuminaUpdateFailed", "更新下載失敗");
         zhHant.put("ShowTranslateButton", "顯示翻譯按鈕");
+        zhHant.put("LuminaTranslateBeforeSend", "傳送前翻譯");
+        zhHant.put("LuminaTranslateBeforeSendInfo", "開啟後，你輸入的訊息會翻譯成目標語言。傳送前可以預覽譯文。");
+        zhHant.put("LuminaSendTranslation", "傳送譯文");
+        zhHant.put("LuminaSendOriginal", "傳送原文");
+        zhHant.put("LuminaTranslateOriginalLabel", "原文");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -158,6 +168,11 @@ public final class LuminaLocale {
         ar.put("LuminaUpdateDownloading", "جارٍ تنزيل التحديث…");
         ar.put("LuminaUpdateFailed", "فشل تنزيل التحديث");
         ar.put("ShowTranslateButton", "إظهار زر الترجمة");
+        ar.put("LuminaTranslateBeforeSend", "الترجمة قبل الإرسال");
+        ar.put("LuminaTranslateBeforeSendInfo", "عند التفعيل، تُترجَم رسالتك المكتوبة إلى اللغة الهدف. يمكنك معاينة الترجمة قبل إرسالها.");
+        ar.put("LuminaSendTranslation", "إرسال الترجمة");
+        ar.put("LuminaSendOriginal", "إرسال النص الأصلي");
+        ar.put("LuminaTranslateOriginalLabel", "النص الأصلي");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -202,6 +217,11 @@ public final class LuminaLocale {
         ru.put("LuminaUpdateDownloading", "Загрузка обновления…");
         ru.put("LuminaUpdateFailed", "Не удалось загрузить обновление");
         ru.put("ShowTranslateButton", "Показывать кнопку перевода");
+        ru.put("LuminaTranslateBeforeSend", "Переводить перед отправкой");
+        ru.put("LuminaTranslateBeforeSendInfo", "Когда включено, ваше сообщение переводится на выбранный язык. Перевод можно посмотреть перед отправкой.");
+        ru.put("LuminaSendTranslation", "Отправить перевод");
+        ru.put("LuminaSendOriginal", "Отправить оригинал");
+        ru.put("LuminaTranslateOriginalLabel", "Оригинал");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -246,6 +266,11 @@ public final class LuminaLocale {
         fa.put("LuminaUpdateDownloading", "در حال دانلود به‌روزرسانی…");
         fa.put("LuminaUpdateFailed", "دانلود به‌روزرسانی ناموفق بود");
         fa.put("ShowTranslateButton", "نمایش دکمه ترجمه");
+        fa.put("LuminaTranslateBeforeSend", "ترجمه پیش از ارسال");
+        fa.put("LuminaTranslateBeforeSendInfo", "وقتی روشن باشد، پیام نوشته‌شده شما به زبان مقصد ترجمه می‌شود. می‌توانید ترجمه را پیش از ارسال ببینید.");
+        fa.put("LuminaSendTranslation", "ارسال ترجمه");
+        fa.put("LuminaSendOriginal", "ارسال متن اصلی");
+        fa.put("LuminaTranslateOriginalLabel", "متن اصلی");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -290,6 +315,11 @@ public final class LuminaLocale {
         tr.put("LuminaUpdateDownloading", "Güncelleme indiriliyor…");
         tr.put("LuminaUpdateFailed", "Güncelleme indirilemedi");
         tr.put("ShowTranslateButton", "Çeviri düğmesini göster");
+        tr.put("LuminaTranslateBeforeSend", "Göndermeden önce çevir");
+        tr.put("LuminaTranslateBeforeSendInfo", "Açıkken, yazdığınız mesaj hedef dile çevrilir. Çeviriyi göndermeden önce önizleyebilirsiniz.");
+        tr.put("LuminaSendTranslation", "Çeviriyi gönder");
+        tr.put("LuminaSendOriginal", "Orijinali gönder");
+        tr.put("LuminaTranslateOriginalLabel", "Orijinal");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -334,6 +364,11 @@ public final class LuminaLocale {
         es.put("LuminaUpdateDownloading", "Descargando actualización…");
         es.put("LuminaUpdateFailed", "Error al descargar la actualización");
         es.put("ShowTranslateButton", "Mostrar botón de traducción");
+        es.put("LuminaTranslateBeforeSend", "Traducir antes de enviar");
+        es.put("LuminaTranslateBeforeSendInfo", "Cuando está activado, tu mensaje se traduce al idioma de destino. Puedes ver la traducción antes de enviarla.");
+        es.put("LuminaSendTranslation", "Enviar traducción");
+        es.put("LuminaSendOriginal", "Enviar original");
+        es.put("LuminaTranslateOriginalLabel", "Original");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -378,6 +413,11 @@ public final class LuminaLocale {
         ptBr.put("LuminaUpdateDownloading", "Baixando atualização…");
         ptBr.put("LuminaUpdateFailed", "Falha ao baixar a atualização");
         ptBr.put("ShowTranslateButton", "Mostrar botão de tradução");
+        ptBr.put("LuminaTranslateBeforeSend", "Traduzir antes de enviar");
+        ptBr.put("LuminaTranslateBeforeSendInfo", "Quando ativado, sua mensagem é traduzida para o idioma de destino. Você pode ver a tradução antes de enviá-la.");
+        ptBr.put("LuminaSendTranslation", "Enviar tradução");
+        ptBr.put("LuminaSendOriginal", "Enviar original");
+        ptBr.put("LuminaTranslateOriginalLabel", "Original");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -422,6 +462,11 @@ public final class LuminaLocale {
         id.put("LuminaUpdateDownloading", "Mengunduh pembaruan…");
         id.put("LuminaUpdateFailed", "Gagal mengunduh pembaruan");
         id.put("ShowTranslateButton", "Tampilkan tombol terjemahan");
+        id.put("LuminaTranslateBeforeSend", "Terjemahkan sebelum kirim");
+        id.put("LuminaTranslateBeforeSendInfo", "Saat aktif, pesan yang Anda ketik diterjemahkan ke bahasa tujuan. Anda dapat melihat pratinjau terjemahan sebelum dikirim.");
+        id.put("LuminaSendTranslation", "Kirim terjemahan");
+        id.put("LuminaSendOriginal", "Kirim asli");
+        id.put("LuminaTranslateOriginalLabel", "Asli");
         T.put("id", id);
     }
 
