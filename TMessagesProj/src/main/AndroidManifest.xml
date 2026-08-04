@@ -289,6 +289,42 @@
             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
         </activity-alias>
 
+        <!-- LuminaGram disguise: Notes camouflage launcher (preset switcher in LuminaDisguiseActivity) -->
+        <activity-alias
+            android:enabled="false"
+            android:name="org.telegram.messenger.NotesIcon"
+            android:targetActivity="org.telegram.ui.LaunchActivity"
+            android:icon="@drawable/lumina_disguise_notes"
+            android:roundIcon="@drawable/lumina_disguise_notes"
+            android:label="@string/LuminaDisguiseNotesLabel"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <!-- LuminaGram disguise: Clock camouflage launcher (preset switcher in LuminaDisguiseActivity) -->
+        <activity-alias
+            android:enabled="false"
+            android:name="org.telegram.messenger.ClockIcon"
+            android:targetActivity="org.telegram.ui.LaunchActivity"
+            android:icon="@drawable/lumina_disguise_clock"
+            android:roundIcon="@drawable/lumina_disguise_clock"
+            android:label="@string/LuminaDisguiseClockLabel"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+        </activity-alias>
+
         <activity
             android:name="org.telegram.ui.LaunchActivity"
             android:theme="@style/Theme.TMessages.Start"

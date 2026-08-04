@@ -169,6 +169,21 @@ public final class LuminaLocale {
         zhHans.put("LuminaMediaUnlockAudioSpeed", "长音频的倍速控制");
         zhHans.put("LuminaMediaUnlockAudioSpeedInfo", "为音乐和长音频文件显示播放倍速控制，而不仅仅是语音消息。");
         zhHans.put("LuminaCalculatorError", "错误");
+        zhHans.put("LuminaDisguiseTitle", "应用伪装");
+        zhHans.put("LuminaDisguiseSectionHeader", "应用伪装");
+        zhHans.put("LuminaDisguiseEnable", "启用应用伪装");
+        zhHans.put("LuminaDisguisePresetDefault", "默认（LuminaGram）");
+        zhHans.put("LuminaDisguisePresetCalculator", "计算器");
+        zhHans.put("LuminaDisguisePresetNotes", "备忘录");
+        zhHans.put("LuminaDisguisePresetClock", "时钟");
+        zhHans.put("LuminaDisguiseInfo", "选择应用在主屏幕上的显示方式。开启后，启动图标和应用名称将被替换为所选应用。");
+        zhHans.put("LuminaDisguiseDecoyHeader", "诱饵锁（计算器）");
+        zhHans.put("LuminaDisguiseDecoyEnable", "启用诱饵锁");
+        zhHans.put("LuminaDisguiseDecoySetCode", "设置解锁码");
+        zhHans.put("LuminaDisguiseDecoyCodeSet", "已设置");
+        zhHans.put("LuminaDisguiseDecoyCodeNotSet", "未设置");
+        zhHans.put("LuminaDisguiseDecoyCodeDialogTitle", "解锁码");
+        zhHans.put("LuminaDisguiseDecoyInfo", "开启后，应用将以可用的计算器形式打开；输入此解锁码可显示真正的应用。此密码与 Telegram 内置密码相互独立。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -312,6 +327,21 @@ public final class LuminaLocale {
         zhHant.put("LuminaMediaUnlockAudioSpeed", "長音訊的倍速控制");
         zhHant.put("LuminaMediaUnlockAudioSpeedInfo", "為音樂和長音訊檔案顯示播放倍速控制，而不僅是語音訊息。");
         zhHant.put("LuminaCalculatorError", "錯誤");
+        zhHant.put("LuminaDisguiseTitle", "應用偽裝");
+        zhHant.put("LuminaDisguiseSectionHeader", "應用偽裝");
+        zhHant.put("LuminaDisguiseEnable", "啟用應用偽裝");
+        zhHant.put("LuminaDisguisePresetDefault", "預設（LuminaGram）");
+        zhHant.put("LuminaDisguisePresetCalculator", "計算機");
+        zhHant.put("LuminaDisguisePresetNotes", "備忘錄");
+        zhHant.put("LuminaDisguisePresetClock", "時鐘");
+        zhHant.put("LuminaDisguiseInfo", "選擇應用在主畫面上的顯示方式。開啟後，啟動圖示和應用名稱將被替換為所選應用。");
+        zhHant.put("LuminaDisguiseDecoyHeader", "誘餅鎖（計算機）");
+        zhHant.put("LuminaDisguiseDecoyEnable", "啟用誘餅鎖");
+        zhHant.put("LuminaDisguiseDecoySetCode", "設定解鎖碼");
+        zhHant.put("LuminaDisguiseDecoyCodeSet", "已設定");
+        zhHant.put("LuminaDisguiseDecoyCodeNotSet", "未設定");
+        zhHant.put("LuminaDisguiseDecoyCodeDialogTitle", "解鎖碼");
+        zhHant.put("LuminaDisguiseDecoyInfo", "開啟後，應用會以可用的計算機形式開啟；輸入此解鎖碼即可顯示真正的應用。此密碼與 Telegram 內建密碼互相獨立。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -454,6 +484,21 @@ public final class LuminaLocale {
         ar.put("LuminaMediaAutoPauseBgVideoInfo", "إيقاف الفيديو قيد التشغيل مؤقتًا تلقائيًا عند مغادرتك LuminaGram.");
         ar.put("LuminaMediaUnlockAudioSpeed", "التحكم في السرعة للمقاطع الصوتية الطويلة");
         ar.put("LuminaMediaUnlockAudioSpeedInfo", "إظهار عنصر التحكم في سرعة التشغيل للموسيقى والملفات الصوتية الطويلة، وليس الرسائل الصوتية فقط.");
+        ar.put("LuminaDisguiseTitle", "تمويه التطبيق");
+        ar.put("LuminaDisguiseSectionHeader", "تمويه التطبيق");
+        ar.put("LuminaDisguiseEnable", "تفعيل تمويه التطبيق");
+        ar.put("LuminaDisguisePresetDefault", "الافتراضي (LuminaGram)");
+        ar.put("LuminaDisguisePresetCalculator", "آلة حاسبة");
+        ar.put("LuminaDisguisePresetNotes", "ملاحظات");
+        ar.put("LuminaDisguisePresetClock", "ساعة");
+        ar.put("LuminaDisguiseInfo", "اختر كيف يظهر التطبيق على شاشتك الرئيسية. عند التفعيل، يُستبدل أيقونة التطبيق واسمه بالتطبيق المختار.");
+        ar.put("LuminaDisguiseDecoyHeader", "قفل خادع (آلة حاسبة)");
+        ar.put("LuminaDisguiseDecoyEnable", "تفعيل القفل الخادع");
+        ar.put("LuminaDisguiseDecoySetCode", "تعيين رمز الفتح");
+        ar.put("LuminaDisguiseDecoyCodeSet", "مُعيَّن");
+        ar.put("LuminaDisguiseDecoyCodeNotSet", "غير مُعيَّن");
+        ar.put("LuminaDisguiseDecoyCodeDialogTitle", "رمز الفتح");
+        ar.put("LuminaDisguiseDecoyInfo", "عند التفعيل، يفتح التطبيق كآلة حاسبة تعمل فعليًا؛ وإدخال هذا الرمز يكشف التطبيق. هذا الرمز منفصل عن رمز مرور Telegram المدمج.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -596,6 +641,21 @@ public final class LuminaLocale {
         ru.put("LuminaMediaAutoPauseBgVideoInfo", "Автоматически ставить воспроизводимое видео на паузу, когда вы покидаете LuminaGram.");
         ru.put("LuminaMediaUnlockAudioSpeed", "Управление скоростью для длинных аудио");
         ru.put("LuminaMediaUnlockAudioSpeedInfo", "Показывать регулятор скорости воспроизведения для музыки и длинных аудиофайлов, а не только для голосовых сообщений.");
+        ru.put("LuminaDisguiseTitle", "Маскировка приложения");
+        ru.put("LuminaDisguiseSectionHeader", "Маскировка приложения");
+        ru.put("LuminaDisguiseEnable", "Включить маскировку");
+        ru.put("LuminaDisguisePresetDefault", "По умолчанию (LuminaGram)");
+        ru.put("LuminaDisguisePresetCalculator", "Калькулятор");
+        ru.put("LuminaDisguisePresetNotes", "Заметки");
+        ru.put("LuminaDisguisePresetClock", "Часы");
+        ru.put("LuminaDisguiseInfo", "Выберите, как приложение отображается на главном экране. При включении значок и название приложения заменяются выбранным приложением.");
+        ru.put("LuminaDisguiseDecoyHeader", "Ложная блокировка (калькулятор)");
+        ru.put("LuminaDisguiseDecoyEnable", "Включить ложную блокировку");
+        ru.put("LuminaDisguiseDecoySetCode", "Задать код разблокировки");
+        ru.put("LuminaDisguiseDecoyCodeSet", "Задан");
+        ru.put("LuminaDisguiseDecoyCodeNotSet", "Не задан");
+        ru.put("LuminaDisguiseDecoyCodeDialogTitle", "Код разблокировки");
+        ru.put("LuminaDisguiseDecoyInfo", "При включении приложение открывается как рабочий калькулятор; ввод этого кода открывает приложение. Этот код независим от встроенного код-пароля Telegram.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -738,6 +798,21 @@ public final class LuminaLocale {
         fa.put("LuminaMediaAutoPauseBgVideoInfo", "هنگام خروج از LuminaGram، ویدیوی در حال پخش به‌طور خودکار متوقف می‌شود.");
         fa.put("LuminaMediaUnlockAudioSpeed", "کنترل سرعت برای صداهای طولانی");
         fa.put("LuminaMediaUnlockAudioSpeedInfo", "نمایش کنترل سرعت پخش برای موسیقی و فایل‌های صوتی طولانی، نه فقط پیام‌های صوتی.");
+        fa.put("LuminaDisguiseTitle", "استتار برنامه");
+        fa.put("LuminaDisguiseSectionHeader", "استتار برنامه");
+        fa.put("LuminaDisguiseEnable", "فعال‌سازی استتار برنامه");
+        fa.put("LuminaDisguisePresetDefault", "پیش‌فرض (LuminaGram)");
+        fa.put("LuminaDisguisePresetCalculator", "ماشین‌حساب");
+        fa.put("LuminaDisguisePresetNotes", "یادداشت‌ها");
+        fa.put("LuminaDisguisePresetClock", "ساعت");
+        fa.put("LuminaDisguiseInfo", "نحوهٔ نمایش برنامه در صفحهٔ اصلی را انتخاب کنید. با فعال‌سازی، نماد و نام برنامه با برنامهٔ انتخاب‌شده جایگزین می‌شود.");
+        fa.put("LuminaDisguiseDecoyHeader", "قفل فریبنده (ماشین‌حساب)");
+        fa.put("LuminaDisguiseDecoyEnable", "فعال‌سازی قفل فریبنده");
+        fa.put("LuminaDisguiseDecoySetCode", "تنظیم کد باز کردن");
+        fa.put("LuminaDisguiseDecoyCodeSet", "تنظیم‌شده");
+        fa.put("LuminaDisguiseDecoyCodeNotSet", "تنظیم‌نشده");
+        fa.put("LuminaDisguiseDecoyCodeDialogTitle", "کد باز کردن");
+        fa.put("LuminaDisguiseDecoyInfo", "با فعال‌سازی، برنامه به‌صورت یک ماشین‌حساب واقعی باز می‌شود؛ واردکردن این کد برنامه را آشکار می‌کند. این رمز جدا از رمز داخلی Telegram است.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -880,6 +955,21 @@ public final class LuminaLocale {
         tr.put("LuminaMediaAutoPauseBgVideoInfo", "LuminaGram'dan ayrıldığınızda oynatılan videoyu otomatik olarak duraklatır.");
         tr.put("LuminaMediaUnlockAudioSpeed", "Uzun sesler için hız denetimi");
         tr.put("LuminaMediaUnlockAudioSpeedInfo", "Hız denetimini yalnızca sesli mesajlar için değil, müzik ve uzun ses dosyaları için de gösterir.");
+        tr.put("LuminaDisguiseTitle", "Uygulama gizleme");
+        tr.put("LuminaDisguiseSectionHeader", "Uygulama gizleme");
+        tr.put("LuminaDisguiseEnable", "Uygulama gizlemeyi etkinleştir");
+        tr.put("LuminaDisguisePresetDefault", "Varsayılan (LuminaGram)");
+        tr.put("LuminaDisguisePresetCalculator", "Hesap makinesi");
+        tr.put("LuminaDisguisePresetNotes", "Notlar");
+        tr.put("LuminaDisguisePresetClock", "Saat");
+        tr.put("LuminaDisguiseInfo", "Uygulamanın ana ekranda nasıl göründüğünü seçin. Açıkken başlatıcı simgesi ve uygulama adı seçilen uygulamayla değiştirilir.");
+        tr.put("LuminaDisguiseDecoyHeader", "Sahte kilit (hesap makinesi)");
+        tr.put("LuminaDisguiseDecoyEnable", "Sahte kilidi etkinleştir");
+        tr.put("LuminaDisguiseDecoySetCode", "Kilit açma kodunu ayarla");
+        tr.put("LuminaDisguiseDecoyCodeSet", "Ayarlı");
+        tr.put("LuminaDisguiseDecoyCodeNotSet", "Ayarlı değil");
+        tr.put("LuminaDisguiseDecoyCodeDialogTitle", "Kilit açma kodu");
+        tr.put("LuminaDisguiseDecoyInfo", "Açıkken uygulama çalışan bir hesap makinesi olarak açılır; bu kodu girmek uygulamayı ortaya çıkarır. Bu parola Telegram'ın yerleşik parolasından ayrıdır.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1022,6 +1112,21 @@ public final class LuminaLocale {
         es.put("LuminaMediaAutoPauseBgVideoInfo", "Pausa automáticamente el video en reproducción cuando sales de LuminaGram.");
         es.put("LuminaMediaUnlockAudioSpeed", "Control de velocidad para audios largos");
         es.put("LuminaMediaUnlockAudioSpeedInfo", "Muestra el control de velocidad de reproducción para música y archivos de audio largos, no solo para los mensajes de voz.");
+        es.put("LuminaDisguiseTitle", "Disfraz de la app");
+        es.put("LuminaDisguiseSectionHeader", "Disfraz de la app");
+        es.put("LuminaDisguiseEnable", "Activar disfraz de la app");
+        es.put("LuminaDisguisePresetDefault", "Predeterminado (LuminaGram)");
+        es.put("LuminaDisguisePresetCalculator", "Calculadora");
+        es.put("LuminaDisguisePresetNotes", "Notas");
+        es.put("LuminaDisguisePresetClock", "Reloj");
+        es.put("LuminaDisguiseInfo", "Elige cómo aparece la app en tu pantalla de inicio. Cuando está activado, el icono y el nombre de la app se reemplazan por la app seleccionada.");
+        es.put("LuminaDisguiseDecoyHeader", "Bloqueo señuelo (calculadora)");
+        es.put("LuminaDisguiseDecoyEnable", "Activar bloqueo señuelo");
+        es.put("LuminaDisguiseDecoySetCode", "Establecer código de desbloqueo");
+        es.put("LuminaDisguiseDecoyCodeSet", "Establecido");
+        es.put("LuminaDisguiseDecoyCodeNotSet", "Sin establecer");
+        es.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueo");
+        es.put("LuminaDisguiseDecoyInfo", "Cuando está activado, la app se abre como una calculadora funcional; introducir este código revela la app. Esta contraseña es independiente del código de acceso integrado de Telegram.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1164,6 +1269,21 @@ public final class LuminaLocale {
         ptBr.put("LuminaMediaAutoPauseBgVideoInfo", "Pausa automaticamente o vídeo em reprodução quando você sai do LuminaGram.");
         ptBr.put("LuminaMediaUnlockAudioSpeed", "Controle de velocidade para áudios longos");
         ptBr.put("LuminaMediaUnlockAudioSpeedInfo", "Mostra o controle de velocidade de reprodução para música e arquivos de áudio longos, não apenas para mensagens de voz.");
+        ptBr.put("LuminaDisguiseTitle", "Disfarce do app");
+        ptBr.put("LuminaDisguiseSectionHeader", "Disfarce do app");
+        ptBr.put("LuminaDisguiseEnable", "Ativar disfarce do app");
+        ptBr.put("LuminaDisguisePresetDefault", "Padrão (LuminaGram)");
+        ptBr.put("LuminaDisguisePresetCalculator", "Calculadora");
+        ptBr.put("LuminaDisguisePresetNotes", "Notas");
+        ptBr.put("LuminaDisguisePresetClock", "Relógio");
+        ptBr.put("LuminaDisguiseInfo", "Escolha como o app aparece na tela inicial. Quando ativado, o ícone e o nome do app são substituídos pelo app selecionado.");
+        ptBr.put("LuminaDisguiseDecoyHeader", "Bloqueio falso (calculadora)");
+        ptBr.put("LuminaDisguiseDecoyEnable", "Ativar bloqueio falso");
+        ptBr.put("LuminaDisguiseDecoySetCode", "Definir código de desbloqueio");
+        ptBr.put("LuminaDisguiseDecoyCodeSet", "Definido");
+        ptBr.put("LuminaDisguiseDecoyCodeNotSet", "Não definido");
+        ptBr.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueio");
+        ptBr.put("LuminaDisguiseDecoyInfo", "Quando ativado, o app abre como uma calculadora funcional; digitar este código revela o app. Esta senha é separada da senha interna do Telegram.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1306,6 +1426,21 @@ public final class LuminaLocale {
         id.put("LuminaMediaAutoPauseBgVideoInfo", "Otomatis menjeda video yang sedang diputar saat Anda meninggalkan LuminaGram.");
         id.put("LuminaMediaUnlockAudioSpeed", "Kontrol kecepatan untuk audio panjang");
         id.put("LuminaMediaUnlockAudioSpeedInfo", "Menampilkan kontrol kecepatan pemutaran untuk musik dan file audio panjang, bukan hanya pesan suara.");
+        id.put("LuminaDisguiseTitle", "Penyamaran aplikasi");
+        id.put("LuminaDisguiseSectionHeader", "Penyamaran aplikasi");
+        id.put("LuminaDisguiseEnable", "Aktifkan penyamaran aplikasi");
+        id.put("LuminaDisguisePresetDefault", "Bawaan (LuminaGram)");
+        id.put("LuminaDisguisePresetCalculator", "Kalkulator");
+        id.put("LuminaDisguisePresetNotes", "Catatan");
+        id.put("LuminaDisguisePresetClock", "Jam");
+        id.put("LuminaDisguiseInfo", "Pilih tampilan aplikasi di layar utama. Saat aktif, ikon peluncur dan nama aplikasi diganti dengan aplikasi yang dipilih.");
+        id.put("LuminaDisguiseDecoyHeader", "Kunci umpan (kalkulator)");
+        id.put("LuminaDisguiseDecoyEnable", "Aktifkan kunci umpan");
+        id.put("LuminaDisguiseDecoySetCode", "Atur kode buka kunci");
+        id.put("LuminaDisguiseDecoyCodeSet", "Diatur");
+        id.put("LuminaDisguiseDecoyCodeNotSet", "Belum diatur");
+        id.put("LuminaDisguiseDecoyCodeDialogTitle", "Kode buka kunci");
+        id.put("LuminaDisguiseDecoyInfo", "Saat aktif, aplikasi terbuka sebagai kalkulator yang berfungsi; memasukkan kode ini menampilkan aplikasi. Sandi ini terpisah dari sandi bawaan Telegram.");
         T.put("id", id);
     }
 
