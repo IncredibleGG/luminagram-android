@@ -159,6 +159,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaQuickRepliesEdit", "编辑模板");
         zhHans.put("LuminaQuickRepliesInfo", "可插入到输入框的文本模板。在聊天中长按表情按钮即可选择，长按模板可拖动排序。");
         zhHans.put("LuminaQuickRepliesManage", "管理模板…");
+        zhHans.put("LuminaCalculatorError", "错误");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -292,6 +293,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaQuickRepliesEdit", "編輯範本");
         zhHant.put("LuminaQuickRepliesInfo", "可插入到輸入框的文字範本。在聊天中長按表情按鈕即可選擇，長按範本可拖曳排序。");
         zhHant.put("LuminaQuickRepliesManage", "管理範本…");
+        zhHant.put("LuminaCalculatorError", "錯誤");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
