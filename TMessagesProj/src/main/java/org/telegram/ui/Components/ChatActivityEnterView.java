@@ -666,6 +666,9 @@ public class ChatActivityEnterView extends FrameLayout implements
     private int luminaPreviewGeneration = 0;
     private String luminaPreviewTranslatedFor;
     private String luminaPreviewTranslatedText;
+    // LuminaGram: undo-send window — the pending dispatch runnable while a just-sent
+    // plain-text message is held; null when no window is active.
+    private Runnable luminaUndoSendRunnable;
     private BotKeyboardView botKeyboardView;
     private ImageView notifyButton;
     @Nullable
@@ -6555,6 +6558,7 @@ public class ChatActivityEnterView extends FrameLayout implements
     }
 
     public void onDestroy() {
+        luminaFlushUndoSend();
         if (audioTimelineView != null) {
             audioTimelineView.destroy();
         }
@@ -7455,6 +7459,20 @@ public class ChatActivityEnterView extends FrameLayout implements
                 updateSendButtonPaid();
                 return;
             }
+            // LuminaGram: undo-send window — hold a plain text send for a few seconds
+            // behind an Undo bulletin. Strictly gated: OFF by default, and only for a
+            // plain typed message (media/voice/rich-draft already returned above; edit,
+            // scheduling and forwarding are excluded here).
+            if (LuminaConfig.getBoolean("undoSendWindow", false)
+                    && parentFragment != null && delegate != null
+                    && !isInScheduleMode() && scheduleDate == 0
+                    && !richDraftActive && editingMessageObject == null
+                    && !delegate.hasForwardingMessages()
+                    && message != null && message.toString().trim().length() > 0) {
+                luminaUndoSendWindow(message, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+                updateSendButtonPaid();
+                return;
+            }
             if (processSendingText(message, notify, scheduleDate, scheduleRepeatPeriod, payStars)) {
                 if (delegate.hasForwardingMessages() || (scheduleDate != 0 && !isInScheduleMode()) || isInScheduleMode()) {
                     if (messageEditText != null) {
@@ -7953,6 +7971,72 @@ public class ChatActivityEnterView extends FrameLayout implements
             return true;
         }
         return false;
+    }
+
+    // ===== LuminaGram: undo-send window =====
+    // When enabled, tapping send on a plain typed message does not dispatch immediately.
+    // The composer is cleared (so it reads as "sent") and the text is held locally for a
+    // few seconds behind an Undo bulletin. If the user taps Undo the send is cancelled and
+    // the text restored to the composer; otherwise the timer fires and the real send runs.
+    // The message is never placed in the chat during the window (no send-then-delete).
+    private void luminaUndoSendWindow(final CharSequence held, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        // Only one hold at a time: flush any still-pending send first so ordering is kept.
+        luminaFlushUndoSend();
+
+        // Clear the composer so it reads as sent; restored verbatim if the user undoes.
+        setFieldText("");
+
+        final Bulletin[] bulletinRef = new Bulletin[1];
+        final Runnable dispatch = new Runnable() {
+            @Override
+            public void run() {
+                if (luminaUndoSendRunnable != this) {
+                    return; // already undone or flushed
+                }
+                luminaUndoSendRunnable = null;
+                if (bulletinRef[0] != null) {
+                    bulletinRef[0].hide();
+                }
+                if (processSendingText(held, notify, scheduleDate, scheduleRepeatPeriod, payStars)) {
+                    hideTopView(true);
+                    if (delegate != null) {
+                        delegate.onMessageSend(held, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+                    }
+                }
+            }
+        };
+        luminaUndoSendRunnable = dispatch;
+
+        final Runnable undo = () -> {
+            if (luminaUndoSendRunnable != dispatch) {
+                return; // window already elapsed / flushed
+            }
+            AndroidUtilities.cancelRunOnUIThread(dispatch);
+            luminaUndoSendRunnable = null;
+            setFieldText(held);
+        };
+
+        if (parentFragment != null) {
+            bulletinRef[0] = BulletinFactory.of(parentFragment).createSimpleBulletin(
+                    R.raw.chats_infotip,
+                    LuminaLocale.getString(R.string.LuminaUndoSendBulletin),
+                    LocaleController.getString(R.string.Undo),
+                    5000,
+                    undo);
+            bulletinRef[0].show();
+        }
+
+        AndroidUtilities.runOnUIThread(dispatch, 5000);
+    }
+
+    // Dispatch any pending undo-send immediately (the user sent again, or the chat is
+    // closing). Safe to call when nothing is pending.
+    private void luminaFlushUndoSend() {
+        final Runnable r = luminaUndoSendRunnable;
+        if (r != null) {
+            AndroidUtilities.cancelRunOnUIThread(r);
+            r.run();
+        }
     }
 
     // ===== LuminaGram: translate-before-send =====
