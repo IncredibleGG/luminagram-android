@@ -11361,4 +11361,7 @@
     <string name="LuminaInterfaceNumbersHeader">Numbers</string>
     <string name="LuminaInterfaceExactNumbers">Show exact numbers (no 1.2K rounding)</string>
     <string name="LuminaInterfaceExactNumbersInfo">Show full counts like 1,234,567 instead of shortened forms such as 1.2M.</string>
+    <!-- LuminaGram: mark all chats in the current folder as read -->
+    <string name="MarkFolderAsRead">Mark folder as read</string>
+    <string name="MarkFolderAsReadAlert">Mark all chats in this folder as read?</string>
 </resources>

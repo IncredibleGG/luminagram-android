@@ -202,6 +202,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaPrivacyHideOwnPhone", "隐藏我的手机号");
         zhHans.put("LuminaPrivacyHideOwnPhoneInfo", "在本应用中你自己的个人资料上隐藏手机号。这不会改变谁能在 Telegram 上看到你的号码。");
         zhHans.put("LuminaHideOwnPhoneMasked", "已隐藏");
+        zhHans.put("MarkFolderAsRead", "将文件夹标为已读");
+        zhHans.put("MarkFolderAsReadAlert", "将此文件夹中的所有聊天标为已读？");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -378,6 +380,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaPrivacyHideOwnPhone", "隱藏我的電話號碼");
         zhHant.put("LuminaPrivacyHideOwnPhoneInfo", "在本應用中你自己的個人資料上隱藏電話號碼。這不會改變誰能在 Telegram 上看到你的號碼。");
         zhHant.put("LuminaHideOwnPhoneMasked", "已隱藏");
+        zhHant.put("MarkFolderAsRead", "將資料夾標為已讀");
+        zhHant.put("MarkFolderAsReadAlert", "將此資料夾中的所有聊天標為已讀？");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -553,6 +557,8 @@ public final class LuminaLocale {
         ar.put("LuminaPrivacyHideOwnPhone", "إخفاء رقم هاتفي");
         ar.put("LuminaPrivacyHideOwnPhoneInfo", "إخفاء رقم هاتفك في ملفك الشخصي داخل هذا التطبيق. لا يغيّر هذا من يمكنه رؤية رقمك على تيليجرام.");
         ar.put("LuminaHideOwnPhoneMasked", "مخفي");
+        ar.put("MarkFolderAsRead", "تحديد المجلد كمقروء");
+        ar.put("MarkFolderAsReadAlert", "هل تريد تحديد كل الدردشات في هذا المجلد كمقروءة؟");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -728,6 +734,8 @@ public final class LuminaLocale {
         ru.put("LuminaPrivacyHideOwnPhone", "Скрыть мой номер телефона");
         ru.put("LuminaPrivacyHideOwnPhoneInfo", "Скрывает ваш номер телефона в вашем профиле в этом приложении. Это не меняет, кто может видеть ваш номер в Telegram.");
         ru.put("LuminaHideOwnPhoneMasked", "Скрыт");
+        ru.put("MarkFolderAsRead", "Отметить папку как прочитанную");
+        ru.put("MarkFolderAsReadAlert", "Отметить все чаты в этой папке как прочитанные?");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -903,6 +911,8 @@ public final class LuminaLocale {
         fa.put("LuminaPrivacyHideOwnPhone", "پنهان کردن شمارهٔ تلفن من");
         fa.put("LuminaPrivacyHideOwnPhoneInfo", "شمارهٔ تلفن شما را در نمایهٔ خودتان در این برنامه پنهان می‌کند. این کار تغییری در اینکه چه کسی می‌تواند شمارهٔ شما را در تلگرام ببیند ایجاد نمی‌کند.");
         fa.put("LuminaHideOwnPhoneMasked", "پنهان");
+        fa.put("MarkFolderAsRead", "علامت‌گذاری پوشه به‌عنوان خوانده‌شده");
+        fa.put("MarkFolderAsReadAlert", "همه گفتگوهای این پوشه به‌عنوان خوانده‌شده علامت‌گذاری شوند؟");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1078,6 +1088,8 @@ public final class LuminaLocale {
         tr.put("LuminaPrivacyHideOwnPhone", "Telefon numaramı gizle");
         tr.put("LuminaPrivacyHideOwnPhoneInfo", "Telefon numaranızı bu uygulamadaki kendi profilinizde gizler. Bu, Telegram'da numaranızı kimin görebileceğini değiştirmez.");
         tr.put("LuminaHideOwnPhoneMasked", "Gizli");
+        tr.put("MarkFolderAsRead", "Klasörü okundu olarak işaretle");
+        tr.put("MarkFolderAsReadAlert", "Bu klasördeki tüm sohbetler okundu olarak işaretlensin mi?");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1253,6 +1265,8 @@ public final class LuminaLocale {
         es.put("LuminaPrivacyHideOwnPhone", "Ocultar mi número de teléfono");
         es.put("LuminaPrivacyHideOwnPhoneInfo", "Oculta tu número de teléfono en tu propio perfil en esta aplicación. Esto no cambia quién puede ver tu número en Telegram.");
         es.put("LuminaHideOwnPhoneMasked", "Oculto");
+        es.put("MarkFolderAsRead", "Marcar carpeta como leída");
+        es.put("MarkFolderAsReadAlert", "¿Marcar todos los chats de esta carpeta como leídos?");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1428,6 +1442,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaPrivacyHideOwnPhone", "Ocultar meu número de telefone");
         ptBr.put("LuminaPrivacyHideOwnPhoneInfo", "Oculta seu número de telefone no seu próprio perfil neste aplicativo. Isso não altera quem pode ver seu número no Telegram.");
         ptBr.put("LuminaHideOwnPhoneMasked", "Oculto");
+        ptBr.put("MarkFolderAsRead", "Marcar pasta como lida");
+        ptBr.put("MarkFolderAsReadAlert", "Marcar todos os chats desta pasta como lidos?");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1603,6 +1619,8 @@ public final class LuminaLocale {
         id.put("LuminaPrivacyHideOwnPhone", "Sembunyikan nomor telepon saya");
         id.put("LuminaPrivacyHideOwnPhoneInfo", "Sembunyikan nomor telepon Anda di profil Anda sendiri di aplikasi ini. Ini tidak mengubah siapa yang dapat melihat nomor Anda di Telegram.");
         id.put("LuminaHideOwnPhoneMasked", "Disembunyikan");
+        id.put("MarkFolderAsRead", "Tandai folder sebagai sudah dibaca");
+        id.put("MarkFolderAsReadAlert", "Tandai semua obrolan di folder ini sebagai sudah dibaca?");
         T.put("id", id);
     }
 

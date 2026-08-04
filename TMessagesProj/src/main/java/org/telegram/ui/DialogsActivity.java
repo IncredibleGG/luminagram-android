@@ -123,6 +123,7 @@ import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.NotificationsController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
@@ -3816,8 +3817,15 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                                 }
                                 BulletinFactory.createMuteBulletin(DialogsActivity.this, finalMuteAll, count, null).show();
                             })
-                            .addIf(hasUnread, R.drawable.msg_markread, LocaleController.getString(R.string.MarkAllAsRead), () -> {
-                                markDialogsAsRead(dialogs);
+                            .addIf(hasUnread, R.drawable.msg_markread, LuminaLocale.getString(R.string.MarkFolderAsRead), () -> {
+                                AlertDialog.Builder markReadBuilder = new AlertDialog.Builder(getParentActivity());
+                                markReadBuilder.setTitle(LuminaLocale.getString(R.string.MarkFolderAsRead));
+                                markReadBuilder.setMessage(LuminaLocale.getString(R.string.MarkFolderAsReadAlert));
+                                markReadBuilder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+                                markReadBuilder.setPositiveButton(LuminaLocale.getString(R.string.MarkFolderAsRead), (dialog2, which2) -> {
+                                    markDialogsAsRead(dialogs);
+                                });
+                                showDialog(markReadBuilder.create());
                             })
                             .addIf(hasShare, R.drawable.msg_share, FilterCreateActivity.withNew(filter != null && filter.isMyChatlist() ? -1 : 0, LocaleController.getString(R.string.LinkActionShare), true), () -> {
                                 if (shareEmpty[0]) {
