@@ -60,6 +60,9 @@ public class LuminaGramSettingsActivity extends BaseFragment {
         items.add(UItem.asButton(12, LuminaLocale.getString(R.string.LuminaTranslateTitle)));
         items.add(UItem.asButton(13, LuminaLocale.getString(R.string.LuminaSecurityTitle)));
         items.add(UItem.asButton(14, LuminaLocale.getString(R.string.LuminaAppearanceTitle)));
+        items.add(UItem.asButton(15, LuminaLocale.getString(R.string.LuminaQuickRepliesTitle)));
+        items.add(UItem.asButton(16, LuminaLocale.getString(R.string.LuminaBookmarksTitle)));
+        items.add(UItem.asButton(17, LuminaLocale.getString(R.string.LuminaGramChatList)));
         items.add(UItem.asShadow(null));
         items.add(UItem.asButton(20, LuminaLocale.getString(R.string.LuminaCheckUpdate)));
         items.add(UItem.asShadow(null));
@@ -95,6 +98,15 @@ public class LuminaGramSettingsActivity extends BaseFragment {
                 break;
             case 14:
                 presentFragment(new LuminaAppearanceActivity());
+                break;
+            case 15:
+                presentFragment(new LuminaQuickRepliesActivity());
+                break;
+            case 16:
+                presentFragment(new LuminaBookmarksActivity());
+                break;
+            case 17:
+                presentFragment(new LuminaChatListActivity());
                 break;
             case 20:
                 LaunchActivity launchActivity = LaunchActivity.instance;
