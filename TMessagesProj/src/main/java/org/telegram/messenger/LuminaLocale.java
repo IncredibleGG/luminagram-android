@@ -286,6 +286,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaMediaPrivacy", "媒体隐私");
         zhHans.put("LuminaSpoilerIncomingMedia", "接收媒体默认剧透");
         zhHans.put("LuminaSpoilerIncomingMediaInfo", "开启后，接收到的照片和视频会先以剧透遮罩隐藏。点按照片或视频即可查看。");
+        zhHans.put("LuminaPhotoUploadDate", "上传于 %1$s");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -546,6 +547,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaMediaPrivacy", "媒體隱私");
         zhHant.put("LuminaSpoilerIncomingMedia", "接收媒體預設劇透");
         zhHant.put("LuminaSpoilerIncomingMediaInfo", "開啟後，接收到的相片和影片會先以劇透遮罩隱藏。點按相片或影片即可查看。");
+        zhHant.put("LuminaPhotoUploadDate", "上傳於 %1$s");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -805,6 +807,7 @@ public final class LuminaLocale {
         ar.put("LuminaMediaPrivacy", "خصوصية الوسائط");
         ar.put("LuminaSpoilerIncomingMedia", "إخفاء الوسائط الواردة");
         ar.put("LuminaSpoilerIncomingMediaInfo", "عند التفعيل، تظهر الصور والفيديوهات الواردة مخفية خلف تمويه المحتوى الحساس. اضغط على الصورة أو الفيديو لكشفه.");
+        ar.put("LuminaPhotoUploadDate", "تم الرفع في %1$s");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1064,6 +1067,7 @@ public final class LuminaLocale {
         ru.put("LuminaMediaPrivacy", "Приватность медиа");
         ru.put("LuminaSpoilerIncomingMedia", "Скрывать входящие медиа");
         ru.put("LuminaSpoilerIncomingMediaInfo", "Если включено, входящие фото и видео сначала скрыты спойлером. Нажмите на фото или видео, чтобы показать.");
+        ru.put("LuminaPhotoUploadDate", "Загружено %1$s");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1323,6 +1327,7 @@ public final class LuminaLocale {
         fa.put("LuminaMediaPrivacy", "حریم خصوصی رسانه");
         fa.put("LuminaSpoilerIncomingMedia", "مخفی‌کردن رسانه‌های دریافتی");
         fa.put("LuminaSpoilerIncomingMediaInfo", "وقتی روشن باشد، عکس‌ها و ویدیوهای دریافتی ابتدا پشت اسپویلر پنهان می‌شوند. برای نمایش روی عکس یا ویدیو ضربه بزنید.");
+        fa.put("LuminaPhotoUploadDate", "بارگذاری در %1$s");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1582,6 +1587,7 @@ public final class LuminaLocale {
         tr.put("LuminaMediaPrivacy", "Medya gizliliği");
         tr.put("LuminaSpoilerIncomingMedia", "Gelen medyayı gizle");
         tr.put("LuminaSpoilerIncomingMediaInfo", "Açıkken, gelen fotoğraf ve videolar önce spoiler bulanıklığıyla gizlenir. Görmek için fotoğraf veya videoya dokunun.");
+        tr.put("LuminaPhotoUploadDate", "%1$s tarihinde yüklendi");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1841,6 +1847,7 @@ public final class LuminaLocale {
         es.put("LuminaMediaPrivacy", "Privacidad multimedia");
         es.put("LuminaSpoilerIncomingMedia", "Ocultar multimedia recibida");
         es.put("LuminaSpoilerIncomingMediaInfo", "Cuando está activado, las fotos y los videos recibidos aparecen ocultos tras un spoiler. Toca la foto o el video para revelarlo.");
+        es.put("LuminaPhotoUploadDate", "Subida el %1$s");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2100,6 +2107,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaMediaPrivacy", "Privacidade de mídia");
         ptBr.put("LuminaSpoilerIncomingMedia", "Ocultar mídia recebida");
         ptBr.put("LuminaSpoilerIncomingMediaInfo", "Quando ativado, fotos e vídeos recebidos aparecem ocultos por um spoiler. Toque na foto ou no vídeo para revelar.");
+        ptBr.put("LuminaPhotoUploadDate", "Enviada em %1$s");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2359,6 +2367,7 @@ public final class LuminaLocale {
         id.put("LuminaMediaPrivacy", "Privasi media");
         id.put("LuminaSpoilerIncomingMedia", "Sembunyikan media masuk");
         id.put("LuminaSpoilerIncomingMediaInfo", "Saat aktif, foto dan video yang masuk disembunyikan di balik spoiler. Ketuk foto atau video untuk menampilkannya.");
+        id.put("LuminaPhotoUploadDate", "Diunggah %1$s");
         T.put("id", id);
     }
 

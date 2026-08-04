@@ -1437,6 +1437,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         private float currentLoadingAnimationProgress;
         private int currentLoadingAnimationDirection = 1;
 
+        private final Paint photoDatePillPaint;
+        private final TextPaint photoDateTextPaint;
+        private final RectF photoDateRect = new RectF();
+        private float photoDateAlpha;
+
         public OverlaysView(Context context) {
             super(context);
             setVisibility(GONE);
@@ -1461,6 +1466,13 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             backgroundPaint.setColor(Color.BLACK);
             backgroundPaint.setAlpha(66);
+            photoDatePillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            photoDatePillPaint.setColor(Color.BLACK);
+            photoDateTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+            photoDateTextPaint.setColor(Color.WHITE);
+            photoDateTextPaint.setTypeface(Typeface.SANS_SERIF);
+            photoDateTextPaint.setTextAlign(Paint.Align.CENTER);
+            photoDateTextPaint.setTextSize(AndroidUtilities.dpf2(13f));
             animator = ValueAnimator.ofFloat(0f, 1f);
             animator.setDuration(250);
             animator.setInterpolator(CubicBezierInterpolator.EASE_BOTH);
@@ -1498,6 +1510,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             barPaint.setAlpha((int) (0x55 * value));
             selectedBarPaint.setAlpha(alpha);
             this.alpha = value;
+            photoDateAlpha = value;
             if (!self) {
                 currentAnimationValue = value;
             }
@@ -1682,6 +1695,24 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         }
                         invalidate = true;
                     }
+                }
+            }
+
+            if (photoDateAlpha > 0.01f && avatarsViewPager != null) {
+                TLRPC.Photo photo = avatarsViewPager.getPhoto(avatarsViewPager.getRealPosition());
+                if (photo != null && photo.date != 0) {
+                    String dateText = String.format(LuminaLocale.getString(R.string.LuminaPhotoUploadDate), LocaleController.formatDate(photo.date));
+                    float cx = getMeasuredWidth() / 2f;
+                    float textWidth = photoDateTextPaint.measureText(dateText);
+                    float pillHeight = AndroidUtilities.dp(26);
+                    float pillTop = statusBarHeight + ActionBar.getCurrentActionBarHeight() + AndroidUtilities.dp(8);
+                    photoDateRect.set(cx - textWidth / 2f - AndroidUtilities.dp(10), pillTop, cx + textWidth / 2f + AndroidUtilities.dp(10), pillTop + pillHeight);
+                    photoDatePillPaint.setAlpha((int) (0x50 * photoDateAlpha));
+                    photoDateTextPaint.setAlpha((int) (0xff * photoDateAlpha));
+                    canvas.drawRoundRect(photoDateRect, AndroidUtilities.dpf2(12), AndroidUtilities.dpf2(12), photoDatePillPaint);
+                    Paint.FontMetrics fm = photoDateTextPaint.getFontMetrics();
+                    float baseline = photoDateRect.centerY() - (fm.ascent + fm.descent) / 2f;
+                    canvas.drawText(dateText, cx, baseline, photoDateTextPaint);
                 }
             }
 
