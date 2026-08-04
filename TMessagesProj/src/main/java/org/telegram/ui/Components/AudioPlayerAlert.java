@@ -83,6 +83,7 @@ import org.telegram.messenger.ImageLoader;
 import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
@@ -2315,7 +2316,7 @@ public class AudioPlayerAlert extends BottomSheet implements NotificationCenter.
                 durationTextView.setText(duration != 0 ? AndroidUtilities.formatShortDuration(duration) : "-:--");
             }
 
-            if (duration > 60 * 10) {
+            if (duration > 60 * 10 || LuminaConfig.getBoolean("unlockAudioSpeed", false)) {
                 playbackSpeedButton.setVisibility(View.VISIBLE);
             } else {
                 playbackSpeedButton.setVisibility(View.GONE);
