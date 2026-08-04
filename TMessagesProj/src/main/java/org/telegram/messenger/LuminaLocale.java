@@ -59,6 +59,10 @@ public final class LuminaLocale {
         zhHans.put("LuminaPrivacyShowRegistrationDate", "显示注册日期");
         zhHans.put("LuminaPrivacyShowRegistrationDateInfo", "在用户资料上显示估算的账号创建日期。该日期为近似值。");
         zhHans.put("ProfileRegistrationDate", "注册日期");
+        zhHans.put("ProfileRiskCardTitle", "新联系人检查");
+        zhHans.put("ProfileRiskNotContact", "不在你的联系人中");
+        zhHans.put("ProfileRiskNoCommonGroups", "没有共同群组");
+        zhHans.put("ProfileRiskAccountCreated", "账号创建于 %1$s");
         zhHans.put("LuminaTranslateTitle", "自动翻译");
         zhHans.put("LuminaTranslateHeader", "翻译");
         zhHans.put("LuminaTranslateTo", "翻译为");
@@ -325,6 +329,10 @@ public final class LuminaLocale {
         zhHant.put("LuminaPrivacyShowRegistrationDate", "顯示註冊日期");
         zhHant.put("LuminaPrivacyShowRegistrationDateInfo", "在使用者個人檔案上顯示估算的帳號建立日期。此日期為近似值。");
         zhHant.put("ProfileRegistrationDate", "註冊日期");
+        zhHant.put("ProfileRiskCardTitle", "新聯絡人檢查");
+        zhHant.put("ProfileRiskNotContact", "不在你的聯絡人中");
+        zhHant.put("ProfileRiskNoCommonGroups", "沒有共同群組");
+        zhHant.put("ProfileRiskAccountCreated", "帳號建立於 %1$s");
         zhHant.put("LuminaTranslateTitle", "自動翻譯");
         zhHant.put("LuminaTranslateHeader", "翻譯");
         zhHant.put("LuminaTranslateTo", "翻譯成");
@@ -591,6 +599,10 @@ public final class LuminaLocale {
         ar.put("LuminaPrivacyShowRegistrationDate", "إظهار تاريخ التسجيل");
         ar.put("LuminaPrivacyShowRegistrationDateInfo", "إظهار تاريخ إنشاء الحساب التقريبي في الملفات الشخصية. التاريخ تقريبي.");
         ar.put("ProfileRegistrationDate", "تاريخ التسجيل");
+        ar.put("ProfileRiskCardTitle", "فحص جهة اتصال جديدة");
+        ar.put("ProfileRiskNotContact", "ليس في جهات اتصالك");
+        ar.put("ProfileRiskNoCommonGroups", "لا مجموعات مشتركة");
+        ar.put("ProfileRiskAccountCreated", "أُنشئ الحساب في %1$s");
         ar.put("LuminaTranslateTitle", "الترجمة التلقائية");
         ar.put("LuminaTranslateHeader", "الترجمة");
         ar.put("LuminaTranslateTo", "الترجمة إلى");
@@ -856,6 +868,10 @@ public final class LuminaLocale {
         ru.put("LuminaPrivacyShowRegistrationDate", "Показывать дату регистрации");
         ru.put("LuminaPrivacyShowRegistrationDateInfo", "Показывать примерную дату создания аккаунта в профилях. Дата приблизительна.");
         ru.put("ProfileRegistrationDate", "Дата регистрации");
+        ru.put("ProfileRiskCardTitle", "Проверка нового контакта");
+        ru.put("ProfileRiskNotContact", "Нет в ваших контактах");
+        ru.put("ProfileRiskNoCommonGroups", "Нет общих групп");
+        ru.put("ProfileRiskAccountCreated", "Аккаунт создан %1$s");
         ru.put("LuminaTranslateTitle", "Автоперевод");
         ru.put("LuminaTranslateHeader", "Перевод");
         ru.put("LuminaTranslateTo", "Переводить на");
@@ -1121,6 +1137,10 @@ public final class LuminaLocale {
         fa.put("LuminaPrivacyShowRegistrationDate", "نمایش تاریخ ثبت‌نام");
         fa.put("LuminaPrivacyShowRegistrationDateInfo", "نمایش تاریخ تقریبی ساخت حساب در نمایه کاربران. این تاریخ تقریبی است.");
         fa.put("ProfileRegistrationDate", "تاریخ ثبت‌نام");
+        fa.put("ProfileRiskCardTitle", "بررسی مخاطب جدید");
+        fa.put("ProfileRiskNotContact", "در مخاطبین شما نیست");
+        fa.put("ProfileRiskNoCommonGroups", "بدون گروه مشترک");
+        fa.put("ProfileRiskAccountCreated", "حساب در %1$s ساخته شده");
         fa.put("LuminaTranslateTitle", "ترجمه خودکار");
         fa.put("LuminaTranslateHeader", "ترجمه");
         fa.put("LuminaTranslateTo", "ترجمه به");
@@ -1386,6 +1406,10 @@ public final class LuminaLocale {
         tr.put("LuminaPrivacyShowRegistrationDate", "Kayıt tarihini göster");
         tr.put("LuminaPrivacyShowRegistrationDateInfo", "Kullanıcı profillerinde tahmini hesap oluşturma tarihini gösterir. Tarih yaklaşıktır.");
         tr.put("ProfileRegistrationDate", "Kayıt tarihi");
+        tr.put("ProfileRiskCardTitle", "Yeni kişi denetimi");
+        tr.put("ProfileRiskNotContact", "Kişilerinizde değil");
+        tr.put("ProfileRiskNoCommonGroups", "Ortak grup yok");
+        tr.put("ProfileRiskAccountCreated", "Hesap %1$s tarihinde oluşturuldu");
         tr.put("LuminaTranslateTitle", "Otomatik çeviri");
         tr.put("LuminaTranslateHeader", "Çeviri");
         tr.put("LuminaTranslateTo", "Şu dile çevir");
@@ -1651,6 +1675,10 @@ public final class LuminaLocale {
         es.put("LuminaPrivacyShowRegistrationDate", "Mostrar fecha de registro");
         es.put("LuminaPrivacyShowRegistrationDateInfo", "Muestra una fecha estimada de creación de la cuenta en los perfiles. La fecha es aproximada.");
         es.put("ProfileRegistrationDate", "Fecha de registro");
+        es.put("ProfileRiskCardTitle", "Verificación de contacto nuevo");
+        es.put("ProfileRiskNotContact", "No está en tus contactos");
+        es.put("ProfileRiskNoCommonGroups", "Sin grupos en común");
+        es.put("ProfileRiskAccountCreated", "Cuenta creada %1$s");
         es.put("LuminaTranslateTitle", "Autotraducción");
         es.put("LuminaTranslateHeader", "Traducción");
         es.put("LuminaTranslateTo", "Traducir a");
@@ -1916,6 +1944,10 @@ public final class LuminaLocale {
         ptBr.put("LuminaPrivacyShowRegistrationDate", "Mostrar data de registro");
         ptBr.put("LuminaPrivacyShowRegistrationDateInfo", "Mostra uma data estimada de criação da conta nos perfis. A data é aproximada.");
         ptBr.put("ProfileRegistrationDate", "Data de registro");
+        ptBr.put("ProfileRiskCardTitle", "Verificação de novo contato");
+        ptBr.put("ProfileRiskNotContact", "Não está nos seus contatos");
+        ptBr.put("ProfileRiskNoCommonGroups", "Nenhum grupo em comum");
+        ptBr.put("ProfileRiskAccountCreated", "Conta criada em %1$s");
         ptBr.put("LuminaTranslateTitle", "Tradução automática");
         ptBr.put("LuminaTranslateHeader", "Tradução");
         ptBr.put("LuminaTranslateTo", "Traduzir para");
@@ -2181,6 +2213,10 @@ public final class LuminaLocale {
         id.put("LuminaPrivacyShowRegistrationDate", "Tampilkan tanggal registrasi");
         id.put("LuminaPrivacyShowRegistrationDateInfo", "Tampilkan perkiraan tanggal pembuatan akun di profil pengguna. Tanggal ini hanya perkiraan.");
         id.put("ProfileRegistrationDate", "Tanggal registrasi");
+        id.put("ProfileRiskCardTitle", "Pemeriksaan kontak baru");
+        id.put("ProfileRiskNotContact", "Tidak ada di kontak Anda");
+        id.put("ProfileRiskNoCommonGroups", "Tidak ada grup bersama");
+        id.put("ProfileRiskAccountCreated", "Akun dibuat %1$s");
         id.put("LuminaTranslateTitle", "Terjemah otomatis");
         id.put("LuminaTranslateHeader", "Terjemahan");
         id.put("LuminaTranslateTo", "Terjemahkan ke");

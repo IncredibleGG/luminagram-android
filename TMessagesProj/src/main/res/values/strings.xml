@@ -11209,6 +11209,11 @@
     <string name="LuminaPrivacyHideOwnPhoneInfo">Hide your phone number on your own profile in this app. This does not change who can see your number on Telegram.</string>
     <string name="LuminaHideOwnPhoneMasked">Hidden</string>
     <string name="ProfileRegistrationDate">Registration date</string>
+    <!-- LuminaGram (wave19): new-contact anti-scam risk card -->
+    <string name="ProfileRiskCardTitle">New-contact check</string>
+    <string name="ProfileRiskNotContact">Not in your contacts</string>
+    <string name="ProfileRiskNoCommonGroups">No groups in common</string>
+    <string name="ProfileRiskAccountCreated">Account created %1$s</string>
     <!-- LuminaGram profile photo upload date (wave18) -->
     <string name="LuminaPhotoUploadDate">Uploaded %1$s</string>
     <!-- LuminaGram privacy / security (wave1) -->
