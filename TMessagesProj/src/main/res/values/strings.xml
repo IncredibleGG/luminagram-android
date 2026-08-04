@@ -11214,4 +11214,16 @@
     <string name="LuminaUpdateNow">Update</string>
     <string name="LuminaUpdateDownloading">Downloading update…</string>
     <string name="LuminaUpdateFailed">Update download failed</string>
+    <!-- LuminaGram security: panic wipe + disguise -->
+    <string name="LuminaSecurityTitle">Security</string>
+    <string name="LuminaSecurityPanicHeader">Panic wipe</string>
+    <string name="LuminaSecurityPanicWipe">Panic wipe (Kaboom)</string>
+    <string name="LuminaSecurityPanicWipeInfo">Instantly logs out every account and erases local chats and cached files from this device, then returns to the login screen. Your accounts stay on Telegram\'s servers. This cannot be undone.</string>
+    <string name="LuminaSecurityPanicConfirmTitle">Panic wipe?</string>
+    <string name="LuminaSecurityPanicConfirmMessage">All accounts will be logged out and every local chat and cached file on this device will be erased. This cannot be undone. Continue?</string>
+    <string name="LuminaSecurityPanicConfirmButton">Wipe now</string>
+    <string name="LuminaSecurityDisguiseHeader">Disguise</string>
+    <string name="LuminaSecurityDisguise">Disguise as Calculator</string>
+    <string name="LuminaSecurityDisguiseInfo">Replace the app\'s launcher icon and name with a plain Calculator. Turn off to restore the normal LuminaGram icon.</string>
+    <string name="LuminaDisguiseAppLabel">Calculator</string>
 </resources>
