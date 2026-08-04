@@ -40,6 +40,10 @@ public class LauncherIconController {
         PREMIUM("PremiumIcon", R.drawable.icon_3_background_sa, R.mipmap.icon_3_foreground_sa, R.string.AppIconPremium),
         TURBO("TurboIcon", R.drawable.icon_5_background_sa, R.mipmap.icon_5_foreground_sa, R.string.AppIconTurbo),
         NOX("NoxIcon", R.mipmap.icon_2_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconNox),
+        AURORA("AuroraIcon", R.drawable.icon_aurora_background_sa, R.mipmap.icon_aurora_foreground_sa, R.string.AppIconAurora),
+        SUNSET("SunsetIcon", R.drawable.icon_sunset_background_sa, R.mipmap.icon_sunset_foreground_sa, R.string.AppIconSunset),
+        MIDNIGHT("MidnightIcon", R.drawable.icon_midnight_background_sa, R.mipmap.icon_midnight_foreground_sa, R.string.AppIconMidnight),
+        MONO("MonoIcon", R.drawable.icon_mono_background_sa, R.mipmap.icon_mono_foreground_sa, R.string.AppIconMono),
         // LuminaGram disguise: Calculator camouflage alias. The launcher icon/label come
         // from the CalculatorIcon <activity-alias> in the manifest; the preview fields here
         // reuse existing adaptive assets so the shared app-icon system keeps compiling.
