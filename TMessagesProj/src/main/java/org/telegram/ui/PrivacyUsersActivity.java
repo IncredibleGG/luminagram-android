@@ -22,11 +22,13 @@ import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.ChatObject;
 import org.telegram.messenger.DialogObject;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.ActionBar;
+import org.telegram.ui.ActionBar.ActionBarMenuItem;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
@@ -75,6 +77,10 @@ public class PrivacyUsersActivity extends BaseFragment implements NotificationCe
     public static final int TYPE_PRIVACY = 0;
     public static final int TYPE_BLOCKED = 1;
     public static final int TYPE_FILTER = 2;
+
+    private ActionBarMenuItem otherItem;
+    private static final int menu_other = 100;
+    private static final int unblock_all = 101;
 
     public interface PrivacyActivityDelegate {
         void didUpdateUserList(ArrayList<Long> ids, boolean added);
@@ -151,9 +157,17 @@ public class PrivacyUsersActivity extends BaseFragment implements NotificationCe
             public void onItemClick(int id) {
                 if (id == -1) {
                     finishFragment();
+                } else if (id == unblock_all) {
+                    unblockAllUsers();
                 }
             }
         });
+
+        if (currentType == TYPE_BLOCKED) {
+            otherItem = actionBar.createMenu().addItem(menu_other, R.drawable.ic_ab_other);
+            otherItem.addSubItem(unblock_all, R.drawable.msg_block2, LuminaLocale.getString(R.string.LuminaUnblockAll));
+            updateMenuVisibility();
+        }
 
         fragmentView = new FrameLayout(context);
         FrameLayout frameLayout = (FrameLayout) fragmentView;
@@ -311,6 +325,40 @@ public class PrivacyUsersActivity extends BaseFragment implements NotificationCe
             .show();
     }
 
+    private void updateMenuVisibility() {
+        if (otherItem == null) {
+            return;
+        }
+        otherItem.setVisibility(getMessagesController().blockePeers.size() > 0 ? View.VISIBLE : View.GONE);
+    }
+
+    private void unblockAllUsers() {
+        if (getParentActivity() == null || currentType != TYPE_BLOCKED) {
+            return;
+        }
+        if (getMessagesController().blockePeers.size() == 0) {
+            return;
+        }
+        AlertDialog alert = AlertsCreator.createSimpleAlert(getContext(),
+                LuminaLocale.getString(R.string.LuminaUnblockAll),
+                LuminaLocale.getString(R.string.LuminaUnblockAllAlert),
+                LuminaLocale.getString(R.string.LuminaUnblockAll),
+                () -> {
+                    int count = getMessagesController().blockePeers.size();
+                    ArrayList<Long> ids = new ArrayList<>(count);
+                    for (int a = 0; a < count; a++) {
+                        ids.add(getMessagesController().blockePeers.keyAt(a));
+                    }
+                    for (int a = 0; a < ids.size(); a++) {
+                        getMessagesController().unblockPeer(ids.get(a));
+                    }
+                    updateRows();
+                    updateMenuVisibility();
+                }, null).create();
+        alert.show();
+        alert.redPositive();
+    }
+
     private void updateRows() {
         rowCount = 0;
         blockUserRow = -1;
@@ -365,6 +413,7 @@ public class PrivacyUsersActivity extends BaseFragment implements NotificationCe
         } else if (id == NotificationCenter.blockedUsersDidLoad) {
             emptyView.showTextView();
             updateRows();
+            updateMenuVisibility();
         }
     }
 

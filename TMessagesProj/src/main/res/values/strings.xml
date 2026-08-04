@@ -11308,6 +11308,8 @@
     <string name="LuminaDisguiseDecoyCodeNotSet">Not set</string>
     <string name="LuminaDisguiseDecoyCodeDialogTitle">Unlock code</string>
     <string name="LuminaDisguiseDecoyInfo">When on, the app opens as a working calculator; entering this code reveals the app. This passcode is separate from Telegram\'s built-in passcode.</string>
+    <string name="LuminaUnblockAll">Unblock all</string>
+    <string name="LuminaUnblockAllAlert">Unblock all blocked users?</string>
     <string name="LuminaAppearanceTitle">Appearance</string>
     <string name="LuminaAppearanceColorsHeader">Colors</string>
     <string name="LuminaAppearanceMaterialYou">Material You (dynamic colors)</string>
