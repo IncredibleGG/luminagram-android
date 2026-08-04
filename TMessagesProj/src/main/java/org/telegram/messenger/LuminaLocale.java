@@ -160,6 +160,14 @@ public final class LuminaLocale {
         zhHans.put("LuminaQuickRepliesInfo", "可插入到输入框的文本模板。在聊天中长按表情按钮即可选择，长按模板可拖动排序。");
         zhHans.put("LuminaQuickRepliesManage", "管理模板…");
         zhHans.put("LuminaGoToFirstMessage", "跳到第一条消息");
+        zhHans.put("LuminaMediaTitle", "媒体与下载");
+        zhHans.put("LuminaMediaHeader", "下载");
+        zhHans.put("LuminaMediaKeepOriginalFilename", "下载时保留原始文件名");
+        zhHans.put("LuminaMediaKeepOriginalFilenameInfo", "将文件保存到设备时，使用发送者的原始文件名，而非内部生成的名称。");
+        zhHans.put("LuminaMediaAutoPauseBgVideo", "应用退到后台时暂停视频");
+        zhHans.put("LuminaMediaAutoPauseBgVideoInfo", "当你离开 LuminaGram 时，自动暂停正在播放的视频。");
+        zhHans.put("LuminaMediaUnlockAudioSpeed", "长音频的倍速控制");
+        zhHans.put("LuminaMediaUnlockAudioSpeedInfo", "为音乐和长音频文件显示播放倍速控制，而不仅仅是语音消息。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -294,6 +302,14 @@ public final class LuminaLocale {
         zhHant.put("LuminaQuickRepliesInfo", "可插入到輸入框的文字範本。在聊天中長按表情按鈕即可選擇，長按範本可拖曳排序。");
         zhHant.put("LuminaQuickRepliesManage", "管理範本…");
         zhHant.put("LuminaGoToFirstMessage", "跳到第一則訊息");
+        zhHant.put("LuminaMediaTitle", "媒體與下載");
+        zhHant.put("LuminaMediaHeader", "下載");
+        zhHant.put("LuminaMediaKeepOriginalFilename", "下載時保留原始檔名");
+        zhHant.put("LuminaMediaKeepOriginalFilenameInfo", "將檔案儲存到裝置時，使用傳送者的原始檔名，而非內部產生的名稱。");
+        zhHant.put("LuminaMediaAutoPauseBgVideo", "應用程式退到背景時暫停影片");
+        zhHant.put("LuminaMediaAutoPauseBgVideoInfo", "當你離開 LuminaGram 時，自動暫停正在播放的影片。");
+        zhHant.put("LuminaMediaUnlockAudioSpeed", "長音訊的倍速控制");
+        zhHant.put("LuminaMediaUnlockAudioSpeedInfo", "為音樂和長音訊檔案顯示播放倍速控制，而不僅是語音訊息。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -428,6 +444,14 @@ public final class LuminaLocale {
         ar.put("LuminaQuickRepliesInfo", "قوالب نصية يمكنك إدراجها في حقل الرسالة. اضغط مطولاً على زر الإيموجي في محادثة لاختيار أحدها، واضغط مطولاً على قالب لإعادة ترتيبه.");
         ar.put("LuminaQuickRepliesManage", "إدارة القوالب…");
         ar.put("LuminaGoToFirstMessage", "الانتقال إلى أول رسالة");
+        ar.put("LuminaMediaTitle", "الوسائط");
+        ar.put("LuminaMediaHeader", "التنزيلات");
+        ar.put("LuminaMediaKeepOriginalFilename", "الاحتفاظ باسم الملف الأصلي عند التنزيل");
+        ar.put("LuminaMediaKeepOriginalFilenameInfo", "عند حفظ ملف على جهازك، استخدم اسم الملف الأصلي من المُرسِل بدلاً من اسم داخلي.");
+        ar.put("LuminaMediaAutoPauseBgVideo", "إيقاف الفيديو مؤقتًا عند انتقال التطبيق إلى الخلفية");
+        ar.put("LuminaMediaAutoPauseBgVideoInfo", "إيقاف الفيديو قيد التشغيل مؤقتًا تلقائيًا عند مغادرتك LuminaGram.");
+        ar.put("LuminaMediaUnlockAudioSpeed", "التحكم في السرعة للمقاطع الصوتية الطويلة");
+        ar.put("LuminaMediaUnlockAudioSpeedInfo", "إظهار عنصر التحكم في سرعة التشغيل للموسيقى والملفات الصوتية الطويلة، وليس الرسائل الصوتية فقط.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -562,6 +586,14 @@ public final class LuminaLocale {
         ru.put("LuminaQuickRepliesInfo", "Текстовые шаблоны для вставки в поле сообщения. Зажмите кнопку эмодзи в чате, чтобы выбрать шаблон, и зажмите шаблон, чтобы изменить порядок.");
         ru.put("LuminaQuickRepliesManage", "Управление шаблонами…");
         ru.put("LuminaGoToFirstMessage", "Перейти к первому сообщению");
+        ru.put("LuminaMediaTitle", "Медиа");
+        ru.put("LuminaMediaHeader", "Загрузки");
+        ru.put("LuminaMediaKeepOriginalFilename", "Сохранять исходное имя файла при загрузке");
+        ru.put("LuminaMediaKeepOriginalFilenameInfo", "При сохранении файла на устройство использовать исходное имя файла от отправителя, а не внутреннее имя.");
+        ru.put("LuminaMediaAutoPauseBgVideo", "Ставить видео на паузу при сворачивании приложения");
+        ru.put("LuminaMediaAutoPauseBgVideoInfo", "Автоматически ставить воспроизводимое видео на паузу, когда вы покидаете LuminaGram.");
+        ru.put("LuminaMediaUnlockAudioSpeed", "Управление скоростью для длинных аудио");
+        ru.put("LuminaMediaUnlockAudioSpeedInfo", "Показывать регулятор скорости воспроизведения для музыки и длинных аудиофайлов, а не только для голосовых сообщений.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -696,6 +728,14 @@ public final class LuminaLocale {
         fa.put("LuminaQuickRepliesInfo", "قالب‌های متنی که می‌توانید در کادر پیام درج کنید. در گفتگو دکمه ایموجی را نگه دارید تا یکی را انتخاب کنید و برای مرتب‌سازی، قالب را نگه دارید.");
         fa.put("LuminaQuickRepliesManage", "مدیریت قالب‌ها…");
         fa.put("LuminaGoToFirstMessage", "رفتن به اولین پیام");
+        fa.put("LuminaMediaTitle", "رسانه");
+        fa.put("LuminaMediaHeader", "دانلودها");
+        fa.put("LuminaMediaKeepOriginalFilename", "حفظ نام فایل اصلی هنگام دانلود");
+        fa.put("LuminaMediaKeepOriginalFilenameInfo", "هنگام ذخیره فایل روی دستگاه، به‌جای یک نام داخلی از نام فایل اصلی فرستنده استفاده کن.");
+        fa.put("LuminaMediaAutoPauseBgVideo", "توقف ویدیو هنگام رفتن برنامه به پس‌زمینه");
+        fa.put("LuminaMediaAutoPauseBgVideoInfo", "هنگام خروج از LuminaGram، ویدیوی در حال پخش به‌طور خودکار متوقف می‌شود.");
+        fa.put("LuminaMediaUnlockAudioSpeed", "کنترل سرعت برای صداهای طولانی");
+        fa.put("LuminaMediaUnlockAudioSpeedInfo", "نمایش کنترل سرعت پخش برای موسیقی و فایل‌های صوتی طولانی، نه فقط پیام‌های صوتی.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -830,6 +870,14 @@ public final class LuminaLocale {
         tr.put("LuminaQuickRepliesInfo", "Mesaj alanına ekleyebileceğiniz metin şablonları. Bir sohbette emoji düğmesine uzun basarak birini seçin; sıralamak için şablona uzun basın.");
         tr.put("LuminaQuickRepliesManage", "Şablonları yönet…");
         tr.put("LuminaGoToFirstMessage", "İlk mesaja git");
+        tr.put("LuminaMediaTitle", "Medya");
+        tr.put("LuminaMediaHeader", "İndirmeler");
+        tr.put("LuminaMediaKeepOriginalFilename", "İndirirken özgün dosya adını koru");
+        tr.put("LuminaMediaKeepOriginalFilenameInfo", "Bir dosyayı cihazınıza kaydederken dahili bir ad yerine gönderenin özgün dosya adını kullanın.");
+        tr.put("LuminaMediaAutoPauseBgVideo", "Uygulama arka plana geçtiğinde videoyu duraklat");
+        tr.put("LuminaMediaAutoPauseBgVideoInfo", "LuminaGram'dan ayrıldığınızda oynatılan videoyu otomatik olarak duraklatır.");
+        tr.put("LuminaMediaUnlockAudioSpeed", "Uzun sesler için hız denetimi");
+        tr.put("LuminaMediaUnlockAudioSpeedInfo", "Hız denetimini yalnızca sesli mesajlar için değil, müzik ve uzun ses dosyaları için de gösterir.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -964,6 +1012,14 @@ public final class LuminaLocale {
         es.put("LuminaQuickRepliesInfo", "Plantillas de texto que puedes insertar en el campo del mensaje. Mantén pulsado el botón de emojis en un chat para elegir una; mantén pulsada una plantilla para reordenarla.");
         es.put("LuminaQuickRepliesManage", "Gestionar plantillas…");
         es.put("LuminaGoToFirstMessage", "Ir al primer mensaje");
+        es.put("LuminaMediaTitle", "Multimedia");
+        es.put("LuminaMediaHeader", "Descargas");
+        es.put("LuminaMediaKeepOriginalFilename", "Mantener el nombre de archivo original al descargar");
+        es.put("LuminaMediaKeepOriginalFilenameInfo", "Al guardar un archivo en tu dispositivo, usa el nombre de archivo original del remitente en lugar de un nombre interno.");
+        es.put("LuminaMediaAutoPauseBgVideo", "Pausar el video cuando la app pasa a segundo plano");
+        es.put("LuminaMediaAutoPauseBgVideoInfo", "Pausa automáticamente el video en reproducción cuando sales de LuminaGram.");
+        es.put("LuminaMediaUnlockAudioSpeed", "Control de velocidad para audios largos");
+        es.put("LuminaMediaUnlockAudioSpeedInfo", "Muestra el control de velocidad de reproducción para música y archivos de audio largos, no solo para los mensajes de voz.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1098,6 +1154,14 @@ public final class LuminaLocale {
         ptBr.put("LuminaQuickRepliesInfo", "Modelos de texto que você pode inserir no campo de mensagem. Mantenha pressionado o botão de emoji em uma conversa para escolher um; mantenha pressionado um modelo para reordenar.");
         ptBr.put("LuminaQuickRepliesManage", "Gerenciar modelos…");
         ptBr.put("LuminaGoToFirstMessage", "Ir para a primeira mensagem");
+        ptBr.put("LuminaMediaTitle", "Mídia");
+        ptBr.put("LuminaMediaHeader", "Downloads");
+        ptBr.put("LuminaMediaKeepOriginalFilename", "Manter o nome de arquivo original ao baixar");
+        ptBr.put("LuminaMediaKeepOriginalFilenameInfo", "Ao salvar um arquivo no dispositivo, usa o nome de arquivo original do remetente em vez de um nome interno.");
+        ptBr.put("LuminaMediaAutoPauseBgVideo", "Pausar o vídeo quando o app vai para segundo plano");
+        ptBr.put("LuminaMediaAutoPauseBgVideoInfo", "Pausa automaticamente o vídeo em reprodução quando você sai do LuminaGram.");
+        ptBr.put("LuminaMediaUnlockAudioSpeed", "Controle de velocidade para áudios longos");
+        ptBr.put("LuminaMediaUnlockAudioSpeedInfo", "Mostra o controle de velocidade de reprodução para música e arquivos de áudio longos, não apenas para mensagens de voz.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1232,6 +1296,14 @@ public final class LuminaLocale {
         id.put("LuminaQuickRepliesInfo", "Templat teks yang bisa kamu sisipkan ke kolom pesan. Tekan lama tombol emoji di obrolan untuk memilih salah satu; tekan lama templat untuk mengurutkan ulang.");
         id.put("LuminaQuickRepliesManage", "Kelola templat…");
         id.put("LuminaGoToFirstMessage", "Ke pesan pertama");
+        id.put("LuminaMediaTitle", "Media");
+        id.put("LuminaMediaHeader", "Unduhan");
+        id.put("LuminaMediaKeepOriginalFilename", "Pertahankan nama file asli saat mengunduh");
+        id.put("LuminaMediaKeepOriginalFilenameInfo", "Saat menyimpan file ke perangkat, gunakan nama file asli dari pengirim, bukan nama internal.");
+        id.put("LuminaMediaAutoPauseBgVideo", "Jeda video saat aplikasi berpindah ke latar belakang");
+        id.put("LuminaMediaAutoPauseBgVideoInfo", "Otomatis menjeda video yang sedang diputar saat Anda meninggalkan LuminaGram.");
+        id.put("LuminaMediaUnlockAudioSpeed", "Kontrol kecepatan untuk audio panjang");
+        id.put("LuminaMediaUnlockAudioSpeedInfo", "Menampilkan kontrol kecepatan pemutaran untuk musik dan file audio panjang, bukan hanya pesan suara.");
         T.put("id", id);
     }
 

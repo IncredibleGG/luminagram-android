@@ -962,6 +962,14 @@ public class FileLoader extends BaseController {
                         if (newDir != null) {
                             storeDir = newDir;
                             saveCustomPath = true;
+                            // LuminaGram: keep original filename on download (fully gated; no-op when off).
+                            // Only the on-disk name (storeFileName) changes; the download/cache key (fileName) stays the hash.
+                            if (document != null && LuminaConfig.getBoolean("keepOriginalFilename", false)) {
+                                String luminaOriginalName = getDocumentFileName(document);
+                                if (!TextUtils.isEmpty(luminaOriginalName)) {
+                                    storeFileName = luminaOriginalName;
+                                }
+                            }
                         }
                     } else if (!TextUtils.isEmpty(getDocumentFileName(document)) && canSaveAsFile(parentObject)) {
                         storeFileName = getDocumentFileName(document);
