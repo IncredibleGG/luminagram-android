@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public class LuminaTranslateActivity extends BaseFragment {
 
     private static final int ITEM_TARGET_LANGUAGE = 1;
+    private static final int ITEM_SHOW_BUTTON = 2;
 
     private UniversalRecyclerView listView;
 
@@ -67,6 +68,8 @@ public class LuminaTranslateActivity extends BaseFragment {
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateHeader)));
         items.add(UItem.asButton(ITEM_TARGET_LANGUAGE, LuminaLocale.getString(R.string.LuminaTranslateTo), currentTargetLanguageName()));
+        items.add(UItem.asSwitch(ITEM_SHOW_BUTTON, LuminaLocale.getString(R.string.ShowTranslateButton))
+                .setChecked(getMessagesController().getTranslateController().isContextTranslateEnabled()));
         items.add(UItem.asShadow(null));
     }
 
@@ -74,6 +77,11 @@ public class LuminaTranslateActivity extends BaseFragment {
         switch (item.id) {
             case ITEM_TARGET_LANGUAGE:
                 showLanguagePicker();
+                break;
+            case ITEM_SHOW_BUTTON:
+                TranslateController tc = getMessagesController().getTranslateController();
+                tc.setContextTranslateEnabled(!tc.isContextTranslateEnabled());
+                update();
                 break;
         }
     }

@@ -394,20 +394,31 @@ public class ConnectionsManager extends BaseController {
         if (object != null) {
             // (1) No read receipts: short-circuit read requests with a fake success.
             //     Local read state is already applied before sendRequest is called.
-            if (!LuminaConfig.getBoolean("sendReadPackets", true) && (
-                    object instanceof TLRPC.TL_messages_readHistory ||
-                    object instanceof TLRPC.TL_messages_readEncryptedHistory ||
-                    object instanceof TLRPC.TL_messages_readDiscussion ||
-                    object instanceof TLRPC.TL_messages_readMessageContents ||
-                    object instanceof TLRPC.TL_channels_readHistory ||
-                    object instanceof TLRPC.TL_channels_readMessageContents)) {
-                if (onComplete != null) {
-                    TLRPC.TL_messages_affectedMessages fakeRes = new TLRPC.TL_messages_affectedMessages();
-                    fakeRes.pts = -1;
-                    fakeRes.pts_count = 0;
-                    onComplete.run(fakeRes, null);
+            if (!LuminaConfig.getBoolean("sendReadPackets", true)) {
+                // Bool-returning read ops: answer with TL_boolTrue so any callback that casts
+                // the response to TLRPC.Bool gets the correct type (previously they were all
+                // handed a TL_messages_affectedMessages, causing ignored success / ClassCastException).
+                if (object instanceof TLRPC.TL_messages_readEncryptedHistory ||
+                        object instanceof TLRPC.TL_messages_readDiscussion ||
+                        object instanceof TLRPC.TL_channels_readHistory ||
+                        object instanceof TLRPC.TL_channels_readMessageContents) {
+                    if (onComplete != null) {
+                        onComplete.run(new TLRPC.TL_boolTrue(), null);
+                    }
+                    return;
                 }
-                return;
+                // These two ops genuinely return messages.affectedMessages — keep the no-op
+                // affectedMessages stub (pts=-1 signals "do not apply").
+                if (object instanceof TLRPC.TL_messages_readHistory ||
+                        object instanceof TLRPC.TL_messages_readMessageContents) {
+                    if (onComplete != null) {
+                        TLRPC.TL_messages_affectedMessages fakeRes = new TLRPC.TL_messages_affectedMessages();
+                        fakeRes.pts = -1;
+                        fakeRes.pts_count = 0;
+                        onComplete.run(fakeRes, null);
+                    }
+                    return;
+                }
             }
             // (2) No typing / recording / upload-progress status.
             if (!LuminaConfig.getBoolean("sendTyping", true) && (

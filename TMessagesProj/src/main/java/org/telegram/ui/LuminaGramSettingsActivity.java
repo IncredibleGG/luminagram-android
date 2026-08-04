@@ -67,9 +67,17 @@ public class LuminaGramSettingsActivity extends BaseFragment {
         switch (item.id) {
             case 1:
                 LuminaConfig.toggleHideTabs();
+                // Live-refresh: DialogsActivity re-runs updateFilterTabs() on dialogFiltersUpdated.
+                if (getNotificationCenter() != null) {
+                    getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
+                }
                 break;
             case 2:
                 LuminaConfig.toggleHideStories();
+                // Live-refresh: DialogsActivity re-runs updateStoriesVisibility() on storiesUpdated.
+                if (getNotificationCenter() != null) {
+                    getNotificationCenter().postNotificationName(NotificationCenter.storiesUpdated);
+                }
                 break;
             case 10:
                 presentFragment(new LuminaPrivacyActivity());
@@ -93,6 +101,5 @@ public class LuminaGramSettingsActivity extends BaseFragment {
         if (listView != null && listView.adapter != null) {
             listView.adapter.update(true);
         }
-        getNotificationCenter().postNotificationName(NotificationCenter.mainUserInfoChanged);
     }
 }

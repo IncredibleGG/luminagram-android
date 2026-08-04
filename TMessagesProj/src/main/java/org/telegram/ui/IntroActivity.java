@@ -153,8 +153,11 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
 
     @Override
     public View createView(Context context) {
-        // LuminaGram: drop the Telegram wordmark ImageSpan; render the real Page1Title ("LuminaGram") text instead.
-        titles[0] = LocaleController.getString(R.string.Page1Title);
+        // LuminaGram: drop the Telegram wordmark ImageSpan and render "LuminaGram" as the slide-0 title.
+        // Page1Title is a standard langpack key that the Telegram cloud langpack shadows back to
+        // "Telegram" at runtime; AppName is resolved from local resources (never langpack-shadowed),
+        // so it stays "LuminaGram" regardless of the active cloud language.
+        titles[0] = LocaleController.getString(R.string.AppName);
 
 
         actionBar.setAddToContainer(false);
