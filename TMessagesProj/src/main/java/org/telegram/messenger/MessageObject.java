@@ -3784,9 +3784,6 @@ public class MessageObject {
             }
             return;
         }
-        if (luminaDualOriginalApplied) {
-            return;
-        }
         if (!isOutOwner() || !luminaKeepOriginalAsMain()) {
             return;
         }
@@ -3794,8 +3791,12 @@ public class MessageObject {
         if (TextUtils.isEmpty(original)) {
             return;
         }
+        // LuminaGram self-heal: re-apply whenever the main text drifted back to the sent
+        // translation (server ack / reload / rebind can reset messageText). No-op when correct.
+        if (!TextUtils.equals(messageText, original)) {
+            applyNewText(original);
+        }
         luminaDualOriginalApplied = true;
-        applyNewText(original);
     }
 
     public void applyNewText() {
