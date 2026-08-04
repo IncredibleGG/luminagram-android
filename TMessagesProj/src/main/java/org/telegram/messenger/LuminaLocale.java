@@ -83,6 +83,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaSendOriginal", "发送原文");
         zhHans.put("LuminaTranslateOriginalLabel", "原文");
         zhHans.put("LuminaTranslatePreviewTranslating", "翻译中…");
+        zhHans.put("LuminaArticleTranslate", "翻译文章");
         zhHans.put("LuminaTranslateBeforeSendConfirm", "发送前二次确认");
         zhHans.put("LuminaTranslateBeforeSendConfirmInfo", "开启后，发送前会显示译文预览，你可以选择发送译文或原文。关闭后，译文将一键直接发送。");
         zhHans.put("LuminaTranslateBeforeSendEnabled", "发送前翻译：开");
@@ -241,6 +242,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaSendOriginal", "傳送原文");
         zhHant.put("LuminaTranslateOriginalLabel", "原文");
         zhHant.put("LuminaTranslatePreviewTranslating", "翻譯中…");
+        zhHant.put("LuminaArticleTranslate", "翻譯文章");
         zhHant.put("LuminaTranslateBeforeSendConfirm", "傳送前二次確認");
         zhHant.put("LuminaTranslateBeforeSendConfirmInfo", "開啟後，傳送前會顯示譯文預覽，你可以選擇傳送譯文或原文。關閉後，譯文將一鍵直接傳送。");
         zhHant.put("LuminaTranslateBeforeSendEnabled", "傳送前翻譯：開");
@@ -399,6 +401,7 @@ public final class LuminaLocale {
         ar.put("LuminaSendOriginal", "إرسال النص الأصلي");
         ar.put("LuminaTranslateOriginalLabel", "النص الأصلي");
         ar.put("LuminaTranslatePreviewTranslating", "جارٍ الترجمة…");
+        ar.put("LuminaArticleTranslate", "ترجمة المقالة");
         ar.put("LuminaTranslateBeforeSendConfirm", "التأكيد قبل الإرسال");
         ar.put("LuminaTranslateBeforeSendConfirmInfo", "عند التفعيل، تظهر معاينة للترجمة قبل الإرسال لتختار إرسال الترجمة أو النص الأصلي. عند الإيقاف، تُرسَل الترجمة مباشرةً بنقرة واحدة.");
         ar.put("LuminaTranslateBeforeSendEnabled", "الترجمة قبل الإرسال: تشغيل");
@@ -556,6 +559,7 @@ public final class LuminaLocale {
         ru.put("LuminaSendOriginal", "Отправить оригинал");
         ru.put("LuminaTranslateOriginalLabel", "Оригинал");
         ru.put("LuminaTranslatePreviewTranslating", "Перевод…");
+        ru.put("LuminaArticleTranslate", "Перевести статью");
         ru.put("LuminaTranslateBeforeSendConfirm", "Подтверждать перед отправкой");
         ru.put("LuminaTranslateBeforeSendConfirmInfo", "Когда включено, перед отправкой показывается предпросмотр перевода, чтобы вы могли отправить перевод или оригинал. Когда выключено, перевод отправляется сразу одним касанием.");
         ru.put("LuminaTranslateBeforeSendEnabled", "Перевод перед отправкой: вкл.");
@@ -713,6 +717,7 @@ public final class LuminaLocale {
         fa.put("LuminaSendOriginal", "ارسال متن اصلی");
         fa.put("LuminaTranslateOriginalLabel", "متن اصلی");
         fa.put("LuminaTranslatePreviewTranslating", "در حال ترجمه…");
+        fa.put("LuminaArticleTranslate", "ترجمه مقاله");
         fa.put("LuminaTranslateBeforeSendConfirm", "تأیید پیش از ارسال");
         fa.put("LuminaTranslateBeforeSendConfirmInfo", "وقتی روشن باشد، پیش از ارسال پیش‌نمایش ترجمه نمایش داده می‌شود تا بتوانید ترجمه یا متن اصلی را بفرستید. وقتی خاموش باشد، ترجمه با یک ضربه مستقیم ارسال می‌شود.");
         fa.put("LuminaTranslateBeforeSendEnabled", "ترجمه پیش از ارسال: روشن");
@@ -870,6 +875,7 @@ public final class LuminaLocale {
         tr.put("LuminaSendOriginal", "Orijinali gönder");
         tr.put("LuminaTranslateOriginalLabel", "Orijinal");
         tr.put("LuminaTranslatePreviewTranslating", "Çevriliyor…");
+        tr.put("LuminaArticleTranslate", "Makaleyi çevir");
         tr.put("LuminaTranslateBeforeSendConfirm", "Göndermeden önce onayla");
         tr.put("LuminaTranslateBeforeSendConfirmInfo", "Açıkken, göndermeden önce çevirinin bir önizlemesi görünür; çeviriyi ya da orijinali gönderebilirsiniz. Kapalıyken çeviri tek dokunuşla doğrudan gönderilir.");
         tr.put("LuminaTranslateBeforeSendEnabled", "Göndermeden önce çevir: açık");
@@ -1027,6 +1033,7 @@ public final class LuminaLocale {
         es.put("LuminaSendOriginal", "Enviar original");
         es.put("LuminaTranslateOriginalLabel", "Original");
         es.put("LuminaTranslatePreviewTranslating", "Traduciendo…");
+        es.put("LuminaArticleTranslate", "Traducir artículo");
         es.put("LuminaTranslateBeforeSendConfirm", "Confirmar antes de enviar");
         es.put("LuminaTranslateBeforeSendConfirmInfo", "Cuando está activado, aparece una vista previa de la traducción antes de enviar, para que elijas enviar la traducción o el original. Cuando está desactivado, la traducción se envía directamente con un solo toque.");
         es.put("LuminaTranslateBeforeSendEnabled", "Traducir antes de enviar: activado");
@@ -1184,6 +1191,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaSendOriginal", "Enviar original");
         ptBr.put("LuminaTranslateOriginalLabel", "Original");
         ptBr.put("LuminaTranslatePreviewTranslating", "Traduzindo…");
+        ptBr.put("LuminaArticleTranslate", "Traduzir artigo");
         ptBr.put("LuminaTranslateBeforeSendConfirm", "Confirmar antes de enviar");
         ptBr.put("LuminaTranslateBeforeSendConfirmInfo", "Quando ativado, uma prévia da tradução aparece antes de enviar, para você escolher enviar a tradução ou o original. Quando desativado, a tradução é enviada diretamente com um único toque.");
         ptBr.put("LuminaTranslateBeforeSendEnabled", "Traduzir antes de enviar: ativado");
@@ -1341,6 +1349,7 @@ public final class LuminaLocale {
         id.put("LuminaSendOriginal", "Kirim asli");
         id.put("LuminaTranslateOriginalLabel", "Asli");
         id.put("LuminaTranslatePreviewTranslating", "Menerjemahkan…");
+        id.put("LuminaArticleTranslate", "Terjemahkan artikel");
         id.put("LuminaTranslateBeforeSendConfirm", "Konfirmasi sebelum kirim");
         id.put("LuminaTranslateBeforeSendConfirmInfo", "Saat aktif, pratinjau terjemahan muncul sebelum mengirim, sehingga Anda dapat memilih mengirim terjemahan atau teks asli. Saat nonaktif, terjemahan langsung dikirim dengan satu ketukan.");
         id.put("LuminaTranslateBeforeSendEnabled", "Terjemahkan sebelum kirim: aktif");
