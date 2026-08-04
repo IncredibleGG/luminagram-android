@@ -824,6 +824,37 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
         return false;
     }
 
+    // LuminaGram wave18: colored last-seen recency dot.
+    // Returns the fill color for the avatar dot based on how recently the 1:1 contact was last
+    // seen, or 0 when no recency dot should be drawn. Buckets:
+    //   online now (status.expires in the future)  -> green  (handled by the online-dot block)
+    //   last seen within ~an hour                   -> yellow
+    //   last seen within ~a day                     -> orange
+    //   older / no precise last-seen timestamp      -> 0 (no dot)
+    // NOTE: in this codebase TL_userStatusOffline stores the last-seen time in status.expires
+    // (there is no was_online field); recently/last-week/last-month statuses carry expires<=0
+    // and therefore have no precise timestamp -> no dot.
+    private int getRecencyDotColor(int currentTime) {
+        if (user == null || user.status == null) {
+            return 0;
+        }
+        int expires = user.status.expires;
+        if (expires > currentTime) {
+            return 0xFF4CB050; // online now -> green
+        }
+        if (expires <= 0) {
+            return 0; // recently / last week / last month / hidden / empty -> no precise last-seen
+        }
+        int delta = currentTime - expires;
+        if (delta <= 60 * 60) {
+            return 0xFFFFC107; // within ~an hour -> yellow
+        }
+        if (delta <= 24 * 60 * 60) {
+            return 0xFFFF9800; // within ~a day -> orange
+        }
+        return 0; // older -> no dot
+    }
+
     private void checkGroupCall() {
         hasCall = chat != null && chat.call_active && chat.call_not_empty;
         chatCallProgress = hasCall ? 1.0f : 0.0f;
@@ -5101,6 +5132,24 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                             }
                             needInvalidate = true;
                         }
+                    }
+                } else if (!isOnline && onlineProgress == 0 && LuminaConfig.getBoolean("chatListRecencyDot", false)) {
+                    // LuminaGram wave18: colored last-seen recency dot for offline-but-recent
+                    // contacts (yellow within ~an hour, orange within ~a day). The online (green)
+                    // case is handled by the block above and still respects chatListOnlineDot.
+                    int recencyColor = getRecencyDotColor(ConnectionsManager.getInstance(currentAccount).getCurrentTime());
+                    if (recencyColor != 0) {
+                        int top = (int) (storyParams.originalAvatarRect.bottom - dp(useForceThreeLines || SharedConfig.useThreeLinesLayout ? 6 : 8));
+                        int left;
+                        if (LocaleController.isRTL) {
+                            left = (int) (storyParams.originalAvatarRect.left + dp(useForceThreeLines || SharedConfig.useThreeLinesLayout ? 10 : 6));
+                        } else {
+                            left = (int) (storyParams.originalAvatarRect.right - dp(useForceThreeLines || SharedConfig.useThreeLinesLayout ? 10 : 6));
+                        }
+                        Theme.dialogs_onlineCirclePaint.setColor(Theme.getColor(Theme.key_windowBackgroundWhite, resourcesProvider));
+                        canvas.drawCircle(left, top, dp(7), Theme.dialogs_onlineCirclePaint);
+                        Theme.dialogs_onlineCirclePaint.setColor(recencyColor);
+                        canvas.drawCircle(left, top, dp(5), Theme.dialogs_onlineCirclePaint);
                     }
                 }
             } else if (chat != null) {

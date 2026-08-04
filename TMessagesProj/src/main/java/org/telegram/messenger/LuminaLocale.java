@@ -45,6 +45,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaShowMutedCountInfo", "将已静音聊天的未读角标以正常强调色显示，而非静音灰色。");
         zhHans.put("LuminaChatListOnlineDot", "在线圆点");
         zhHans.put("LuminaChatListOnlineDotInfo", "在单聊头像上显示一个小绿点，表示对方当前在线。");
+        zhHans.put("LuminaChatListRecencyDot", "最近上线圆点");
+        zhHans.put("LuminaChatListRecencyDotInfo", "根据对方最后上线的时间为单聊头像圆点着色：当前在线为绿色，一小时内为黄色，一天内为橙色。更久或隐藏的最后上线时间则不显示圆点。绿色（在线）圆点仍由“在线圆点”开关控制。");
         zhHans.put("LuminaPrivacyTitle", "隐私与隐身");
         zhHans.put("LuminaPrivacyGhostHeader", "幽灵模式");
         zhHans.put("LuminaPrivacySendReadReceipts", "发送已读回执");
@@ -306,6 +308,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaShowMutedCountInfo", "將已靜音聊天的未讀角標以正常強調色顯示，而非靜音灰色。");
         zhHant.put("LuminaChatListOnlineDot", "線上圓點");
         zhHant.put("LuminaChatListOnlineDotInfo", "在單聊頭像上顯示一個小綠點，表示對方目前在線。");
+        zhHant.put("LuminaChatListRecencyDot", "最近上線圓點");
+        zhHant.put("LuminaChatListRecencyDotInfo", "根據對方最後上線的時間為單聊頭像圓點著色：目前在線為綠色，一小時內為黃色，一天內為橙色。更久或隱藏的最後上線時間則不顯示圓點。綠色（在線）圓點仍由「線上圓點」開關控制。");
         zhHant.put("LuminaPrivacyTitle", "隱私與隱身");
         zhHant.put("LuminaPrivacyGhostHeader", "幽靈模式");
         zhHant.put("LuminaPrivacySendReadReceipts", "傳送已讀回條");
@@ -567,6 +571,8 @@ public final class LuminaLocale {
         ar.put("LuminaShowMutedCountInfo", "يرسم شارة غير المقروء للدردشات المكتومة باللون المميّز العادي بدلاً من الرمادي المكتوم.");
         ar.put("LuminaChatListOnlineDot", "نقطة الاتصال");
         ar.put("LuminaChatListOnlineDotInfo", "يعرض نقطة خضراء صغيرة على صورة المحادثات الفردية التي يكون المستخدم فيها متصلاً الآن.");
+        ar.put("LuminaChatListRecencyDot", "نقطة آخر ظهور");
+        ar.put("LuminaChatListRecencyDotInfo", "تلوّن نقطة الصورة الرمزية في المحادثات الفردية حسب مدى حداثة آخر ظهور لجهة الاتصال: أخضر عند الاتصال الآن، وأصفر خلال ساعة، وبرتقالي خلال يوم. ولا تظهر أي نقطة لآخر ظهور أقدم أو مخفي. ويظل مفتاح نقطة الاتصال يتحكم في الحالة الخضراء (متصل).");
         ar.put("LuminaPrivacyTitle", "الخصوصية والتخفّي");
         ar.put("LuminaPrivacyGhostHeader", "الوضع الشبح");
         ar.put("LuminaPrivacySendReadReceipts", "إرسال إيصالات القراءة");
@@ -827,6 +833,8 @@ public final class LuminaLocale {
         ru.put("LuminaShowMutedCountInfo", "Рисует счётчик непрочитанных у чатов без звука обычным акцентным цветом вместо приглушённого серого.");
         ru.put("LuminaChatListOnlineDot", "Точка «в сети»");
         ru.put("LuminaChatListOnlineDotInfo", "Показывает маленькую зелёную точку на аватаре личных чатов, собеседник которых сейчас в сети.");
+        ru.put("LuminaChatListRecencyDot", "Точка недавнего визита");
+        ru.put("LuminaChatListRecencyDotInfo", "Окрашивает точку на аватаре личных чатов в зависимости от того, как недавно собеседник был в сети: зелёная — сейчас в сети, жёлтая — в течение часа, оранжевая — в течение суток. Для более давнего или скрытого времени визита точка не показывается. Зелёную (в сети) точку по-прежнему включает переключатель «Точка в сети».");
         ru.put("LuminaPrivacyTitle", "Конфиденциальность и скрытность");
         ru.put("LuminaPrivacyGhostHeader", "Режим невидимки");
         ru.put("LuminaPrivacySendReadReceipts", "Отправлять отчёты о прочтении");
@@ -1087,6 +1095,8 @@ public final class LuminaLocale {
         fa.put("LuminaShowMutedCountInfo", "نشان نخوانده گفتگوهای بی‌صدا را به‌جای خاکستری کم‌رنگ با رنگ تأکید عادی نمایش می‌دهد.");
         fa.put("LuminaChatListOnlineDot", "نقطهٔ آنلاین");
         fa.put("LuminaChatListOnlineDotInfo", "یک نقطهٔ سبز کوچک روی تصویر گفتگوهای خصوصی که طرف مقابل هم‌اکنون آنلاین است نمایش می‌دهد.");
+        fa.put("LuminaChatListRecencyDot", "نقطهٔ آخرین بازدید");
+        fa.put("LuminaChatListRecencyDotInfo", "نقطهٔ روی تصویر گفتگوهای خصوصی را بر اساس اینکه طرف مقابل چند وقت پیش آنلاین بوده رنگ می‌کند: سبز اگر هم‌اکنون آنلاین باشد، زرد در یک ساعت گذشته و نارنجی در یک روز گذشته. برای زمان‌های قدیمی‌تر یا پنهان نقطه‌ای نمایش داده نمی‌شود. حالت سبز (آنلاین) همچنان با کلید «نقطهٔ آنلاین» کنترل می‌شود.");
         fa.put("LuminaPrivacyTitle", "حریم خصوصی و ناپیدایی");
         fa.put("LuminaPrivacyGhostHeader", "حالت شبح");
         fa.put("LuminaPrivacySendReadReceipts", "ارسال رسید خواندن");
@@ -1347,6 +1357,8 @@ public final class LuminaLocale {
         tr.put("LuminaShowMutedCountInfo", "Sessize alınmış sohbetlerin okunmamış rozetini sessiz gri yerine normal vurgu renginde çizer.");
         tr.put("LuminaChatListOnlineDot", "Çevrimiçi noktası");
         tr.put("LuminaChatListOnlineDotInfo", "Karşı tarafın şu anda çevrimiçi olduğu birebir sohbetlerin avatarında küçük yeşil bir nokta gösterir.");
+        tr.put("LuminaChatListRecencyDot", "Son görülme noktası");
+        tr.put("LuminaChatListRecencyDotInfo", "Kişinin ne kadar süre önce görüldüğüne göre birebir sohbetlerdeki avatar noktasını renklendirir: şu anda çevrimiçiyse yeşil, bir saat içinde sarı, bir gün içinde turuncu. Daha eski veya gizli son görülme için nokta gösterilmez. Yeşil (çevrimiçi) durumu hâlâ Çevrimiçi noktası anahtarıyla denetlenir.");
         tr.put("LuminaPrivacyTitle", "Gizlilik ve Görünmezlik");
         tr.put("LuminaPrivacyGhostHeader", "Hayalet modu");
         tr.put("LuminaPrivacySendReadReceipts", "Okundu bilgisi gönder");
@@ -1607,6 +1619,8 @@ public final class LuminaLocale {
         es.put("LuminaShowMutedCountInfo", "Dibuja la insignia de no leídos de los chats silenciados con el color de acento normal en lugar del gris silenciado.");
         es.put("LuminaChatListOnlineDot", "Punto de conexión");
         es.put("LuminaChatListOnlineDotInfo", "Muestra un pequeño punto verde en el avatar de los chats privados cuyo contacto está conectado en este momento.");
+        es.put("LuminaChatListRecencyDot", "Punto de última conexión");
+        es.put("LuminaChatListRecencyDotInfo", "Colorea el punto del avatar en los chats privados según lo reciente que fue la última conexión del contacto: verde si está conectado ahora, amarillo dentro de una hora y naranja dentro de un día. No se muestra punto para conexiones más antiguas u ocultas. El interruptor del punto de conexión sigue controlando el caso verde (conectado).");
         es.put("LuminaPrivacyTitle", "Privacidad y sigilo");
         es.put("LuminaPrivacyGhostHeader", "Modo fantasma");
         es.put("LuminaPrivacySendReadReceipts", "Enviar confirmaciones de lectura");
@@ -1867,6 +1881,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaShowMutedCountInfo", "Desenha o selo de não lidas das conversas silenciadas na cor de destaque normal em vez do cinza silenciado.");
         ptBr.put("LuminaChatListOnlineDot", "Ponto on-line");
         ptBr.put("LuminaChatListOnlineDotInfo", "Mostra um pequeno ponto verde no avatar das conversas privadas cujo contato está on-line no momento.");
+        ptBr.put("LuminaChatListRecencyDot", "Ponto de visto por último");
+        ptBr.put("LuminaChatListRecencyDotInfo", "Colore o ponto do avatar nas conversas privadas de acordo com há quanto tempo o contato foi visto por último: verde quando está on-line agora, amarelo em até uma hora e laranja em até um dia. Nenhum ponto para visto por último mais antigo ou oculto. O botão do ponto on-line ainda controla o caso verde (on-line).");
         ptBr.put("LuminaPrivacyTitle", "Privacidade e discrição");
         ptBr.put("LuminaPrivacyGhostHeader", "Modo fantasma");
         ptBr.put("LuminaPrivacySendReadReceipts", "Enviar confirmações de leitura");
@@ -2127,6 +2143,8 @@ public final class LuminaLocale {
         id.put("LuminaShowMutedCountInfo", "Menggambar lencana belum dibaca untuk obrolan yang dibisukan dengan warna aksen normal, bukan abu-abu bisu.");
         id.put("LuminaChatListOnlineDot", "Titik daring");
         id.put("LuminaChatListOnlineDotInfo", "Menampilkan titik hijau kecil pada avatar obrolan pribadi yang kontaknya sedang daring.");
+        id.put("LuminaChatListRecencyDot", "Titik terakhir dilihat");
+        id.put("LuminaChatListRecencyDotInfo", "Mewarnai titik avatar pada obrolan pribadi berdasarkan seberapa baru kontak terakhir terlihat: hijau saat sedang daring, kuning dalam satu jam, oranye dalam satu hari. Tidak ada titik untuk terakhir terlihat yang lebih lama atau tersembunyi. Sakelar titik daring tetap mengendalikan kondisi hijau (daring).");
         id.put("LuminaPrivacyTitle", "Privasi & Siluman");
         id.put("LuminaPrivacyGhostHeader", "Mode hantu");
         id.put("LuminaPrivacySendReadReceipts", "Kirim tanda telah dibaca");

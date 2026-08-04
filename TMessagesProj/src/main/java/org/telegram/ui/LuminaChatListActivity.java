@@ -40,6 +40,7 @@ public class LuminaChatListActivity extends BaseFragment {
     private static final int ID_HIDE_MUTE = 2;
     private static final int ID_SHOW_COUNT = 3;
     private static final int ID_ONLINE_DOT = 4;
+    private static final int ID_RECENCY_DOT = 5;
 
     private UniversalRecyclerView listView;
 
@@ -85,6 +86,9 @@ public class LuminaChatListActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_ONLINE_DOT, LuminaLocale.getString(R.string.LuminaChatListOnlineDot))
                 .setChecked(LuminaConfig.getBoolean("chatListOnlineDot", true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaChatListOnlineDotInfo)));
+        items.add(UItem.asSwitch(ID_RECENCY_DOT, LuminaLocale.getString(R.string.LuminaChatListRecencyDot))
+                .setChecked(LuminaConfig.getBoolean("chatListRecencyDot", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaChatListRecencyDotInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -100,6 +104,9 @@ public class LuminaChatListActivity extends BaseFragment {
                 break;
             case ID_ONLINE_DOT:
                 LuminaConfig.putBoolean("chatListOnlineDot", !LuminaConfig.getBoolean("chatListOnlineDot", true));
+                break;
+            case ID_RECENCY_DOT:
+                LuminaConfig.putBoolean("chatListRecencyDot", !LuminaConfig.getBoolean("chatListRecencyDot", false));
                 break;
         }
         if (listView != null && listView.adapter != null) {
