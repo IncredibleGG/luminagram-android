@@ -124,6 +124,24 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- LuminaGram disguise: Calculator camouflage launcher (standalone _sa icon) -->
+        <activity-alias
+            android:enabled="false"
+            android:name="org.telegram.messenger.CalculatorIcon"
+            android:targetActivity="org.telegram.ui.LaunchActivity"
+            android:icon="@mipmap/icon_calc_launcher_sa"
+            android:roundIcon="@mipmap/icon_calc_launcher_sa"
+            android:label="@string/LuminaDisguiseAppLabel"
+            android:exported="true"
+            tools:node="replace">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyA-t0jLPjUt2FxrA8VPK2EiYHcYcboIR6k" />
 
         <service

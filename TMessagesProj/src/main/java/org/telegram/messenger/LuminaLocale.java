@@ -95,6 +95,16 @@ public final class LuminaLocale {
         zhHans.put("LuminaDetailsMessageId", "消息 ID");
         zhHans.put("LuminaDetailsForwardedFrom", "转发自");
         zhHans.put("LuminaDetailsOriginalDate", "原始日期");
+        zhHans.put("LuminaSecurityTitle", "安全");
+        zhHans.put("LuminaSecurityPanicHeader", "紧急清除");
+        zhHans.put("LuminaSecurityPanicWipe", "紧急清除 (Kaboom)");
+        zhHans.put("LuminaSecurityPanicWipeInfo", "立即登出所有账号，并从本设备清除本地聊天和缓存文件，然后返回登录界面。你的账号仍保留在 Telegram 服务器上。此操作无法撤销。");
+        zhHans.put("LuminaSecurityPanicConfirmTitle", "紧急清除？");
+        zhHans.put("LuminaSecurityPanicConfirmMessage", "所有账号都将被登出，本设备上的所有本地聊天和缓存文件都将被清除。此操作无法撤销。是否继续？");
+        zhHans.put("LuminaSecurityPanicConfirmButton", "立即清除");
+        zhHans.put("LuminaSecurityDisguiseHeader", "伪装");
+        zhHans.put("LuminaSecurityDisguise", "伪装成 Calculator");
+        zhHans.put("LuminaSecurityDisguiseInfo", "将应用的启动图标和名称替换为普通的 Calculator。关闭以恢复正常的 LuminaGram 图标。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -164,6 +174,16 @@ public final class LuminaLocale {
         zhHant.put("LuminaDetailsMessageId", "訊息 ID");
         zhHant.put("LuminaDetailsForwardedFrom", "轉發自");
         zhHant.put("LuminaDetailsOriginalDate", "原始日期");
+        zhHant.put("LuminaSecurityTitle", "安全");
+        zhHant.put("LuminaSecurityPanicHeader", "緊急清除");
+        zhHant.put("LuminaSecurityPanicWipe", "緊急清除 (Kaboom)");
+        zhHant.put("LuminaSecurityPanicWipeInfo", "立即登出所有帳號，並從本裝置清除本地聊天與快取檔案，然後返回登入畫面。你的帳號仍保留在 Telegram 伺服器上。此操作無法復原。");
+        zhHant.put("LuminaSecurityPanicConfirmTitle", "緊急清除？");
+        zhHant.put("LuminaSecurityPanicConfirmMessage", "所有帳號都將被登出，本裝置上的所有本地聊天與快取檔案都將被清除。此操作無法復原。是否繼續？");
+        zhHant.put("LuminaSecurityPanicConfirmButton", "立即清除");
+        zhHant.put("LuminaSecurityDisguiseHeader", "偽裝");
+        zhHant.put("LuminaSecurityDisguise", "偽裝成 Calculator");
+        zhHant.put("LuminaSecurityDisguiseInfo", "將應用程式的啟動圖示與名稱替換為普通的 Calculator。關閉以恢復正常的 LuminaGram 圖示。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -233,6 +253,16 @@ public final class LuminaLocale {
         ar.put("LuminaDetailsMessageId", "معرّف الرسالة");
         ar.put("LuminaDetailsForwardedFrom", "أُعيد توجيهها من");
         ar.put("LuminaDetailsOriginalDate", "التاريخ الأصلي");
+        ar.put("LuminaSecurityTitle", "الأمان");
+        ar.put("LuminaSecurityPanicHeader", "المحو الطارئ");
+        ar.put("LuminaSecurityPanicWipe", "المحو الطارئ (Kaboom)");
+        ar.put("LuminaSecurityPanicWipeInfo", "يسجّل الخروج فورًا من كل الحسابات ويمحو الدردشات المحلية والملفات المؤقتة من هذا الجهاز، ثم يعود إلى شاشة تسجيل الدخول. تبقى حساباتك على خوادم Telegram. لا يمكن التراجع عن هذا الإجراء.");
+        ar.put("LuminaSecurityPanicConfirmTitle", "محو طارئ؟");
+        ar.put("LuminaSecurityPanicConfirmMessage", "سيتم تسجيل الخروج من كل الحسابات ومحو كل دردشة محلية وملف مؤقت على هذا الجهاز. لا يمكن التراجع عن هذا. هل تريد المتابعة؟");
+        ar.put("LuminaSecurityPanicConfirmButton", "امحُ الآن");
+        ar.put("LuminaSecurityDisguiseHeader", "التمويه");
+        ar.put("LuminaSecurityDisguise", "التمويه كـ Calculator");
+        ar.put("LuminaSecurityDisguiseInfo", "استبدال أيقونة التطبيق واسمه بتطبيق Calculator عادي. أوقفه لاستعادة أيقونة LuminaGram العادية.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -302,6 +332,16 @@ public final class LuminaLocale {
         ru.put("LuminaDetailsMessageId", "ID сообщения");
         ru.put("LuminaDetailsForwardedFrom", "Переслано от");
         ru.put("LuminaDetailsOriginalDate", "Исходная дата");
+        ru.put("LuminaSecurityTitle", "Безопасность");
+        ru.put("LuminaSecurityPanicHeader", "Экстренная очистка");
+        ru.put("LuminaSecurityPanicWipe", "Экстренная очистка (Kaboom)");
+        ru.put("LuminaSecurityPanicWipeInfo", "Мгновенно выходит из всех аккаунтов и стирает локальные чаты и кэш с этого устройства, затем возвращает на экран входа. Ваши аккаунты остаются на серверах Telegram. Это действие нельзя отменить.");
+        ru.put("LuminaSecurityPanicConfirmTitle", "Экстренная очистка?");
+        ru.put("LuminaSecurityPanicConfirmMessage", "Все аккаунты будут выведены из системы, а все локальные чаты и кэш на этом устройстве будут стёрты. Это действие нельзя отменить. Продолжить?");
+        ru.put("LuminaSecurityPanicConfirmButton", "Стереть сейчас");
+        ru.put("LuminaSecurityDisguiseHeader", "Маскировка");
+        ru.put("LuminaSecurityDisguise", "Маскировать под Calculator");
+        ru.put("LuminaSecurityDisguiseInfo", "Заменить значок и название приложения на обычный Calculator. Выключите, чтобы вернуть обычный значок LuminaGram.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -371,6 +411,16 @@ public final class LuminaLocale {
         fa.put("LuminaDetailsMessageId", "شناسه پیام");
         fa.put("LuminaDetailsForwardedFrom", "هدایت‌شده از");
         fa.put("LuminaDetailsOriginalDate", "تاریخ اصلی");
+        fa.put("LuminaSecurityTitle", "امنیت");
+        fa.put("LuminaSecurityPanicHeader", "پاک‌سازی اضطراری");
+        fa.put("LuminaSecurityPanicWipe", "پاک‌سازی اضطراری (Kaboom)");
+        fa.put("LuminaSecurityPanicWipeInfo", "بلافاصله از همه حساب‌ها خارج می‌شود و گفتگوهای محلی و فایل‌های موقت را از این دستگاه پاک می‌کند، سپس به صفحه ورود بازمی‌گردد. حساب‌های شما روی سرورهای Telegram باقی می‌مانند. این عمل قابل بازگشت نیست.");
+        fa.put("LuminaSecurityPanicConfirmTitle", "پاک‌سازی اضطراری؟");
+        fa.put("LuminaSecurityPanicConfirmMessage", "از همه حساب‌ها خارج می‌شوید و همه گفتگوهای محلی و فایل‌های موقت روی این دستگاه پاک می‌شوند. این عمل قابل بازگشت نیست. ادامه می‌دهید؟");
+        fa.put("LuminaSecurityPanicConfirmButton", "اکنون پاک کن");
+        fa.put("LuminaSecurityDisguiseHeader", "استتار");
+        fa.put("LuminaSecurityDisguise", "استتار به‌صورت Calculator");
+        fa.put("LuminaSecurityDisguiseInfo", "نماد و نام برنامه را با یک Calculator ساده جایگزین کنید. برای بازگرداندن نماد عادی LuminaGram خاموش کنید.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -440,6 +490,16 @@ public final class LuminaLocale {
         tr.put("LuminaDetailsMessageId", "Mesaj kimliği");
         tr.put("LuminaDetailsForwardedFrom", "Şuradan iletildi");
         tr.put("LuminaDetailsOriginalDate", "Özgün tarih");
+        tr.put("LuminaSecurityTitle", "Güvenlik");
+        tr.put("LuminaSecurityPanicHeader", "Acil silme");
+        tr.put("LuminaSecurityPanicWipe", "Acil silme (Kaboom)");
+        tr.put("LuminaSecurityPanicWipeInfo", "Tüm hesaplardan anında çıkış yapar, bu cihazdaki yerel sohbetleri ve önbelleğe alınmış dosyaları siler, ardından giriş ekranına döner. Hesaplarınız Telegram sunucularında kalır. Bu işlem geri alınamaz.");
+        tr.put("LuminaSecurityPanicConfirmTitle", "Acil silme?");
+        tr.put("LuminaSecurityPanicConfirmMessage", "Tüm hesaplardan çıkış yapılacak ve bu cihazdaki tüm yerel sohbetler ile önbellek dosyaları silinecek. Bu işlem geri alınamaz. Devam edilsin mi?");
+        tr.put("LuminaSecurityPanicConfirmButton", "Şimdi sil");
+        tr.put("LuminaSecurityDisguiseHeader", "Kılık değiştirme");
+        tr.put("LuminaSecurityDisguise", "Calculator olarak gizle");
+        tr.put("LuminaSecurityDisguiseInfo", "Uygulamanın başlatıcı simgesini ve adını sade bir Calculator ile değiştirir. Normal LuminaGram simgesini geri getirmek için kapatın.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -509,6 +569,16 @@ public final class LuminaLocale {
         es.put("LuminaDetailsMessageId", "ID del mensaje");
         es.put("LuminaDetailsForwardedFrom", "Reenviado de");
         es.put("LuminaDetailsOriginalDate", "Fecha original");
+        es.put("LuminaSecurityTitle", "Seguridad");
+        es.put("LuminaSecurityPanicHeader", "Borrado de emergencia");
+        es.put("LuminaSecurityPanicWipe", "Borrado de emergencia (Kaboom)");
+        es.put("LuminaSecurityPanicWipeInfo", "Cierra sesión al instante en todas las cuentas y borra los chats locales y los archivos en caché de este dispositivo; luego vuelve a la pantalla de inicio de sesión. Tus cuentas permanecen en los servidores de Telegram. Esto no se puede deshacer.");
+        es.put("LuminaSecurityPanicConfirmTitle", "¿Borrado de emergencia?");
+        es.put("LuminaSecurityPanicConfirmMessage", "Se cerrará sesión en todas las cuentas y se borrarán todos los chats locales y archivos en caché de este dispositivo. Esto no se puede deshacer. ¿Continuar?");
+        es.put("LuminaSecurityPanicConfirmButton", "Borrar ahora");
+        es.put("LuminaSecurityDisguiseHeader", "Disfraz");
+        es.put("LuminaSecurityDisguise", "Disfrazar como Calculator");
+        es.put("LuminaSecurityDisguiseInfo", "Reemplaza el icono y el nombre de la app por una simple Calculator. Desactívalo para restaurar el icono normal de LuminaGram.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -578,6 +648,16 @@ public final class LuminaLocale {
         ptBr.put("LuminaDetailsMessageId", "ID da mensagem");
         ptBr.put("LuminaDetailsForwardedFrom", "Encaminhado de");
         ptBr.put("LuminaDetailsOriginalDate", "Data original");
+        ptBr.put("LuminaSecurityTitle", "Segurança");
+        ptBr.put("LuminaSecurityPanicHeader", "Limpeza de emergência");
+        ptBr.put("LuminaSecurityPanicWipe", "Limpeza de emergência (Kaboom)");
+        ptBr.put("LuminaSecurityPanicWipeInfo", "Encerra a sessão de todas as contas na hora e apaga as conversas locais e os arquivos em cache deste dispositivo, voltando à tela de login. Suas contas permanecem nos servidores do Telegram. Isso não pode ser desfeito.");
+        ptBr.put("LuminaSecurityPanicConfirmTitle", "Limpeza de emergência?");
+        ptBr.put("LuminaSecurityPanicConfirmMessage", "Todas as contas serão desconectadas e todas as conversas locais e arquivos em cache deste dispositivo serão apagados. Isso não pode ser desfeito. Continuar?");
+        ptBr.put("LuminaSecurityPanicConfirmButton", "Apagar agora");
+        ptBr.put("LuminaSecurityDisguiseHeader", "Disfarce");
+        ptBr.put("LuminaSecurityDisguise", "Disfarçar como Calculator");
+        ptBr.put("LuminaSecurityDisguiseInfo", "Substitui o ícone e o nome do app por uma Calculator comum. Desative para restaurar o ícone normal do LuminaGram.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -647,6 +727,16 @@ public final class LuminaLocale {
         id.put("LuminaDetailsMessageId", "ID pesan");
         id.put("LuminaDetailsForwardedFrom", "Diteruskan dari");
         id.put("LuminaDetailsOriginalDate", "Tanggal asli");
+        id.put("LuminaSecurityTitle", "Keamanan");
+        id.put("LuminaSecurityPanicHeader", "Hapus darurat");
+        id.put("LuminaSecurityPanicWipe", "Hapus darurat (Kaboom)");
+        id.put("LuminaSecurityPanicWipeInfo", "Segera keluar dari semua akun dan menghapus obrolan lokal serta berkas cache dari perangkat ini, lalu kembali ke layar masuk. Akun Anda tetap ada di server Telegram. Tindakan ini tidak dapat dibatalkan.");
+        id.put("LuminaSecurityPanicConfirmTitle", "Hapus darurat?");
+        id.put("LuminaSecurityPanicConfirmMessage", "Semua akun akan dikeluarkan dan semua obrolan lokal serta berkas cache di perangkat ini akan dihapus. Tindakan ini tidak dapat dibatalkan. Lanjutkan?");
+        id.put("LuminaSecurityPanicConfirmButton", "Hapus sekarang");
+        id.put("LuminaSecurityDisguiseHeader", "Penyamaran");
+        id.put("LuminaSecurityDisguise", "Menyamar sebagai Calculator");
+        id.put("LuminaSecurityDisguiseInfo", "Ganti ikon peluncur dan nama aplikasi dengan Calculator biasa. Matikan untuk memulihkan ikon LuminaGram normal.");
         T.put("id", id);
     }
 
