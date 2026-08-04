@@ -47,6 +47,7 @@ public class LuminaTranslateActivity extends BaseFragment {
     private static final int ITEM_MODEL = 8;
     private static final int ITEM_SYSTEM_PROMPT = 9;
     private static final int ITEM_TEST = 10;
+    private static final int ITEM_DUAL_LANGUAGE = 11;
 
     private UniversalRecyclerView listView;
 
@@ -87,6 +88,8 @@ public class LuminaTranslateActivity extends BaseFragment {
         items.add(UItem.asButton(ITEM_TARGET_LANGUAGE, LuminaLocale.getString(R.string.LuminaTranslateTo), currentTargetLanguageName()));
         items.add(UItem.asSwitch(ITEM_SHOW_BUTTON, LuminaLocale.getString(R.string.ShowTranslateButton))
                 .setChecked(getMessagesController().getTranslateController().isContextTranslateEnabled()));
+        items.add(UItem.asSwitch(ITEM_DUAL_LANGUAGE, LuminaLocale.getString(R.string.LuminaDualLanguageDisplay))
+                .setChecked(LuminaConfig.getBoolean("dualLanguageDisplay", false)));
         items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND, LuminaLocale.getString(R.string.LuminaTranslateBeforeSend))
                 .setChecked(LuminaConfig.translateBeforeSend));
         items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND_CONFIRM, LuminaLocale.getString(R.string.LuminaTranslateBeforeSendConfirm))
@@ -141,6 +144,10 @@ public class LuminaTranslateActivity extends BaseFragment {
             case ITEM_SHOW_BUTTON:
                 TranslateController tc = getMessagesController().getTranslateController();
                 tc.setContextTranslateEnabled(!tc.isContextTranslateEnabled());
+                update();
+                break;
+            case ITEM_DUAL_LANGUAGE:
+                LuminaConfig.putBoolean("dualLanguageDisplay", !LuminaConfig.getBoolean("dualLanguageDisplay", false));
                 update();
                 break;
             case ITEM_TRANSLATE_BEFORE_SEND:
