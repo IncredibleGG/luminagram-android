@@ -11262,6 +11262,7 @@
     <string name="LuminaShowDcIdInfo">Show the datacenter that stores the profile photo on user, group and channel profiles. Also adds a Details action to the message menu.</string>
     <string name="LuminaShowChatDate">Show creation / join date</string>
     <string name="LuminaShowMessageDetails">Message details menu</string>
+    <string name="LuminaTimeWithSeconds">Show seconds in message time</string>
     <string name="ProfileDcId">Datacenter</string>
     <string name="ProfileChatCreated">Created</string>
     <string name="ProfileChatJoined">Joined</string>

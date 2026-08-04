@@ -110,6 +110,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaShowDcIdInfo", "在用户、群组和频道资料上显示存储头像的数据中心。同时在消息菜单中添加“详情”操作。");
         zhHans.put("LuminaShowChatDate", "显示创建 / 加入日期");
         zhHans.put("LuminaShowMessageDetails", "消息详情菜单");
+        zhHans.put("LuminaTimeWithSeconds", "在消息时间中显示秒");
         zhHans.put("ProfileDcId", "数据中心");
         zhHans.put("ProfileChatCreated", "创建于");
         zhHans.put("ProfileChatJoined", "加入于");
@@ -282,6 +283,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaShowDcIdInfo", "在使用者、群組和頻道個人檔案上顯示儲存大頭貼的資料中心。同時在訊息選單中新增「詳細資訊」操作。");
         zhHant.put("LuminaShowChatDate", "顯示建立 / 加入日期");
         zhHant.put("LuminaShowMessageDetails", "訊息詳細資訊選單");
+        zhHant.put("LuminaTimeWithSeconds", "在訊息時間中顯示秒");
         zhHant.put("ProfileDcId", "資料中心");
         zhHant.put("ProfileChatCreated", "建立於");
         zhHant.put("ProfileChatJoined", "加入於");
@@ -454,6 +456,7 @@ public final class LuminaLocale {
         ar.put("LuminaShowDcIdInfo", "إظهار مركز البيانات الذي يخزّن صورة الملف الشخصي في ملفات المستخدمين والمجموعات والقنوات. كما يضيف إجراء «التفاصيل» إلى قائمة الرسائل.");
         ar.put("LuminaShowChatDate", "إظهار تاريخ الإنشاء / الانضمام");
         ar.put("LuminaShowMessageDetails", "قائمة تفاصيل الرسالة");
+        ar.put("LuminaTimeWithSeconds", "إظهار الثواني في وقت الرسالة");
         ar.put("ProfileDcId", "مركز البيانات");
         ar.put("ProfileChatCreated", "أُنشئت في");
         ar.put("ProfileChatJoined", "انضممت في");
@@ -625,6 +628,7 @@ public final class LuminaLocale {
         ru.put("LuminaShowDcIdInfo", "Показывать дата-центр, где хранится фото профиля, в профилях пользователей, групп и каналов. Также добавляет действие «Подробности» в меню сообщения.");
         ru.put("LuminaShowChatDate", "Показывать дату создания / вступления");
         ru.put("LuminaShowMessageDetails", "Меню «Подробности» сообщения");
+        ru.put("LuminaTimeWithSeconds", "Показывать секунды во времени сообщения");
         ru.put("ProfileDcId", "Дата-центр");
         ru.put("ProfileChatCreated", "Создан");
         ru.put("ProfileChatJoined", "Вы вступили");
@@ -796,6 +800,7 @@ public final class LuminaLocale {
         fa.put("LuminaShowDcIdInfo", "نمایش مرکز داده‌ای که عکس نمایه را ذخیره می‌کند در نمایه کاربران، گروه‌ها و کانال‌ها. همچنین کنش «جزئیات» را به منوی پیام می‌افزاید.");
         fa.put("LuminaShowChatDate", "نمایش تاریخ ساخت / پیوستن");
         fa.put("LuminaShowMessageDetails", "منوی جزئیات پیام");
+        fa.put("LuminaTimeWithSeconds", "نمایش ثانیه در زمان پیام");
         fa.put("ProfileDcId", "مرکز داده");
         fa.put("ProfileChatCreated", "ساخته‌شده در");
         fa.put("ProfileChatJoined", "پیوستید در");
@@ -967,6 +972,7 @@ public final class LuminaLocale {
         tr.put("LuminaShowDcIdInfo", "Kullanıcı, grup ve kanal profillerinde profil fotoğrafını saklayan veri merkezini gösterir. Ayrıca mesaj menüsüne bir Ayrıntılar eylemi ekler.");
         tr.put("LuminaShowChatDate", "Oluşturma / katılma tarihini göster");
         tr.put("LuminaShowMessageDetails", "Mesaj ayrıntıları menüsü");
+        tr.put("LuminaTimeWithSeconds", "Mesaj saatinde saniyeleri göster");
         tr.put("ProfileDcId", "Veri merkezi");
         tr.put("ProfileChatCreated", "Oluşturuldu");
         tr.put("ProfileChatJoined", "Katıldınız");
@@ -1138,6 +1144,7 @@ public final class LuminaLocale {
         es.put("LuminaShowDcIdInfo", "Muestra el centro de datos que almacena la foto de perfil en los perfiles de usuarios, grupos y canales. También añade una acción Detalles al menú del mensaje.");
         es.put("LuminaShowChatDate", "Mostrar fecha de creación / ingreso");
         es.put("LuminaShowMessageDetails", "Menú de detalles del mensaje");
+        es.put("LuminaTimeWithSeconds", "Mostrar segundos en la hora del mensaje");
         es.put("ProfileDcId", "Centro de datos");
         es.put("ProfileChatCreated", "Creado");
         es.put("ProfileChatJoined", "Te uniste");
@@ -1309,6 +1316,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaShowDcIdInfo", "Mostra o datacenter que armazena a foto do perfil nos perfis de usuários, grupos e canais. Também adiciona uma ação Detalhes ao menu da mensagem.");
         ptBr.put("LuminaShowChatDate", "Mostrar data de criação / entrada");
         ptBr.put("LuminaShowMessageDetails", "Menu de detalhes da mensagem");
+        ptBr.put("LuminaTimeWithSeconds", "Mostrar segundos na hora da mensagem");
         ptBr.put("ProfileDcId", "Datacenter");
         ptBr.put("ProfileChatCreated", "Criado");
         ptBr.put("ProfileChatJoined", "Você entrou");
@@ -1480,6 +1488,7 @@ public final class LuminaLocale {
         id.put("LuminaShowDcIdInfo", "Tampilkan pusat data yang menyimpan foto profil di profil pengguna, grup, dan kanal. Juga menambahkan tindakan Detail ke menu pesan.");
         id.put("LuminaShowChatDate", "Tampilkan tanggal dibuat / bergabung");
         id.put("LuminaShowMessageDetails", "Menu detail pesan");
+        id.put("LuminaTimeWithSeconds", "Tampilkan detik pada waktu pesan");
         id.put("ProfileDcId", "Pusat data");
         id.put("ProfileChatCreated", "Dibuat");
         id.put("ProfileChatJoined", "Anda bergabung");
