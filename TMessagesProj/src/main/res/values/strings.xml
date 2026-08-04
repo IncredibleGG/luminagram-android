@@ -11272,6 +11272,10 @@
     <string name="LuminaSaveStickers">Save stickers</string>
     <string name="LuminaSendAsFileDefault">Send media as file</string>
     <string name="LuminaSendAsFileDefaultInfo">When on, photos and videos from the attachment panel are sent uncompressed as files by default. You can still send them compressed from the media preview.</string>
+    <!-- LuminaGram media privacy (wave 18) -->
+    <string name="LuminaMediaPrivacy">Media privacy</string>
+    <string name="LuminaSpoilerIncomingMedia">Spoiler incoming media</string>
+    <string name="LuminaSpoilerIncomingMediaInfo">When on, incoming photos and videos start hidden behind a spoiler blur. Tap a photo or video to reveal it.</string>
     <string name="LuminaSensitive">Restricted content</string>
     <string name="LuminaCopyRestricted">Copy from restricted chats</string>
     <string name="LuminaSaveRestrictedMedia">Save media from no-save chats</string>
