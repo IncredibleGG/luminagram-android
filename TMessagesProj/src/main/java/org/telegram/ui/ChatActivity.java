@@ -1249,6 +1249,7 @@ public class ChatActivity extends BaseFragment implements
     public final static int OPTION_SAVE_TO_CLOUD = 202;
     public final static int OPTION_SELECT_AUTHOR = 203;
     public final static int OPTION_DETAILS = 204;
+    public final static int OPTION_BOOKMARK = 205;
 
     private final static int[] allowedNotificationsDuringChatListAnimations = new int[]{
             NotificationCenter.messagesRead,
@@ -33189,6 +33190,10 @@ public class ChatActivity extends BaseFragment implements
                 showMessageDetailsDialog(selectedObject);
                 break;
             }
+            case OPTION_BOOKMARK: {
+                toggleMessageBookmark(selectedObject);
+                break;
+            }
             case OPTION_FORWARD_NO_AUTHOR:
             case OPTION_FORWARD_NO_CAPTION:
             case OPTION_FORWARD: {
@@ -46023,6 +46028,13 @@ public class ChatActivity extends BaseFragment implements
             options.add(OPTION_DETAILS);
             icons.add(R.drawable.msg_info);
         }
+        // LuminaGram: bookmark this message into the local, searchable Bookmarks list
+        if (LuminaConfig.getBoolean("showBookmarks", true) && selectedObject != null && !selectedObject.isSponsored() && selectedObject.getId() != 0) {
+            boolean bookmarked = LuminaConfig.isBookmarked(selectedObject.getDialogId(), selectedObject.getId());
+            items.add(LuminaLocale.getString(bookmarked ? R.string.LuminaBookmarkRemove : R.string.LuminaBookmark));
+            options.add(OPTION_BOOKMARK);
+            icons.add(R.drawable.msg_saved);
+        }
     }
 
     // LuminaGram: read-only message details popup. Everything shown is already on the
@@ -46071,6 +46083,28 @@ public class ChatActivity extends BaseFragment implements
                     .format(new java.util.Date(unixSeconds * 1000L));
         } catch (Exception e) {
             return String.valueOf(unixSeconds);
+        }
+    }
+
+    // LuminaGram: add/remove this message from the local Bookmarks list (see LuminaBookmarksActivity).
+    private void toggleMessageBookmark(MessageObject msg) {
+        if (msg == null || msg.messageOwner == null) {
+            return;
+        }
+        CharSequence textCs = msg.messageText;
+        if (TextUtils.isEmpty(textCs)) {
+            textCs = msg.caption;
+        }
+        String snippet = textCs == null ? "" : textCs.toString().trim();
+        if (snippet.length() > 140) {
+            snippet = snippet.substring(0, 140);
+        }
+        boolean nowBookmarked = LuminaConfig.toggleBookmark(msg.getDialogId(), msg.getId(), snippet);
+        if (getParentActivity() != null) {
+            BulletinFactory.of(ChatActivity.this).createSimpleBulletin(
+                    R.raw.saved_messages,
+                    LuminaLocale.getString(nowBookmarked ? R.string.LuminaBookmarkAdded : R.string.LuminaBookmarkRemoved)
+            ).show();
         }
     }
 

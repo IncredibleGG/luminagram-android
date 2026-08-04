@@ -139,6 +139,13 @@ public final class LuminaLocale {
         zhHans.put("LuminaAppearanceFontSerif", "衬线体");
         zhHans.put("LuminaAppearanceFontMono", "等宽");
         zhHans.put("LuminaAppearanceFontInfo", "更换应用字体。新打开的界面立即生效；已打开的界面在重启应用后刷新。");
+        zhHans.put("LuminaBookmark", "添加书签");
+        zhHans.put("LuminaBookmarkRemove", "移除书签");
+        zhHans.put("LuminaBookmarkAdded", "已添加到书签");
+        zhHans.put("LuminaBookmarkRemoved", "已从书签移除");
+        zhHans.put("LuminaBookmarksTitle", "书签");
+        zhHans.put("LuminaBookmarksEmpty", "你还没有收藏任何消息。");
+        zhHans.put("LuminaBookmarkDeleteTitle", "删除书签？");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -252,6 +259,13 @@ public final class LuminaLocale {
         zhHant.put("LuminaAppearanceFontSerif", "襯線體");
         zhHant.put("LuminaAppearanceFontMono", "等寬");
         zhHant.put("LuminaAppearanceFontInfo", "更換應用程式字型。新開啟的畫面立即生效；已開啟的畫面在重新啟動應用程式後更新。");
+        zhHant.put("LuminaBookmark", "加入書籤");
+        zhHant.put("LuminaBookmarkRemove", "移除書籤");
+        zhHant.put("LuminaBookmarkAdded", "已加入書籤");
+        zhHant.put("LuminaBookmarkRemoved", "已從書籤移除");
+        zhHant.put("LuminaBookmarksTitle", "書籤");
+        zhHant.put("LuminaBookmarksEmpty", "你還沒有收藏任何訊息。");
+        zhHant.put("LuminaBookmarkDeleteTitle", "刪除書籤？");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -365,6 +379,13 @@ public final class LuminaLocale {
         ar.put("LuminaAppearanceFontSerif", "Serif");
         ar.put("LuminaAppearanceFontMono", "أحادي المسافة");
         ar.put("LuminaAppearanceFontInfo", "يبدّل خط التطبيق. تُحدَّث الشاشات المفتوحة حديثًا فورًا؛ أما الشاشات المفتوحة مسبقًا فتُحدَّث بعد إعادة تشغيل التطبيق.");
+        ar.put("LuminaBookmark", "إضافة إشارة مرجعية");
+        ar.put("LuminaBookmarkRemove", "إزالة الإشارة المرجعية");
+        ar.put("LuminaBookmarkAdded", "أُضيفت إلى الإشارات المرجعية");
+        ar.put("LuminaBookmarkRemoved", "أُزيلت من الإشارات المرجعية");
+        ar.put("LuminaBookmarksTitle", "الإشارات المرجعية");
+        ar.put("LuminaBookmarksEmpty", "لم تحفظ أي رسالة في الإشارات المرجعية بعد.");
+        ar.put("LuminaBookmarkDeleteTitle", "حذف الإشارة المرجعية؟");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -478,6 +499,13 @@ public final class LuminaLocale {
         ru.put("LuminaAppearanceFontSerif", "С засечками");
         ru.put("LuminaAppearanceFontMono", "Моноширинный");
         ru.put("LuminaAppearanceFontInfo", "Меняет шрифт приложения. Новые экраны обновляются сразу; уже открытые — после перезапуска приложения.");
+        ru.put("LuminaBookmark", "В закладки");
+        ru.put("LuminaBookmarkRemove", "Убрать из закладок");
+        ru.put("LuminaBookmarkAdded", "Добавлено в закладки");
+        ru.put("LuminaBookmarkRemoved", "Удалено из закладок");
+        ru.put("LuminaBookmarksTitle", "Закладки");
+        ru.put("LuminaBookmarksEmpty", "У вас пока нет закладок.");
+        ru.put("LuminaBookmarkDeleteTitle", "Удалить закладку?");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -591,6 +619,13 @@ public final class LuminaLocale {
         fa.put("LuminaAppearanceFontSerif", "Serif");
         fa.put("LuminaAppearanceFontMono", "تک‌فاصله");
         fa.put("LuminaAppearanceFontInfo", "فونت برنامه را عوض می‌کند. صفحه‌های تازه‌بازشده فوراً به‌روز می‌شوند؛ صفحه‌های ازپیش‌باز پس از راه‌اندازی مجدد برنامه.");
+        fa.put("LuminaBookmark", "افزودن نشانک");
+        fa.put("LuminaBookmarkRemove", "حذف نشانک");
+        fa.put("LuminaBookmarkAdded", "به نشانک‌ها افزوده شد");
+        fa.put("LuminaBookmarkRemoved", "از نشانک‌ها حذف شد");
+        fa.put("LuminaBookmarksTitle", "نشانک‌ها");
+        fa.put("LuminaBookmarksEmpty", "هنوز هیچ پیامی را نشانک نکرده‌اید.");
+        fa.put("LuminaBookmarkDeleteTitle", "حذف نشانک؟");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -704,6 +739,13 @@ public final class LuminaLocale {
         tr.put("LuminaAppearanceFontSerif", "Serif");
         tr.put("LuminaAppearanceFontMono", "Tek aralıklı");
         tr.put("LuminaAppearanceFontInfo", "Uygulama yazı tipini değiştirir. Yeni açılan ekranlar hemen güncellenir; zaten açık ekranlar uygulama yeniden başlatıldıktan sonra yenilenir.");
+        tr.put("LuminaBookmark", "Yer imi ekle");
+        tr.put("LuminaBookmarkRemove", "Yer imini kaldır");
+        tr.put("LuminaBookmarkAdded", "Yer imlerine eklendi");
+        tr.put("LuminaBookmarkRemoved", "Yer imlerinden kaldırıldı");
+        tr.put("LuminaBookmarksTitle", "Yer imleri");
+        tr.put("LuminaBookmarksEmpty", "Henüz hiçbir mesajı yer imlerine eklemediniz.");
+        tr.put("LuminaBookmarkDeleteTitle", "Yer imi silinsin mi?");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -817,6 +859,13 @@ public final class LuminaLocale {
         es.put("LuminaAppearanceFontSerif", "Serif");
         es.put("LuminaAppearanceFontMono", "Monoespaciada");
         es.put("LuminaAppearanceFontInfo", "Cambia la tipografía de la app. Las pantallas recién abiertas se actualizan al instante; las ya abiertas se actualizan tras reiniciar la app.");
+        es.put("LuminaBookmark", "Añadir marcador");
+        es.put("LuminaBookmarkRemove", "Quitar marcador");
+        es.put("LuminaBookmarkAdded", "Añadido a marcadores");
+        es.put("LuminaBookmarkRemoved", "Quitado de marcadores");
+        es.put("LuminaBookmarksTitle", "Marcadores");
+        es.put("LuminaBookmarksEmpty", "Aún no has guardado ningún mensaje en marcadores.");
+        es.put("LuminaBookmarkDeleteTitle", "¿Eliminar marcador?");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -930,6 +979,13 @@ public final class LuminaLocale {
         ptBr.put("LuminaAppearanceFontSerif", "Serifada");
         ptBr.put("LuminaAppearanceFontMono", "Monoespaçada");
         ptBr.put("LuminaAppearanceFontInfo", "Troca a fonte do app. Telas recém-abertas atualizam na hora; telas já abertas atualizam após reiniciar o app.");
+        ptBr.put("LuminaBookmark", "Adicionar marcador");
+        ptBr.put("LuminaBookmarkRemove", "Remover marcador");
+        ptBr.put("LuminaBookmarkAdded", "Adicionado aos marcadores");
+        ptBr.put("LuminaBookmarkRemoved", "Removido dos marcadores");
+        ptBr.put("LuminaBookmarksTitle", "Marcadores");
+        ptBr.put("LuminaBookmarksEmpty", "Você ainda não salvou nenhuma mensagem nos marcadores.");
+        ptBr.put("LuminaBookmarkDeleteTitle", "Excluir marcador?");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1043,6 +1099,13 @@ public final class LuminaLocale {
         id.put("LuminaAppearanceFontSerif", "Serif");
         id.put("LuminaAppearanceFontMono", "Monospace");
         id.put("LuminaAppearanceFontInfo", "Mengganti font aplikasi. Layar yang baru dibuka diperbarui langsung; layar yang sudah terbuka diperbarui setelah aplikasi dimulai ulang.");
+        id.put("LuminaBookmark", "Tambahkan penanda");
+        id.put("LuminaBookmarkRemove", "Hapus penanda");
+        id.put("LuminaBookmarkAdded", "Ditambahkan ke penanda");
+        id.put("LuminaBookmarkRemoved", "Dihapus dari penanda");
+        id.put("LuminaBookmarksTitle", "Penanda");
+        id.put("LuminaBookmarksEmpty", "Anda belum menyimpan pesan apa pun ke penanda.");
+        id.put("LuminaBookmarkDeleteTitle", "Hapus penanda?");
         T.put("id", id);
     }
 
