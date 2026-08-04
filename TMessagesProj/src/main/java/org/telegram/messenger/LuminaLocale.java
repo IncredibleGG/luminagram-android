@@ -184,6 +184,12 @@ public final class LuminaLocale {
         zhHans.put("LuminaDisguiseDecoyCodeNotSet", "未设置");
         zhHans.put("LuminaDisguiseDecoyCodeDialogTitle", "解锁码");
         zhHans.put("LuminaDisguiseDecoyInfo", "开启后，应用将以可用的计算器形式打开；输入此解锁码可显示真正的应用。此密码与 Telegram 内置密码相互独立。");
+        zhHans.put("LuminaStickerExport", "导出贴纸包");
+        zhHans.put("LuminaStickerImport", "导入贴纸包");
+        zhHans.put("LuminaStickerExportInfo", "复制或分享你已安装的所有贴纸包链接。");
+        zhHans.put("LuminaStickerExportEmpty", "没有可导出的贴纸包。");
+        zhHans.put("LuminaStickerImportHint", "粘贴 t.me/addstickers 链接，每行一个");
+        zhHans.put("LuminaStickerImportEmpty", "未找到贴纸包链接。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -342,6 +348,12 @@ public final class LuminaLocale {
         zhHant.put("LuminaDisguiseDecoyCodeNotSet", "未設定");
         zhHant.put("LuminaDisguiseDecoyCodeDialogTitle", "解鎖碼");
         zhHant.put("LuminaDisguiseDecoyInfo", "開啟後，應用會以可用的計算機形式開啟；輸入此解鎖碼即可顯示真正的應用。此密碼與 Telegram 內建密碼互相獨立。");
+        zhHant.put("LuminaStickerExport", "匯出貼圖包");
+        zhHant.put("LuminaStickerImport", "匯入貼圖包");
+        zhHant.put("LuminaStickerExportInfo", "複製或分享你已安裝的所有貼圖包連結。");
+        zhHant.put("LuminaStickerExportEmpty", "沒有可匯出的貼圖包。");
+        zhHant.put("LuminaStickerImportHint", "貼上 t.me/addstickers 連結，每行一個");
+        zhHant.put("LuminaStickerImportEmpty", "找不到貼圖包連結。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -499,6 +511,12 @@ public final class LuminaLocale {
         ar.put("LuminaDisguiseDecoyCodeNotSet", "غير مُعيَّن");
         ar.put("LuminaDisguiseDecoyCodeDialogTitle", "رمز الفتح");
         ar.put("LuminaDisguiseDecoyInfo", "عند التفعيل، يفتح التطبيق كآلة حاسبة تعمل فعليًا؛ وإدخال هذا الرمز يكشف التطبيق. هذا الرمز منفصل عن رمز مرور Telegram المدمج.");
+        ar.put("LuminaStickerExport", "تصدير حزم الملصقات");
+        ar.put("LuminaStickerImport", "استيراد حزم الملصقات");
+        ar.put("LuminaStickerExportInfo", "انسخ أو شارك روابط جميع حزم الملصقات المثبتة لديك.");
+        ar.put("LuminaStickerExportEmpty", "لا توجد حزم ملصقات للتصدير.");
+        ar.put("LuminaStickerImportHint", "الصق روابط t.me/addstickers، رابط واحد في كل سطر");
+        ar.put("LuminaStickerImportEmpty", "لم يتم العثور على روابط حزم ملصقات.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -656,6 +674,12 @@ public final class LuminaLocale {
         ru.put("LuminaDisguiseDecoyCodeNotSet", "Не задан");
         ru.put("LuminaDisguiseDecoyCodeDialogTitle", "Код разблокировки");
         ru.put("LuminaDisguiseDecoyInfo", "При включении приложение открывается как рабочий калькулятор; ввод этого кода открывает приложение. Этот код независим от встроенного код-пароля Telegram.");
+        ru.put("LuminaStickerExport", "Экспорт стикерпаков");
+        ru.put("LuminaStickerImport", "Импорт стикерпаков");
+        ru.put("LuminaStickerExportInfo", "Скопируйте или поделитесь ссылками на все установленные стикерпаки.");
+        ru.put("LuminaStickerExportEmpty", "Нет стикерпаков для экспорта.");
+        ru.put("LuminaStickerImportHint", "Вставьте ссылки t.me/addstickers, по одной в строке");
+        ru.put("LuminaStickerImportEmpty", "Ссылки на стикерпаки не найдены.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -813,6 +837,12 @@ public final class LuminaLocale {
         fa.put("LuminaDisguiseDecoyCodeNotSet", "تنظیم‌نشده");
         fa.put("LuminaDisguiseDecoyCodeDialogTitle", "کد باز کردن");
         fa.put("LuminaDisguiseDecoyInfo", "با فعال‌سازی، برنامه به‌صورت یک ماشین‌حساب واقعی باز می‌شود؛ واردکردن این کد برنامه را آشکار می‌کند. این رمز جدا از رمز داخلی Telegram است.");
+        fa.put("LuminaStickerExport", "برون‌بری بسته‌های برچسب");
+        fa.put("LuminaStickerImport", "درون‌ریزی بسته‌های برچسب");
+        fa.put("LuminaStickerExportInfo", "پیوند همه بسته‌های برچسب نصب‌شده را کپی یا هم‌رسانی کنید.");
+        fa.put("LuminaStickerExportEmpty", "بسته برچسبی برای برون‌بری وجود ندارد.");
+        fa.put("LuminaStickerImportHint", "پیوندهای t.me/addstickers را جای‌گذاری کنید، هر خط یک پیوند");
+        fa.put("LuminaStickerImportEmpty", "هیچ پیوند بسته برچسبی یافت نشد.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -970,6 +1000,12 @@ public final class LuminaLocale {
         tr.put("LuminaDisguiseDecoyCodeNotSet", "Ayarlı değil");
         tr.put("LuminaDisguiseDecoyCodeDialogTitle", "Kilit açma kodu");
         tr.put("LuminaDisguiseDecoyInfo", "Açıkken uygulama çalışan bir hesap makinesi olarak açılır; bu kodu girmek uygulamayı ortaya çıkarır. Bu parola Telegram'ın yerleşik parolasından ayrıdır.");
+        tr.put("LuminaStickerExport", "Çıkartma paketlerini dışa aktar");
+        tr.put("LuminaStickerImport", "Çıkartma paketlerini içe aktar");
+        tr.put("LuminaStickerExportInfo", "Yüklü tüm çıkartma paketlerinin bağlantılarını kopyalayın veya paylaşın.");
+        tr.put("LuminaStickerExportEmpty", "Dışa aktarılacak çıkartma paketi yok.");
+        tr.put("LuminaStickerImportHint", "t.me/addstickers bağlantılarını yapıştırın, her satıra bir tane");
+        tr.put("LuminaStickerImportEmpty", "Çıkartma paketi bağlantısı bulunamadı.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1127,6 +1163,12 @@ public final class LuminaLocale {
         es.put("LuminaDisguiseDecoyCodeNotSet", "Sin establecer");
         es.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueo");
         es.put("LuminaDisguiseDecoyInfo", "Cuando está activado, la app se abre como una calculadora funcional; introducir este código revela la app. Esta contraseña es independiente del código de acceso integrado de Telegram.");
+        es.put("LuminaStickerExport", "Exportar paquetes de stickers");
+        es.put("LuminaStickerImport", "Importar paquetes de stickers");
+        es.put("LuminaStickerExportInfo", "Copia o comparte los enlaces de todos tus paquetes de stickers instalados.");
+        es.put("LuminaStickerExportEmpty", "No hay paquetes de stickers para exportar.");
+        es.put("LuminaStickerImportHint", "Pega enlaces t.me/addstickers, uno por línea");
+        es.put("LuminaStickerImportEmpty", "No se encontraron enlaces de paquetes de stickers.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1284,6 +1326,12 @@ public final class LuminaLocale {
         ptBr.put("LuminaDisguiseDecoyCodeNotSet", "Não definido");
         ptBr.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueio");
         ptBr.put("LuminaDisguiseDecoyInfo", "Quando ativado, o app abre como uma calculadora funcional; digitar este código revela o app. Esta senha é separada da senha interna do Telegram.");
+        ptBr.put("LuminaStickerExport", "Exportar pacotes de figurinhas");
+        ptBr.put("LuminaStickerImport", "Importar pacotes de figurinhas");
+        ptBr.put("LuminaStickerExportInfo", "Copie ou compartilhe os links de todos os seus pacotes de figurinhas instalados.");
+        ptBr.put("LuminaStickerExportEmpty", "Nenhum pacote de figurinhas para exportar.");
+        ptBr.put("LuminaStickerImportHint", "Cole links t.me/addstickers, um por linha");
+        ptBr.put("LuminaStickerImportEmpty", "Nenhum link de pacote de figurinhas encontrado.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1441,6 +1489,12 @@ public final class LuminaLocale {
         id.put("LuminaDisguiseDecoyCodeNotSet", "Belum diatur");
         id.put("LuminaDisguiseDecoyCodeDialogTitle", "Kode buka kunci");
         id.put("LuminaDisguiseDecoyInfo", "Saat aktif, aplikasi terbuka sebagai kalkulator yang berfungsi; memasukkan kode ini menampilkan aplikasi. Sandi ini terpisah dari sandi bawaan Telegram.");
+        id.put("LuminaStickerExport", "Ekspor paket stiker");
+        id.put("LuminaStickerImport", "Impor paket stiker");
+        id.put("LuminaStickerExportInfo", "Salin atau bagikan tautan semua paket stiker yang terpasang.");
+        id.put("LuminaStickerExportEmpty", "Tidak ada paket stiker untuk diekspor.");
+        id.put("LuminaStickerImportHint", "Tempel tautan t.me/addstickers, satu per baris");
+        id.put("LuminaStickerImportEmpty", "Tautan paket stiker tidak ditemukan.");
         T.put("id", id);
     }
 
