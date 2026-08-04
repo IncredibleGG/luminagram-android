@@ -11357,4 +11357,6 @@
     <string name="LuminaInterfaceNumbersHeader">Numbers</string>
     <string name="LuminaInterfaceExactNumbers">Show exact numbers (no 1.2K rounding)</string>
     <string name="LuminaInterfaceExactNumbersInfo">Show full counts like 1,234,567 instead of shortened forms such as 1.2M.</string>
+    <string name="LuminaClearAllCache">Clear all cache</string>
+    <string name="LuminaClearAllCacheConfirm">This will remove all cached media, files and temporary data from this device. Your messages and account are not affected.</string>
 </resources>
