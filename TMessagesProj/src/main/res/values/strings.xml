@@ -11249,6 +11249,8 @@
     <string name="LuminaSelectFromAuthorTitle">Select all from author</string>
     <string name="LuminaMediaSaving">Media</string>
     <string name="LuminaSaveStickers">Save stickers</string>
+    <string name="LuminaSendAsFileDefault">Send media as file</string>
+    <string name="LuminaSendAsFileDefaultInfo">When on, photos and videos from the attachment panel are sent uncompressed as files by default. You can still send them compressed from the media preview.</string>
     <string name="LuminaSensitive">Restricted content</string>
     <string name="LuminaCopyRestricted">Copy from restricted chats</string>
     <string name="LuminaSaveRestrictedMedia">Save media from no-save chats</string>

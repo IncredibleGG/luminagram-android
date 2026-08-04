@@ -64,7 +64,8 @@ public class LuminaChatActivity extends BaseFragment {
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMediaSaving)));
         items.add(UItem.asSwitch(5, LuminaLocale.getString(R.string.LuminaSaveStickers)).setChecked(LuminaConfig.getBoolean("saveStickers", true)));
-        items.add(UItem.asShadow(null));
+        items.add(UItem.asSwitch(10, LuminaLocale.getString(R.string.LuminaSendAsFileDefault)).setChecked(LuminaConfig.getBoolean("sendAsFileDefault", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSendAsFileDefaultInfo)));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaInfoDensity)));
         items.add(UItem.asSwitch(6, LuminaLocale.getString(R.string.LuminaShowDcId)).setChecked(LuminaConfig.getBoolean("showDcId", false)));
@@ -90,6 +91,9 @@ public class LuminaChatActivity extends BaseFragment {
                 break;
             case 5:
                 LuminaConfig.putBoolean("saveStickers", !LuminaConfig.getBoolean("saveStickers", true));
+                break;
+            case 10:
+                LuminaConfig.putBoolean("sendAsFileDefault", !LuminaConfig.getBoolean("sendAsFileDefault", false));
                 break;
             case 6:
                 LuminaConfig.putBoolean("showDcId", !LuminaConfig.getBoolean("showDcId", false));
