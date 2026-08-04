@@ -11177,6 +11177,14 @@
     <string name="LuminaHideTabs">Hide folder tabs</string>
     <string name="LuminaHideStories">Hide stories</string>
     <string name="LuminaCompactChatList">Compact chat list</string>
+    <!-- LuminaGram chat-list customization -->
+    <string name="LuminaChatListRowHeader">Rows</string>
+    <string name="LuminaCompactChatListInfo">Uses a denser row height so more chats fit on screen. The message preview and avatar stay visible.</string>
+    <string name="LuminaChatListBadgesHeader">Badges &amp; icons</string>
+    <string name="LuminaHideMuteIcon">Hide mute icon</string>
+    <string name="LuminaHideMuteIconInfo">Hides the small bell icon shown next to muted chats in the list.</string>
+    <string name="LuminaShowMutedCount">Always show unread count</string>
+    <string name="LuminaShowMutedCountInfo">Draws the unread badge of muted chats in the normal accent color instead of muted gray.</string>
     <!-- LuminaGram privacy / stealth -->
     <string name="LuminaPrivacyTitle">Privacy &amp; Stealth</string>
     <string name="LuminaPrivacyGhostHeader">Ghost mode</string>
