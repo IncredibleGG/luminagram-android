@@ -11368,4 +11368,12 @@
     <!-- LuminaGram copy inline bot-button link/data on long-press -->
     <string name="LuminaBotButtonLinkCopied">Link copied to clipboard</string>
     <string name="LuminaBotButtonDataCopied">Callback data copied to clipboard</string>
+    <!-- LuminaGram sticker set backup / export + import -->
+    <string name="LuminaStickerExport">Export sticker sets</string>
+    <string name="LuminaStickerImport">Import sticker sets</string>
+    <string name="LuminaStickerExportInfo">Copy or share the links to all your installed sticker sets.</string>
+    <string name="LuminaStickerExportEmpty">No sticker sets to export.</string>
+    <string name="LuminaStickerImportHint">Paste t.me/addstickers links, one per line</string>
+    <string name="LuminaStickerImportEmpty">No sticker set links found.</string>
 </resources>
+

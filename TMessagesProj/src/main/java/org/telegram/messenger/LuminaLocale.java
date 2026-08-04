@@ -207,6 +207,12 @@ public final class LuminaLocale {
         zhHans.put("MarkFolderAsReadAlert", "将此文件夹中的所有聊天标为已读？");
         zhHans.put("LuminaBotButtonLinkCopied", "链接已复制到剪贴板");
         zhHans.put("LuminaBotButtonDataCopied", "回调数据已复制到剪贴板");
+        zhHans.put("LuminaStickerExport", "导出贴纸包");
+        zhHans.put("LuminaStickerImport", "导入贴纸包");
+        zhHans.put("LuminaStickerExportInfo", "复制或分享你已安装的所有贴纸包链接。");
+        zhHans.put("LuminaStickerExportEmpty", "没有可导出的贴纸包。");
+        zhHans.put("LuminaStickerImportHint", "粘贴 t.me/addstickers 链接，每行一个");
+        zhHans.put("LuminaStickerImportEmpty", "未找到贴纸包链接。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -388,6 +394,12 @@ public final class LuminaLocale {
         zhHant.put("MarkFolderAsReadAlert", "將此資料夾中的所有聊天標為已讀？");
         zhHant.put("LuminaBotButtonLinkCopied", "連結已複製到剪貼簿");
         zhHant.put("LuminaBotButtonDataCopied", "回呼資料已複製到剪貼簿");
+        zhHant.put("LuminaStickerExport", "匯出貼圖包");
+        zhHant.put("LuminaStickerImport", "匯入貼圖包");
+        zhHant.put("LuminaStickerExportInfo", "複製或分享你已安裝的所有貼圖包連結。");
+        zhHant.put("LuminaStickerExportEmpty", "沒有可匯出的貼圖包。");
+        zhHant.put("LuminaStickerImportHint", "貼上 t.me/addstickers 連結，每行一個");
+        zhHant.put("LuminaStickerImportEmpty", "找不到貼圖包連結。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -568,6 +580,12 @@ public final class LuminaLocale {
         ar.put("MarkFolderAsReadAlert", "هل تريد تحديد كل الدردشات في هذا المجلد كمقروءة؟");
         ar.put("LuminaBotButtonLinkCopied", "تم نسخ الرابط إلى الحافظة");
         ar.put("LuminaBotButtonDataCopied", "تم نسخ بيانات الاستدعاء إلى الحافظة");
+        ar.put("LuminaStickerExport", "تصدير حزم الملصقات");
+        ar.put("LuminaStickerImport", "استيراد حزم الملصقات");
+        ar.put("LuminaStickerExportInfo", "انسخ أو شارك روابط جميع حزم الملصقات المثبتة لديك.");
+        ar.put("LuminaStickerExportEmpty", "لا توجد حزم ملصقات للتصدير.");
+        ar.put("LuminaStickerImportHint", "الصق روابط t.me/addstickers، رابط واحد في كل سطر");
+        ar.put("LuminaStickerImportEmpty", "لم يتم العثور على روابط حزم ملصقات.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -748,6 +766,12 @@ public final class LuminaLocale {
         ru.put("MarkFolderAsReadAlert", "Отметить все чаты в этой папке как прочитанные?");
         ru.put("LuminaBotButtonLinkCopied", "Ссылка скопирована в буфер обмена");
         ru.put("LuminaBotButtonDataCopied", "Данные обратного вызова скопированы в буфер обмена");
+        ru.put("LuminaStickerExport", "Экспорт стикерпаков");
+        ru.put("LuminaStickerImport", "Импорт стикерпаков");
+        ru.put("LuminaStickerExportInfo", "Скопируйте или поделитесь ссылками на все установленные стикерпаки.");
+        ru.put("LuminaStickerExportEmpty", "Нет стикерпаков для экспорта.");
+        ru.put("LuminaStickerImportHint", "Вставьте ссылки t.me/addstickers, по одной в строке");
+        ru.put("LuminaStickerImportEmpty", "Ссылки на стикерпаки не найдены.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -928,6 +952,12 @@ public final class LuminaLocale {
         fa.put("MarkFolderAsReadAlert", "همه گفتگوهای این پوشه به‌عنوان خوانده‌شده علامت‌گذاری شوند؟");
         fa.put("LuminaBotButtonLinkCopied", "پیوند در کلیپ‌بورد کپی شد");
         fa.put("LuminaBotButtonDataCopied", "داده‌های فراخوانی در کلیپ‌بورد کپی شد");
+        fa.put("LuminaStickerExport", "برون‌بری بسته‌های برچسب");
+        fa.put("LuminaStickerImport", "درون‌ریزی بسته‌های برچسب");
+        fa.put("LuminaStickerExportInfo", "پیوند همه بسته‌های برچسب نصب‌شده را کپی یا هم‌رسانی کنید.");
+        fa.put("LuminaStickerExportEmpty", "بسته برچسبی برای برون‌بری وجود ندارد.");
+        fa.put("LuminaStickerImportHint", "پیوندهای t.me/addstickers را جای‌گذاری کنید، هر خط یک پیوند");
+        fa.put("LuminaStickerImportEmpty", "هیچ پیوند بسته برچسبی یافت نشد.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1108,6 +1138,12 @@ public final class LuminaLocale {
         tr.put("MarkFolderAsReadAlert", "Bu klasördeki tüm sohbetler okundu olarak işaretlensin mi?");
         tr.put("LuminaBotButtonLinkCopied", "Bağlantı panoya kopyalandı");
         tr.put("LuminaBotButtonDataCopied", "Geri çağırma verisi panoya kopyalandı");
+        tr.put("LuminaStickerExport", "Çıkartma paketlerini dışa aktar");
+        tr.put("LuminaStickerImport", "Çıkartma paketlerini içe aktar");
+        tr.put("LuminaStickerExportInfo", "Yüklü tüm çıkartma paketlerinin bağlantılarını kopyalayın veya paylaşın.");
+        tr.put("LuminaStickerExportEmpty", "Dışa aktarılacak çıkartma paketi yok.");
+        tr.put("LuminaStickerImportHint", "t.me/addstickers bağlantılarını yapıştırın, her satıra bir tane");
+        tr.put("LuminaStickerImportEmpty", "Çıkartma paketi bağlantısı bulunamadı.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1288,6 +1324,12 @@ public final class LuminaLocale {
         es.put("MarkFolderAsReadAlert", "¿Marcar todos los chats de esta carpeta como leídos?");
         es.put("LuminaBotButtonLinkCopied", "Enlace copiado al portapapeles");
         es.put("LuminaBotButtonDataCopied", "Datos de devolución de llamada copiados al portapapeles");
+        es.put("LuminaStickerExport", "Exportar paquetes de stickers");
+        es.put("LuminaStickerImport", "Importar paquetes de stickers");
+        es.put("LuminaStickerExportInfo", "Copia o comparte los enlaces de todos tus paquetes de stickers instalados.");
+        es.put("LuminaStickerExportEmpty", "No hay paquetes de stickers para exportar.");
+        es.put("LuminaStickerImportHint", "Pega enlaces t.me/addstickers, uno por línea");
+        es.put("LuminaStickerImportEmpty", "No se encontraron enlaces de paquetes de stickers.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1468,6 +1510,12 @@ public final class LuminaLocale {
         ptBr.put("MarkFolderAsReadAlert", "Marcar todos os chats desta pasta como lidos?");
         ptBr.put("LuminaBotButtonLinkCopied", "Link copiado para a área de transferência");
         ptBr.put("LuminaBotButtonDataCopied", "Dados de retorno de chamada copiados para a área de transferência");
+        ptBr.put("LuminaStickerExport", "Exportar pacotes de figurinhas");
+        ptBr.put("LuminaStickerImport", "Importar pacotes de figurinhas");
+        ptBr.put("LuminaStickerExportInfo", "Copie ou compartilhe os links de todos os seus pacotes de figurinhas instalados.");
+        ptBr.put("LuminaStickerExportEmpty", "Nenhum pacote de figurinhas para exportar.");
+        ptBr.put("LuminaStickerImportHint", "Cole links t.me/addstickers, um por linha");
+        ptBr.put("LuminaStickerImportEmpty", "Nenhum link de pacote de figurinhas encontrado.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1648,6 +1696,12 @@ public final class LuminaLocale {
         id.put("MarkFolderAsReadAlert", "Tandai semua obrolan di folder ini sebagai sudah dibaca?");
         id.put("LuminaBotButtonLinkCopied", "Tautan disalin ke papan klip");
         id.put("LuminaBotButtonDataCopied", "Data callback disalin ke papan klip");
+        id.put("LuminaStickerExport", "Ekspor paket stiker");
+        id.put("LuminaStickerImport", "Impor paket stiker");
+        id.put("LuminaStickerExportInfo", "Salin atau bagikan tautan semua paket stiker yang terpasang.");
+        id.put("LuminaStickerExportEmpty", "Tidak ada paket stiker untuk diekspor.");
+        id.put("LuminaStickerImportHint", "Tempel tautan t.me/addstickers, satu per baris");
+        id.put("LuminaStickerImportEmpty", "Tautan paket stiker tidak ditemukan.");
         T.put("id", id);
     }
 

@@ -20,9 +20,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +49,7 @@ import org.telegram.messenger.DocumentObject;
 import org.telegram.messenger.FileLog;
 import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
@@ -55,6 +58,7 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.SvgHelper;
 import org.telegram.messenger.UserConfig;
+import org.telegram.messenger.browser.Browser;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.ActionBar;
@@ -79,6 +83,7 @@ import org.telegram.ui.Components.AnimatedEmojiDrawable;
 import org.telegram.ui.Components.Bulletin;
 import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.CubicBezierInterpolator;
+import org.telegram.ui.Components.EditTextBoldCursor;
 import org.telegram.ui.Components.EmojiPacksAlert;
 import org.telegram.ui.Components.ItemOptions;
 import org.telegram.ui.Components.LayoutHelper;
@@ -109,6 +114,9 @@ public class StickersActivity extends BaseFragment implements NotificationCenter
     private static final int MENU_SHARE = 2;
     private static final int MENU_COPY = 3;
     private static final int MENU_REORDER = 4;
+    private static final int MENU_LUMINA_OVERFLOW = 100;
+    private static final int MENU_LUMINA_EXPORT = 101;
+    private static final int MENU_LUMINA_IMPORT = 102;
 
     private UniversalRecyclerView listView;
     @SuppressWarnings("FieldCanBeLocal")
@@ -218,6 +226,13 @@ public class StickersActivity extends BaseFragment implements NotificationCenter
         } else if (currentType == TYPE_EMOJIPACKS) {
             actionBar.setTitle(getString(R.string.Emoji));
         }
+        if (currentType == TYPE_IMAGE) {
+            ActionBarMenu luminaMenu = actionBar.createMenu();
+            ActionBarMenuItem luminaOtherItem = luminaMenu.addItem(MENU_LUMINA_OVERFLOW, R.drawable.ic_ab_other);
+            luminaOtherItem.setContentDescription(getString(R.string.AccDescrMoreOptions));
+            luminaOtherItem.addSubItem(MENU_LUMINA_EXPORT, R.drawable.msg_share, LuminaLocale.getString(R.string.LuminaStickerExport));
+            luminaOtherItem.addSubItem(MENU_LUMINA_IMPORT, R.drawable.msg_download, LuminaLocale.getString(R.string.LuminaStickerImport));
+        }
         actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
             @Override
             public void onItemClick(int id) {
@@ -225,6 +240,10 @@ public class StickersActivity extends BaseFragment implements NotificationCenter
                     if (onBackPressed(true)) {
                         finishFragment();
                     }
+                } else if (id == MENU_LUMINA_EXPORT) {
+                    exportInstalledStickerSets();
+                } else if (id == MENU_LUMINA_IMPORT) {
+                    showImportStickerSetsDialog();
                 } else {
                     processSelectionMenu(id);
                 }
@@ -898,6 +917,150 @@ public class StickersActivity extends BaseFragment implements NotificationCenter
 
     private String getLinkForSet(TLRPC.TL_messages_stickerSet stickerSet) {
         return String.format(Locale.US, "https://" + MessagesController.getInstance(currentAccount).linkPrefix + "/" + (stickerSet.set.emojis ? "addemoji" : "addstickers") + "/%s", stickerSet.set.short_name);
+    }
+
+    private void exportInstalledStickerSets() {
+        final Context context = getParentActivity();
+        if (context == null) {
+            return;
+        }
+        final StringBuilder stringBuilder = new StringBuilder();
+        int count = 0;
+        if (sets != null) {
+            for (int i = 0, size = sets.size(); i < size; i++) {
+                final TLRPC.TL_messages_stickerSet stickerSet = sets.get(i);
+                if (stickerSet == null || stickerSet.set == null || TextUtils.isEmpty(stickerSet.set.short_name)) {
+                    continue;
+                }
+                if (stringBuilder.length() != 0) {
+                    stringBuilder.append("\n");
+                }
+                stringBuilder.append(getLinkForSet(stickerSet));
+                count++;
+            }
+        }
+        if (count == 0) {
+            BulletinFactory.of(this).createErrorBulletin(LuminaLocale.getString(R.string.LuminaStickerExportEmpty)).show();
+            return;
+        }
+        final String text = stringBuilder.toString();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaStickerExport));
+        builder.setMessage(LuminaLocale.getString(R.string.LuminaStickerExportInfo));
+        builder.setPositiveButton(LocaleController.getString(R.string.Copy), (dialog, which) -> {
+            try {
+                final android.content.ClipboardManager clipboard = (android.content.ClipboardManager) ApplicationLoader.applicationContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                final android.content.ClipData clip = android.content.ClipData.newPlainText("label", text);
+                clipboard.setPrimaryClip(clip);
+                BulletinFactory.createCopyLinkBulletin(StickersActivity.this).show();
+            } catch (Exception e) {
+                FileLog.e(e);
+            }
+        });
+        builder.setNeutralButton(LocaleController.getString(R.string.ShareFile), (dialog, which) -> {
+            try {
+                final Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, text);
+                context.startActivity(Intent.createChooser(intent, LuminaLocale.getString(R.string.LuminaStickerExport)));
+            } catch (Exception e) {
+                FileLog.e(e);
+            }
+        });
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        showDialog(builder.create());
+    }
+
+    private void showImportStickerSetsDialog() {
+        final Context context = getParentActivity();
+        if (context == null) {
+            return;
+        }
+        final EditTextBoldCursor editText = new EditTextBoldCursor(context);
+        editText.setTextSize(16);
+        editText.setTextColor(Theme.getColor(Theme.key_dialogTextBlack));
+        editText.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint));
+        editText.setCursorColor(Theme.getColor(Theme.key_dialogTextBlack));
+        editText.setCursorSize(dp(20));
+        editText.setCursorWidth(1.5f);
+        editText.setBackgroundDrawable(null);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        editText.setSingleLine(false);
+        editText.setMinLines(3);
+        editText.setMaxLines(6);
+        editText.setGravity(Gravity.TOP | Gravity.LEFT);
+        editText.setHint(LuminaLocale.getString(R.string.LuminaStickerImportHint));
+
+        final FrameLayout container = new FrameLayout(context);
+        container.addView(editText, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL, 24, 6, 24, 0));
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaStickerImport));
+        builder.setView(container);
+        builder.setPositiveButton(LocaleController.getString(R.string.Add), (dialog, which) -> {
+            AndroidUtilities.hideKeyboard(editText);
+            importStickerSetsFromText(editText.getText().toString());
+        });
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        showDialog(builder.create());
+    }
+
+    private void importStickerSetsFromText(String text) {
+        final Context context = getParentActivity();
+        if (context == null || TextUtils.isEmpty(text)) {
+            return;
+        }
+        final String prefix = MessagesController.getInstance(currentAccount).linkPrefix;
+        final java.util.LinkedHashSet<String> shortNames = new java.util.LinkedHashSet<>();
+        final String normalized = text.replace(',', '\n').replace(' ', '\n').replace('\t', '\n');
+        final String[] tokens = normalized.split("\n");
+        for (String token : tokens) {
+            if (token == null) {
+                continue;
+            }
+            String name = token.trim();
+            if (name.isEmpty()) {
+                continue;
+            }
+            int idx = name.indexOf("addstickers/");
+            if (idx >= 0) {
+                name = name.substring(idx + "addstickers/".length());
+            } else {
+                int idxEmoji = name.indexOf("addemoji/");
+                if (idxEmoji >= 0) {
+                    name = name.substring(idxEmoji + "addemoji/".length());
+                } else {
+                    int idxSet = name.indexOf("set=");
+                    if (idxSet >= 0) {
+                        name = name.substring(idxSet + "set=".length());
+                    } else {
+                        int slash = name.lastIndexOf('/');
+                        if (slash >= 0) {
+                            name = name.substring(slash + 1);
+                        }
+                    }
+                }
+            }
+            int cut = name.indexOf('?');
+            if (cut >= 0) {
+                name = name.substring(0, cut);
+            }
+            cut = name.indexOf('#');
+            if (cut >= 0) {
+                name = name.substring(0, cut);
+            }
+            name = name.trim();
+            if (!name.isEmpty()) {
+                shortNames.add(name);
+            }
+        }
+        if (shortNames.isEmpty()) {
+            BulletinFactory.of(this).createErrorBulletin(LuminaLocale.getString(R.string.LuminaStickerImportEmpty)).show();
+            return;
+        }
+        for (String name : shortNames) {
+            Browser.openUrl(context, "https://" + prefix + "/addstickers/" + name);
+        }
     }
 
     private void processSelectionMenu(int which) {
