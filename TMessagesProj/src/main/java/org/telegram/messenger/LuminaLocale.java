@@ -184,6 +184,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaDisguiseDecoyCodeNotSet", "未设置");
         zhHans.put("LuminaDisguiseDecoyCodeDialogTitle", "解锁码");
         zhHans.put("LuminaDisguiseDecoyInfo", "开启后，应用将以可用的计算器形式打开；输入此解锁码可显示真正的应用。此密码与 Telegram 内置密码相互独立。");
+        zhHans.put("MarkFolderAsRead", "将文件夹标为已读");
+        zhHans.put("MarkFolderAsReadAlert", "将此文件夹中的所有聊天标为已读？");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -342,6 +344,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaDisguiseDecoyCodeNotSet", "未設定");
         zhHant.put("LuminaDisguiseDecoyCodeDialogTitle", "解鎖碼");
         zhHant.put("LuminaDisguiseDecoyInfo", "開啟後，應用會以可用的計算機形式開啟；輸入此解鎖碼即可顯示真正的應用。此密碼與 Telegram 內建密碼互相獨立。");
+        zhHant.put("MarkFolderAsRead", "將資料夾標為已讀");
+        zhHant.put("MarkFolderAsReadAlert", "將此資料夾中的所有聊天標為已讀？");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -499,6 +503,8 @@ public final class LuminaLocale {
         ar.put("LuminaDisguiseDecoyCodeNotSet", "غير مُعيَّن");
         ar.put("LuminaDisguiseDecoyCodeDialogTitle", "رمز الفتح");
         ar.put("LuminaDisguiseDecoyInfo", "عند التفعيل، يفتح التطبيق كآلة حاسبة تعمل فعليًا؛ وإدخال هذا الرمز يكشف التطبيق. هذا الرمز منفصل عن رمز مرور Telegram المدمج.");
+        ar.put("MarkFolderAsRead", "تحديد المجلد كمقروء");
+        ar.put("MarkFolderAsReadAlert", "هل تريد تحديد كل الدردشات في هذا المجلد كمقروءة؟");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -656,6 +662,8 @@ public final class LuminaLocale {
         ru.put("LuminaDisguiseDecoyCodeNotSet", "Не задан");
         ru.put("LuminaDisguiseDecoyCodeDialogTitle", "Код разблокировки");
         ru.put("LuminaDisguiseDecoyInfo", "При включении приложение открывается как рабочий калькулятор; ввод этого кода открывает приложение. Этот код независим от встроенного код-пароля Telegram.");
+        ru.put("MarkFolderAsRead", "Отметить папку как прочитанную");
+        ru.put("MarkFolderAsReadAlert", "Отметить все чаты в этой папке как прочитанные?");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -813,6 +821,8 @@ public final class LuminaLocale {
         fa.put("LuminaDisguiseDecoyCodeNotSet", "تنظیم‌نشده");
         fa.put("LuminaDisguiseDecoyCodeDialogTitle", "کد باز کردن");
         fa.put("LuminaDisguiseDecoyInfo", "با فعال‌سازی، برنامه به‌صورت یک ماشین‌حساب واقعی باز می‌شود؛ واردکردن این کد برنامه را آشکار می‌کند. این رمز جدا از رمز داخلی Telegram است.");
+        fa.put("MarkFolderAsRead", "علامت‌گذاری پوشه به‌عنوان خوانده‌شده");
+        fa.put("MarkFolderAsReadAlert", "همه گفتگوهای این پوشه به‌عنوان خوانده‌شده علامت‌گذاری شوند؟");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -970,6 +980,8 @@ public final class LuminaLocale {
         tr.put("LuminaDisguiseDecoyCodeNotSet", "Ayarlı değil");
         tr.put("LuminaDisguiseDecoyCodeDialogTitle", "Kilit açma kodu");
         tr.put("LuminaDisguiseDecoyInfo", "Açıkken uygulama çalışan bir hesap makinesi olarak açılır; bu kodu girmek uygulamayı ortaya çıkarır. Bu parola Telegram'ın yerleşik parolasından ayrıdır.");
+        tr.put("MarkFolderAsRead", "Klasörü okundu olarak işaretle");
+        tr.put("MarkFolderAsReadAlert", "Bu klasördeki tüm sohbetler okundu olarak işaretlensin mi?");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1127,6 +1139,8 @@ public final class LuminaLocale {
         es.put("LuminaDisguiseDecoyCodeNotSet", "Sin establecer");
         es.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueo");
         es.put("LuminaDisguiseDecoyInfo", "Cuando está activado, la app se abre como una calculadora funcional; introducir este código revela la app. Esta contraseña es independiente del código de acceso integrado de Telegram.");
+        es.put("MarkFolderAsRead", "Marcar carpeta como leída");
+        es.put("MarkFolderAsReadAlert", "¿Marcar todos los chats de esta carpeta como leídos?");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1284,6 +1298,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaDisguiseDecoyCodeNotSet", "Não definido");
         ptBr.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueio");
         ptBr.put("LuminaDisguiseDecoyInfo", "Quando ativado, o app abre como uma calculadora funcional; digitar este código revela o app. Esta senha é separada da senha interna do Telegram.");
+        ptBr.put("MarkFolderAsRead", "Marcar pasta como lida");
+        ptBr.put("MarkFolderAsReadAlert", "Marcar todos os chats desta pasta como lidos?");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1441,6 +1457,8 @@ public final class LuminaLocale {
         id.put("LuminaDisguiseDecoyCodeNotSet", "Belum diatur");
         id.put("LuminaDisguiseDecoyCodeDialogTitle", "Kode buka kunci");
         id.put("LuminaDisguiseDecoyInfo", "Saat aktif, aplikasi terbuka sebagai kalkulator yang berfungsi; memasukkan kode ini menampilkan aplikasi. Sandi ini terpisah dari sandi bawaan Telegram.");
+        id.put("MarkFolderAsRead", "Tandai folder sebagai sudah dibaca");
+        id.put("MarkFolderAsReadAlert", "Tandai semua obrolan di folder ini sebagai sudah dibaca?");
         T.put("id", id);
     }
 

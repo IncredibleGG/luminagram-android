@@ -11341,4 +11341,7 @@
     <string name="LuminaMediaUnlockAudioSpeedInfo">Show the playback-speed control for music and long audio files, not just voice messages.</string>
     <!-- LuminaGram decoy calculator lock -->
     <string name="LuminaCalculatorError">Error</string>
+    <!-- LuminaGram: mark all chats in the current folder as read -->
+    <string name="MarkFolderAsRead">Mark folder as read</string>
+    <string name="MarkFolderAsReadAlert">Mark all chats in this folder as read?</string>
 </resources>
