@@ -186,6 +186,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaDisguiseDecoyInfo", "开启后，应用将以可用的计算器形式打开；输入此解锁码可显示真正的应用。此密码与 Telegram 内置密码相互独立。");
         zhHans.put("LuminaUnblockAll", "全部解除拉黑");
         zhHans.put("LuminaUnblockAllAlert", "解除拉黑所有已屏蔽的用户？");
+        zhHans.put("LuminaConfirmSendVoiceVideoTitle", "发送这条消息？");
+        zhHans.put("LuminaConfirmSendVoiceVideoMessage", "要发送这条语音或视频消息吗？");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -346,6 +348,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaDisguiseDecoyInfo", "開啟後，應用會以可用的計算機形式開啟；輸入此解鎖碼即可顯示真正的應用。此密碼與 Telegram 內建密碼互相獨立。");
         zhHant.put("LuminaUnblockAll", "全部解除封鎖");
         zhHant.put("LuminaUnblockAllAlert", "解除封鎖所有已封鎖的使用者？");
+        zhHant.put("LuminaConfirmSendVoiceVideoTitle", "傳送這則訊息？");
+        zhHant.put("LuminaConfirmSendVoiceVideoMessage", "要傳送這則語音或視訊訊息嗎？");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -505,6 +509,8 @@ public final class LuminaLocale {
         ar.put("LuminaDisguiseDecoyInfo", "عند التفعيل، يفتح التطبيق كآلة حاسبة تعمل فعليًا؛ وإدخال هذا الرمز يكشف التطبيق. هذا الرمز منفصل عن رمز مرور Telegram المدمج.");
         ar.put("LuminaUnblockAll", "إلغاء حظر الكل");
         ar.put("LuminaUnblockAllAlert", "إلغاء حظر جميع المستخدمين المحظورين؟");
+        ar.put("LuminaConfirmSendVoiceVideoTitle", "إرسال هذه الرسالة؟");
+        ar.put("LuminaConfirmSendVoiceVideoMessage", "هل تريد إرسال هذه الرسالة الصوتية أو المرئية؟");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -664,6 +670,8 @@ public final class LuminaLocale {
         ru.put("LuminaDisguiseDecoyInfo", "При включении приложение открывается как рабочий калькулятор; ввод этого кода открывает приложение. Этот код независим от встроенного код-пароля Telegram.");
         ru.put("LuminaUnblockAll", "Разблокировать всех");
         ru.put("LuminaUnblockAllAlert", "Разблокировать всех заблокированных пользователей?");
+        ru.put("LuminaConfirmSendVoiceVideoTitle", "Отправить это сообщение?");
+        ru.put("LuminaConfirmSendVoiceVideoMessage", "Отправить это голосовое или видеосообщение?");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -823,6 +831,8 @@ public final class LuminaLocale {
         fa.put("LuminaDisguiseDecoyInfo", "با فعال‌سازی، برنامه به‌صورت یک ماشین‌حساب واقعی باز می‌شود؛ واردکردن این کد برنامه را آشکار می‌کند. این رمز جدا از رمز داخلی Telegram است.");
         fa.put("LuminaUnblockAll", "رفع مسدودیت همه");
         fa.put("LuminaUnblockAllAlert", "رفع مسدودیت همهٔ کاربران مسدودشده؟");
+        fa.put("LuminaConfirmSendVoiceVideoTitle", "این پیام ارسال شود؟");
+        fa.put("LuminaConfirmSendVoiceVideoMessage", "این پیام صوتی یا ویدیویی ارسال شود؟");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -982,6 +992,8 @@ public final class LuminaLocale {
         tr.put("LuminaDisguiseDecoyInfo", "Açıkken uygulama çalışan bir hesap makinesi olarak açılır; bu kodu girmek uygulamayı ortaya çıkarır. Bu parola Telegram'ın yerleşik parolasından ayrıdır.");
         tr.put("LuminaUnblockAll", "Tümünün engelini kaldır");
         tr.put("LuminaUnblockAllAlert", "Engellenen tüm kullanıcıların engeli kaldırılsın mı?");
+        tr.put("LuminaConfirmSendVoiceVideoTitle", "Bu mesaj gönderilsin mi?");
+        tr.put("LuminaConfirmSendVoiceVideoMessage", "Bu sesli veya görüntülü mesaj gönderilsin mi?");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1141,6 +1153,8 @@ public final class LuminaLocale {
         es.put("LuminaDisguiseDecoyInfo", "Cuando está activado, la app se abre como una calculadora funcional; introducir este código revela la app. Esta contraseña es independiente del código de acceso integrado de Telegram.");
         es.put("LuminaUnblockAll", "Desbloquear a todos");
         es.put("LuminaUnblockAllAlert", "¿Desbloquear a todos los usuarios bloqueados?");
+        es.put("LuminaConfirmSendVoiceVideoTitle", "¿Enviar este mensaje?");
+        es.put("LuminaConfirmSendVoiceVideoMessage", "¿Enviar este mensaje de voz o de video?");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1300,6 +1314,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaDisguiseDecoyInfo", "Quando ativado, o app abre como uma calculadora funcional; digitar este código revela o app. Esta senha é separada da senha interna do Telegram.");
         ptBr.put("LuminaUnblockAll", "Desbloquear todos");
         ptBr.put("LuminaUnblockAllAlert", "Desbloquear todos os usuários bloqueados?");
+        ptBr.put("LuminaConfirmSendVoiceVideoTitle", "Enviar esta mensagem?");
+        ptBr.put("LuminaConfirmSendVoiceVideoMessage", "Enviar esta mensagem de voz ou vídeo?");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1459,6 +1475,8 @@ public final class LuminaLocale {
         id.put("LuminaDisguiseDecoyInfo", "Saat aktif, aplikasi terbuka sebagai kalkulator yang berfungsi; memasukkan kode ini menampilkan aplikasi. Sandi ini terpisah dari sandi bawaan Telegram.");
         id.put("LuminaUnblockAll", "Buka blokir semua");
         id.put("LuminaUnblockAllAlert", "Buka blokir semua pengguna yang diblokir?");
+        id.put("LuminaConfirmSendVoiceVideoTitle", "Kirim pesan ini?");
+        id.put("LuminaConfirmSendVoiceVideoMessage", "Kirim pesan suara atau video ini?");
         T.put("id", id);
     }
 
