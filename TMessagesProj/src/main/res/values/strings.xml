@@ -11341,4 +11341,7 @@
     <string name="LuminaMediaUnlockAudioSpeedInfo">Show the playback-speed control for music and long audio files, not just voice messages.</string>
     <!-- LuminaGram decoy calculator lock -->
     <string name="LuminaCalculatorError">Error</string>
+    <!-- LuminaGram copy inline bot-button link/data on long-press -->
+    <string name="LuminaBotButtonLinkCopied">Link copied to clipboard</string>
+    <string name="LuminaBotButtonDataCopied">Callback data copied to clipboard</string>
 </resources>

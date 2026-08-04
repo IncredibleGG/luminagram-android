@@ -184,6 +184,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaDisguiseDecoyCodeNotSet", "未设置");
         zhHans.put("LuminaDisguiseDecoyCodeDialogTitle", "解锁码");
         zhHans.put("LuminaDisguiseDecoyInfo", "开启后，应用将以可用的计算器形式打开；输入此解锁码可显示真正的应用。此密码与 Telegram 内置密码相互独立。");
+        zhHans.put("LuminaBotButtonLinkCopied", "链接已复制到剪贴板");
+        zhHans.put("LuminaBotButtonDataCopied", "回调数据已复制到剪贴板");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -342,6 +344,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaDisguiseDecoyCodeNotSet", "未設定");
         zhHant.put("LuminaDisguiseDecoyCodeDialogTitle", "解鎖碼");
         zhHant.put("LuminaDisguiseDecoyInfo", "開啟後，應用會以可用的計算機形式開啟；輸入此解鎖碼即可顯示真正的應用。此密碼與 Telegram 內建密碼互相獨立。");
+        zhHant.put("LuminaBotButtonLinkCopied", "連結已複製到剪貼簿");
+        zhHant.put("LuminaBotButtonDataCopied", "回呼資料已複製到剪貼簿");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -499,6 +503,8 @@ public final class LuminaLocale {
         ar.put("LuminaDisguiseDecoyCodeNotSet", "غير مُعيَّن");
         ar.put("LuminaDisguiseDecoyCodeDialogTitle", "رمز الفتح");
         ar.put("LuminaDisguiseDecoyInfo", "عند التفعيل، يفتح التطبيق كآلة حاسبة تعمل فعليًا؛ وإدخال هذا الرمز يكشف التطبيق. هذا الرمز منفصل عن رمز مرور Telegram المدمج.");
+        ar.put("LuminaBotButtonLinkCopied", "تم نسخ الرابط إلى الحافظة");
+        ar.put("LuminaBotButtonDataCopied", "تم نسخ بيانات الاستدعاء إلى الحافظة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -656,6 +662,8 @@ public final class LuminaLocale {
         ru.put("LuminaDisguiseDecoyCodeNotSet", "Не задан");
         ru.put("LuminaDisguiseDecoyCodeDialogTitle", "Код разблокировки");
         ru.put("LuminaDisguiseDecoyInfo", "При включении приложение открывается как рабочий калькулятор; ввод этого кода открывает приложение. Этот код независим от встроенного код-пароля Telegram.");
+        ru.put("LuminaBotButtonLinkCopied", "Ссылка скопирована в буфер обмена");
+        ru.put("LuminaBotButtonDataCopied", "Данные обратного вызова скопированы в буфер обмена");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -813,6 +821,8 @@ public final class LuminaLocale {
         fa.put("LuminaDisguiseDecoyCodeNotSet", "تنظیم‌نشده");
         fa.put("LuminaDisguiseDecoyCodeDialogTitle", "کد باز کردن");
         fa.put("LuminaDisguiseDecoyInfo", "با فعال‌سازی، برنامه به‌صورت یک ماشین‌حساب واقعی باز می‌شود؛ واردکردن این کد برنامه را آشکار می‌کند. این رمز جدا از رمز داخلی Telegram است.");
+        fa.put("LuminaBotButtonLinkCopied", "پیوند در کلیپ‌بورد کپی شد");
+        fa.put("LuminaBotButtonDataCopied", "داده‌های فراخوانی در کلیپ‌بورد کپی شد");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -970,6 +980,8 @@ public final class LuminaLocale {
         tr.put("LuminaDisguiseDecoyCodeNotSet", "Ayarlı değil");
         tr.put("LuminaDisguiseDecoyCodeDialogTitle", "Kilit açma kodu");
         tr.put("LuminaDisguiseDecoyInfo", "Açıkken uygulama çalışan bir hesap makinesi olarak açılır; bu kodu girmek uygulamayı ortaya çıkarır. Bu parola Telegram'ın yerleşik parolasından ayrıdır.");
+        tr.put("LuminaBotButtonLinkCopied", "Bağlantı panoya kopyalandı");
+        tr.put("LuminaBotButtonDataCopied", "Geri çağırma verisi panoya kopyalandı");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1127,6 +1139,8 @@ public final class LuminaLocale {
         es.put("LuminaDisguiseDecoyCodeNotSet", "Sin establecer");
         es.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueo");
         es.put("LuminaDisguiseDecoyInfo", "Cuando está activado, la app se abre como una calculadora funcional; introducir este código revela la app. Esta contraseña es independiente del código de acceso integrado de Telegram.");
+        es.put("LuminaBotButtonLinkCopied", "Enlace copiado al portapapeles");
+        es.put("LuminaBotButtonDataCopied", "Datos de devolución de llamada copiados al portapapeles");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1284,6 +1298,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaDisguiseDecoyCodeNotSet", "Não definido");
         ptBr.put("LuminaDisguiseDecoyCodeDialogTitle", "Código de desbloqueio");
         ptBr.put("LuminaDisguiseDecoyInfo", "Quando ativado, o app abre como uma calculadora funcional; digitar este código revela o app. Esta senha é separada da senha interna do Telegram.");
+        ptBr.put("LuminaBotButtonLinkCopied", "Link copiado para a área de transferência");
+        ptBr.put("LuminaBotButtonDataCopied", "Dados de retorno de chamada copiados para a área de transferência");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1441,6 +1457,8 @@ public final class LuminaLocale {
         id.put("LuminaDisguiseDecoyCodeNotSet", "Belum diatur");
         id.put("LuminaDisguiseDecoyCodeDialogTitle", "Kode buka kunci");
         id.put("LuminaDisguiseDecoyInfo", "Saat aktif, aplikasi terbuka sebagai kalkulator yang berfungsi; memasukkan kode ini menampilkan aplikasi. Sandi ini terpisah dari sandi bawaan Telegram.");
+        id.put("LuminaBotButtonLinkCopied", "Tautan disalin ke papan klip");
+        id.put("LuminaBotButtonDataCopied", "Data callback disalin ke papan klip");
         T.put("id", id);
     }
 
