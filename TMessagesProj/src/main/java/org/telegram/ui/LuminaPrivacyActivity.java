@@ -44,6 +44,7 @@ public class LuminaPrivacyActivity extends BaseFragment {
     private static final int ID_LINK_SAFETY = 10;
     private static final int ID_CRYPTO_CLIPBOARD_GUARD = 11;
     private static final int ID_INCOGNITO_KEYBOARD = 12;
+    private static final int ID_SCAM_KEYWORD_WARNING = 13;
 
     private UniversalRecyclerView listView;
 
@@ -110,6 +111,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_INCOGNITO_KEYBOARD, LuminaLocale.getString(R.string.LuminaPrivacyIncognitoKeyboard))
                 .setChecked(LuminaConfig.getBoolean("incognitoKeyboard", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyIncognitoKeyboardInfo)));
+        items.add(UItem.asSwitch(ID_SCAM_KEYWORD_WARNING, LuminaLocale.getString(R.string.LuminaPrivacyScamKeywordWarning))
+                .setChecked(LuminaConfig.getBoolean("scamKeywordWarning", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyScamKeywordWarningInfo)));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacyNotificationsHeader)));
         items.add(UItem.asSwitch(ID_HIDE_NOTIF_CONTENT, LuminaLocale.getString(R.string.LuminaPrivacyHideNotifContent))
@@ -155,6 +159,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
                 break;
             case ID_INCOGNITO_KEYBOARD:
                 LuminaConfig.putBoolean("incognitoKeyboard", !LuminaConfig.getBoolean("incognitoKeyboard", false));
+                break;
+            case ID_SCAM_KEYWORD_WARNING:
+                LuminaConfig.putBoolean("scamKeywordWarning", !LuminaConfig.getBoolean("scamKeywordWarning", false));
                 break;
         }
         if (listView != null && listView.adapter != null) {

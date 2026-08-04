@@ -292,6 +292,9 @@ public final class LuminaLocale {
         zhHans.put("LuminaOnboardingTitle", "欢迎使用 LuminaGram");
         zhHans.put("LuminaOnboardingMessage", "LuminaGram 在 Telegram 之上增加了专属的私密工具：\n\n• 翻译 — 翻译任意聊天，或在发送前自动翻译消息。\n• 双语显示 — 在译文旁同时显示原文。\n• 伪装与诱饵锁 — 将应用伪装成计算器，并使用独立的解锁码隐藏应用。\n• 隐私 — 幽灵模式可隐藏你的输入、在线状态和已读回执。\n\n点击下方任意项即可开始设置。");
         zhHans.put("LuminaOnboardingGotIt", "知道了");
+        zhHans.put("LuminaPrivacyScamKeywordWarning", "诈骗关键词警告");
+        zhHans.put("LuminaPrivacyScamKeywordWarningInfo", "当不在你联系人中的人发来的消息提到常见诈骗手段（汇款、礼品卡、加密货币“投资”、验证费或索要验证码）时，显示一次性提醒，提醒你保持警惕。消息永远不会被拦截或修改。检查在你的设备上离线运行。");
+        zhHans.put("LuminaScamKeywordWarning", "⚠ 这条消息来自不在你联系人中的人，且提到了钱款或验证——小心诈骗。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -558,6 +561,9 @@ public final class LuminaLocale {
         zhHant.put("LuminaOnboardingTitle", "歡迎使用 LuminaGram");
         zhHant.put("LuminaOnboardingMessage", "LuminaGram 在 Telegram 之上加入了專屬的私密工具：\n\n• 翻譯 — 翻譯任何聊天，或在傳送前自動翻譯訊息。\n• 雙語顯示 — 在譯文旁同時顯示原文。\n• 偽裝與誘餅鎖 — 將應用程式偽裝成計算機，並以獨立的解鎖碼隱藏應用程式。\n• 隱私 — 幽靈模式可隱藏你的輸入、上線狀態與已讀回執。\n\n點擊下方任一項即可開始設定。");
         zhHant.put("LuminaOnboardingGotIt", "知道了");
+        zhHant.put("LuminaPrivacyScamKeywordWarning", "詐騙關鍵字警告");
+        zhHant.put("LuminaPrivacyScamKeywordWarningInfo", "當不在你聯絡人中的人傳來的訊息提到常見詐騙手法（匯款、禮品卡、加密貨幣「投資」、驗證費或索取驗證碼）時，顯示一次性提醒，提醒你保持警覺。訊息永遠不會被攜截或修改。檢查在你的裝置上離線執行。");
+        zhHant.put("LuminaScamKeywordWarning", "⚠ 這則訊息來自不在你聯絡人中的人，且提到金錢或驗證——小心詐騙。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -823,6 +829,9 @@ public final class LuminaLocale {
         ar.put("LuminaOnboardingTitle", "مرحبًا بك في LuminaGram");
         ar.put("LuminaOnboardingMessage", "يضيف LuminaGram أدوات خاصة وحصرية فوق Telegram:\n\n• الترجمة — ترجم أي محادثة أو ترجم الرسائل تلقائيًا قبل إرسالها.\n• عرض لغتين — أظهر النص الأصلي بجانب ترجمته.\n• التمويه وقفل خادع — أخفِ التطبيق خلف آلة حاسبة برمز فتح خاص به.\n• الخصوصية — يُخفي الوضع الشبح كتابتك وحالة اتصالك وإيصالات القراءة.\n\nانقر على أي عنصر بالأسفل لإعداد ذلك.");
         ar.put("LuminaOnboardingGotIt", "حسنًا");
+        ar.put("LuminaPrivacyScamKeywordWarning", "تحذير من كلمات الاحتيال");
+        ar.put("LuminaPrivacyScamKeywordWarningInfo", "عندما تذكر رسالة من شخص ليس ضمن جهات اتصالك أساليب احتيال شائعة — تحويل الأموال، بطاقات الهدايا، «استثمار» العملات المشفّرة، رسوم التحقق أو طلب الرموز — يظهر تذكير لمرة واحدة لتوخّي الحذر. لا يتم حظر الرسالة أو تغييرها أبدًا. تُجرى الفحوص دون اتصال على جهازك.");
+        ar.put("LuminaScamKeywordWarning", "⚠ تذكر هذه الرسالة أموالًا أو تحققًا وهي من شخص ليس ضمن جهات اتصالك — احذر من الاحتيال.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1088,6 +1097,9 @@ public final class LuminaLocale {
         ru.put("LuminaOnboardingTitle", "Добро пожаловать в LuminaGram");
         ru.put("LuminaOnboardingMessage", "LuminaGram добавляет приватные эксклюзивные инструменты поверх Telegram:\n\n• Перевод — переводите любой чат или автоматически переводите сообщения перед отправкой.\n• Два языка — показывайте оригинал рядом с переводом.\n• Маскировка и ложная блокировка — спрячьте приложение за калькулятором с отдельным кодом разблокировки.\n• Конфиденциальность — режим невидимки скрывает набор текста, статус в сети и отметки о прочтении.\n\nНажмите любой пункт ниже, чтобы настроить это.");
         ru.put("LuminaOnboardingGotIt", "Понятно");
+        ru.put("LuminaPrivacyScamKeywordWarning", "Предупреждение о мошенничестве");
+        ru.put("LuminaPrivacyScamKeywordWarningInfo", "Когда в сообщении от человека не из ваших контактов упоминаются типичные уловки мошенников — переводы денег, подарочные карты, «инвестиции» в криптовалюту, плата за верификацию или просьба прислать код — показывается однократное напоминание быть осторожнее. Сообщение никогда не блокируется и не изменяется. Проверка выполняется офлайн на вашем устройстве.");
+        ru.put("LuminaScamKeywordWarning", "⚠ Это сообщение упоминает деньги или верификацию и пришло от человека не из ваших контактов — остерегайтесь мошенничества.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1353,6 +1365,9 @@ public final class LuminaLocale {
         fa.put("LuminaOnboardingTitle", "به LuminaGram خوش آمدید");
         fa.put("LuminaOnboardingMessage", "LuminaGram ابزارهای خصوصی و ویژه‌ای را روی Telegram اضافه می‌کند:\n\n• ترجمه — هر گفتگو را ترجمه کنید یا پیام‌ها را پیش از ارسال به‌طور خودکار ترجمه کنید.\n• دو زبانه — متن اصلی را در کنار ترجمه‌اش نمایش دهید.\n• استتار و قفل فریبنده — برنامه را پشت یک ماشین‌حساب با رمز باز کردن مخصوص خود پنهان کنید.\n• حریم خصوصی — حالت شبح تایپ کردن، وضعیت آنلاین و رسیدهای خواندن شما را پنهان می‌کند.\n\nبرای تنظیم این موارد، روی هر ردیف پایین ضربه بزنید.");
         fa.put("LuminaOnboardingGotIt", "متوجه شدم");
+        fa.put("LuminaPrivacyScamKeywordWarning", "هشدار واژگان کلاه‌برداری");
+        fa.put("LuminaPrivacyScamKeywordWarningInfo", "وقتی پیامی از شخصی که در مخاطبان شما نیست به ترفندهای رایج کلاه‌برداری اشاره کند — انتقال پول، کارت هدیه، «سرمایه‌گذاری» رمزارز، هزینهٔ تأیید یا درخواست کد — یک یادآوری یک‌باره برای احتیاط نمایش داده می‌شود. پیام هرگز مسدود یا تغییر داده نمی‌شود. بررسی‌ها به‌صورت آفلاین روی دستگاه شما انجام می‌شود.");
+        fa.put("LuminaScamKeywordWarning", "⚠ این پیام به پول یا تأیید اشاره دارد و از شخصی است که در مخاطبان شما نیست — مراقب کلاه‌برداری باشید.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1618,6 +1633,9 @@ public final class LuminaLocale {
         tr.put("LuminaOnboardingTitle", "LuminaGram'a hoş geldiniz");
         tr.put("LuminaOnboardingMessage", "LuminaGram, Telegram'ın üzerine özel ve ayrıcalıklı araçlar ekler:\n\n• Çeviri — herhangi bir sohbeti çevirin veya mesajları göndermeden önce otomatik çevirin.\n• Çift dil — orijinal metni çevirisinin yanında gösterin.\n• Gizleme ve sahte kilit — uygulamayı kendi kilit açma koduyla bir hesap makinesinin arkasına gizleyin.\n• Gizlilik — hayalet modu yazma durumunuzu, çevrimiçi durumunuzu ve okundu bilgilerini gizler.\n\nBunları ayarlamak için aşağıdaki herhangi bir satıra dokunun.");
         tr.put("LuminaOnboardingGotIt", "Anladım");
+        tr.put("LuminaPrivacyScamKeywordWarning", "Dolandırıcılık kelime uyarısı");
+        tr.put("LuminaPrivacyScamKeywordWarningInfo", "Kişilerinizde olmayan birinden gelen bir mesaj yaygın dolandırıcılık taktiklerinden söz ettiğinde — para transferi, hediye kartı, kripto “yatırımı”, doğrulama ücreti veya kod isteme — dikkatli olmanız için tek seferlik bir hatırlatma gösterilir. Mesaj asla engellenmez veya değiştirilmez. Kontroller cihazınızda çevrimdışı çalışır.");
+        tr.put("LuminaScamKeywordWarning", "⚠ Bu mesaj para veya doğrulamadan söz ediyor ve kişilerinizde olmayan birinden geliyor — dolandırıcılığa karşı dikkatli olun.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1883,6 +1901,9 @@ public final class LuminaLocale {
         es.put("LuminaOnboardingTitle", "Te damos la bienvenida a LuminaGram");
         es.put("LuminaOnboardingMessage", "LuminaGram añade herramientas privadas y exclusivas sobre Telegram:\n\n• Traducción — traduce cualquier chat o traduce los mensajes automáticamente antes de enviarlos.\n• Doble idioma — muestra el texto original junto a su traducción.\n• Disfraz y bloqueo señuelo — oculta la app tras una calculadora con su propio código de desbloqueo.\n• Privacidad — el modo fantasma oculta tu escritura, tu estado en línea y las confirmaciones de lectura.\n\nToca cualquier fila de abajo para configurarlo.");
         es.put("LuminaOnboardingGotIt", "Entendido");
+        es.put("LuminaPrivacyScamKeywordWarning", "Aviso de palabras de estafa");
+        es.put("LuminaPrivacyScamKeywordWarningInfo", "Cuando un mensaje de alguien que no está en tus contactos menciona tácticas de estafa habituales —transferencias de dinero, tarjetas de regalo, «inversiones» en criptomonedas, tarifas de verificación o pedir códigos— se muestra un recordatorio único para que tengas cuidado. El mensaje nunca se bloquea ni se modifica. Las comprobaciones se realizan sin conexión en tu dispositivo.");
+        es.put("LuminaScamKeywordWarning", "⚠ Este mensaje menciona dinero o verificación y proviene de alguien que no está en tus contactos: ten cuidado con las estafas.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2148,6 +2169,9 @@ public final class LuminaLocale {
         ptBr.put("LuminaOnboardingTitle", "Boas-vindas ao LuminaGram");
         ptBr.put("LuminaOnboardingMessage", "O LuminaGram adiciona ferramentas privadas e exclusivas sobre o Telegram:\n\n• Tradução — traduza qualquer conversa ou traduza mensagens automaticamente antes de enviar.\n• Dois idiomas — mostre o texto original ao lado da tradução.\n• Disfarce e bloqueio falso — esconda o app atrás de uma calculadora com um código de desbloqueio próprio.\n• Privacidade — o modo fantasma oculta sua digitação, seu status on-line e as confirmações de leitura.\n\nToque em qualquer item abaixo para configurar.");
         ptBr.put("LuminaOnboardingGotIt", "Entendi");
+        ptBr.put("LuminaPrivacyScamKeywordWarning", "Aviso de palavras de golpe");
+        ptBr.put("LuminaPrivacyScamKeywordWarningInfo", "Quando uma mensagem de alguém que não está nos seus contatos menciona táticas comuns de golpe — transferências de dinheiro, cartões-presente, “investimentos” em cripto, taxas de verificação ou pedir códigos — é exibido um lembrete único para você ter cuidado. A mensagem nunca é bloqueada nem alterada. As verificações são feitas off-line no seu dispositivo.");
+        ptBr.put("LuminaScamKeywordWarning", "⚠ Esta mensagem menciona dinheiro ou verificação e vem de alguém que não está nos seus contatos — cuidado com golpes.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2413,6 +2437,9 @@ public final class LuminaLocale {
         id.put("LuminaOnboardingTitle", "Selamat datang di LuminaGram");
         id.put("LuminaOnboardingMessage", "LuminaGram menambahkan alat pribadi dan eksklusif di atas Telegram:\n\n• Terjemahan — terjemahkan obrolan apa pun, atau terjemahkan pesan secara otomatis sebelum dikirim.\n• Dwibahasa — tampilkan teks asli di samping terjemahannya.\n• Penyamaran dan kunci umpan — sembunyikan aplikasi di balik kalkulator dengan kode buka kunci tersendiri.\n• Privasi — mode hantu menyembunyikan aktivitas mengetik, status online, dan tanda telah dibaca Anda.\n\nKetuk baris mana pun di bawah untuk mengaturnya.");
         id.put("LuminaOnboardingGotIt", "Mengerti");
+        id.put("LuminaPrivacyScamKeywordWarning", "Peringatan kata penipuan");
+        id.put("LuminaPrivacyScamKeywordWarningInfo", "Saat pesan dari seseorang yang tidak ada di kontak Anda menyebutkan taktik penipuan umum — transfer uang, kartu hadiah, “investasi” kripto, biaya verifikasi, atau meminta kode — sebuah pengingat sekali muncul agar Anda berhati-hati. Pesan tidak pernah diblokir atau diubah. Pemeriksaan berjalan luring di perangkat Anda.");
+        id.put("LuminaScamKeywordWarning", "⚠ Pesan ini menyebutkan uang atau verifikasi dan berasal dari seseorang yang tidak ada di kontak Anda — waspadalah terhadap penipuan.");
         T.put("id", id);
     }
 
