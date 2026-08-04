@@ -292,6 +292,9 @@ public final class LuminaLocale {
         zhHans.put("LuminaOnboardingTitle", "欢迎使用 LuminaGram");
         zhHans.put("LuminaOnboardingMessage", "LuminaGram 在 Telegram 之上增加了专属的私密工具：\n\n• 翻译 — 翻译任意聊天，或在发送前自动翻译消息。\n• 双语显示 — 在译文旁同时显示原文。\n• 伪装与诱饵锁 — 将应用伪装成计算器，并使用独立的解锁码隐藏应用。\n• 隐私 — 幽灵模式可隐藏你的输入、在线状态和已读回执。\n\n点击下方任意项即可开始设置。");
         zhHans.put("LuminaOnboardingGotIt", "知道了");
+        zhHans.put("LuminaUndoSendWindow", "撤销发送窗口");
+        zhHans.put("LuminaUndoSendWindowInfo", "开启后，发送纯文字消息时会先暂缓几秒并显示“撤销”按钮。点按撤销可将文字放回输入框；否则将正常发送。媒体、语音、定时、已编辑和转发的消息不受影响。");
+        zhHans.put("LuminaUndoSendBulletin", "正在发送消息…");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -558,6 +561,9 @@ public final class LuminaLocale {
         zhHant.put("LuminaOnboardingTitle", "歡迎使用 LuminaGram");
         zhHant.put("LuminaOnboardingMessage", "LuminaGram 在 Telegram 之上加入了專屬的私密工具：\n\n• 翻譯 — 翻譯任何聊天，或在傳送前自動翻譯訊息。\n• 雙語顯示 — 在譯文旁同時顯示原文。\n• 偽裝與誘餅鎖 — 將應用程式偽裝成計算機，並以獨立的解鎖碼隱藏應用程式。\n• 隱私 — 幽靈模式可隱藏你的輸入、上線狀態與已讀回執。\n\n點擊下方任一項即可開始設定。");
         zhHant.put("LuminaOnboardingGotIt", "知道了");
+        zhHant.put("LuminaUndoSendWindow", "復原發送視窗");
+        zhHant.put("LuminaUndoSendWindowInfo", "開啟後，傳送純文字訊息時會先暫緩幾秒並顯示「復原」按鈕。點按復原可將文字放回輸入框；否則會正常傳送。媒體、語音、定時、已編輯和轉發的訊息不受影響。");
+        zhHant.put("LuminaUndoSendBulletin", "正在傳送訊息…");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -823,6 +829,9 @@ public final class LuminaLocale {
         ar.put("LuminaOnboardingTitle", "مرحبًا بك في LuminaGram");
         ar.put("LuminaOnboardingMessage", "يضيف LuminaGram أدوات خاصة وحصرية فوق Telegram:\n\n• الترجمة — ترجم أي محادثة أو ترجم الرسائل تلقائيًا قبل إرسالها.\n• عرض لغتين — أظهر النص الأصلي بجانب ترجمته.\n• التمويه وقفل خادع — أخفِ التطبيق خلف آلة حاسبة برمز فتح خاص به.\n• الخصوصية — يُخفي الوضع الشبح كتابتك وحالة اتصالك وإيصالات القراءة.\n\nانقر على أي عنصر بالأسفل لإعداد ذلك.");
         ar.put("LuminaOnboardingGotIt", "حسنًا");
+        ar.put("LuminaUndoSendWindow", "نافذة التراجع عن الإرسال");
+        ar.put("LuminaUndoSendWindowInfo", "عند التفعيل، يتم الاحتفاظ برسالة نصية عادية لبضع ثوانٍ مع زر تراجع. اضغط تراجع لإعادة النص إلى مربع الكتابة، وإلا فسيتم إرسالها كالمعتاد. الوسائط والرسائل الصوتية والمجدولة والمحررة والمعاد توجيهها لا تتأثر.");
+        ar.put("LuminaUndoSendBulletin", "جارٍ إرسال الرسالة…");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1088,6 +1097,9 @@ public final class LuminaLocale {
         ru.put("LuminaOnboardingTitle", "Добро пожаловать в LuminaGram");
         ru.put("LuminaOnboardingMessage", "LuminaGram добавляет приватные эксклюзивные инструменты поверх Telegram:\n\n• Перевод — переводите любой чат или автоматически переводите сообщения перед отправкой.\n• Два языка — показывайте оригинал рядом с переводом.\n• Маскировка и ложная блокировка — спрячьте приложение за калькулятором с отдельным кодом разблокировки.\n• Конфиденциальность — режим невидимки скрывает набор текста, статус в сети и отметки о прочтении.\n\nНажмите любой пункт ниже, чтобы настроить это.");
         ru.put("LuminaOnboardingGotIt", "Понятно");
+        ru.put("LuminaUndoSendWindow", "Окно отмены отправки");
+        ru.put("LuminaUndoSendWindowInfo", "Когда включено, отправка обычного текстового сообщения задерживается на несколько секунд с кнопкой «Отмена». Нажмите «Отмена», чтобы вернуть текст в поле ввода, иначе оно отправится как обычно. Медиа, голосовые, отложенные, изменённые и пересланные сообщения не затрагиваются.");
+        ru.put("LuminaUndoSendBulletin", "Отправка сообщения…");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1353,6 +1365,9 @@ public final class LuminaLocale {
         fa.put("LuminaOnboardingTitle", "به LuminaGram خوش آمدید");
         fa.put("LuminaOnboardingMessage", "LuminaGram ابزارهای خصوصی و ویژه‌ای را روی Telegram اضافه می‌کند:\n\n• ترجمه — هر گفتگو را ترجمه کنید یا پیام‌ها را پیش از ارسال به‌طور خودکار ترجمه کنید.\n• دو زبانه — متن اصلی را در کنار ترجمه‌اش نمایش دهید.\n• استتار و قفل فریبنده — برنامه را پشت یک ماشین‌حساب با رمز باز کردن مخصوص خود پنهان کنید.\n• حریم خصوصی — حالت شبح تایپ کردن، وضعیت آنلاین و رسیدهای خواندن شما را پنهان می‌کند.\n\nبرای تنظیم این موارد، روی هر ردیف پایین ضربه بزنید.");
         fa.put("LuminaOnboardingGotIt", "متوجه شدم");
+        fa.put("LuminaUndoSendWindow", "پنجره لغو ارسال");
+        fa.put("LuminaUndoSendWindowInfo", "وقتی روشن باشد، ارسال یک پیام متنی ساده چند ثانیه با دکمه لغو نگه داشته می‌شود. برای بازگرداندن متن به کادر نوشتن روی لغو بزنید؛ در غیر این صورت به‌طور عادی ارسال می‌شود. رسانه‌ها، پیام‌های صوتی، زمان‌بندی‌شده، ویرایش‌شده و بازفرست‌شده تأثیری نمی‌پذیرند.");
+        fa.put("LuminaUndoSendBulletin", "در حال ارسال پیام…");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1618,6 +1633,9 @@ public final class LuminaLocale {
         tr.put("LuminaOnboardingTitle", "LuminaGram'a hoş geldiniz");
         tr.put("LuminaOnboardingMessage", "LuminaGram, Telegram'ın üzerine özel ve ayrıcalıklı araçlar ekler:\n\n• Çeviri — herhangi bir sohbeti çevirin veya mesajları göndermeden önce otomatik çevirin.\n• Çift dil — orijinal metni çevirisinin yanında gösterin.\n• Gizleme ve sahte kilit — uygulamayı kendi kilit açma koduyla bir hesap makinesinin arkasına gizleyin.\n• Gizlilik — hayalet modu yazma durumunuzu, çevrimiçi durumunuzu ve okundu bilgilerini gizler.\n\nBunları ayarlamak için aşağıdaki herhangi bir satıra dokunun.");
         tr.put("LuminaOnboardingGotIt", "Anladım");
+        tr.put("LuminaUndoSendWindow", "Göndermeyi geri alma penceresi");
+        tr.put("LuminaUndoSendWindowInfo", "Açıkken, düz bir metin mesajı göndermek birkaç saniye Geri Al düğmesiyle bekletilir. Metni yazma kutusuna geri getirmek için Geri Al'a dokunun; aksi halde normal şekilde gönderilir. Medya, sesli, zamanlanmış, düzenlenmiş ve iletilen mesajlar etkilenmez.");
+        tr.put("LuminaUndoSendBulletin", "Mesaj gönderiliyor…");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1883,6 +1901,9 @@ public final class LuminaLocale {
         es.put("LuminaOnboardingTitle", "Te damos la bienvenida a LuminaGram");
         es.put("LuminaOnboardingMessage", "LuminaGram añade herramientas privadas y exclusivas sobre Telegram:\n\n• Traducción — traduce cualquier chat o traduce los mensajes automáticamente antes de enviarlos.\n• Doble idioma — muestra el texto original junto a su traducción.\n• Disfraz y bloqueo señuelo — oculta la app tras una calculadora con su propio código de desbloqueo.\n• Privacidad — el modo fantasma oculta tu escritura, tu estado en línea y las confirmaciones de lectura.\n\nToca cualquier fila de abajo para configurarlo.");
         es.put("LuminaOnboardingGotIt", "Entendido");
+        es.put("LuminaUndoSendWindow", "Ventana para deshacer el envío");
+        es.put("LuminaUndoSendWindowInfo", "Cuando está activado, enviar un mensaje de texto simple lo retiene unos segundos con un botón Deshacer. Toca Deshacer para devolver el texto al cuadro de escritura; de lo contrario, se envía normalmente. No afecta a multimedia, notas de voz ni a los mensajes programados, editados o reenviados.");
+        es.put("LuminaUndoSendBulletin", "Enviando mensaje…");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2148,6 +2169,9 @@ public final class LuminaLocale {
         ptBr.put("LuminaOnboardingTitle", "Boas-vindas ao LuminaGram");
         ptBr.put("LuminaOnboardingMessage", "O LuminaGram adiciona ferramentas privadas e exclusivas sobre o Telegram:\n\n• Tradução — traduza qualquer conversa ou traduza mensagens automaticamente antes de enviar.\n• Dois idiomas — mostre o texto original ao lado da tradução.\n• Disfarce e bloqueio falso — esconda o app atrás de uma calculadora com um código de desbloqueio próprio.\n• Privacidade — o modo fantasma oculta sua digitação, seu status on-line e as confirmações de leitura.\n\nToque em qualquer item abaixo para configurar.");
         ptBr.put("LuminaOnboardingGotIt", "Entendi");
+        ptBr.put("LuminaUndoSendWindow", "Janela para desfazer o envio");
+        ptBr.put("LuminaUndoSendWindowInfo", "Quando ativado, enviar uma mensagem de texto simples a retém por alguns segundos com um botão Desfazer. Toque em Desfazer para trazer o texto de volta à caixa de digitação; caso contrário, ela é enviada normalmente. Mídia, mensagens de voz, agendadas, editadas e encaminhadas não são afetadas.");
+        ptBr.put("LuminaUndoSendBulletin", "Enviando mensagem…");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2413,6 +2437,9 @@ public final class LuminaLocale {
         id.put("LuminaOnboardingTitle", "Selamat datang di LuminaGram");
         id.put("LuminaOnboardingMessage", "LuminaGram menambahkan alat pribadi dan eksklusif di atas Telegram:\n\n• Terjemahan — terjemahkan obrolan apa pun, atau terjemahkan pesan secara otomatis sebelum dikirim.\n• Dwibahasa — tampilkan teks asli di samping terjemahannya.\n• Penyamaran dan kunci umpan — sembunyikan aplikasi di balik kalkulator dengan kode buka kunci tersendiri.\n• Privasi — mode hantu menyembunyikan aktivitas mengetik, status online, dan tanda telah dibaca Anda.\n\nKetuk baris mana pun di bawah untuk mengaturnya.");
         id.put("LuminaOnboardingGotIt", "Mengerti");
+        id.put("LuminaUndoSendWindow", "Jendela urungkan kirim");
+        id.put("LuminaUndoSendWindowInfo", "Saat aktif, mengirim pesan teks biasa akan ditahan beberapa detik dengan tombol Urungkan. Ketuk Urungkan untuk mengembalikan teks ke kotak tulis; jika tidak, pesan akan dikirim seperti biasa. Media, pesan suara, terjadwal, yang diedit, dan diteruskan tidak terpengaruh.");
+        id.put("LuminaUndoSendBulletin", "Mengirim pesan…");
         T.put("id", id);
     }
 

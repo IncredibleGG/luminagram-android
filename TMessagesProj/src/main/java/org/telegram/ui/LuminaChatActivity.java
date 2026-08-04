@@ -61,7 +61,8 @@ public class LuminaChatActivity extends BaseFragment {
         items.add(UItem.asSwitch(3, LuminaLocale.getString(R.string.LuminaSaveToCloudTitle)).setChecked(LuminaConfig.getBoolean("saveToCloud", true)));
         items.add(UItem.asSwitch(4, LuminaLocale.getString(R.string.LuminaSelectFromAuthorTitle)).setChecked(LuminaConfig.getBoolean("selectFromAuthor", true)));
         items.add(UItem.asSwitch(11, LuminaLocale.getString(R.string.LuminaHideKeyboardOnScroll)).setChecked(LuminaConfig.getBoolean("hideKeyboardOnScroll", false)));
-        items.add(UItem.asShadow(null));
+        items.add(UItem.asSwitch(13, LuminaLocale.getString(R.string.LuminaUndoSendWindow)).setChecked(LuminaConfig.getBoolean("undoSendWindow", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaUndoSendWindowInfo)));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMediaSaving)));
         items.add(UItem.asSwitch(5, LuminaLocale.getString(R.string.LuminaSaveStickers)).setChecked(LuminaConfig.getBoolean("saveStickers", true)));
@@ -105,6 +106,9 @@ public class LuminaChatActivity extends BaseFragment {
                 break;
             case 12:
                 LuminaConfig.putBoolean("spoilerIncomingMedia", !LuminaConfig.getBoolean("spoilerIncomingMedia", false));
+                break;
+            case 13:
+                LuminaConfig.putBoolean("undoSendWindow", !LuminaConfig.getBoolean("undoSendWindow", false));
                 break;
             case 6:
                 LuminaConfig.putBoolean("showDcId", !LuminaConfig.getBoolean("showDcId", false));

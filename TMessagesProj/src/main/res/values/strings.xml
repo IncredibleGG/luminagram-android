@@ -11278,6 +11278,10 @@
     <string name="LuminaSaveToCloudTitle">Save to Saved Messages</string>
     <string name="LuminaSelectFromAuthorTitle">Select all from author</string>
     <string name="LuminaHideKeyboardOnScroll">Hide keyboard on scroll</string>
+    <!-- LuminaGram undo-send window (wave 19) -->
+    <string name="LuminaUndoSendWindow">Undo send window</string>
+    <string name="LuminaUndoSendWindowInfo">When on, sending a plain text message holds it for a few seconds behind an Undo button. Tap Undo to bring the text back to the message box; otherwise it sends normally. Media, voice, scheduled, edited and forwarded messages are unaffected.</string>
+    <string name="LuminaUndoSendBulletin">Sending message…</string>
     <string name="LuminaMediaSaving">Media</string>
     <string name="LuminaSaveStickers">Save stickers</string>
     <string name="LuminaSendAsFileDefault">Send media as file</string>
