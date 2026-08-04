@@ -11306,6 +11306,16 @@
     <string name="LuminaSecurityDisguiseHeader">Disguise</string>
     <string name="LuminaSecurityDisguise">Disguise as Calculator</string>
     <string name="LuminaSecurityDisguiseInfo">Replace the app\'s launcher icon and name with a plain Calculator. Turn off to restore the normal LuminaGram icon.</string>
+    <!-- LuminaGram security: fake-crash duress unlock -->
+    <string name="LuminaSecurityFakeCrashHeader">Fake-crash unlock</string>
+    <string name="LuminaSecurityFakeCrashEnable">Enable fake-crash unlock</string>
+    <string name="LuminaSecurityFakeCrashSetCode">Set fake-crash code</string>
+    <string name="LuminaSecurityFakeCrashCodeSet">Set</string>
+    <string name="LuminaSecurityFakeCrashCodeNotSet">Not set</string>
+    <string name="LuminaSecurityFakeCrashCodeDialogTitle">Fake-crash code</string>
+    <string name="LuminaSecurityFakeCrashInfo">When on, entering this code at the passcode screen shows a fake Android crash and closes the app instead of unlocking. This code is separate from your Telegram passcode and from the decoy calculator lock.</string>
+    <string name="LuminaFakeCrashTitle">LuminaGram keeps stopping</string>
+    <string name="LuminaFakeCrashCloseApp">Close app</string>
     <string name="LuminaDisguiseAppLabel">Calculator</string>
     <!-- LuminaGram app disguise + decoy lock -->
     <string name="LuminaDisguiseNotesLabel">Notes</string>

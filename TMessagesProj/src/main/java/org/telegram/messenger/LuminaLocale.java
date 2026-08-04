@@ -239,6 +239,15 @@ public final class LuminaLocale {
         zhHans.put("LuminaPrivacyHideNotifContent", "隐藏通知内容");
         zhHans.put("LuminaPrivacyHideNotifContentInfo", "开启后，所有通知仅显示应用名称和通用的「新消息」，隐藏发送者与消息预览。");
         zhHans.put("LuminaHiddenNotificationText", "新消息");
+        zhHans.put("LuminaSecurityFakeCrashHeader", "假崩溃解锁");
+        zhHans.put("LuminaSecurityFakeCrashEnable", "启用假崩溃解锁");
+        zhHans.put("LuminaSecurityFakeCrashSetCode", "设置假崩溃密码");
+        zhHans.put("LuminaSecurityFakeCrashCodeSet", "已设置");
+        zhHans.put("LuminaSecurityFakeCrashCodeNotSet", "未设置");
+        zhHans.put("LuminaSecurityFakeCrashCodeDialogTitle", "假崩溃密码");
+        zhHans.put("LuminaSecurityFakeCrashInfo", "开启后，在密码锁屏输入此密码将显示伪造的 Android 崩溃提示并关闭应用，而不是解锁。此密码独立于你的 Telegram 密码，也独立于伪装计算器锁。");
+        zhHans.put("LuminaFakeCrashTitle", "LuminaGram 一直停止运行");
+        zhHans.put("LuminaFakeCrashCloseApp", "关闭应用");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -452,6 +461,15 @@ public final class LuminaLocale {
         zhHant.put("LuminaPrivacyHideNotifContent", "隱藏通知內容");
         zhHant.put("LuminaPrivacyHideNotifContentInfo", "開啟後，所有通知僅顯示應用程式名稱和通用的「新訊息」，隱藏寄件者與訊息預覽。");
         zhHant.put("LuminaHiddenNotificationText", "新訊息");
+        zhHant.put("LuminaSecurityFakeCrashHeader", "假當機解鎖");
+        zhHant.put("LuminaSecurityFakeCrashEnable", "啟用假當機解鎖");
+        zhHant.put("LuminaSecurityFakeCrashSetCode", "設定假當機密碼");
+        zhHant.put("LuminaSecurityFakeCrashCodeSet", "已設定");
+        zhHant.put("LuminaSecurityFakeCrashCodeNotSet", "未設定");
+        zhHant.put("LuminaSecurityFakeCrashCodeDialogTitle", "假當機密碼");
+        zhHant.put("LuminaSecurityFakeCrashInfo", "開啟後，在密碼鎖畫面輸入此密碼會顯示偽造的 Android 當機提示並關閉應用程式，而不是解鎖。此密碼與你的 Telegram 密碼以及偽裝計算機鎖互相獨立。");
+        zhHant.put("LuminaFakeCrashTitle", "LuminaGram 一直停止運作");
+        zhHant.put("LuminaFakeCrashCloseApp", "關閉應用程式");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -664,6 +682,15 @@ public final class LuminaLocale {
         ar.put("LuminaPrivacyHideNotifContent", "إخفاء محتوى الإشعارات");
         ar.put("LuminaPrivacyHideNotifContentInfo", "عند التفعيل، يعرض كل إشعار اسم التطبيق فقط ونصًا عامًا هو «رسالة جديدة»، مع إخفاء المُرسِل ومعاينة الرسالة.");
         ar.put("LuminaHiddenNotificationText", "رسالة جديدة");
+        ar.put("LuminaSecurityFakeCrashHeader", "فتح بإيهام التعطل");
+        ar.put("LuminaSecurityFakeCrashEnable", "تفعيل الفتح بإيهام التعطل");
+        ar.put("LuminaSecurityFakeCrashSetCode", "تعيين رمز إيهام التعطل");
+        ar.put("LuminaSecurityFakeCrashCodeSet", "معيَّن");
+        ar.put("LuminaSecurityFakeCrashCodeNotSet", "غير معيَّن");
+        ar.put("LuminaSecurityFakeCrashCodeDialogTitle", "رمز إيهام التعطل");
+        ar.put("LuminaSecurityFakeCrashInfo", "عند التفعيل، يؤدي إدخال هذا الرمز في شاشة رمز المرور إلى إظهار تعطّل وهمي لنظام أندرويد وإغلاق التطبيق بدلاً من فتحه. هذا الرمز منفصل عن رمز مرور تيليجرام وعن قفل الآلة الحاسبة الوهمي.");
+        ar.put("LuminaFakeCrashTitle", "يستمر تطبيق LuminaGram في التوقف");
+        ar.put("LuminaFakeCrashCloseApp", "إغلاق التطبيق");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -876,6 +903,15 @@ public final class LuminaLocale {
         ru.put("LuminaPrivacyHideNotifContent", "Скрывать содержимое уведомлений");
         ru.put("LuminaPrivacyHideNotifContentInfo", "Когда включено, каждое уведомление показывает только название приложения и общий текст «Новое сообщение», скрывая отправителя и превью сообщения.");
         ru.put("LuminaHiddenNotificationText", "Новое сообщение");
+        ru.put("LuminaSecurityFakeCrashHeader", "Разблокировка ложным сбоем");
+        ru.put("LuminaSecurityFakeCrashEnable", "Включить разблокировку ложным сбоем");
+        ru.put("LuminaSecurityFakeCrashSetCode", "Задать код ложного сбоя");
+        ru.put("LuminaSecurityFakeCrashCodeSet", "Задан");
+        ru.put("LuminaSecurityFakeCrashCodeNotSet", "Не задан");
+        ru.put("LuminaSecurityFakeCrashCodeDialogTitle", "Код ложного сбоя");
+        ru.put("LuminaSecurityFakeCrashInfo", "Когда включено, ввод этого кода на экране блокировки показывает поддельный сбой Android и закрывает приложение вместо разблокировки. Этот код не связан с вашим паролем Telegram и с ложным замком-калькулятором.");
+        ru.put("LuminaFakeCrashTitle", "Приложение LuminaGram продолжает останавливаться");
+        ru.put("LuminaFakeCrashCloseApp", "Закрыть приложение");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1088,6 +1124,15 @@ public final class LuminaLocale {
         fa.put("LuminaPrivacyHideNotifContent", "پنهان‌کردن محتوای اعلان‌ها");
         fa.put("LuminaPrivacyHideNotifContentInfo", "وقتی روشن باشد، هر اعلان فقط نام برنامه و متن عمومی «پیام جدید» را نشان می‌دهد و فرستنده و پیش‌نمایش پیام پنهان می‌ماند.");
         fa.put("LuminaHiddenNotificationText", "پیام جدید");
+        fa.put("LuminaSecurityFakeCrashHeader", "بازگشایی با خرابی جعلی");
+        fa.put("LuminaSecurityFakeCrashEnable", "فعال‌سازی بازگشایی با خرابی جعلی");
+        fa.put("LuminaSecurityFakeCrashSetCode", "تنظیم رمز خرابی جعلی");
+        fa.put("LuminaSecurityFakeCrashCodeSet", "تنظیم‌شده");
+        fa.put("LuminaSecurityFakeCrashCodeNotSet", "تنظیم‌نشده");
+        fa.put("LuminaSecurityFakeCrashCodeDialogTitle", "رمز خرابی جعلی");
+        fa.put("LuminaSecurityFakeCrashInfo", "وقتی فعال باشد، وارد کردن این رمز در صفحهٔ رمز عبور به‌جای بازکردن برنامه یک خرابی جعلی اندروید نشان می‌دهد و برنامه را می‌بندد. این رمز از رمز عبور تلگرام و از قفل ماشین‌حساب تقلبی جدا است.");
+        fa.put("LuminaFakeCrashTitle", "برنامه LuminaGram مدام متوقف می‌شود");
+        fa.put("LuminaFakeCrashCloseApp", "بستن برنامه");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1300,6 +1345,15 @@ public final class LuminaLocale {
         tr.put("LuminaPrivacyHideNotifContent", "Bildirim içeriğini gizle");
         tr.put("LuminaPrivacyHideNotifContentInfo", "Açıkken her bildirim yalnızca uygulama adını ve genel bir «Yeni mesaj» metnini gösterir; gönderen ve mesaj önizlemesi gizli kalır.");
         tr.put("LuminaHiddenNotificationText", "Yeni mesaj");
+        tr.put("LuminaSecurityFakeCrashHeader", "Sahte çökme kilidi");
+        tr.put("LuminaSecurityFakeCrashEnable", "Sahte çökme kilidini etkinleştir");
+        tr.put("LuminaSecurityFakeCrashSetCode", "Sahte çökme kodunu ayarla");
+        tr.put("LuminaSecurityFakeCrashCodeSet", "Ayarlandı");
+        tr.put("LuminaSecurityFakeCrashCodeNotSet", "Ayarlanmadı");
+        tr.put("LuminaSecurityFakeCrashCodeDialogTitle", "Sahte çökme kodu");
+        tr.put("LuminaSecurityFakeCrashInfo", "Açıkken, bu kodu parola ekranında girmek uygulamanın kilidini açmak yerine sahte bir Android çökmesi gösterir ve uygulamayı kapatır. Bu kod, Telegram parolanızdan ve sahte hesap makinesi kilidinden ayrıdır.");
+        tr.put("LuminaFakeCrashTitle", "LuminaGram sürekli duruyor");
+        tr.put("LuminaFakeCrashCloseApp", "Uygulamayı kapat");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1512,6 +1566,15 @@ public final class LuminaLocale {
         es.put("LuminaPrivacyHideNotifContent", "Ocultar el contenido de las notificaciones");
         es.put("LuminaPrivacyHideNotifContentInfo", "Cuando está activado, cada notificación muestra solo el nombre de la app y un texto genérico «Mensaje nuevo»; el remitente y la vista previa quedan ocultos.");
         es.put("LuminaHiddenNotificationText", "Mensaje nuevo");
+        es.put("LuminaSecurityFakeCrashHeader", "Desbloqueo con fallo falso");
+        es.put("LuminaSecurityFakeCrashEnable", "Activar desbloqueo con fallo falso");
+        es.put("LuminaSecurityFakeCrashSetCode", "Establecer código de fallo falso");
+        es.put("LuminaSecurityFakeCrashCodeSet", "Establecido");
+        es.put("LuminaSecurityFakeCrashCodeNotSet", "Sin establecer");
+        es.put("LuminaSecurityFakeCrashCodeDialogTitle", "Código de fallo falso");
+        es.put("LuminaSecurityFakeCrashInfo", "Cuando está activado, escribir este código en la pantalla de código muestra un fallo falso de Android y cierra la aplicación en lugar de desbloquearla. Este código es independiente de tu código de Telegram y del bloqueo con calculadora señuelo.");
+        es.put("LuminaFakeCrashTitle", "LuminaGram se detiene constantemente");
+        es.put("LuminaFakeCrashCloseApp", "Cerrar la aplicación");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1724,6 +1787,15 @@ public final class LuminaLocale {
         ptBr.put("LuminaPrivacyHideNotifContent", "Ocultar conteúdo das notificações");
         ptBr.put("LuminaPrivacyHideNotifContentInfo", "Quando ativado, cada notificação mostra apenas o nome do app e um texto genérico «Nova mensagem»; o remetente e a prévia ficam ocultos.");
         ptBr.put("LuminaHiddenNotificationText", "Nova mensagem");
+        ptBr.put("LuminaSecurityFakeCrashHeader", "Desbloqueio com falha falsa");
+        ptBr.put("LuminaSecurityFakeCrashEnable", "Ativar desbloqueio com falha falsa");
+        ptBr.put("LuminaSecurityFakeCrashSetCode", "Definir código de falha falsa");
+        ptBr.put("LuminaSecurityFakeCrashCodeSet", "Definido");
+        ptBr.put("LuminaSecurityFakeCrashCodeNotSet", "Não definido");
+        ptBr.put("LuminaSecurityFakeCrashCodeDialogTitle", "Código de falha falsa");
+        ptBr.put("LuminaSecurityFakeCrashInfo", "Quando ativado, digitar este código na tela de senha mostra uma falha falsa do Android e fecha o app em vez de desbloquear. Este código é separado da sua senha do Telegram e do bloqueio com calculadora falsa.");
+        ptBr.put("LuminaFakeCrashTitle", "O LuminaGram continua parando");
+        ptBr.put("LuminaFakeCrashCloseApp", "Fechar app");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1936,6 +2008,15 @@ public final class LuminaLocale {
         id.put("LuminaPrivacyHideNotifContent", "Sembunyikan isi notifikasi");
         id.put("LuminaPrivacyHideNotifContentInfo", "Saat aktif, setiap notifikasi hanya menampilkan nama aplikasi dan teks umum «Pesan baru»; pengirim dan pratinjau pesan tetap tersembunyi.");
         id.put("LuminaHiddenNotificationText", "Pesan baru");
+        id.put("LuminaSecurityFakeCrashHeader", "Buka kunci crash palsu");
+        id.put("LuminaSecurityFakeCrashEnable", "Aktifkan buka kunci crash palsu");
+        id.put("LuminaSecurityFakeCrashSetCode", "Atur kode crash palsu");
+        id.put("LuminaSecurityFakeCrashCodeSet", "Diatur");
+        id.put("LuminaSecurityFakeCrashCodeNotSet", "Belum diatur");
+        id.put("LuminaSecurityFakeCrashCodeDialogTitle", "Kode crash palsu");
+        id.put("LuminaSecurityFakeCrashInfo", "Saat aktif, memasukkan kode ini di layar sandi akan menampilkan crash Android palsu dan menutup aplikasi alih-alih membukanya. Kode ini terpisah dari sandi Telegram Anda dan dari kunci kalkulator umpan.");
+        id.put("LuminaFakeCrashTitle", "LuminaGram terus berhenti");
+        id.put("LuminaFakeCrashCloseApp", "Tutup aplikasi");
         T.put("id", id);
     }
 
