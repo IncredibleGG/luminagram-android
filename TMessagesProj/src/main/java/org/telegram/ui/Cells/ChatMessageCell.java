@@ -7019,6 +7019,10 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             dualLanguageLayout = null;
             dualLanguageHeight = 0;
             dualLanguageWidth = 0;
+            // LuminaGram dual-language: for outgoing translate-before-send messages swap the main
+            // (big) text to the ORIGINAL before measuring, so the sent translation can be shown as
+            // a small dimmed sub-line. No-op when the toggle is off or for non-plain messages.
+            messageObject.luminaApplyOutgoingDualOriginal();
             closeExplanationX = -1;
             closeExplanationY = -1;
             instantPressed = commentButtonPressed = false;
@@ -16719,13 +16723,15 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         } else {
             drawMessageText(textX, textY, canvas, currentMessageObject.textLayoutBlocks, currentMessageObject.textXOffset, true, 1.0f, true, false, false);
         }
-        drawDualLanguageOriginal(canvas, textY);
+        drawDualLanguageSubline(canvas, textY);
     }
 
-    // LuminaGram: build a dimmed layout of the original message text when dual-language
-    // display is enabled and the message is translated. Plain text bubbles only
-    // (no link/game/invoice preview) - those layouts position media relative to the
-    // translated text height and are intentionally left unchanged.
+    // LuminaGram: build a dimmed sub-line layout showing the TRANSLATION beneath the main text
+    // when dual-language display is enabled. The main (big) text is the ORIGINAL - incoming
+    // translated messages keep the original as main (MessageObject.updateTranslation) and expose
+    // the translation via translatedText; outgoing translate-before-send messages have the main
+    // swapped to the original (MessageObject.luminaApplyOutgoingDualOriginal) and expose the sent
+    // translation via messageOwner.message. Plain text bubbles only (no link/game/invoice preview).
     private void buildDualLanguageLayout(MessageObject messageObject, int maxWidth) {
         dualLanguageLayout = null;
         dualLanguageHeight = 0;
@@ -16736,14 +16742,24 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         if (!LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
             return;
         }
-        if (!messageObject.translated || messageObject.type != MessageObject.TYPE_TEXT) {
+        if (messageObject.type != MessageObject.TYPE_TEXT) {
             return;
         }
         if (hasLinkPreview || hasGamePreview || hasInvoicePreview) {
             return;
         }
-        CharSequence original = messageObject.messageOwner.message;
-        if (TextUtils.isEmpty(original)) {
+        // The main (big) text is the ORIGINAL; the sub-line is always the TRANSLATION.
+        CharSequence sub = null;
+        if (messageObject.isOutOwner()) {
+            // outgoing translate-before-send: main = original, sub-line = the sent translation
+            if (messageObject.luminaDualOriginalApplied) {
+                sub = messageObject.messageOwner.message;
+            }
+        } else if (messageObject.translated && messageObject.messageOwner.translatedText != null) {
+            // incoming translated: main = original, sub-line = the translation
+            sub = messageObject.messageOwner.translatedText.text;
+        }
+        if (TextUtils.isEmpty(sub)) {
             return;
         }
         if (maxWidth <= 0) {
@@ -16756,7 +16772,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         float baseSize = Theme.chat_msgTextPaint != null ? Theme.chat_msgTextPaint.getTextSize() : dp(16);
         dualLanguageTextPaint.setTextSize(Math.max(dp(12), baseSize - dp(2)));
         try {
-            CharSequence text = Emoji.replaceEmoji(original, dualLanguageTextPaint.getFontMetricsInt(), false);
+            CharSequence text = Emoji.replaceEmoji(sub, dualLanguageTextPaint.getFontMetricsInt(), false);
             dualLanguageLayout = new StaticLayout(text, dualLanguageTextPaint, maxWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
             int w = 0;
             for (int i = 0; i < dualLanguageLayout.getLineCount(); i++) {
@@ -16772,8 +16788,8 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         }
     }
 
-    // LuminaGram: draw the original-text sub-line beneath the translated text.
-    private void drawDualLanguageOriginal(Canvas canvas, float textY) {
+    // LuminaGram: draw the translation sub-line (small, dimmed) beneath the original main text.
+    private void drawDualLanguageSubline(Canvas canvas, float textY) {
         if (dualLanguageLayout == null || dualLanguageTextPaint == null || currentMessageObject == null || currentMessageObject.isSponsored()) {
             return;
         }
