@@ -11212,6 +11212,14 @@
     <string name="LuminaPrivacyDisableLinkPreviewInfo">New messages you compose default to sending without a link preview, so servers are not asked to resolve pasted links.</string>
     <string name="LuminaPrivacyStripMetadata">Strip photo location &amp; metadata</string>
     <string name="LuminaPrivacyStripMetadataInfo">Removes GPS and other EXIF metadata from photos sent as files. Compressed photos never include this data.</string>
+    <!-- LuminaGram link safety inspector (wave10) -->
+    <string name="LuminaPrivacyLinkSafety">Link safety inspector</string>
+    <string name="LuminaPrivacyLinkSafetyInfo">Before opening a link to an external website, show a confirmation with the full address and warnings about look-alike domains, hidden destinations and link shorteners. Checks run offline on your device.</string>
+    <string name="LuminaLinkSafetyTitle">Open external link?</string>
+    <string name="LuminaLinkSafetyWarnMismatch">This link hides its real destination behind text before the “@” sign.</string>
+    <string name="LuminaLinkSafetyWarnPunycode">This address uses encoded (punycode) characters that can imitate a well-known site.</string>
+    <string name="LuminaLinkSafetyWarnMixedScript">This address mixes letters from different alphabets, a common look-alike trick.</string>
+    <string name="LuminaLinkSafetyWarnShortener">This is a link shortener — the real destination stays hidden until you open it.</string>
     <!-- LuminaGram hide notification content (wave9) -->
     <string name="LuminaPrivacyNotificationsHeader">Notifications</string>
     <string name="LuminaPrivacyHideNotifContent">Hide notification content</string>

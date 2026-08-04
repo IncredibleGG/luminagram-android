@@ -28,6 +28,8 @@ import org.telegram.messenger.BuildVars;
 import org.telegram.messenger.CustomTabsCopyReceiver;
 import org.telegram.messenger.FileLog;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
@@ -292,6 +294,25 @@ public class Browser {
         if (context == null || uri == null) {
             return;
         }
+        // LuminaGram: Link safety inspector (gated by "linkSafetyCheck", default off).
+        // For external http/https links, show a confirmation sheet listing the full URL
+        // and any heuristic warnings; the normal open proceeds only when the user confirms.
+        if (luminaLinkSafetyShouldConfirm(uri)) {
+            final Uri fUri = uri;
+            final boolean fAllowCustom = _allowCustom;
+            final boolean fTryTelegraph = tryTelegraph;
+            final boolean fForceNotInternalForApps = forceNotInternalForApps;
+            final Progress fInCaseLoading = inCaseLoading;
+            final String fBrowser = browser;
+            final boolean fAllowIntent = allowIntent;
+            final boolean fAllowInAppBrowser = allowInAppBrowser;
+            final boolean fForceRequest = forceRequest;
+            luminaShowLinkSafetySheet(context, fUri, () -> {
+                luminaLinkSafetyApprovedUrl = fUri.toString();
+                openUrl(context, fUri, fAllowCustom, fTryTelegraph, fForceNotInternalForApps, fInCaseLoading, fBrowser, fAllowIntent, fAllowInAppBrowser, fForceRequest);
+            });
+            return;
+        }
         final int currentAccount = UserConfig.selectedAccount;
         boolean[] forceBrowser = new boolean[]{false};
         boolean internalUri = isInternalUri(uri, forceBrowser);
@@ -439,6 +460,146 @@ public class Browser {
             }
         } catch (Exception e) {
             FileLog.e(e);
+        }
+    }
+
+    // ===== LuminaGram: Link safety inspector =====
+    // Gated by LuminaConfig "linkSafetyCheck" (default off -> behavior unchanged).
+    // Detection is entirely heuristic and offline (no network). When on, tapping a link
+    // to an external website first shows an AlertDialog (Open / Cancel) that lists the
+    // full resolved URL plus any of these warnings:
+    //   (b) the address hides its real destination behind userinfo (text before "@");
+    //   (c) the host is punycode/IDN ("xn--") or mixes letters from different alphabets
+    //       (e.g. Cyrillic among Latin) -- classic look-alike / homograph domains;
+    //   (d) the host is a known URL shortener that hides the real destination.
+
+    // Last URL the user approved via the safety sheet. Kept so the re-invoked open (and
+    // async paths such as Instant View / Telegraph that call openUrl again with the same
+    // URI) are not prompted a second time. Replaced whenever a different URL is approved.
+    private static volatile String luminaLinkSafetyApprovedUrl;
+
+    // Common URL shorteners (registrable host, lower-case, no "www.").
+    private static final String[] LUMINA_URL_SHORTENERS = {
+        "bit.ly", "tinyurl.com", "t.co", "goo.gl", "ow.ly", "is.gd", "buff.ly",
+        "bit.do", "cutt.ly", "rebrand.ly", "rb.gy", "shorturl.at", "tiny.cc",
+        "t.ly", "s.id", "v.gd", "clck.ru", "vk.cc", "adf.ly", "shorte.st",
+        "lnkd.in", "db.tt", "qr.ae", "u.to", "x.co", "trib.al", "shrtco.de"
+    };
+
+    private static boolean luminaLinkSafetyShouldConfirm(Uri uri) {
+        try {
+            if (uri == null) {
+                return false;
+            }
+            if (!LuminaConfig.getBoolean("linkSafetyCheck", false)) {
+                return false;
+            }
+            String scheme = uri.getScheme();
+            if (scheme == null) {
+                return false;
+            }
+            scheme = scheme.toLowerCase();
+            if (!"http".equals(scheme) && !"https".equals(scheme)) {
+                return false; // only external web links; tg:// and other internal schemes are untouched
+            }
+            if (isInternalUri(uri, new boolean[]{false})) {
+                return false; // Telegram deep links / t.me handled internally -- never nag on these
+            }
+            String url = uri.toString();
+            if (url != null && url.equals(luminaLinkSafetyApprovedUrl)) {
+                return false; // already approved (or an async re-open of the same URL)
+            }
+            return true;
+        } catch (Exception e) {
+            FileLog.e(e);
+            return false;
+        }
+    }
+
+    private static java.util.ArrayList<String> luminaLinkSafetyWarnings(Uri uri) {
+        java.util.ArrayList<String> warnings = new java.util.ArrayList<>();
+        try {
+            // (b) userinfo hides the real destination, e.g. https://paypal.com@evil.example
+            if (!TextUtils.isEmpty(uri.getUserInfo())) {
+                warnings.add(LuminaLocale.getString(R.string.LuminaLinkSafetyWarnMismatch));
+            }
+            String host = uri.getHost();
+            if (host == null) {
+                host = AndroidUtilities.getHostAuthority(uri.toString());
+            }
+            if (host != null) {
+                host = host.toLowerCase();
+                String ascii = host;
+                try {
+                    ascii = IDN.toASCII(host, IDN.ALLOW_UNASSIGNED).toLowerCase();
+                } catch (Exception ignore) {
+                }
+                // (c1) punycode / IDN label present (either as literal xn-- or after encoding)
+                if (host.contains("xn--") || ascii.contains("xn--")) {
+                    warnings.add(LuminaLocale.getString(R.string.LuminaLinkSafetyWarnPunycode));
+                }
+                // (c2) mixed-script look-alike -- Latin mixed with Cyrillic/Greek in the visible host
+                if (luminaIsMixedScript(host)) {
+                    warnings.add(LuminaLocale.getString(R.string.LuminaLinkSafetyWarnMixedScript));
+                }
+                // (d) known URL shorteners
+                String bare = host.startsWith("www.") ? host.substring(4) : host;
+                for (String s : LUMINA_URL_SHORTENERS) {
+                    if (bare.equals(s)) {
+                        warnings.add(LuminaLocale.getString(R.string.LuminaLinkSafetyWarnShortener));
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+        return warnings;
+    }
+
+    // True when the string mixes letters from more than one of Latin / Cyrillic / Greek.
+    // Uses explicit code-point ranges (works on API 21+, unlike Character.UnicodeScript).
+    private static boolean luminaIsMixedScript(String s) {
+        if (s == null) {
+            return false;
+        }
+        boolean latin = false, cyrillic = false, greek = false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+                latin = true;
+            } else if (c >= 0x0400 && c <= 0x04FF) {
+                cyrillic = true;
+            } else if (c >= 0x0370 && c <= 0x03FF) {
+                greek = true;
+            }
+        }
+        return (latin && cyrillic) || (latin && greek) || (cyrillic && greek);
+    }
+
+    private static void luminaShowLinkSafetySheet(final Context context, final Uri uri, final Runnable onOpen) {
+        try {
+            java.util.ArrayList<String> warnings = luminaLinkSafetyWarnings(uri);
+            StringBuilder message = new StringBuilder();
+            message.append(uri.toString()); // (a) the full resolved URL
+            for (int i = 0; i < warnings.size(); i++) {
+                message.append("\n\n⚠ ").append(warnings.get(i));
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(LuminaLocale.getString(R.string.LuminaLinkSafetyTitle));
+            builder.setMessage(message.toString());
+            builder.setPositiveButton(LocaleController.getString(R.string.Open), (dialog, which) -> {
+                if (onOpen != null) {
+                    onOpen.run();
+                }
+            });
+            builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+            builder.show();
+        } catch (Exception e) {
+            FileLog.e(e);
+            if (onOpen != null) {
+                onOpen.run(); // never silently swallow a link if the sheet cannot be shown
+            }
         }
     }
 
