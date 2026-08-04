@@ -199,6 +199,9 @@ public final class LuminaLocale {
         zhHans.put("LuminaInterfaceNumbersHeader", "数字");
         zhHans.put("LuminaInterfaceExactNumbers", "显示精确数字（不使用 1.2K 缩写）");
         zhHans.put("LuminaInterfaceExactNumbersInfo", "显示完整计数，如 1,234,567，而非 1.2M 之类的缩写形式。");
+        zhHans.put("LuminaPrivacyHideOwnPhone", "隐藏我的手机号");
+        zhHans.put("LuminaPrivacyHideOwnPhoneInfo", "在本应用中你自己的个人资料上隐藏手机号。这不会改变谁能在 Telegram 上看到你的号码。");
+        zhHans.put("LuminaHideOwnPhoneMasked", "已隐藏");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -372,6 +375,9 @@ public final class LuminaLocale {
         zhHant.put("LuminaInterfaceNumbersHeader", "數字");
         zhHant.put("LuminaInterfaceExactNumbers", "顯示精確數字（不使用 1.2K 縮寫）");
         zhHant.put("LuminaInterfaceExactNumbersInfo", "顯示完整計數，如 1,234,567，而非 1.2M 之類的縮寫形式。");
+        zhHant.put("LuminaPrivacyHideOwnPhone", "隱藏我的電話號碼");
+        zhHant.put("LuminaPrivacyHideOwnPhoneInfo", "在本應用中你自己的個人資料上隱藏電話號碼。這不會改變誰能在 Telegram 上看到你的號碼。");
+        zhHant.put("LuminaHideOwnPhoneMasked", "已隱藏");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -544,6 +550,9 @@ public final class LuminaLocale {
         ar.put("LuminaInterfaceNumbersHeader", "الأرقام");
         ar.put("LuminaInterfaceExactNumbers", "إظهار الأرقام الدقيقة (بدون اختصار 1.2K)");
         ar.put("LuminaInterfaceExactNumbersInfo", "إظهار الأعداد الكاملة مثل 1,234,567 بدلاً من الصيغ المختصرة مثل 1.2M.");
+        ar.put("LuminaPrivacyHideOwnPhone", "إخفاء رقم هاتفي");
+        ar.put("LuminaPrivacyHideOwnPhoneInfo", "إخفاء رقم هاتفك في ملفك الشخصي داخل هذا التطبيق. لا يغيّر هذا من يمكنه رؤية رقمك على تيليجرام.");
+        ar.put("LuminaHideOwnPhoneMasked", "مخفي");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -716,6 +725,9 @@ public final class LuminaLocale {
         ru.put("LuminaInterfaceNumbersHeader", "Числа");
         ru.put("LuminaInterfaceExactNumbers", "Показывать точные числа (без округления 1.2K)");
         ru.put("LuminaInterfaceExactNumbersInfo", "Показывать полные значения, например 1 234 567, вместо сокращённых форм вроде 1.2M.");
+        ru.put("LuminaPrivacyHideOwnPhone", "Скрыть мой номер телефона");
+        ru.put("LuminaPrivacyHideOwnPhoneInfo", "Скрывает ваш номер телефона в вашем профиле в этом приложении. Это не меняет, кто может видеть ваш номер в Telegram.");
+        ru.put("LuminaHideOwnPhoneMasked", "Скрыт");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -888,6 +900,9 @@ public final class LuminaLocale {
         fa.put("LuminaInterfaceNumbersHeader", "اعداد");
         fa.put("LuminaInterfaceExactNumbers", "نمایش اعداد دقیق (بدون خلاصه‌سازی 1.2K)");
         fa.put("LuminaInterfaceExactNumbersInfo", "نمایش اعداد کامل مانند 1,234,567 به جای شکل‌های خلاصه مانند 1.2M.");
+        fa.put("LuminaPrivacyHideOwnPhone", "پنهان کردن شمارهٔ تلفن من");
+        fa.put("LuminaPrivacyHideOwnPhoneInfo", "شمارهٔ تلفن شما را در نمایهٔ خودتان در این برنامه پنهان می‌کند. این کار تغییری در اینکه چه کسی می‌تواند شمارهٔ شما را در تلگرام ببیند ایجاد نمی‌کند.");
+        fa.put("LuminaHideOwnPhoneMasked", "پنهان");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1060,6 +1075,9 @@ public final class LuminaLocale {
         tr.put("LuminaInterfaceNumbersHeader", "Sayılar");
         tr.put("LuminaInterfaceExactNumbers", "Tam sayıları göster (1.2K yuvarlaması yok)");
         tr.put("LuminaInterfaceExactNumbersInfo", "1.2M gibi kısaltmalar yerine 1.234.567 gibi tam sayıları göster.");
+        tr.put("LuminaPrivacyHideOwnPhone", "Telefon numaramı gizle");
+        tr.put("LuminaPrivacyHideOwnPhoneInfo", "Telefon numaranızı bu uygulamadaki kendi profilinizde gizler. Bu, Telegram'da numaranızı kimin görebileceğini değiştirmez.");
+        tr.put("LuminaHideOwnPhoneMasked", "Gizli");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1232,6 +1250,9 @@ public final class LuminaLocale {
         es.put("LuminaInterfaceNumbersHeader", "Números");
         es.put("LuminaInterfaceExactNumbers", "Mostrar números exactos (sin redondeo 1.2K)");
         es.put("LuminaInterfaceExactNumbersInfo", "Mostrar cifras completas como 1.234.567 en lugar de formas abreviadas como 1.2M.");
+        es.put("LuminaPrivacyHideOwnPhone", "Ocultar mi número de teléfono");
+        es.put("LuminaPrivacyHideOwnPhoneInfo", "Oculta tu número de teléfono en tu propio perfil en esta aplicación. Esto no cambia quién puede ver tu número en Telegram.");
+        es.put("LuminaHideOwnPhoneMasked", "Oculto");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1404,6 +1425,9 @@ public final class LuminaLocale {
         ptBr.put("LuminaInterfaceNumbersHeader", "Números");
         ptBr.put("LuminaInterfaceExactNumbers", "Mostrar números exatos (sem arredondamento 1.2K)");
         ptBr.put("LuminaInterfaceExactNumbersInfo", "Mostrar contagens completas como 1.234.567 em vez de formas abreviadas como 1.2M.");
+        ptBr.put("LuminaPrivacyHideOwnPhone", "Ocultar meu número de telefone");
+        ptBr.put("LuminaPrivacyHideOwnPhoneInfo", "Oculta seu número de telefone no seu próprio perfil neste aplicativo. Isso não altera quem pode ver seu número no Telegram.");
+        ptBr.put("LuminaHideOwnPhoneMasked", "Oculto");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1576,6 +1600,9 @@ public final class LuminaLocale {
         id.put("LuminaInterfaceNumbersHeader", "Angka");
         id.put("LuminaInterfaceExactNumbers", "Tampilkan angka persis (tanpa pembulatan 1.2K)");
         id.put("LuminaInterfaceExactNumbersInfo", "Tampilkan jumlah penuh seperti 1.234.567 alih-alih bentuk singkat seperti 1.2M.");
+        id.put("LuminaPrivacyHideOwnPhone", "Sembunyikan nomor telepon saya");
+        id.put("LuminaPrivacyHideOwnPhoneInfo", "Sembunyikan nomor telepon Anda di profil Anda sendiri di aplikasi ini. Ini tidak mengubah siapa yang dapat melihat nomor Anda di Telegram.");
+        id.put("LuminaHideOwnPhoneMasked", "Disembunyikan");
         T.put("id", id);
     }
 

@@ -39,6 +39,7 @@ public class LuminaPrivacyActivity extends BaseFragment {
     private static final int ID_SECURE_SCREEN = 5;
     private static final int ID_DISABLE_LINK_PREVIEW = 6;
     private static final int ID_STRIP_METADATA = 7;
+    private static final int ID_HIDE_OWN_PHONE = 8;
 
     private UniversalRecyclerView listView;
 
@@ -82,6 +83,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_REGDATE, LuminaLocale.getString(R.string.LuminaPrivacyShowRegistrationDate))
                 .setChecked(LuminaConfig.getBoolean("showRegistrationDate", true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyShowRegistrationDateInfo)));
+        items.add(UItem.asSwitch(ID_HIDE_OWN_PHONE, LuminaLocale.getString(R.string.LuminaPrivacyHideOwnPhone))
+                .setChecked(LuminaConfig.getBoolean("hideOwnPhone", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyHideOwnPhoneInfo)));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacySecurityHeader)));
         items.add(UItem.asSwitch(ID_SECURE_SCREEN, LuminaLocale.getString(R.string.LuminaPrivacySecureScreen))
@@ -108,6 +112,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
                 break;
             case ID_REGDATE:
                 LuminaConfig.putBoolean("showRegistrationDate", !LuminaConfig.getBoolean("showRegistrationDate", true));
+                break;
+            case ID_HIDE_OWN_PHONE:
+                LuminaConfig.putBoolean("hideOwnPhone", !LuminaConfig.getBoolean("hideOwnPhone", false));
                 break;
             case ID_SECURE_SCREEN:
                 LuminaConfig.putBoolean("secureScreen", !LuminaConfig.getBoolean("secureScreen", false));
