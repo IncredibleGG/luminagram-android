@@ -163,6 +163,62 @@ public class LuminaConfig {
         putString(KEY_BOOKMARKS, out.toString());
     }
 
+    // ---- Text replacer / auto-substitution (Wave 8) ----
+    // User-defined substitution rules ("brb" -> "be right back") applied to OUTGOING
+    // plain-text messages just before send (see SendMessagesHelper.sendMessage). Rules
+    // live only in the app-private "luminagram" prefs as a JSON array string under the
+    // "textReplacements" key (via getString/putString) -- nothing is sent to Telegram.
+    // Each entry: { "from": <String>, "to": <String> }.
+    public static final String KEY_TEXT_REPLACEMENTS = "textReplacements";
+
+    /** All substitution rules (insertion order). Never null; empty when none / parse error. */
+    public static org.json.JSONArray getTextReplacements() {
+        String raw = getString(KEY_TEXT_REPLACEMENTS, "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                return new org.json.JSONArray(raw);
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return new org.json.JSONArray();
+    }
+
+    /**
+     * Apply the user's substitution rules to an outgoing plain-text message.
+     * Each rule replaces whole-word, case-sensitive occurrences of "from" with "to"
+     * (regex word boundaries, so "brb" does not fire inside "abrbcd"). Returns the
+     * input unchanged when there are no rules -- the default, zero-change behavior.
+     */
+    public static String applyTextReplacements(String message) {
+        if (message == null || message.length() == 0) {
+            return message;
+        }
+        org.json.JSONArray arr = getTextReplacements();
+        if (arr.length() == 0) {
+            return message;
+        }
+        String result = message;
+        for (int i = 0; i < arr.length(); i++) {
+            org.json.JSONObject o = arr.optJSONObject(i);
+            if (o == null) {
+                continue;
+            }
+            String from = o.optString("from", "");
+            String to = o.optString("to", "");
+            if (from.length() == 0) {
+                continue;
+            }
+            try {
+                java.util.regex.Pattern p = java.util.regex.Pattern.compile(
+                        "\\b" + java.util.regex.Pattern.quote(from) + "\\b");
+                result = p.matcher(result).replaceAll(java.util.regex.Matcher.quoteReplacement(to));
+            } catch (Exception ignore) {
+                // Malformed rule: skip it, never block the send.
+            }
+        }
+        return result;
+    }
+
     // Typed toggles keep the static field and the persisted value in sync (XOR idiom)
     public static void toggleHideTabs() {
         editor.putBoolean("hideTabs", hideTabs ^= true).apply();

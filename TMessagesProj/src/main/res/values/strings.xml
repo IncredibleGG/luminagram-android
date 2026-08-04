@@ -11331,6 +11331,15 @@
     <string name="LuminaQuickRepliesEdit">Edit template</string>
     <string name="LuminaQuickRepliesInfo">Text templates you can insert into the message field. Long-press the emoji button in a chat to pick one. Long-press a template to reorder.</string>
     <string name="LuminaQuickRepliesManage">Manage templates…</string>
+    <!-- LuminaGram text replacer / auto-substitution -->
+    <string name="LuminaReplacerTitle">Text replacer</string>
+    <string name="LuminaReplacerHeader">Rules</string>
+    <string name="LuminaReplacerAdd">Add rule</string>
+    <string name="LuminaReplacerEdit">Edit rule</string>
+    <string name="LuminaReplacerFrom">Replace</string>
+    <string name="LuminaReplacerTo">With</string>
+    <string name="LuminaReplacerInfo">Automatically replace text in messages you send. Each rule swaps a whole word (for example brb → be right back). Matching is case-sensitive and is skipped for messages with formatting.</string>
+    <string name="LuminaReplacerManage">Manage rules…</string>
     <string name="LuminaGoToFirstMessage">Go to first message</string>
     <!-- LuminaGram media and download preferences -->
     <string name="LuminaMediaTitle">Media</string>
