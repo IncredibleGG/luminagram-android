@@ -184,7 +184,7 @@ public class LuminaQuickRepliesActivity extends BaseFragment {
         edit.setCursorSize(AndroidUtilities.dp(20));
         edit.setCursorWidth(1.5f);
         edit.setBackgroundDrawable(null);
-        edit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAPITALIZATION_SENTENCES);
+        edit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         edit.setSingleLine(false);
         edit.setMaxLines(6);
         edit.setText(existing == null ? "" : existing);
