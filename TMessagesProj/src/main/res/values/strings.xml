@@ -11186,6 +11186,8 @@
     <string name="LuminaHideMuteIconInfo">Hides the small bell icon shown next to muted chats in the list.</string>
     <string name="LuminaShowMutedCount">Always show unread count</string>
     <string name="LuminaShowMutedCountInfo">Draws the unread badge of muted chats in the normal accent color instead of muted gray.</string>
+    <string name="LuminaChatListOnlineDot">Online dot</string>
+    <string name="LuminaChatListOnlineDotInfo">Shows a small green dot on the avatar of one-on-one chats whose contact is currently online.</string>
     <!-- LuminaGram privacy / stealth -->
     <string name="LuminaPrivacyTitle">Privacy &amp; Stealth</string>
     <string name="LuminaPrivacyGhostHeader">Ghost mode</string>
