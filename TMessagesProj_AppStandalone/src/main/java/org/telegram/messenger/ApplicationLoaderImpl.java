@@ -6,6 +6,7 @@ import static org.telegram.ui.PremiumPreviewFragment.applyNewSpan;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.text.SpannableStringBuilder;
@@ -31,9 +32,26 @@ import org.telegram.ui.LaunchActivity;
 import org.telegram.ui.SMSStatsActivity;
 import org.telegram.ui.SMSSubscribeSheet;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ApplicationLoaderImpl extends ApplicationLoader {
+
+    // --- LuminaGram in-app self-updater (R2 version.json -> download -> install) ---
+    private static final String LUMINA_UPDATE_MANIFEST_URL = "https://pub-d6a54d2e5f5947e2b0b23fb8e27ce0a5.r2.dev/version.json";
+
+    private volatile BetaUpdate pendingUpdate;
+    private volatile String pendingUpdateUrl;
+    private volatile File downloadedApk;
+    private volatile boolean downloadingUpdate;
+    private volatile boolean cancelUpdateDownload;
+    private volatile float updateDownloadProgress;
+    private long lastUpdateCheckTime;
     @Override
     protected String onGetApplicationId() {
         return BuildConfig.APPLICATION_ID;
@@ -282,5 +300,269 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
             }
         }
         return null;
+    }
+
+    // ---------------------------------------------------------------------------------
+    // LuminaGram custom self-updater. Activates the scaffold already wired into
+    // LaunchActivity.checkAppUpdate() by returning true from isCustomUpdate(). Reads a
+    // JSON manifest on Cloudflare R2, compares versions, downloads a newer APK over
+    // HTTPS and hands it to the system installer via AndroidUtilities.openForView().
+    // ---------------------------------------------------------------------------------
+
+    @Override
+    public boolean isCustomUpdate() {
+        return true;
+    }
+
+    @Override
+    public BetaUpdate getUpdate() {
+        return pendingUpdate;
+    }
+
+    @Override
+    public void checkUpdate(boolean force, Runnable whenDone) {
+        // Rate-limit background (non-forced) checks so the resume hook doesn't hit the
+        // network every time; manual "Check for updates" passes force=true.
+        if (!force && System.currentTimeMillis() - lastUpdateCheckTime < 60L * 60L * 1000L) {
+            if (whenDone != null) {
+                AndroidUtilities.runOnUIThread(whenDone);
+            }
+            return;
+        }
+        Utilities.globalQueue.postRunnable(() -> {
+            BetaUpdate parsed = null;
+            String parsedUrl = null;
+            HttpURLConnection connection = null;
+            try {
+                URL url = new URL(LUMINA_UPDATE_MANIFEST_URL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(15000);
+                connection.setReadTimeout(30000);
+                connection.setInstanceFollowRedirects(true);
+                connection.setRequestMethod("GET");
+                connection.setDoInput(true);
+                int statusCode = connection.getResponseCode();
+                InputStream stream = (statusCode >= 200 && statusCode < 300) ? connection.getInputStream() : connection.getErrorStream();
+                StringBuilder body = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    body.append(line);
+                }
+                reader.close();
+
+                JSONObject json = new JSONObject(body.toString());
+                String versionName = json.getString("versionName");
+                int versionCode = json.getInt("versionCode");
+                String notes = json.optString("notes", null);
+                String apkUrl = json.getString("url");
+
+                // Compare against the installed build. The standalone flavor overrides the
+                // versionCode as base*10+abi (see TMessagesProj_AppStandalone/build.gradle),
+                // and the manifest carries the base code, so divide the installed code by 10.
+                PackageInfo packageInfo = ApplicationLoader.applicationContext.getPackageManager()
+                        .getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
+                int installedBaseCode = packageInfo.versionCode / 10;
+                String installedName = packageInfo.versionName;
+
+                boolean newer = versionCode > installedBaseCode
+                        || (versionCode == installedBaseCode
+                            && SharedConfig.versionBiggerOrEqual(versionName, installedName)
+                            && !versionName.equals(installedName));
+                if (newer) {
+                    parsed = new BetaUpdate(versionName, versionCode, notes);
+                    parsedUrl = apkUrl;
+                }
+            } catch (Exception e) {
+                FileLog.e(e);
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.disconnect();
+                    } catch (Exception ignore) {
+                    }
+                }
+            }
+            lastUpdateCheckTime = System.currentTimeMillis();
+            final BetaUpdate result = parsed;
+            final String resultUrl = parsedUrl;
+            AndroidUtilities.runOnUIThread(() -> {
+                if (result != null) {
+                    pendingUpdate = result;
+                    pendingUpdateUrl = resultUrl;
+                }
+                if (whenDone != null) {
+                    whenDone.run();
+                }
+            });
+        });
+    }
+
+    @Override
+    public void downloadUpdate() {
+        startDownload(null, null);
+    }
+
+    @Override
+    public void cancelDownloadingUpdate() {
+        cancelUpdateDownload = true;
+    }
+
+    @Override
+    public boolean isDownloadingUpdate() {
+        return downloadingUpdate;
+    }
+
+    @Override
+    public float getDownloadingUpdateProgress() {
+        return updateDownloadProgress;
+    }
+
+    @Override
+    public File getDownloadedUpdateFile() {
+        return downloadedApk;
+    }
+
+    private void startDownload(Utilities.Callback<Float> onProgress, Utilities.Callback<File> onComplete) {
+        if (downloadingUpdate) {
+            return;
+        }
+        final String downloadUrl = pendingUpdateUrl;
+        if (downloadUrl == null || pendingUpdate == null) {
+            if (onComplete != null) {
+                AndroidUtilities.runOnUIThread(() -> onComplete.run(null));
+            }
+            return;
+        }
+        if (downloadedApk != null && downloadedApk.exists()) {
+            if (onComplete != null) {
+                final File cached = downloadedApk;
+                AndroidUtilities.runOnUIThread(() -> onComplete.run(cached));
+            }
+            return;
+        }
+        downloadingUpdate = true;
+        cancelUpdateDownload = false;
+        updateDownloadProgress = 0f;
+        Utilities.globalQueue.postRunnable(() -> {
+            File result = null;
+            HttpURLConnection connection = null;
+            try {
+                File out = new File(FileLoader.getDirectory(FileLoader.MEDIA_DIR_CACHE), "LuminaGram-update.apk");
+                connection = (HttpURLConnection) new URL(downloadUrl).openConnection();
+                connection.setConnectTimeout(15000);
+                connection.setReadTimeout(30000);
+                connection.setInstanceFollowRedirects(true);
+                connection.connect();
+                int total = connection.getContentLength();
+                InputStream in = connection.getInputStream();
+                FileOutputStream fos = new FileOutputStream(out);
+                byte[] buffer = new byte[16 * 1024];
+                long downloaded = 0;
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    if (cancelUpdateDownload) {
+                        break;
+                    }
+                    fos.write(buffer, 0, read);
+                    downloaded += read;
+                    if (total > 0) {
+                        final float progress = Math.min(1f, (float) downloaded / (float) total);
+                        updateDownloadProgress = progress;
+                        if (onProgress != null) {
+                            AndroidUtilities.runOnUIThread(() -> onProgress.run(progress));
+                        }
+                    }
+                }
+                fos.flush();
+                fos.close();
+                in.close();
+                if (!cancelUpdateDownload) {
+                    result = out;
+                }
+            } catch (Exception e) {
+                FileLog.e(e);
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.disconnect();
+                    } catch (Exception ignore) {
+                    }
+                }
+                downloadingUpdate = false;
+            }
+            final File finalResult = result;
+            downloadedApk = finalResult;
+            if (onComplete != null) {
+                AndroidUtilities.runOnUIThread(() -> onComplete.run(finalResult));
+            }
+        });
+    }
+
+    @Override
+    public boolean showCustomUpdateAppPopup(Context context, BetaUpdate update, int account) {
+        if (context == null || update == null) {
+            return false;
+        }
+        AndroidUtilities.runOnUIThread(() -> {
+            try {
+                final Activity activity = (context instanceof Activity) ? (Activity) context : LaunchActivity.instance;
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(LuminaLocale.getString(R.string.LuminaUpdateAvailable));
+                StringBuilder message = new StringBuilder();
+                message.append(LuminaLocale.getString(R.string.LuminaUpdateNewVersion)).append(' ').append(update.version);
+                if (update.changelog != null && update.changelog.length() > 0) {
+                    message.append("\n\n").append(update.changelog);
+                }
+                builder.setMessage(message.toString());
+                builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaUpdateNow), (dialog, which) -> {
+                    if (activity == null) {
+                        return;
+                    }
+                    if (!checkApkInstallPermissions(activity)) {
+                        return;
+                    }
+                    beginDownloadAndInstall(activity);
+                });
+                builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+                builder.show();
+            } catch (Exception e) {
+                FileLog.e(e);
+            }
+        });
+        return true;
+    }
+
+    private void beginDownloadAndInstall(final Activity activity) {
+        if (downloadedApk != null && downloadedApk.exists()) {
+            installApk(activity, downloadedApk);
+            return;
+        }
+        final AlertDialog progressDialog = new AlertDialog(activity, AlertDialog.ALERT_TYPE_LOADING);
+        progressDialog.setCanCancel(true);
+        progressDialog.setMessage(LuminaLocale.getString(R.string.LuminaUpdateDownloading));
+        progressDialog.setOnCancelListener(dialog -> cancelDownloadingUpdate());
+        progressDialog.show();
+        startDownload(
+                progress -> progressDialog.setProgress((int) (progress * 100)),
+                file -> {
+                    try {
+                        progressDialog.dismiss();
+                    } catch (Exception ignore) {
+                    }
+                    if (file != null) {
+                        installApk(activity, file);
+                    } else if (!cancelUpdateDownload) {
+                        BaseFragment fragment = LaunchActivity.getLastFragment();
+                        if (fragment != null) {
+                            BulletinFactory.of(fragment).createErrorBulletin(LuminaLocale.getString(R.string.LuminaUpdateFailed)).show();
+                        }
+                    }
+                }
+        );
+    }
+
+    private void installApk(Activity activity, File apk) {
+        AndroidUtilities.openForView(apk, "LuminaGram.apk", "application/vnd.android.package-archive", activity, null, false);
     }
 }

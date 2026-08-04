@@ -9,6 +9,7 @@ import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
+import org.telegram.messenger.browser.Browser;
 import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
@@ -58,6 +59,8 @@ public class LuminaGramSettingsActivity extends BaseFragment {
         items.add(UItem.asButton(11, LuminaLocale.getString(R.string.LuminaChatSettings)));
         items.add(UItem.asButton(12, LuminaLocale.getString(R.string.LuminaTranslateTitle)));
         items.add(UItem.asShadow(null));
+        items.add(UItem.asButton(20, LuminaLocale.getString(R.string.LuminaCheckUpdate)));
+        items.add(UItem.asShadow(null));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -76,6 +79,15 @@ public class LuminaGramSettingsActivity extends BaseFragment {
                 break;
             case 12:
                 presentFragment(new LuminaTranslateActivity());
+                break;
+            case 20:
+                LaunchActivity launchActivity = LaunchActivity.instance;
+                if (launchActivity != null) {
+                    // force=true bypasses the CHECK_UPDATES gate / rate-limit; a non-null
+                    // progress makes LaunchActivity show the "already latest" bulletin when
+                    // no newer build is found. The custom updater path handles the popup.
+                    launchActivity.checkAppUpdate(true, new Browser.Progress());
+                }
                 break;
         }
         if (listView != null && listView.adapter != null) {

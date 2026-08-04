@@ -62,6 +62,12 @@ public final class LuminaLocale {
         zhHans.put("LuminaForwardNoCaption", "转发时移除说明文字");
         zhHans.put("LuminaSaveToCloud", "保存到收藏夹");
         zhHans.put("LuminaSelectFromAuthor", "选择该作者的全部消息");
+        zhHans.put("LuminaCheckUpdate", "检查更新");
+        zhHans.put("LuminaUpdateAvailable", "有可用更新");
+        zhHans.put("LuminaUpdateNewVersion", "新版本");
+        zhHans.put("LuminaUpdateNow", "立即更新");
+        zhHans.put("LuminaUpdateDownloading", "正在下载更新…");
+        zhHans.put("LuminaUpdateFailed", "更新下载失败");
         T.put("zh-hans", zhHans);
     }
 

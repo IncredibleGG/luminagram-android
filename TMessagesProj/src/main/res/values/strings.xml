@@ -11207,4 +11207,11 @@
     <string name="LuminaForwardNoCaption">Forward without caption</string>
     <string name="LuminaSaveToCloud">Save to Saved Messages</string>
     <string name="LuminaSelectFromAuthor">Select all from author</string>
+    <!-- LuminaGram self-updater -->
+    <string name="LuminaCheckUpdate">Check for updates</string>
+    <string name="LuminaUpdateAvailable">Update available</string>
+    <string name="LuminaUpdateNewVersion">New version</string>
+    <string name="LuminaUpdateNow">Update</string>
+    <string name="LuminaUpdateDownloading">Downloading update…</string>
+    <string name="LuminaUpdateFailed">Update download failed</string>
 </resources>
