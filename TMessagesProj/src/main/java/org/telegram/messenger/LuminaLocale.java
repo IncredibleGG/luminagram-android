@@ -243,6 +243,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaPrivacyLinkSafetyInfo", "打开指向外部网站的链接前,先显示确认框,列出完整网址,并对仿冒域名、隐藏目标和短链接发出警告。检查在本机离线进行。");
         zhHans.put("LuminaPrivacyCryptoClipboardGuard", "加密货币地址粘贴保护");
         zhHans.put("LuminaPrivacyCryptoClipboardGuardInfo", "当你把看起来像加密货币钱包地址的内容粘贴到消息框时发出警告。剪贴板劫持恶意软件可能会悄悄把你复制的地址替换成骗子的地址——在插入前提醒你核对一遍。检查在本机离线进行。");
+        zhHans.put("LuminaPrivacyIncognitoKeyboard", "隐身键盘");
+        zhHans.put("LuminaPrivacyIncognitoKeyboardInfo", "请求键盘不要学习或个性化你在消息框中输入的内容。是否生效取决于你的键盘应用，部分键盘会忽略该请求。");
         zhHans.put("LuminaCryptoClipboardGuardTitle", "请核对这个加密货币地址");
         zhHans.put("LuminaCryptoClipboardGuardMessage", "这看起来像一个加密货币钱包地址。恶意软件可能会把你复制的地址替换成骗子的地址——发送前请再次核对它与你想使用的地址一致。");
         zhHans.put("LuminaCryptoClipboardGuardPaste", "仍然粘贴");
@@ -498,6 +500,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaPrivacyLinkSafetyInfo", "開啟指向外部網站的連結前,先顯示確認視窗,列出完整網址,並對仿冒網域、隱藏目標和短連結發出警告。檢查在本機離線進行。");
         zhHant.put("LuminaPrivacyCryptoClipboardGuard", "加密貨幣地址貼上保護");
         zhHant.put("LuminaPrivacyCryptoClipboardGuardInfo", "當你把看起來像加密貨幣錢包地址的內容貼到訊息框時發出警告。剪貼簿劫持惡意軟體可能會悄悄把你複製的地址換成騙徒的地址——在貼上前提醒你核對一遍。檢查在本機離線進行。");
+        zhHant.put("LuminaPrivacyIncognitoKeyboard", "隱身鍵盤");
+        zhHant.put("LuminaPrivacyIncognitoKeyboardInfo", "要求鍵盤不要學習或個人化你在訊息框中輸入的內容。是否生效取決於你的鍵盤應用程式，部分鍵盤會忽略此要求。");
         zhHant.put("LuminaCryptoClipboardGuardTitle", "請核對這個加密貨幣地址");
         zhHant.put("LuminaCryptoClipboardGuardMessage", "這看起來像一個加密貨幣錢包地址。惡意軟體可能會把你複製的地址換成騙徒的地址——傳送前請再次核對它與你想使用的地址一致。");
         zhHant.put("LuminaCryptoClipboardGuardPaste", "仍要貼上");
@@ -752,6 +756,8 @@ public final class LuminaLocale {
         ar.put("LuminaPrivacyLinkSafetyInfo", "قبل فتح رابط إلى موقع خارجي، اعرض تأكيدًا يتضمّن العنوان الكامل وتحذيرات بشأن النطاقات المُقلِّدة والوجهات المخفية ومختصرات الروابط. تُجرى الفحوص دون اتصال على جهازك.");
         ar.put("LuminaPrivacyCryptoClipboardGuard", "حماية لصق عناوين العملات المشفّرة");
         ar.put("LuminaPrivacyCryptoClipboardGuardInfo", "تحذيرك عند لصق ما يبدو أنه عنوان محفظة عملات مشفّرة في مربّع الرسالة. قد تقوم البرمجيات الخبيثة التي تختطف الحافظة باستبدال العنوان الذي نسخته بعنوان محتال بصمت — يطلب منك هذا التحقّق قبل إدراجه. تُجرى الفحوص دون اتصال على جهازك.");
+        ar.put("LuminaPrivacyIncognitoKeyboard", "لوحة مفاتيح متخفّية");
+        ar.put("LuminaPrivacyIncognitoKeyboardInfo", "اطلب من لوحة المفاتيح ألا تتعلّم مما تكتبه في مربّع الرسالة أو تخصّصه. يعتمد الدعم على تطبيق لوحة المفاتيح لديك، وبعض لوحات المفاتيح تتجاهل هذا الطلب.");
         ar.put("LuminaCryptoClipboardGuardTitle", "تحقّق من عنوان العملة المشفّرة هذا");
         ar.put("LuminaCryptoClipboardGuardMessage", "يبدو هذا عنوان محفظة عملات مشفّرة. قد تستبدل البرمجيات الخبيثة العنوان المنسوخ بعنوان محتال — تحقّق من مطابقته للعنوان المقصود قبل الإرسال.");
         ar.put("LuminaCryptoClipboardGuardPaste", "اللصق على أي حال");
@@ -1006,6 +1012,8 @@ public final class LuminaLocale {
         ru.put("LuminaPrivacyLinkSafetyInfo", "Перед открытием ссылки на внешний сайт показывать подтверждение с полным адресом и предупреждениями о поддельных доменах, скрытых адресах и сокращателях ссылок. Проверки выполняются офлайн на вашем устройстве.");
         ru.put("LuminaPrivacyCryptoClipboardGuard", "Защита при вставке крипто-адреса");
         ru.put("LuminaPrivacyCryptoClipboardGuardInfo", "Предупреждать, когда вы вставляете в поле сообщения текст, похожий на адрес криптокошелька. Вредоносные программы, перехватывающие буфер обмена, могут незаметно подменить скопированный адрес на адрес мошенника — это предлагает вам перепроверить его перед вставкой. Проверки выполняются офлайн на вашем устройстве.");
+        ru.put("LuminaPrivacyIncognitoKeyboard", "Инкогнито-клавиатура");
+        ru.put("LuminaPrivacyIncognitoKeyboardInfo", "Просит клавиатуру не запоминать и не персонализировать то, что вы вводите в поле сообщения. Поддержка зависит от вашего приложения клавиатуры — некоторые клавиатуры игнорируют этот запрос.");
         ru.put("LuminaCryptoClipboardGuardTitle", "Проверьте этот крипто-адрес");
         ru.put("LuminaCryptoClipboardGuardMessage", "Это похоже на адрес криптокошелька. Вредоносное ПО может подменить скопированный адрес на адрес мошенника — перед отправкой перепроверьте, что он совпадает с нужным.");
         ru.put("LuminaCryptoClipboardGuardPaste", "Всё равно вставить");
@@ -1260,6 +1268,8 @@ public final class LuminaLocale {
         fa.put("LuminaPrivacyLinkSafetyInfo", "پیش از باز کردن پیوندی به یک وب‌سایت بیرونی، تأییدی شامل نشانی کامل و هشدارها دربارهٔ دامنه‌های تقلبی، مقصدهای پنهان و کوتاه‌کننده‌های پیوند نشان بده. بررسی‌ها به‌صورت آفلاین روی دستگاه شما انجام می‌شود.");
         fa.put("LuminaPrivacyCryptoClipboardGuard", "محافظت هنگام چسباندن نشانی رمزارز");
         fa.put("LuminaPrivacyCryptoClipboardGuardInfo", "هنگامی که چیزی شبیه نشانی کیف‌پول رمزارز را در کادر پیام می‌چسبانی هشدار می‌دهد. بدافزارِ ربایندهٔ حافظهٔ موقت می‌تواند نشانی کپی‌شده را بی‌صدا با نشانی کلاهبردار جایگزین کند — این پیش از درج، از تو می‌خواهد آن را دوباره بررسی کنی. بررسی‌ها به‌صورت آفلاین روی دستگاه تو انجام می‌شود.");
+        fa.put("LuminaPrivacyIncognitoKeyboard", "صفحه‌کلید ناشناس");
+        fa.put("LuminaPrivacyIncognitoKeyboardInfo", "از صفحه‌کلید می‌خواهد از آنچه در کادر پیام می‌نویسی یاد نگیرد و آن را شخصی‌سازی نکند. پشتیبانی به برنامهٔ صفحه‌کلید تو بستگی دارد و برخی صفحه‌کلیدها این درخواست را نادیده می‌گیرند.");
         fa.put("LuminaCryptoClipboardGuardTitle", "این نشانی رمزارز را بررسی کن");
         fa.put("LuminaCryptoClipboardGuardMessage", "این شبیه نشانی کیف‌پول رمزارز است. بدافزار می‌تواند نشانی کپی‌شده را با نشانی کلاهبردار جایگزین کند — پیش از ارسال بررسی کن که با نشانی موردنظرت یکی باشد.");
         fa.put("LuminaCryptoClipboardGuardPaste", "با این حال بچسبان");
@@ -1514,6 +1524,8 @@ public final class LuminaLocale {
         tr.put("LuminaPrivacyLinkSafetyInfo", "Dış bir web sitesine giden bağlantıyı açmadan önce, tam adresi ve benzer görünen alan adları, gizli hedefler ve bağlantı kısaltıcılarla ilgili uyarıları içeren bir onay göster. Denetimler cihazında çevrimdışı yapılır.");
         tr.put("LuminaPrivacyCryptoClipboardGuard", "Kripto adresi yapıştırma koruması");
         tr.put("LuminaPrivacyCryptoClipboardGuardInfo", "Mesaj kutusuna kripto cüzdan adresine benzeyen bir şey yapıştırdığında uyarır. Panoyu ele geçiren kötü amaçlı yazılımlar, kopyaladığın adresi sessizce bir dolandırıcının adresiyle değiştirebilir — bu, eklemeden önce iki kez kontrol etmeni ister. Denetimler cihazında çevrimdışı yapılır.");
+        tr.put("LuminaPrivacyIncognitoKeyboard", "Gizli klavye");
+        tr.put("LuminaPrivacyIncognitoKeyboardInfo", "Klavyenden, mesaj kutusuna yazdıklarını öğrenmemesini ve kişiselleştirmemesini ister. Destek klavye uygulamana bağlıdır ve bazı klavyeler bu isteği yok sayar.");
         tr.put("LuminaCryptoClipboardGuardTitle", "Bu kripto adresini kontrol et");
         tr.put("LuminaCryptoClipboardGuardMessage", "Bu bir kripto cüzdan adresine benziyor. Kötü amaçlı yazılım, kopyalanan adresi bir dolandırıcının adresiyle değiştirebilir — göndermeden önce istediğin adresle eşleştiğini iki kez kontrol et.");
         tr.put("LuminaCryptoClipboardGuardPaste", "Yine de yapıştır");
@@ -1768,6 +1780,8 @@ public final class LuminaLocale {
         es.put("LuminaPrivacyLinkSafetyInfo", "Antes de abrir un enlace a un sitio web externo, muestra una confirmación con la dirección completa y avisos sobre dominios similares, destinos ocultos y acortadores de enlaces. Las comprobaciones se hacen sin conexión en tu dispositivo.");
         es.put("LuminaPrivacyCryptoClipboardGuard", "Protección al pegar direcciones cripto");
         es.put("LuminaPrivacyCryptoClipboardGuardInfo", "Avisa cuando pegas en el mensaje algo que parece una dirección de monedero de criptomonedas. El malware que secuestra el portapapeles puede cambiar en silencio la dirección que copiaste por la de un estafador; esto te pide comprobarla antes de insertarla. Las comprobaciones se hacen sin conexión en tu dispositivo.");
+        es.put("LuminaPrivacyIncognitoKeyboard", "Teclado de incógnito");
+        es.put("LuminaPrivacyIncognitoKeyboardInfo", "Pide a tu teclado que no aprenda ni personalice lo que escribes en el mensaje. La compatibilidad depende de tu aplicación de teclado y algunos teclados ignoran la solicitud.");
         es.put("LuminaCryptoClipboardGuardTitle", "Comprueba esta dirección cripto");
         es.put("LuminaCryptoClipboardGuardMessage", "Esto parece una dirección de monedero de criptomonedas. El malware puede cambiar la dirección copiada por la de un estafador; antes de enviar, comprueba que coincide con la que querías usar.");
         es.put("LuminaCryptoClipboardGuardPaste", "Pegar de todos modos");
@@ -2022,6 +2036,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaPrivacyLinkSafetyInfo", "Antes de abrir um link para um site externo, mostrar uma confirmação com o endereço completo e avisos sobre domínios parecidos, destinos ocultos e encurtadores de links. As verificações são feitas offline no seu aparelho.");
         ptBr.put("LuminaPrivacyCryptoClipboardGuard", "Proteção ao colar endereço de cripto");
         ptBr.put("LuminaPrivacyCryptoClipboardGuardInfo", "Avisa quando você cola na mensagem algo que parece um endereço de carteira de criptomoedas. Malware que sequestra a área de transferência pode trocar silenciosamente o endereço copiado pelo de um golpista — isto pede que você confira antes de inserir. As verificações são feitas offline no seu aparelho.");
+        ptBr.put("LuminaPrivacyIncognitoKeyboard", "Teclado anônimo");
+        ptBr.put("LuminaPrivacyIncognitoKeyboardInfo", "Pede ao seu teclado que não aprenda nem personalize o que você digita na mensagem. O suporte depende do seu aplicativo de teclado e alguns teclados ignoram o pedido.");
         ptBr.put("LuminaCryptoClipboardGuardTitle", "Confira este endereço de cripto");
         ptBr.put("LuminaCryptoClipboardGuardMessage", "Isto parece um endereço de carteira de criptomoedas. Malware pode trocar o endereço copiado pelo de um golpista — antes de enviar, confira se ele corresponde ao que você pretendia usar.");
         ptBr.put("LuminaCryptoClipboardGuardPaste", "Colar mesmo assim");
@@ -2276,6 +2292,8 @@ public final class LuminaLocale {
         id.put("LuminaPrivacyLinkSafetyInfo", "Sebelum membuka tautan ke situs web eksternal, tampilkan konfirmasi berisi alamat lengkap dan peringatan tentang domain mirip, tujuan tersembunyi, dan pemendek tautan. Pemeriksaan dilakukan offline di perangkat Anda.");
         id.put("LuminaPrivacyCryptoClipboardGuard", "Perlindungan tempel alamat kripto");
         id.put("LuminaPrivacyCryptoClipboardGuardInfo", "Memperingatkan saat Anda menempelkan sesuatu yang tampak seperti alamat dompet kripto ke kotak pesan. Malware pembajak papan klip bisa diam-diam menukar alamat yang Anda salin dengan alamat penipu — ini meminta Anda memeriksanya sebelum disisipkan. Pemeriksaan dilakukan offline di perangkat Anda.");
+        id.put("LuminaPrivacyIncognitoKeyboard", "Keyboard incognito");
+        id.put("LuminaPrivacyIncognitoKeyboardInfo", "Meminta keyboard Anda untuk tidak mempelajari atau mempersonalisasi apa yang Anda ketik di kotak pesan. Dukungan bergantung pada aplikasi keyboard Anda, dan beberapa keyboard mengabaikan permintaan ini.");
         id.put("LuminaCryptoClipboardGuardTitle", "Periksa alamat kripto ini");
         id.put("LuminaCryptoClipboardGuardMessage", "Ini tampak seperti alamat dompet kripto. Malware bisa menukar alamat yang disalin dengan alamat penipu — sebelum mengirim, periksa apakah cocok dengan yang Anda maksud.");
         id.put("LuminaCryptoClipboardGuardPaste", "Tetap tempel");

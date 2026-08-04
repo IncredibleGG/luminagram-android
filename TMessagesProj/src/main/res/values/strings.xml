@@ -11226,6 +11226,9 @@
     <string name="LuminaCryptoClipboardGuardTitle">Check this crypto address</string>
     <string name="LuminaCryptoClipboardGuardMessage">This looks like a crypto wallet address. Malware can swap a copied address for a scammer\'s — double-check it matches the one you intended before sending.</string>
     <string name="LuminaCryptoClipboardGuardPaste">Paste anyway</string>
+    <!-- LuminaGram incognito keyboard (wave18) -->
+    <string name="LuminaPrivacyIncognitoKeyboard">Incognito keyboard</string>
+    <string name="LuminaPrivacyIncognitoKeyboardInfo">Ask your keyboard not to learn from or personalize what you type in the message box. Support depends on your keyboard app, and some keyboards ignore the request.</string>
     <!-- LuminaGram hide notification content (wave9) -->
     <string name="LuminaPrivacyNotificationsHeader">Notifications</string>
     <string name="LuminaPrivacyHideNotifContent">Hide notification content</string>
