@@ -5734,6 +5734,9 @@ public class ChatActivityEnterView extends FrameLayout implements
 
             @Override
             public boolean onTextContextMenuItem(int id) {
+                if (id == android.R.id.paste && luminaCheckCryptoClipboardGuard()) {
+                    return true;
+                }
                 if (id == android.R.id.paste && handleRichHtmlPaste()) {
                     return true;
                 }
@@ -8080,6 +8083,78 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
         });
         builder.show();
+    }
+
+    // ===== LuminaGram: crypto address clipboard guard (anti-scam, wave11) =====
+    // Gated by LuminaConfig "cryptoClipboardGuard" (default OFF -> paste behavior unchanged).
+    // Clipboard-hijacking malware can silently swap a copied wallet address for a scammer's.
+    // When ON, a paste into the composer whose whole clipboard text looks like a crypto wallet
+    // address is intercepted and a confirm dialog is shown; the text is only inserted if the
+    // user taps "Paste anyway".
+    private static final java.util.regex.Pattern LUMINA_CRYPTO_ADDRESS_PATTERN =
+            java.util.regex.Pattern.compile("^(0x[a-fA-F0-9]{40}|[13][a-km-zA-HJ-NP-Z1-9]{25,34}|T[a-zA-Z0-9]{33}|bc1[a-z0-9]{25,90})$");
+
+    // Returns true if the paste was intercepted (a warning dialog is shown), so the caller
+    // consumes the event and does NOT paste immediately; false lets the paste proceed normally.
+    private boolean luminaCheckCryptoClipboardGuard() {
+        if (!LuminaConfig.getBoolean("cryptoClipboardGuard", false)) {
+            return false;
+        }
+        if (messageEditText == null || getContext() == null) {
+            return false;
+        }
+        try {
+            final ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            final ClipData clip = cm == null ? null : cm.getPrimaryClip();
+            if (clip == null || clip.getItemCount() < 1) {
+                return false;
+            }
+            final CharSequence text = clip.getItemAt(0).coerceToText(getContext());
+            if (TextUtils.isEmpty(text)) {
+                return false;
+            }
+            final String candidate = text.toString().trim();
+            if (candidate.length() == 0 || !LUMINA_CRYPTO_ADDRESS_PATTERN.matcher(candidate).matches()) {
+                return false;
+            }
+            luminaShowCryptoClipboardWarning(candidate);
+            return true;
+        } catch (Exception e) {
+            FileLog.e(e);
+            return false;
+        }
+    }
+
+    private void luminaShowCryptoClipboardWarning(final CharSequence pasted) {
+        if (getContext() == null) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), resourcesProvider);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaCryptoClipboardGuardTitle));
+        builder.setMessage(LuminaLocale.getString(R.string.LuminaCryptoClipboardGuardMessage));
+        builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaCryptoClipboardGuardPaste), (dialog, which) -> luminaInsertPastedText(pasted));
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        builder.show();
+    }
+
+    // Inserts plain text at the current selection, mirroring handleRichHtmlPaste()'s plain-text
+    // branch. Used when the user confirms a guarded crypto-address paste ("Paste anyway").
+    private void luminaInsertPastedText(CharSequence pasted) {
+        if (messageEditText == null || messageEditText.getText() == null || pasted == null) {
+            return;
+        }
+        try {
+            final int len = messageEditText.getText().length();
+            int start = Math.max(0, Math.min(messageEditText.getSelectionStart(), messageEditText.getSelectionEnd()));
+            int end = Math.min(len, Math.max(messageEditText.getSelectionStart(), messageEditText.getSelectionEnd()));
+            if (end < start) {
+                end = start;
+            }
+            messageEditText.setText(messageEditText.getText().replace(start, end, pasted));
+            messageEditText.setSelection(Math.min(start + pasted.length(), messageEditText.getText().length()));
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
     }
 
     // ===== LuminaGram: quick reply templates =====

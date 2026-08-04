@@ -42,6 +42,7 @@ public class LuminaPrivacyActivity extends BaseFragment {
     private static final int ID_HIDE_OWN_PHONE = 8;
     private static final int ID_HIDE_NOTIF_CONTENT = 9;
     private static final int ID_LINK_SAFETY = 10;
+    private static final int ID_CRYPTO_CLIPBOARD_GUARD = 11;
 
     private UniversalRecyclerView listView;
 
@@ -102,6 +103,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_LINK_SAFETY, LuminaLocale.getString(R.string.LuminaPrivacyLinkSafety))
                 .setChecked(LuminaConfig.getBoolean("linkSafetyCheck", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyLinkSafetyInfo)));
+        items.add(UItem.asSwitch(ID_CRYPTO_CLIPBOARD_GUARD, LuminaLocale.getString(R.string.LuminaPrivacyCryptoClipboardGuard))
+                .setChecked(LuminaConfig.getBoolean("cryptoClipboardGuard", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyCryptoClipboardGuardInfo)));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacyNotificationsHeader)));
         items.add(UItem.asSwitch(ID_HIDE_NOTIF_CONTENT, LuminaLocale.getString(R.string.LuminaPrivacyHideNotifContent))
@@ -141,6 +145,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
                 break;
             case ID_LINK_SAFETY:
                 LuminaConfig.putBoolean("linkSafetyCheck", !LuminaConfig.getBoolean("linkSafetyCheck", false));
+                break;
+            case ID_CRYPTO_CLIPBOARD_GUARD:
+                LuminaConfig.putBoolean("cryptoClipboardGuard", !LuminaConfig.getBoolean("cryptoClipboardGuard", false));
                 break;
         }
         if (listView != null && listView.adapter != null) {

@@ -11220,6 +11220,12 @@
     <string name="LuminaLinkSafetyWarnPunycode">This address uses encoded (punycode) characters that can imitate a well-known site.</string>
     <string name="LuminaLinkSafetyWarnMixedScript">This address mixes letters from different alphabets, a common look-alike trick.</string>
     <string name="LuminaLinkSafetyWarnShortener">This is a link shortener — the real destination stays hidden until you open it.</string>
+    <!-- LuminaGram crypto address clipboard guard (anti-scam, wave11) -->
+    <string name="LuminaPrivacyCryptoClipboardGuard">Crypto address paste guard</string>
+    <string name="LuminaPrivacyCryptoClipboardGuardInfo">Warn when you paste what looks like a crypto wallet address into the message box. Clipboard-hijacking malware can silently swap a copied address for a scammer\'s — this asks you to double-check before it is inserted. Checks run offline on your device.</string>
+    <string name="LuminaCryptoClipboardGuardTitle">Check this crypto address</string>
+    <string name="LuminaCryptoClipboardGuardMessage">This looks like a crypto wallet address. Malware can swap a copied address for a scammer\'s — double-check it matches the one you intended before sending.</string>
+    <string name="LuminaCryptoClipboardGuardPaste">Paste anyway</string>
     <!-- LuminaGram hide notification content (wave9) -->
     <string name="LuminaPrivacyNotificationsHeader">Notifications</string>
     <string name="LuminaPrivacyHideNotifContent">Hide notification content</string>
