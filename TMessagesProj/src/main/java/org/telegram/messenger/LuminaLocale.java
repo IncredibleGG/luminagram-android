@@ -216,6 +216,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaClearAllCache", "清除所有缓存");
         zhHans.put("LuminaClearAllCacheConfirm", "这将从此设备删除所有缓存的媒体、文件和临时数据。你的消息和账号不受影响。");
         zhHans.put("LuminaTranslateSelection", "翻译");
+        zhHans.put("SaveCurrentFrame", "保存当前帧");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -406,6 +407,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaClearAllCache", "清除所有快取");
         zhHant.put("LuminaClearAllCacheConfirm", "這將從此裝置刪除所有快取的媒體、檔案和暫存資料。你的訊息和帳號不受影響。");
         zhHant.put("LuminaTranslateSelection", "翻譯");
+        zhHant.put("SaveCurrentFrame", "儲存目前影格");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -595,6 +597,7 @@ public final class LuminaLocale {
         ar.put("LuminaClearAllCache", "مسح كل ذاكرة التخزين المؤقت");
         ar.put("LuminaClearAllCacheConfirm", "سيؤدي هذا إلى إزالة جميع الوسائط والملفات والبيانات المؤقتة المخزنة من هذا الجهاز. لن تتأثر رسائلك وحسابك.");
         ar.put("LuminaTranslateSelection", "ترجمة");
+        ar.put("SaveCurrentFrame", "حفظ الإطار الحالي");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -784,6 +787,7 @@ public final class LuminaLocale {
         ru.put("LuminaClearAllCache", "Очистить весь кэш");
         ru.put("LuminaClearAllCacheConfirm", "Это удалит все кэшированные медиафайлы, файлы и временные данные с этого устройства. Ваши сообщения и аккаунт не затрагиваются.");
         ru.put("LuminaTranslateSelection", "Перевести");
+        ru.put("SaveCurrentFrame", "Сохранить текущий кадр");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -973,6 +977,7 @@ public final class LuminaLocale {
         fa.put("LuminaClearAllCache", "پاک کردن همه حافظه پنهان");
         fa.put("LuminaClearAllCacheConfirm", "این کار همه رسانه‌ها، فایل‌ها و داده‌های موقت ذخیره‌شده را از این دستگاه حذف می‌کند. پیام‌ها و حساب شما تحت تأثیر قرار نمی‌گیرد.");
         fa.put("LuminaTranslateSelection", "ترجمه");
+        fa.put("SaveCurrentFrame", "ذخیره فریم فعلی");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1162,6 +1167,7 @@ public final class LuminaLocale {
         tr.put("LuminaClearAllCache", "Tüm önbelleği temizle");
         tr.put("LuminaClearAllCacheConfirm", "Bu işlem, önbelleğe alınmış tüm medyayı, dosyaları ve geçici verileri bu cihazdan kaldırır. Mesajlarınız ve hesabınız etkilenmez.");
         tr.put("LuminaTranslateSelection", "Çevir");
+        tr.put("SaveCurrentFrame", "Geçerli kareyi kaydet");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1351,6 +1357,7 @@ public final class LuminaLocale {
         es.put("LuminaClearAllCache", "Borrar toda la caché");
         es.put("LuminaClearAllCacheConfirm", "Esto eliminará de este dispositivo todos los archivos multimedia, archivos y datos temporales en caché. Tus mensajes y tu cuenta no se verán afectados.");
         es.put("LuminaTranslateSelection", "Traducir");
+        es.put("SaveCurrentFrame", "Guardar fotograma actual");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1540,6 +1547,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaClearAllCache", "Limpar todo o cache");
         ptBr.put("LuminaClearAllCacheConfirm", "Isso removerá deste dispositivo todas as mídias, arquivos e dados temporários em cache. Suas mensagens e sua conta não serão afetadas.");
         ptBr.put("LuminaTranslateSelection", "Traduzir");
+        ptBr.put("SaveCurrentFrame", "Salvar quadro atual");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1729,6 +1737,7 @@ public final class LuminaLocale {
         id.put("LuminaClearAllCache", "Hapus semua cache");
         id.put("LuminaClearAllCacheConfirm", "Ini akan menghapus semua media, berkas, dan data sementara yang tersimpan dari perangkat ini. Pesan dan akun Anda tidak terpengaruh.");
         id.put("LuminaTranslateSelection", "Terjemahkan");
+        id.put("SaveCurrentFrame", "Simpan bingkai saat ini");
         T.put("id", id);
     }
 
