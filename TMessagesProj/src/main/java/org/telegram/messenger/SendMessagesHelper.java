@@ -4746,6 +4746,9 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
             if (newMsg.random_id == 0) {
                 newMsg.random_id = getNextRandomId();
             }
+            // LuminaGram: correlate a translate-before-send original with this outgoing text
+            // message via its freshly-assigned random_id (no-op unless a matching TBS send is pending).
+            LuminaTBS.onOutgoingText(peer, newMsg.random_id, newMsg.message);
             if (quick_reply_shortcut != null || quick_reply_shortcut_id != 0) {
                 if (quick_reply_shortcut_id != 0) {
                     TLRPC.TL_inputQuickReplyShortcutId shortcut = new TLRPC.TL_inputQuickReplyShortcutId();

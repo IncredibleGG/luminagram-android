@@ -135,6 +135,7 @@ import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaTranslator;
 import org.telegram.messenger.LuminaTranslators;
+import org.telegram.messenger.LuminaTBS;
 import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
@@ -7964,7 +7965,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         // confirmation, so send that translation straight away (no extra request, no dialog).
         if (livePreviewVisible && luminaPreviewTranslatedText != null
                 && luminaPreviewTranslatedFor != null && luminaPreviewTranslatedFor.equals(original.trim())) {
-            luminaSendPreparedText(luminaPreviewTranslatedText, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            luminaSendTranslatedText(original, luminaPreviewTranslatedText, notify, scheduleDate, scheduleRepeatPeriod, payStars);
             return;
         }
         final String toLang = TranslateAlert2.getToLanguage();
@@ -8008,14 +8009,14 @@ public class ChatActivityEnterView extends FrameLayout implements
             luminaShowTranslatePreview(original, translated, toLang, notify, scheduleDate, scheduleRepeatPeriod, payStars);
         } else {
             // Live panel visible (panel = confirmation) or confirm off: send the translation.
-            luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            luminaSendTranslatedText(original, translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
         }
     }
 
     private void luminaShowTranslatePreview(final String original, final String translated, final String toLang, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
         final Context context = getContext();
         if (context == null || parentActivity == null) {
-            luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            luminaSendTranslatedText(original, translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
             return;
         }
         String langName = TranslateAlert2.capitalFirst(TranslateAlert2.languageName(toLang));
@@ -8029,7 +8030,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         final AlertDialog.Builder builder = new AlertDialog.Builder(context, resourcesProvider);
         builder.setTitle(LuminaLocale.getString(R.string.LuminaTranslateBeforeSend));
         builder.setMessage(body);
-        builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaSendTranslation), (dialog, which) -> luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars));
+        builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaSendTranslation), (dialog, which) -> luminaSendTranslatedText(original, translated, notify, scheduleDate, scheduleRepeatPeriod, payStars));
         builder.setNeutralButton(LuminaLocale.getString(R.string.LuminaSendOriginal), (dialog, which) -> luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars));
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
         builder.show();
@@ -8040,6 +8041,18 @@ public class ChatActivityEnterView extends FrameLayout implements
         sb.append(label);
         sb.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, sb.length(), android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         sb.append("\n").append(value);
+    }
+
+    // LuminaGram: send a translate-before-send TRANSLATION while remembering its pre-translation
+    // original. We stash the pending {dialog, translated, original} right before dispatch; when
+    // SendMessagesHelper assigns the outgoing text message's random_id it correlates the two
+    // (matching on dialog + exact sent text) so the sent bubble can later reveal the original.
+    // Only called from translation-send paths, so nothing is stored when the original is sent.
+    private void luminaSendTranslatedText(String original, CharSequence translated, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
+        if (translated != null && original != null && !translated.toString().equals(original)) {
+            LuminaTBS.setPending(dialog_id, translated.toString(), original);
+        }
+        luminaSendPreparedText(translated, notify, scheduleDate, scheduleRepeatPeriod, payStars);
     }
 
     private void luminaSendPreparedText(CharSequence text, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
