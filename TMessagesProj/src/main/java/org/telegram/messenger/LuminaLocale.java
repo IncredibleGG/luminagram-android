@@ -236,6 +236,10 @@ public final class LuminaLocale {
         zhHans.put("LuminaPrivacyHideNotifContent", "隐藏通知内容");
         zhHans.put("LuminaPrivacyHideNotifContentInfo", "开启后，所有通知仅显示应用名称和通用的「新消息」，隐藏发送者与消息预览。");
         zhHans.put("LuminaHiddenNotificationText", "新消息");
+        zhHans.put("LuminaPrivateNote", "私密备注");
+        zhHans.put("LuminaPrivateNoteEmpty", "点按以添加私密备注");
+        zhHans.put("LuminaPrivateNoteHint", "备注（仅你可见）");
+        zhHans.put("LuminaPrivateNoteTagsHint", "标签，以逗号分隔");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -446,6 +450,10 @@ public final class LuminaLocale {
         zhHant.put("LuminaPrivacyHideNotifContent", "隱藏通知內容");
         zhHant.put("LuminaPrivacyHideNotifContentInfo", "開啟後，所有通知僅顯示應用程式名稱和通用的「新訊息」，隱藏寄件者與訊息預覽。");
         zhHant.put("LuminaHiddenNotificationText", "新訊息");
+        zhHant.put("LuminaPrivateNote", "私密備註");
+        zhHant.put("LuminaPrivateNoteEmpty", "點按以新增私密備註");
+        zhHant.put("LuminaPrivateNoteHint", "備註（僅你可見）");
+        zhHant.put("LuminaPrivateNoteTagsHint", "標籤，以逗號分隔");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -655,6 +663,10 @@ public final class LuminaLocale {
         ar.put("LuminaPrivacyHideNotifContent", "إخفاء محتوى الإشعارات");
         ar.put("LuminaPrivacyHideNotifContentInfo", "عند التفعيل، يعرض كل إشعار اسم التطبيق فقط ونصًا عامًا هو «رسالة جديدة»، مع إخفاء المُرسِل ومعاينة الرسالة.");
         ar.put("LuminaHiddenNotificationText", "رسالة جديدة");
+        ar.put("LuminaPrivateNote", "ملاحظة خاصة");
+        ar.put("LuminaPrivateNoteEmpty", "اضغط لإضافة ملاحظة خاصة");
+        ar.put("LuminaPrivateNoteHint", "ملاحظة (يمكنك أنت وحدك رؤيتها)");
+        ar.put("LuminaPrivateNoteTagsHint", "وسوم مفصولة بفواصل");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -864,6 +876,10 @@ public final class LuminaLocale {
         ru.put("LuminaPrivacyHideNotifContent", "Скрывать содержимое уведомлений");
         ru.put("LuminaPrivacyHideNotifContentInfo", "Когда включено, каждое уведомление показывает только название приложения и общий текст «Новое сообщение», скрывая отправителя и превью сообщения.");
         ru.put("LuminaHiddenNotificationText", "Новое сообщение");
+        ru.put("LuminaPrivateNote", "Личная заметка");
+        ru.put("LuminaPrivateNoteEmpty", "Нажмите, чтобы добавить личную заметку");
+        ru.put("LuminaPrivateNoteHint", "Заметка (видна только вам)");
+        ru.put("LuminaPrivateNoteTagsHint", "Теги через запятую");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1073,6 +1089,10 @@ public final class LuminaLocale {
         fa.put("LuminaPrivacyHideNotifContent", "پنهان‌کردن محتوای اعلان‌ها");
         fa.put("LuminaPrivacyHideNotifContentInfo", "وقتی روشن باشد، هر اعلان فقط نام برنامه و متن عمومی «پیام جدید» را نشان می‌دهد و فرستنده و پیش‌نمایش پیام پنهان می‌ماند.");
         fa.put("LuminaHiddenNotificationText", "پیام جدید");
+        fa.put("LuminaPrivateNote", "یادداشت خصوصی");
+        fa.put("LuminaPrivateNoteEmpty", "برای افزودن یادداشت خصوصی ضربه بزنید");
+        fa.put("LuminaPrivateNoteHint", "یادداشت (فقط شما می‌بینید)");
+        fa.put("LuminaPrivateNoteTagsHint", "برچسب‌ها، جدا شده با کاما");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1282,6 +1302,10 @@ public final class LuminaLocale {
         tr.put("LuminaPrivacyHideNotifContent", "Bildirim içeriğini gizle");
         tr.put("LuminaPrivacyHideNotifContentInfo", "Açıkken her bildirim yalnızca uygulama adını ve genel bir «Yeni mesaj» metnini gösterir; gönderen ve mesaj önizlemesi gizli kalır.");
         tr.put("LuminaHiddenNotificationText", "Yeni mesaj");
+        tr.put("LuminaPrivateNote", "Özel not");
+        tr.put("LuminaPrivateNoteEmpty", "Özel not eklemek için dokunun");
+        tr.put("LuminaPrivateNoteHint", "Not (yalnızca siz görebilirsiniz)");
+        tr.put("LuminaPrivateNoteTagsHint", "Etiketler, virgülle ayrılmış");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -1491,6 +1515,10 @@ public final class LuminaLocale {
         es.put("LuminaPrivacyHideNotifContent", "Ocultar el contenido de las notificaciones");
         es.put("LuminaPrivacyHideNotifContentInfo", "Cuando está activado, cada notificación muestra solo el nombre de la app y un texto genérico «Mensaje nuevo»; el remitente y la vista previa quedan ocultos.");
         es.put("LuminaHiddenNotificationText", "Mensaje nuevo");
+        es.put("LuminaPrivateNote", "Nota privada");
+        es.put("LuminaPrivateNoteEmpty", "Toca para añadir una nota privada");
+        es.put("LuminaPrivateNoteHint", "Nota (solo tú puedes verla)");
+        es.put("LuminaPrivateNoteTagsHint", "Etiquetas separadas por comas");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -1700,6 +1728,10 @@ public final class LuminaLocale {
         ptBr.put("LuminaPrivacyHideNotifContent", "Ocultar conteúdo das notificações");
         ptBr.put("LuminaPrivacyHideNotifContentInfo", "Quando ativado, cada notificação mostra apenas o nome do app e um texto genérico «Nova mensagem»; o remetente e a prévia ficam ocultos.");
         ptBr.put("LuminaHiddenNotificationText", "Nova mensagem");
+        ptBr.put("LuminaPrivateNote", "Nota privada");
+        ptBr.put("LuminaPrivateNoteEmpty", "Toque para adicionar uma nota privada");
+        ptBr.put("LuminaPrivateNoteHint", "Nota (só você pode ver)");
+        ptBr.put("LuminaPrivateNoteTagsHint", "Tags separadas por vírgula");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -1909,6 +1941,10 @@ public final class LuminaLocale {
         id.put("LuminaPrivacyHideNotifContent", "Sembunyikan isi notifikasi");
         id.put("LuminaPrivacyHideNotifContentInfo", "Saat aktif, setiap notifikasi hanya menampilkan nama aplikasi dan teks umum «Pesan baru»; pengirim dan pratinjau pesan tetap tersembunyi.");
         id.put("LuminaHiddenNotificationText", "Pesan baru");
+        id.put("LuminaPrivateNote", "Catatan pribadi");
+        id.put("LuminaPrivateNoteEmpty", "Ketuk untuk menambah catatan pribadi");
+        id.put("LuminaPrivateNoteHint", "Catatan (hanya Anda yang bisa melihat)");
+        id.put("LuminaPrivateNoteTagsHint", "Tag, dipisahkan koma");
         T.put("id", id);
     }
 
