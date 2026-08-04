@@ -168,6 +168,9 @@ public final class LuminaLocale {
         zhHans.put("LuminaMediaAutoPauseBgVideoInfo", "当你离开 LuminaGram 时，自动暂停正在播放的视频。");
         zhHans.put("LuminaMediaUnlockAudioSpeed", "长音频的倍速控制");
         zhHans.put("LuminaMediaUnlockAudioSpeedInfo", "为音乐和长音频文件显示播放倍速控制，而不仅仅是语音消息。");
+        zhHans.put("LuminaMediaSaveFolder", "保存媒体到文件夹");
+        zhHans.put("LuminaMediaSaveFolderInfo", "保存到相册的照片和视频会存入以此命名的相册（位于 Pictures 和 Movies 下），而非默认的 Telegram 文件夹。留空则使用 Telegram 文件夹。");
+        zhHans.put("LuminaMediaSaveFolderHint", "文件夹名称");
         zhHans.put("LuminaCalculatorError", "错误");
         zhHans.put("LuminaDisguiseTitle", "应用伪装");
         zhHans.put("LuminaDisguiseSectionHeader", "应用伪装");
@@ -340,6 +343,9 @@ public final class LuminaLocale {
         zhHant.put("LuminaMediaAutoPauseBgVideoInfo", "當你離開 LuminaGram 時，自動暫停正在播放的影片。");
         zhHant.put("LuminaMediaUnlockAudioSpeed", "長音訊的倍速控制");
         zhHant.put("LuminaMediaUnlockAudioSpeedInfo", "為音樂和長音訊檔案顯示播放倍速控制，而不僅是語音訊息。");
+        zhHant.put("LuminaMediaSaveFolder", "儲存媒體到資料夾");
+        zhHant.put("LuminaMediaSaveFolderInfo", "儲存到相簿的相片和影片會存入以此命名的相簿（位於 Pictures 和 Movies 下），而非預設的 Telegram 資料夾。留空則使用 Telegram 資料夾。");
+        zhHant.put("LuminaMediaSaveFolderHint", "資料夾名稱");
         zhHant.put("LuminaCalculatorError", "錯誤");
         zhHant.put("LuminaDisguiseTitle", "應用偽裝");
         zhHant.put("LuminaDisguiseSectionHeader", "應用偽裝");
@@ -512,6 +518,9 @@ public final class LuminaLocale {
         ar.put("LuminaMediaAutoPauseBgVideoInfo", "إيقاف الفيديو قيد التشغيل مؤقتًا تلقائيًا عند مغادرتك LuminaGram.");
         ar.put("LuminaMediaUnlockAudioSpeed", "التحكم في السرعة للمقاطع الصوتية الطويلة");
         ar.put("LuminaMediaUnlockAudioSpeedInfo", "إظهار عنصر التحكم في سرعة التشغيل للموسيقى والملفات الصوتية الطويلة، وليس الرسائل الصوتية فقط.");
+        ar.put("LuminaMediaSaveFolder", "حفظ الوسائط في مجلد");
+        ar.put("LuminaMediaSaveFolderInfo", "تُحفظ الصور ومقاطع الفيديو التي تحفظها في معرض الصور داخل ألبوم بهذا الاسم (ضمن Pictures وMovies) بدلاً من مجلد Telegram الافتراضي. اتركه فارغًا لاستخدام مجلد Telegram.");
+        ar.put("LuminaMediaSaveFolderHint", "اسم المجلد");
         ar.put("LuminaDisguiseTitle", "تمويه التطبيق");
         ar.put("LuminaDisguiseSectionHeader", "تمويه التطبيق");
         ar.put("LuminaDisguiseEnable", "تفعيل تمويه التطبيق");
@@ -683,6 +692,9 @@ public final class LuminaLocale {
         ru.put("LuminaMediaAutoPauseBgVideoInfo", "Автоматически ставить воспроизводимое видео на паузу, когда вы покидаете LuminaGram.");
         ru.put("LuminaMediaUnlockAudioSpeed", "Управление скоростью для длинных аудио");
         ru.put("LuminaMediaUnlockAudioSpeedInfo", "Показывать регулятор скорости воспроизведения для музыки и длинных аудиофайлов, а не только для голосовых сообщений.");
+        ru.put("LuminaMediaSaveFolder", "Сохранять медиа в папку");
+        ru.put("LuminaMediaSaveFolderInfo", "Фотографии и видео, сохраняемые в галерею, попадают в альбом с этим именем (в Pictures и Movies) вместо стандартной папки Telegram. Оставьте пустым, чтобы использовать папку Telegram.");
+        ru.put("LuminaMediaSaveFolderHint", "Имя папки");
         ru.put("LuminaDisguiseTitle", "Маскировка приложения");
         ru.put("LuminaDisguiseSectionHeader", "Маскировка приложения");
         ru.put("LuminaDisguiseEnable", "Включить маскировку");
@@ -854,6 +866,9 @@ public final class LuminaLocale {
         fa.put("LuminaMediaAutoPauseBgVideoInfo", "هنگام خروج از LuminaGram، ویدیوی در حال پخش به‌طور خودکار متوقف می‌شود.");
         fa.put("LuminaMediaUnlockAudioSpeed", "کنترل سرعت برای صداهای طولانی");
         fa.put("LuminaMediaUnlockAudioSpeedInfo", "نمایش کنترل سرعت پخش برای موسیقی و فایل‌های صوتی طولانی، نه فقط پیام‌های صوتی.");
+        fa.put("LuminaMediaSaveFolder", "ذخیره رسانه در پوشه");
+        fa.put("LuminaMediaSaveFolderInfo", "عکس‌ها و ویدیوهایی که در گالری ذخیره می‌کنید به‌جای پوشه پیش‌فرض Telegram، در آلبومی با این نام (در Pictures و Movies) قرار می‌گیرند. برای استفاده از پوشه Telegram آن را خالی بگذارید.");
+        fa.put("LuminaMediaSaveFolderHint", "نام پوشه");
         fa.put("LuminaDisguiseTitle", "استتار برنامه");
         fa.put("LuminaDisguiseSectionHeader", "استتار برنامه");
         fa.put("LuminaDisguiseEnable", "فعال‌سازی استتار برنامه");
@@ -1025,6 +1040,9 @@ public final class LuminaLocale {
         tr.put("LuminaMediaAutoPauseBgVideoInfo", "LuminaGram'dan ayrıldığınızda oynatılan videoyu otomatik olarak duraklatır.");
         tr.put("LuminaMediaUnlockAudioSpeed", "Uzun sesler için hız denetimi");
         tr.put("LuminaMediaUnlockAudioSpeedInfo", "Hız denetimini yalnızca sesli mesajlar için değil, müzik ve uzun ses dosyaları için de gösterir.");
+        tr.put("LuminaMediaSaveFolder", "Medyayı klasöre kaydet");
+        tr.put("LuminaMediaSaveFolderInfo", "Galeriye kaydettiğiniz fotoğraflar ve videolar, varsayılan Telegram klasörü yerine bu adı taşıyan bir albüme (Pictures ve Movies altında) kaydedilir. Telegram klasörünü kullanmak için boş bırakın.");
+        tr.put("LuminaMediaSaveFolderHint", "Klasör adı");
         tr.put("LuminaDisguiseTitle", "Uygulama gizleme");
         tr.put("LuminaDisguiseSectionHeader", "Uygulama gizleme");
         tr.put("LuminaDisguiseEnable", "Uygulama gizlemeyi etkinleştir");
@@ -1196,6 +1214,9 @@ public final class LuminaLocale {
         es.put("LuminaMediaAutoPauseBgVideoInfo", "Pausa automáticamente el video en reproducción cuando sales de LuminaGram.");
         es.put("LuminaMediaUnlockAudioSpeed", "Control de velocidad para audios largos");
         es.put("LuminaMediaUnlockAudioSpeedInfo", "Muestra el control de velocidad de reproducción para música y archivos de audio largos, no solo para los mensajes de voz.");
+        es.put("LuminaMediaSaveFolder", "Guardar multimedia en carpeta");
+        es.put("LuminaMediaSaveFolderInfo", "Las fotos y los videos que guardas en tu galería se colocan en un álbum con este nombre (en Pictures y Movies) en lugar de la carpeta Telegram predeterminada. Déjalo vacío para usar la carpeta Telegram.");
+        es.put("LuminaMediaSaveFolderHint", "Nombre de la carpeta");
         es.put("LuminaDisguiseTitle", "Disfraz de la app");
         es.put("LuminaDisguiseSectionHeader", "Disfraz de la app");
         es.put("LuminaDisguiseEnable", "Activar disfraz de la app");
@@ -1367,6 +1388,9 @@ public final class LuminaLocale {
         ptBr.put("LuminaMediaAutoPauseBgVideoInfo", "Pausa automaticamente o vídeo em reprodução quando você sai do LuminaGram.");
         ptBr.put("LuminaMediaUnlockAudioSpeed", "Controle de velocidade para áudios longos");
         ptBr.put("LuminaMediaUnlockAudioSpeedInfo", "Mostra o controle de velocidade de reprodução para música e arquivos de áudio longos, não apenas para mensagens de voz.");
+        ptBr.put("LuminaMediaSaveFolder", "Salvar mídia na pasta");
+        ptBr.put("LuminaMediaSaveFolderInfo", "As fotos e os vídeos que você salva na galeria vão para um álbum com este nome (em Pictures e Movies) em vez da pasta Telegram padrão. Deixe em branco para usar a pasta Telegram.");
+        ptBr.put("LuminaMediaSaveFolderHint", "Nome da pasta");
         ptBr.put("LuminaDisguiseTitle", "Disfarce do app");
         ptBr.put("LuminaDisguiseSectionHeader", "Disfarce do app");
         ptBr.put("LuminaDisguiseEnable", "Ativar disfarce do app");
@@ -1538,6 +1562,9 @@ public final class LuminaLocale {
         id.put("LuminaMediaAutoPauseBgVideoInfo", "Otomatis menjeda video yang sedang diputar saat Anda meninggalkan LuminaGram.");
         id.put("LuminaMediaUnlockAudioSpeed", "Kontrol kecepatan untuk audio panjang");
         id.put("LuminaMediaUnlockAudioSpeedInfo", "Menampilkan kontrol kecepatan pemutaran untuk musik dan file audio panjang, bukan hanya pesan suara.");
+        id.put("LuminaMediaSaveFolder", "Simpan media ke folder");
+        id.put("LuminaMediaSaveFolderInfo", "Foto dan video yang Anda simpan ke galeri akan masuk ke album dengan nama ini (di Pictures dan Movies) alih-alih folder Telegram bawaan. Biarkan kosong untuk menggunakan folder Telegram.");
+        id.put("LuminaMediaSaveFolderHint", "Nama folder");
         id.put("LuminaDisguiseTitle", "Penyamaran aplikasi");
         id.put("LuminaDisguiseSectionHeader", "Penyamaran aplikasi");
         id.put("LuminaDisguiseEnable", "Aktifkan penyamaran aplikasi");
