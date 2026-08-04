@@ -1102,6 +1102,28 @@ public class TranslateController extends BaseController {
                     }
                 }
 
+                // LuminaGram: route incoming per-message translation through the selected provider
+                // when it is not Telegram. Providers translate one message at a time (batching is not
+                // available to them) but feed the result back into the exact same callback/cache path
+                // TranslateController already uses, so the in-bubble show-original/translation UI works
+                // unchanged. When the provider IS Telegram (the default) this is skipped and the efficient
+                // server-side batch TL_messages_translateText path below runs untouched (zero regression).
+                if (!"telegram".equals(LuminaTranslators.current().id())) {
+                    final String toLanguage = pendingTranslation1.language;
+                    for (int i = 0; i < pendingTranslation1.messageIds.size(); ++i) {
+                        luminaProviderTranslate(
+                            isTranscription,
+                            dialogId,
+                            pendingTranslation1.messageIds.get(i),
+                            pendingTranslation1.messageTexts.get(i).text,
+                            toLanguage,
+                            loadingTranslations,
+                            pendingTranslation1.callbacks.get(i)
+                        );
+                    }
+                    return;
+                }
+
                 final String method = getMessagesController().translationsAutoEnabled;
                 if ("alternative".equals(method) || "system".equals(method)) {
                     final String toLanguage = pendingTranslation1.language;
@@ -1208,6 +1230,84 @@ public class TranslateController extends BaseController {
             };
             AndroidUtilities.runOnUIThread(pendingTranslation.runnable, pendingTranslation.delay);
             pendingTranslation.delay /= 2;
+        }
+    }
+
+    // LuminaGram: translate a single incoming message through the selected LuminaTranslator provider,
+    // then feed the result back into the same per-message callback the Telegram batch path uses (so the
+    // translation is cached onto the MessageObject and the in-bubble UI updates identically). On provider
+    // error, fall back to Telegram's own translator per message (config translateFallbackTelegram, default
+    // on); if that also fails, surface the existing TranslationFailedAlert bulletins.
+    private void luminaProviderTranslate(
+        boolean isTranscription,
+        long dialogId,
+        int id,
+        String text,
+        String toLanguage,
+        Set<Integer> loadingTranslations,
+        Utilities.Callback4<Boolean, Integer, TLRPC.TL_textWithEntities, String> callback
+    ) {
+        final boolean fallbackTelegram = LuminaConfig.getBoolean("translateFallbackTelegram", true);
+        LuminaTranslators.current().translate(text, toLanguage, new LuminaTranslator.Callback() {
+            @Override
+            public void onResult(String translated, String detectedSourceLang) {
+                if (translated == null) {
+                    onError(false, null);
+                    return;
+                }
+                luminaApplyProviderResult(isTranscription, id, translated, toLanguage, loadingTranslations, callback);
+            }
+
+            @Override
+            public void onError(boolean rateLimited, String message) {
+                if (fallbackTelegram) {
+                    LuminaTranslators.byId("telegram").translate(text, toLanguage, new LuminaTranslator.Callback() {
+                        @Override
+                        public void onResult(String translated, String detectedSourceLang) {
+                            if (translated != null) {
+                                luminaApplyProviderResult(isTranscription, id, translated, toLanguage, loadingTranslations, callback);
+                            } else {
+                                luminaProviderTranslateFailed(dialogId, id, false, loadingTranslations);
+                            }
+                        }
+
+                        @Override
+                        public void onError(boolean rateLimited2, String message2) {
+                            luminaProviderTranslateFailed(dialogId, id, rateLimited2, loadingTranslations);
+                        }
+                    });
+                } else {
+                    luminaProviderTranslateFailed(dialogId, id, rateLimited, loadingTranslations);
+                }
+            }
+        });
+    }
+
+    // LuminaGram: wrap a provider's plain-string translation into a TL_textWithEntities and hand it to the
+    // controller's existing per-message callback, then clear the loading flag exactly like the batch path.
+    private void luminaApplyProviderResult(
+        boolean isTranscription,
+        int id,
+        String translated,
+        String toLanguage,
+        Set<Integer> loadingTranslations,
+        Utilities.Callback4<Boolean, Integer, TLRPC.TL_textWithEntities, String> callback
+    ) {
+        final TLRPC.TL_textWithEntities resultWithEntities = new TLRPC.TL_textWithEntities();
+        resultWithEntities.text = translated;
+        callback.run(isTranscription, id, resultWithEntities, toLanguage);
+        synchronized (this) {
+            loadingTranslations.remove(id);
+        }
+    }
+
+    // LuminaGram: mirror the batch path's terminal-failure handling (stop translating the dialog, show the
+    // rate-limited/generic bulletin) and clear the loading flag so the UI does not spin forever.
+    private void luminaProviderTranslateFailed(long dialogId, int id, boolean rateLimited, Set<Integer> loadingTranslations) {
+        toggleTranslatingDialog(dialogId, false);
+        NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.showBulletin, Bulletin.TYPE_ERROR, getString(rateLimited ? R.string.TranslationFailedAlert1 : R.string.TranslationFailedAlert2));
+        synchronized (this) {
+            loadingTranslations.remove(id);
         }
     }
 
