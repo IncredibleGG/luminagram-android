@@ -110,7 +110,7 @@ public class LuminaSecurityActivity extends BaseFragment {
         builder.setTitle(LuminaLocale.getString(R.string.LuminaSecurityPanicConfirmTitle));
         builder.setMessage(LuminaLocale.getString(R.string.LuminaSecurityPanicConfirmMessage));
         builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaSecurityPanicConfirmButton),
-                (DialogInterface d, int w) -> performPanicWipe());
+                (d, w) -> performPanicWipe());
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
         AlertDialog dialog = builder.create();
         TextView button = (TextView) dialog.getButton(DialogInterface.BUTTON_POSITIVE);
