@@ -24253,7 +24253,7 @@ public class ChatActivity extends BaseFragment implements
 
             // LuminaGram: auto-enable translation when dual-language display is on, so INCOMING
             // messages are translated and shown as original(big)+translation(small).
-            if (LuminaConfig.getBoolean("dualLanguageDisplay", false)
+            if (getMessagesController().getTranslateController().luminaShouldAutoTranslate(dialogId)
                     && !getMessagesController().getTranslateController().isTranslatingDialog(dialogId)
                     && !getMessagesController().getTranslateController().isTranslateDialogHidden(dialogId)) {
                 getMessagesController().getTranslateController().toggleTranslatingDialog(dialogId, true);
@@ -29754,7 +29754,8 @@ public class ChatActivity extends BaseFragment implements
             final long dualLangDialogId = getDialogId();
             final TranslateController translateController = getMessagesController().getTranslateController();
             if (translateController.isFeatureAvailable(dualLangDialogId)
-                    && translateController.isDialogTranslatable(dualLangDialogId)
+                    && (translateController.isDialogTranslatable(dualLangDialogId)
+                        || translateController.luminaShouldAutoTranslate(dualLangDialogId))
                     && !translateController.isTranslatingDialog(dualLangDialogId)
                     && !translateController.isTranslateDialogHidden(dualLangDialogId)) {
                 translateController.toggleTranslatingDialog(dualLangDialogId, true);
