@@ -11276,6 +11276,13 @@
     <string name="LuminaTranslateBeforeSendConfirmInfo">When on, a preview of the translation appears before sending, so you can choose to send the translation or the original. When off, the translation is sent directly with a single tap.</string>
     <string name="LuminaTranslateBeforeSendEnabled">Translate before send: on</string>
     <string name="LuminaTranslateBeforeSendDisabled">Translate before send: off</string>
+    <string name="LuminaTrSendConfirmTitle">Confirm translation language</string>
+    <string name="LuminaTrSendConfirmMessage">The recipient appears to write in %1$s. Your messages will be translated to this language before sending.</string>
+    <string name="LuminaTrSendConfirmRemember">Confirm and remember</string>
+    <string name="LuminaTrSendChooseOther">Choose another language</string>
+    <string name="LuminaTrSendPickerTitle">Translation language</string>
+    <string name="LuminaTrSendSetLangMenu">Set translation language</string>
+    <string name="LuminaTrSendLangLocked">Messages will be translated to %1$s</string>
     <string name="LuminaArticleTranslate">Translate article</string>
     <string name="LuminaTranslateSelection">Translate</string>
     <!-- LuminaGram multi-provider translation -->

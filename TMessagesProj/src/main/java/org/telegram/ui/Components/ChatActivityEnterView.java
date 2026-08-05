@@ -5183,6 +5183,17 @@ public class ChatActivityEnterView extends FrameLayout implements
                 messageSendPreview = null;
             }
         });
+        // LuminaGram: change this dialog's translate-before-send language any time (auto mode only,
+        // where a per-dialog language is what gets used; a fixed global language ignores the lock).
+        if (LuminaConfig.translateBeforeSend && "auto".equals(LuminaConfig.getString("trSendLang", "auto"))) {
+            options.add(R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaTrSendSetLangMenu), () -> {
+                luminaChooseDialogSendLang();
+                if (messageSendPreview != null) {
+                    messageSendPreview.dismiss(false);
+                    messageSendPreview = null;
+                }
+            });
+        }
         options.setupSelectors();
         if (sendWhenOnlineButton != null) {
             TLRPC.User user = parentFragment == null ? null : parentFragment.getCurrentUser();
@@ -8064,12 +8075,200 @@ public class ChatActivityEnterView extends FrameLayout implements
             luminaSendTranslatedText(original, luminaPreviewTranslatedText, notify, scheduleDate, scheduleRepeatPeriod, payStars);
             return;
         }
-        final String toLang = TranslateAlert2.getToLanguage();
-        // P1-4: from here an async translation round-trip is in flight. Mark it and immediately
-        // capture+clear the composer (original is already captured above): the message visibly
-        // leaves the input like a normal send, a second Send tap is ignored by the guard at the
-        // top of this method, and anything typed during the round-trip is a fresh draft that the
-        // async result must not overwrite.
+        // LuminaGram: translate-before-send targets the configurable SEND language, not the
+        // global read-side "translate-to". Scope + language resolution happens here; the actual
+        // translate round-trip is luminaTranslateAndSend() below.
+        if (!luminaTbsInScope()) {
+            // Out of scope (private/group toggle off): send exactly as typed.
+            luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        final String sendLang = LuminaConfig.getString("trSendLang", "auto");
+        if (sendLang != null && sendLang.length() > 0 && !"auto".equals(sendLang)) {
+            // Global fixed send language: no per-dialog lock, no confirm.
+            luminaTranslateAndSend(original, sendLang, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        // "auto": translate into the language locked for THIS dialog. Auto-detect is error-prone
+        // (e.g. Malay vs Indonesian), so instead of silently trusting detection on every send we
+        // ask ONCE per chat and remember the choice; a locked language is the steady state.
+        final String locked = LuminaConfig.getDialogSendLang(dialog_id);
+        if (locked != null && locked.length() > 0) {
+            luminaTranslateAndSend(original, locked, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        luminaConfirmSendLang(original, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+    }
+
+    // LuminaGram: scope gate for translate-before-send. Private (user) chats require
+    // "trScopePrivate"; groups/channels require "trScopeGroup" (both default on).
+    private boolean luminaTbsInScope() {
+        if (DialogObject.isUserDialog(dialog_id)) {
+            return LuminaConfig.getBoolean("trScopePrivate", true);
+        }
+        return LuminaConfig.getBoolean("trScopeGroup", true);
+    }
+
+    // LuminaGram: resolve the target language for the live send-preview panel (NOT the send path,
+    // which resolves inline and can prompt). Returns null = nothing to preview: out of scope, or
+    // "auto" mode before a per-dialog language has been locked (we do not guess a target -- the
+    // one-time confirm at send picks it). A fixed or locked language previews directly.
+    private String luminaResolveSendLang() {
+        if (!luminaTbsInScope()) {
+            return null;
+        }
+        final String sendLang = LuminaConfig.getString("trSendLang", "auto");
+        if (sendLang != null && sendLang.length() > 0 && !"auto".equals(sendLang)) {
+            return sendLang;
+        }
+        final String locked = LuminaConfig.getDialogSendLang(dialog_id);
+        if (locked != null && locked.length() > 0) {
+            return locked;
+        }
+        return null;
+    }
+
+    // LuminaGram: one-time per-dialog confirm for "auto" send language. Detect the recipient's
+    // language; [confirm+remember] LOCKS it for this dialog (never asked again), [choose another]
+    // opens a picker, [cancel] sends the original untranslated and locks nothing. Unknown detection
+    // skips straight to the picker. Reuses luminaTbsInFlight as the double-send guard: the composer
+    // is cleared up front like a normal send and restored if the user backs out without choosing.
+    private void luminaConfirmSendLang(final String original, final boolean livePreviewVisible, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        final Context context = getContext();
+        if (context == null || parentActivity == null) {
+            luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        final String detected = parentFragment == null ? null
+                : parentFragment.getMessagesController().getTranslateController().getDialogDetectedLanguage(dialog_id);
+        final boolean hasDetected = detected != null && detected.length() > 0 && !TranslateController.UNKNOWN_LANGUAGE.equals(detected);
+        // Take the composer now: a second Send tap is ignored by the guard and the message
+        // visibly leaves the input. Restored below if the user aborts (back / tap-outside).
+        luminaTbsInFlight = true;
+        setFieldText("");
+        if (!hasDetected) {
+            // No reliable detection yet: go straight to the picker (no detected default).
+            luminaPickSendLang(original, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        String langName = TranslateAlert2.capitalFirst(TranslateAlert2.languageName(detected));
+        if (langName == null) {
+            langName = detected;
+        }
+        final boolean[] routed = {false};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context, resourcesProvider);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaTrSendConfirmTitle));
+        builder.setMessage(String.format(LuminaLocale.getString(R.string.LuminaTrSendConfirmMessage), langName));
+        builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaTrSendConfirmRemember), (dialog, which) -> {
+            routed[0] = true;
+            LuminaConfig.setDialogSendLang(dialog_id, detected);
+            luminaTranslateAndSend(original, detected, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        });
+        builder.setNeutralButton(LuminaLocale.getString(R.string.LuminaTrSendChooseOther), (dialog, which) -> {
+            routed[0] = true;
+            luminaPickSendLang(original, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        });
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), (dialog, which) -> {
+            routed[0] = true;
+            luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        });
+        builder.setOnDismissListener(dialog -> {
+            if (!routed[0] && luminaTbsInFlight) {
+                // Backed out without choosing: nothing sent, restore the captured draft.
+                luminaTbsInFlight = false;
+                if (messageEditText != null && messageEditText.length() == 0) {
+                    setFieldText(original);
+                }
+            }
+        });
+        builder.show();
+    }
+
+    // LuminaGram: language picker used by the send flow. Picking LOCKS the chosen language for this
+    // dialog and then sends; cancel/back sends the original untranslated (composer restored on a
+    // bare back-out). Entered with luminaTbsInFlight already set and the composer already cleared.
+    private void luminaPickSendLang(final String original, final boolean livePreviewVisible, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        final Context context = getContext();
+        if (context == null || parentActivity == null) {
+            luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        final ArrayList<TranslateController.Language> langs = TranslateController.getLanguages();
+        final CharSequence[] names = new CharSequence[langs.size()];
+        for (int i = 0; i < langs.size(); i++) {
+            names[i] = langs.get(i).displayName;
+        }
+        final boolean[] routed = {false};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context, resourcesProvider);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaTrSendPickerTitle));
+        builder.setItems(names, (dialog, which) -> {
+            if (which < 0 || which >= langs.size()) {
+                return;
+            }
+            routed[0] = true;
+            final String chosen = langs.get(which).code;
+            LuminaConfig.setDialogSendLang(dialog_id, chosen);
+            luminaTranslateAndSend(original, chosen, livePreviewVisible, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        });
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), (dialog, which) -> {
+            routed[0] = true;
+            luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        });
+        builder.setOnDismissListener(dialog -> {
+            if (!routed[0] && luminaTbsInFlight) {
+                luminaTbsInFlight = false;
+                if (messageEditText != null && messageEditText.length() == 0) {
+                    setFieldText(original);
+                }
+            }
+        });
+        builder.show();
+    }
+
+    // LuminaGram: settings-style picker to (re)lock this dialog's translate-before-send language,
+    // reachable any time from the Send long-press menu. Unlike the send-flow picker it never sends
+    // anything -- it only overwrites the per-dialog lock and refreshes the live preview.
+    private void luminaChooseDialogSendLang() {
+        final Context context = getContext();
+        if (context == null || parentActivity == null) {
+            return;
+        }
+        final ArrayList<TranslateController.Language> langs = TranslateController.getLanguages();
+        final CharSequence[] names = new CharSequence[langs.size()];
+        for (int i = 0; i < langs.size(); i++) {
+            names[i] = langs.get(i).displayName;
+        }
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context, resourcesProvider);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaTrSendPickerTitle));
+        builder.setItems(names, (dialog, which) -> {
+            if (which < 0 || which >= langs.size()) {
+                return;
+            }
+            final String chosen = langs.get(which).code;
+            LuminaConfig.setDialogSendLang(dialog_id, chosen);
+            luminaUpdateTranslatePreview();
+            if (parentFragment != null) {
+                String langName = TranslateAlert2.capitalFirst(TranslateAlert2.languageName(chosen));
+                if (langName == null) {
+                    langName = chosen;
+                }
+                BulletinFactory.of(parentFragment).createSimpleBulletin(
+                        R.raw.msg_translate,
+                        String.format(LuminaLocale.getString(R.string.LuminaTrSendLangLocked), langName)
+                ).show();
+            }
+        });
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        builder.show();
+    }
+
+    // LuminaGram: the actual translate round-trip + send once a target language is resolved
+    // (fixed lang, locked lang, or a just-confirmed/picked lang). Provider error falls back to
+    // Telegram, then to send-as-typed -- a bad key or dead endpoint must never block sending.
+    private void luminaTranslateAndSend(final String original, final String toLang, final boolean livePreviewVisible, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        // P1-4: from here an async translation round-trip is in flight. Mark it and clear the
+        // composer (idempotent -- the confirm path already did both): a second Send tap is ignored
+        // and text typed during the round-trip is a fresh draft the async result must not overwrite.
         luminaTbsInFlight = true;
         setFieldText("");
         // Route through the selected provider (Telegram / Google / DeepL / LLM). On a
@@ -8355,7 +8554,9 @@ public class ChatActivityEnterView extends FrameLayout implements
         if (luminaPreviewPanel == null || messageEditText == null) {
             return;
         }
-        final boolean enabled = LuminaConfig.translateBeforeSend && editingMessageObject == null && !recordingAudioVideo;
+        // LuminaGram: also require an in-scope chat with a resolvable send language, so the live
+        // preview never shows a translation the actual send would skip (out of scope / undetected).
+        final boolean enabled = LuminaConfig.translateBeforeSend && editingMessageObject == null && !recordingAudioVideo && luminaResolveSendLang() != null;
         final CharSequence cs = messageEditText.getTextToUse();
         final String text = cs == null ? "" : cs.toString().trim();
         if (!enabled || text.length() == 0) {
@@ -8392,7 +8593,14 @@ public class ChatActivityEnterView extends FrameLayout implements
         if (source == null || source.length() == 0) {
             return;
         }
-        final String toLang = TranslateAlert2.getToLanguage();
+        // LuminaGram: preview into the same configurable SEND language the real send uses, so the
+        // live panel faithfully previews what will be sent. null (out of scope, or auto-mode before
+        // a per-dialog language is locked) -> nothing to preview: hide the panel.
+        final String toLang = luminaResolveSendLang();
+        if (toLang == null) {
+            luminaHideTranslatePreview();
+            return;
+        }
         // A monotonically increasing generation stands in for the old cancellable RPC
         // token: any callback whose generation is stale (newer text typed, or the panel
         // hidden) is simply dropped. Callbacks arrive on the UI thread.

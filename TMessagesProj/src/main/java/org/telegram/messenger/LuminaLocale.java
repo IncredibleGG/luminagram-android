@@ -30,6 +30,13 @@ public final class LuminaLocale {
     static {
         // ---- Simplified Chinese ----
         Map<String, String> zhHans = new HashMap<>();
+        zhHans.put("LuminaTrSendConfirmTitle", "确认翻译语言");
+        zhHans.put("LuminaTrSendConfirmMessage", "检测到对方语言为【%1$s】。你的消息会翻译成这个语言后发送。");
+        zhHans.put("LuminaTrSendConfirmRemember", "确认并记住");
+        zhHans.put("LuminaTrSendChooseOther", "选择其他语言");
+        zhHans.put("LuminaTrSendPickerTitle", "翻译语言");
+        zhHans.put("LuminaTrSendSetLangMenu", "设置此对话的翻译语言");
+        zhHans.put("LuminaTrSendLangLocked", "消息将翻译为 %1$s");
         zhHans.put("LuminaGramSettings", "LuminaGram 设置");
         zhHans.put("LuminaGramSettingsInfo", "专属功能");
         zhHans.put("LuminaGramChatList", "聊天列表");
@@ -330,6 +337,13 @@ public final class LuminaLocale {
 
         // ---- Traditional Chinese ----
         Map<String, String> zhHant = new HashMap<>();
+        zhHant.put("LuminaTrSendConfirmTitle", "確認翻譯語言");
+        zhHant.put("LuminaTrSendConfirmMessage", "偵測到對方語言為【%1$s】。你的訊息會翻成這個語言發送。");
+        zhHant.put("LuminaTrSendConfirmRemember", "確認並記住");
+        zhHant.put("LuminaTrSendChooseOther", "選其他語言");
+        zhHant.put("LuminaTrSendPickerTitle", "翻譯語言");
+        zhHant.put("LuminaTrSendSetLangMenu", "設定此對話翻譯語言");
+        zhHant.put("LuminaTrSendLangLocked", "訊息將翻譯為 %1$s");
         zhHant.put("LuminaGramSettings", "LuminaGram 設定");
         zhHant.put("LuminaGramSettingsInfo", "專屬功能");
         zhHant.put("LuminaGramChatList", "聊天列表");
@@ -630,6 +644,13 @@ public final class LuminaLocale {
 
         // ---- Arabic (RTL) ----
         Map<String, String> ar = new HashMap<>();
+        ar.put("LuminaTrSendConfirmTitle", "تأكيد لغة الترجمة");
+        ar.put("LuminaTrSendConfirmMessage", "يبدو أن الطرف الآخر يكتب بـ %1$s. ستتم ترجمة رسائلك إلى هذه اللغة قبل الإرسال.");
+        ar.put("LuminaTrSendConfirmRemember", "تأكيد وتذكّر");
+        ar.put("LuminaTrSendChooseOther", "اختيار لغة أخرى");
+        ar.put("LuminaTrSendPickerTitle", "لغة الترجمة");
+        ar.put("LuminaTrSendSetLangMenu", "تعيين لغة الترجمة");
+        ar.put("LuminaTrSendLangLocked", "ستتم ترجمة الرسائل إلى %1$s");
         ar.put("LuminaGramSettings", "إعدادات LuminaGram");
         ar.put("LuminaGramSettingsInfo", "ميزات حصرية");
         ar.put("LuminaGramChatList", "قائمة الدردشات");
@@ -929,6 +950,13 @@ public final class LuminaLocale {
 
         // ---- Russian ----
         Map<String, String> ru = new HashMap<>();
+        ru.put("LuminaTrSendConfirmTitle", "Подтвердите язык перевода");
+        ru.put("LuminaTrSendConfirmMessage", "Похоже, собеседник пишет на языке %1$s. Ваши сообщения будут переведены на этот язык перед отправкой.");
+        ru.put("LuminaTrSendConfirmRemember", "Подтвердить и запомнить");
+        ru.put("LuminaTrSendChooseOther", "Выбрать другой язык");
+        ru.put("LuminaTrSendPickerTitle", "Язык перевода");
+        ru.put("LuminaTrSendSetLangMenu", "Задать язык перевода");
+        ru.put("LuminaTrSendLangLocked", "Сообщения будут переведены на %1$s");
         ru.put("LuminaGramSettings", "Настройки LuminaGram");
         ru.put("LuminaGramSettingsInfo", "Эксклюзивные функции");
         ru.put("LuminaGramChatList", "Список чатов");
@@ -1228,6 +1256,13 @@ public final class LuminaLocale {
 
         // ---- Persian / Farsi (RTL) ----
         Map<String, String> fa = new HashMap<>();
+        fa.put("LuminaTrSendConfirmTitle", "تأیید زبان ترجمه");
+        fa.put("LuminaTrSendConfirmMessage", "به نظر می‌رسد مخاطب به زبان %1$s می‌نویسد. پیام‌های شما پیش از ارسال به این زبان ترجمه می‌شوند.");
+        fa.put("LuminaTrSendConfirmRemember", "تأیید و به‌خاطر سپردن");
+        fa.put("LuminaTrSendChooseOther", "انتخاب زبان دیگر");
+        fa.put("LuminaTrSendPickerTitle", "زبان ترجمه");
+        fa.put("LuminaTrSendSetLangMenu", "تنظیم زبان ترجمه");
+        fa.put("LuminaTrSendLangLocked", "پیام‌ها به %1$s ترجمه می‌شوند");
         fa.put("LuminaGramSettings", "تنظیمات LuminaGram");
         fa.put("LuminaGramSettingsInfo", "امکانات ویژه");
         fa.put("LuminaGramChatList", "فهرست گفتگوها");
@@ -1527,6 +1562,13 @@ public final class LuminaLocale {
 
         // ---- Turkish ----
         Map<String, String> tr = new HashMap<>();
+        tr.put("LuminaTrSendConfirmTitle", "Çeviri dilini onayla");
+        tr.put("LuminaTrSendConfirmMessage", "Karşı taraf %1$s yazıyor gibi görünüyor. Mesajlarınız gönderilmeden önce bu dile çevrilecek.");
+        tr.put("LuminaTrSendConfirmRemember", "Onayla ve hatırla");
+        tr.put("LuminaTrSendChooseOther", "Başka bir dil seç");
+        tr.put("LuminaTrSendPickerTitle", "Çeviri dili");
+        tr.put("LuminaTrSendSetLangMenu", "Çeviri dilini ayarla");
+        tr.put("LuminaTrSendLangLocked", "Mesajlar %1$s diline çevrilecek");
         tr.put("LuminaGramSettings", "LuminaGram Ayarları");
         tr.put("LuminaGramSettingsInfo", "Özel özellikler");
         tr.put("LuminaGramChatList", "Sohbet listesi");
@@ -1826,6 +1868,13 @@ public final class LuminaLocale {
 
         // ---- Spanish ----
         Map<String, String> es = new HashMap<>();
+        es.put("LuminaTrSendConfirmTitle", "Confirmar idioma de traducción");
+        es.put("LuminaTrSendConfirmMessage", "Parece que la otra persona escribe en %1$s. Tus mensajes se traducirán a este idioma antes de enviarlos.");
+        es.put("LuminaTrSendConfirmRemember", "Confirmar y recordar");
+        es.put("LuminaTrSendChooseOther", "Elegir otro idioma");
+        es.put("LuminaTrSendPickerTitle", "Idioma de traducción");
+        es.put("LuminaTrSendSetLangMenu", "Definir idioma de traducción");
+        es.put("LuminaTrSendLangLocked", "Los mensajes se traducirán a %1$s");
         es.put("LuminaGramSettings", "Ajustes de LuminaGram");
         es.put("LuminaGramSettingsInfo", "Funciones exclusivas");
         es.put("LuminaGramChatList", "Lista de chats");
@@ -2125,6 +2174,13 @@ public final class LuminaLocale {
 
         // ---- Portuguese (Brazil) — key is pt-br ----
         Map<String, String> ptBr = new HashMap<>();
+        ptBr.put("LuminaTrSendConfirmTitle", "Confirmar idioma da tradução");
+        ptBr.put("LuminaTrSendConfirmMessage", "Parece que a outra pessoa escreve em %1$s. Suas mensagens serão traduzidas para este idioma antes do envio.");
+        ptBr.put("LuminaTrSendConfirmRemember", "Confirmar e lembrar");
+        ptBr.put("LuminaTrSendChooseOther", "Escolher outro idioma");
+        ptBr.put("LuminaTrSendPickerTitle", "Idioma da tradução");
+        ptBr.put("LuminaTrSendSetLangMenu", "Definir idioma da tradução");
+        ptBr.put("LuminaTrSendLangLocked", "As mensagens serão traduzidas para %1$s");
         ptBr.put("LuminaGramSettings", "Configurações do LuminaGram");
         ptBr.put("LuminaGramSettingsInfo", "Recursos exclusivos");
         ptBr.put("LuminaGramChatList", "Lista de conversas");
@@ -2424,6 +2480,13 @@ public final class LuminaLocale {
 
         // ---- Indonesian ----
         Map<String, String> id = new HashMap<>();
+        id.put("LuminaTrSendConfirmTitle", "Konfirmasi bahasa terjemahan");
+        id.put("LuminaTrSendConfirmMessage", "Sepertinya lawan bicara menulis dalam %1$s. Pesan Anda akan diterjemahkan ke bahasa ini sebelum dikirim.");
+        id.put("LuminaTrSendConfirmRemember", "Konfirmasi dan ingat");
+        id.put("LuminaTrSendChooseOther", "Pilih bahasa lain");
+        id.put("LuminaTrSendPickerTitle", "Bahasa terjemahan");
+        id.put("LuminaTrSendSetLangMenu", "Atur bahasa terjemahan");
+        id.put("LuminaTrSendLangLocked", "Pesan akan diterjemahkan ke %1$s");
         id.put("LuminaGramSettings", "Pengaturan LuminaGram");
         id.put("LuminaGramSettingsInfo", "Fitur eksklusif");
         id.put("LuminaGramChatList", "Daftar obrolan");
