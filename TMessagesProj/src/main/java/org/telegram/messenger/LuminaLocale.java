@@ -344,6 +344,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaTranslateThisChat", "翻译此对话");
         zhHans.put("LuminaVaultDoorHint", "密码");
         zhHans.put("LuminaVaultDoorConfirm", "确定");
+        zhHans.put("LuminaNotepadTitle", "笔记");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -662,6 +663,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaTranslateThisChat", "翻譯此對話");
         zhHant.put("LuminaVaultDoorHint", "密碼");
         zhHant.put("LuminaVaultDoorConfirm", "確定");
+        zhHant.put("LuminaNotepadTitle", "筆記");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -979,6 +981,7 @@ public final class LuminaLocale {
         ar.put("LuminaTranslateThisChat", "ترجمة هذه المحادثة");
         ar.put("LuminaVaultDoorHint", "كلمة المرور");
         ar.put("LuminaVaultDoorConfirm", "موافق");
+        ar.put("LuminaNotepadTitle", "الملاحظات");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1296,6 +1299,7 @@ public final class LuminaLocale {
         ru.put("LuminaTranslateThisChat", "Перевести этот чат");
         ru.put("LuminaVaultDoorHint", "Пароль");
         ru.put("LuminaVaultDoorConfirm", "OK");
+        ru.put("LuminaNotepadTitle", "Заметки");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1613,6 +1617,7 @@ public final class LuminaLocale {
         fa.put("LuminaTranslateThisChat", "ترجمهٔ این گفتگو");
         fa.put("LuminaVaultDoorHint", "رمز عبور");
         fa.put("LuminaVaultDoorConfirm", "تأیید");
+        fa.put("LuminaNotepadTitle", "یادداشت‌ها");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1930,6 +1935,7 @@ public final class LuminaLocale {
         tr.put("LuminaTranslateThisChat", "Bu sohbeti çevir");
         tr.put("LuminaVaultDoorHint", "Parola");
         tr.put("LuminaVaultDoorConfirm", "Tamam");
+        tr.put("LuminaNotepadTitle", "Notlar");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2247,6 +2253,7 @@ public final class LuminaLocale {
         es.put("LuminaTranslateThisChat", "Traducir este chat");
         es.put("LuminaVaultDoorHint", "Contraseña");
         es.put("LuminaVaultDoorConfirm", "Aceptar");
+        es.put("LuminaNotepadTitle", "Notas");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2564,6 +2571,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaTranslateThisChat", "Traduzir esta conversa");
         ptBr.put("LuminaVaultDoorHint", "Senha");
         ptBr.put("LuminaVaultDoorConfirm", "OK");
+        ptBr.put("LuminaNotepadTitle", "Notas");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2881,6 +2889,7 @@ public final class LuminaLocale {
         id.put("LuminaTranslateThisChat", "Terjemahkan obrolan ini");
         id.put("LuminaVaultDoorHint", "Kata sandi");
         id.put("LuminaVaultDoorConfirm", "OK");
+        id.put("LuminaNotepadTitle", "Catatan");
         T.put("id", id);
     }
 
