@@ -29744,6 +29744,22 @@ public class ChatActivity extends BaseFragment implements
             getNotificationsController().setOpenedDialogId(dialog_id, getTopicId());
         }
         getMessagesController().setLastVisibleDialogId(dialog_id, chatMode == MODE_SCHEDULED, true);
+
+        // LuminaGram: also auto-enable incoming/whole-chat translation on chat OPEN, not only
+        // via the dialogIsTranslatable notification (which fires unreliably). Strictly gated on
+        // the dualLanguageDisplay preference. Relies on the cached translatable detection so it
+        // no-ops until the dialog is known-translatable; the notification handler still covers
+        // the case where detection completes after open.
+        if (LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+            final long dualLangDialogId = getDialogId();
+            final TranslateController translateController = getMessagesController().getTranslateController();
+            if (translateController.isFeatureAvailable(dualLangDialogId)
+                    && translateController.isDialogTranslatable(dualLangDialogId)
+                    && !translateController.isTranslatingDialog(dualLangDialogId)
+                    && !translateController.isTranslateDialogHidden(dualLangDialogId)) {
+                translateController.toggleTranslatingDialog(dualLangDialogId, true);
+            }
+        }
         if (scrollToTopOnResume) {
             if (scrollToTopUnReadOnResume && scrollToMessage != null) {
                 if (chatListView != null) {

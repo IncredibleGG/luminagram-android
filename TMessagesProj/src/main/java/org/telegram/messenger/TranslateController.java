@@ -91,12 +91,28 @@ public class TranslateController extends BaseController {
     }
 
     public boolean isFeatureAvailable() {
-        return isChatTranslateEnabled() && UserConfig.getInstance(currentAccount).isPremium();
+        if (!isChatTranslateEnabled()) {
+            return false;
+        }
+        // LuminaGram: when the user picked a NON-Telegram provider (their own API key or the
+        // free web engine), incoming/whole-chat translation runs through that provider, not
+        // Telegram's paid server-side service, so the Telegram Premium gate must not apply.
+        // When the provider IS Telegram, keep the Premium requirement unchanged so we never
+        // circumvent Telegram's paid translation.
+        if (!"telegram".equals(LuminaTranslators.current().id())) {
+            return true;
+        }
+        return UserConfig.getInstance(currentAccount).isPremium();
     }
 
     public boolean isFeatureAvailable(long dialogId) {
         if (!isChatTranslateEnabled()) {
             return false;
+        }
+        // LuminaGram: see isFeatureAvailable() above. Bypass the Telegram Premium gate only
+        // when a non-Telegram provider is selected; the Telegram provider keeps the gate.
+        if (!"telegram".equals(LuminaTranslators.current().id())) {
+            return true;
         }
         final TLRPC.Chat chat = getMessagesController().getChat(-dialogId);
         return (
