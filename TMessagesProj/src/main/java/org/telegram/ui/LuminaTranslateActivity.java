@@ -13,7 +13,6 @@ import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaTranslator;
 import org.telegram.messenger.LuminaTranslators;
-import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.messenger.TranslateController;
 import org.telegram.ui.ActionBar.ActionBar;
@@ -32,13 +31,20 @@ import java.util.ArrayList;
 
 /**
  * LuminaGram — auto-translate settings.
- * Mirrors LuminaGramSettingsActivity. Exposes the safe "Translate to" target-language
- * selection (a global setting reused from TranslateAlert2).
+ * Organised as a clear two-direction model:
+ *   1) 發送翻譯 (outgoing): translate-before-send + outgoing language.
+ *   2) 收訊翻譯 (incoming): auto-translate incoming (bilingual) + reading language.
+ *   3) 適用範圍 (scope): apply to private chats / groups.
+ *   4) 翻譯服務商 (provider): bring-your-own-key provider settings.
  */
 public class LuminaTranslateActivity extends BaseFragment {
 
-    private static final int ITEM_TARGET_LANGUAGE = 1;
-    private static final int ITEM_SHOW_BUTTON = 2;
+    // Config keys owned by this screen (consumed by the translate pipeline elsewhere).
+    private static final String KEY_SEND_LANG = "trSendLang";         // default "auto" (recipient's language)
+    private static final String KEY_READ_LANG = "trReadLang";         // default ""     (follow app language)
+    private static final String KEY_SCOPE_PRIVATE = "trScopePrivate"; // default true
+    private static final String KEY_SCOPE_GROUP = "trScopeGroup";     // default true
+
     private static final int ITEM_TRANSLATE_BEFORE_SEND = 3;
     private static final int ITEM_TRANSLATE_BEFORE_SEND_CONFIRM = 4;
     private static final int ITEM_PROVIDER = 5;
@@ -48,6 +54,10 @@ public class LuminaTranslateActivity extends BaseFragment {
     private static final int ITEM_SYSTEM_PROMPT = 9;
     private static final int ITEM_TEST = 10;
     private static final int ITEM_DUAL_LANGUAGE = 11;
+    private static final int ITEM_SEND_LANG = 12;
+    private static final int ITEM_READ_LANG = 13;
+    private static final int ITEM_SCOPE_PRIVATE = 14;
+    private static final int ITEM_SCOPE_GROUP = 15;
 
     private UniversalRecyclerView listView;
 
@@ -77,26 +87,59 @@ public class LuminaTranslateActivity extends BaseFragment {
         return fragmentView;
     }
 
-    private CharSequence currentTargetLanguageName() {
-        String code = TranslateAlert2.getToLanguage();
+    // Display name for a stored code, falling back to the raw code when unknown.
+    private CharSequence languageDisplayName(String code) {
+        if (code == null || code.length() == 0) {
+            return code;
+        }
         String name = TranslateAlert2.capitalFirst(TranslateAlert2.languageName(code));
         return name != null ? name : code;
     }
 
+    // Current value shown on the 送出語言 row.
+    private CharSequence currentSendLanguageName() {
+        String code = LuminaConfig.getString(KEY_SEND_LANG, "auto");
+        if (code == null || code.length() == 0 || "auto".equals(code)) {
+            return LuminaLocale.getString(R.string.LuminaTranslateSendLangAuto);
+        }
+        return languageDisplayName(code);
+    }
+
+    // Current value shown on the 閱讀語言 row.
+    private CharSequence currentReadLanguageName() {
+        String code = LuminaConfig.getString(KEY_READ_LANG, "");
+        if (code == null || code.length() == 0) {
+            return LuminaLocale.getString(R.string.LuminaTranslateReadLangFollow);
+        }
+        return languageDisplayName(code);
+    }
+
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
-        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateHeader)));
-        items.add(UItem.asButton(ITEM_TARGET_LANGUAGE, LuminaLocale.getString(R.string.LuminaTranslateTo), currentTargetLanguageName()));
-        items.add(UItem.asSwitch(ITEM_SHOW_BUTTON, LuminaLocale.getString(R.string.ShowTranslateButton))
-                .setChecked(getMessagesController().getTranslateController().isContextTranslateEnabled()));
-        items.add(UItem.asSwitch(ITEM_DUAL_LANGUAGE, LuminaLocale.getString(R.string.LuminaDualLanguageDisplay))
-                .setChecked(LuminaConfig.getBoolean("dualLanguageDisplay", false)));
+        // ---- 1) Sending (outgoing) ----
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateSendHeader)));
         items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND, LuminaLocale.getString(R.string.LuminaTranslateBeforeSend))
                 .setChecked(LuminaConfig.translateBeforeSend));
+        items.add(UItem.asButton(ITEM_SEND_LANG, LuminaLocale.getString(R.string.LuminaTranslateSendLang), currentSendLanguageName()));
         items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND_CONFIRM, LuminaLocale.getString(R.string.LuminaTranslateBeforeSendConfirm))
                 .setChecked(LuminaConfig.translateBeforeSendConfirm));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaTranslateBeforeSendConfirmInfo)));
 
-        // ---- Multi-provider translation (bring-your-own key) ----
+        // ---- 2) Receiving (incoming) ----
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateReceiveHeader)));
+        items.add(UItem.asSwitch(ITEM_DUAL_LANGUAGE, LuminaLocale.getString(R.string.LuminaDualLanguageDisplay))
+                .setChecked(LuminaConfig.getBoolean("dualLanguageDisplay", false)));
+        items.add(UItem.asButton(ITEM_READ_LANG, LuminaLocale.getString(R.string.LuminaTranslateReadLang), currentReadLanguageName()));
+        items.add(UItem.asShadow(null));
+
+        // ---- 3) Scope ----
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateScopeHeader)));
+        items.add(UItem.asSwitch(ITEM_SCOPE_PRIVATE, LuminaLocale.getString(R.string.LuminaTranslateScopePrivate))
+                .setChecked(LuminaConfig.getBoolean(KEY_SCOPE_PRIVATE, true)));
+        items.add(UItem.asSwitch(ITEM_SCOPE_GROUP, LuminaLocale.getString(R.string.LuminaTranslateScopeGroup))
+                .setChecked(LuminaConfig.getBoolean(KEY_SCOPE_GROUP, true)));
+        items.add(UItem.asShadow(null));
+
+        // ---- 4) Multi-provider translation (bring-your-own key) ----
         final LuminaTranslator provider = LuminaTranslators.current();
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateProviderHeader)));
         items.add(UItem.asButton(ITEM_PROVIDER, LuminaLocale.getString(R.string.LuminaTranslateProvider), provider.displayName()));
@@ -138,24 +181,32 @@ public class LuminaTranslateActivity extends BaseFragment {
 
     private void onClick(UItem item, View view, int position, float x, float y) {
         switch (item.id) {
-            case ITEM_TARGET_LANGUAGE:
-                showLanguagePicker();
+            case ITEM_TRANSLATE_BEFORE_SEND:
+                LuminaConfig.toggleTranslateBeforeSend();
+                update();
                 break;
-            case ITEM_SHOW_BUTTON:
-                TranslateController tc = getMessagesController().getTranslateController();
-                tc.setContextTranslateEnabled(!tc.isContextTranslateEnabled());
+            case ITEM_SEND_LANG:
+                showLanguagePicker(KEY_SEND_LANG, LuminaLocale.getString(R.string.LuminaTranslateSendLang),
+                        LuminaLocale.getString(R.string.LuminaTranslateSendLangAuto), "auto");
+                break;
+            case ITEM_TRANSLATE_BEFORE_SEND_CONFIRM:
+                LuminaConfig.toggleTranslateBeforeSendConfirm();
                 update();
                 break;
             case ITEM_DUAL_LANGUAGE:
                 LuminaConfig.putBoolean("dualLanguageDisplay", !LuminaConfig.getBoolean("dualLanguageDisplay", false));
                 update();
                 break;
-            case ITEM_TRANSLATE_BEFORE_SEND:
-                LuminaConfig.toggleTranslateBeforeSend();
+            case ITEM_READ_LANG:
+                showLanguagePicker(KEY_READ_LANG, LuminaLocale.getString(R.string.LuminaTranslateReadLang),
+                        LuminaLocale.getString(R.string.LuminaTranslateReadLangFollow), "");
+                break;
+            case ITEM_SCOPE_PRIVATE:
+                LuminaConfig.putBoolean(KEY_SCOPE_PRIVATE, !LuminaConfig.getBoolean(KEY_SCOPE_PRIVATE, true));
                 update();
                 break;
-            case ITEM_TRANSLATE_BEFORE_SEND_CONFIRM:
-                LuminaConfig.toggleTranslateBeforeSendConfirm();
+            case ITEM_SCOPE_GROUP:
+                LuminaConfig.putBoolean(KEY_SCOPE_GROUP, !LuminaConfig.getBoolean(KEY_SCOPE_GROUP, true));
                 update();
                 break;
             case ITEM_PROVIDER:
@@ -192,7 +243,7 @@ public class LuminaTranslateActivity extends BaseFragment {
         for (int i = 0; i < providers.size(); ++i) {
             names[i] = providers.get(i).displayName();
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), getResourceProvider());
         builder.setTitle(LuminaLocale.getString(R.string.LuminaTranslateProvider));
         builder.setItems(names, (dialog, which) -> {
             if (which >= 0 && which < providers.size()) {
@@ -238,7 +289,7 @@ public class LuminaTranslateActivity extends BaseFragment {
         container.addView(edit, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
                 Gravity.CENTER_VERTICAL, 24, 6, 24, 0));
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, getResourceProvider());
         builder.setTitle(title);
         builder.setView(container);
         builder.setPositiveButton(LocaleController.getString(R.string.Save), (dialog, which) -> {
@@ -279,22 +330,31 @@ public class LuminaTranslateActivity extends BaseFragment {
         });
     }
 
-    private void showLanguagePicker() {
-        if (getParentActivity() == null) {
+    /**
+     * Reusable language picker. Presents a special first option (its label + the code to store)
+     * followed by the full translatable-language list. The chosen code is written to {@code prefKey}.
+     */
+    private void showLanguagePicker(final String prefKey, final CharSequence dialogTitle,
+                                    final CharSequence firstOptionLabel, final String firstOptionValue) {
+        final Context context = getParentActivity();
+        if (context == null) {
             return;
         }
         final ArrayList<TranslateController.Language> languages = TranslateController.getLanguages();
-        final CharSequence[] names = new CharSequence[languages.size()];
+        final CharSequence[] names = new CharSequence[languages.size() + 1];
+        names[0] = firstOptionLabel;
         for (int i = 0; i < languages.size(); ++i) {
-            names[i] = languages.get(i).displayName;
+            names[i + 1] = languages.get(i).displayName;
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
-        builder.setTitle(LuminaLocale.getString(R.string.LuminaTranslateTo));
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, getResourceProvider());
+        builder.setTitle(dialogTitle);
         builder.setItems(names, (dialog, which) -> {
-            if (which >= 0 && which < languages.size()) {
-                TranslateAlert2.setToLanguage(languages.get(which).code);
-                update();
+            if (which == 0) {
+                LuminaConfig.putString(prefKey, firstOptionValue);
+            } else if (which - 1 >= 0 && which - 1 < languages.size()) {
+                LuminaConfig.putString(prefKey, languages.get(which - 1).code);
             }
+            update();
         });
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
         showDialog(builder.create());
