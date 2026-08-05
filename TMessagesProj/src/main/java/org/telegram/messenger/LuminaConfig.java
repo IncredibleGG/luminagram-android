@@ -257,22 +257,37 @@ public class LuminaConfig {
 
     // Typed toggles keep the static field and the persisted value in sync (XOR idiom)
     public static void toggleHideTabs() {
+        if (editor == null) {
+            return;
+        }
         editor.putBoolean("hideTabs", hideTabs ^= true).apply();
     }
 
     public static void toggleHideStories() {
+        if (editor == null) {
+            return;
+        }
         editor.putBoolean("hideStories", hideStories ^= true).apply();
     }
 
     public static void toggleCompactChatList() {
+        if (editor == null) {
+            return;
+        }
         editor.putBoolean("compactChatList", compactChatList ^= true).apply();
     }
 
     public static void toggleTranslateBeforeSend() {
+        if (editor == null) {
+            return;
+        }
         editor.putBoolean("translateBeforeSend", translateBeforeSend ^= true).apply();
     }
 
     public static void toggleTranslateBeforeSendConfirm() {
+        if (editor == null) {
+            return;
+        }
         editor.putBoolean("translateBeforeSendConfirm", translateBeforeSendConfirm ^= true).apply();
     }
 
@@ -317,22 +332,34 @@ public class LuminaConfig {
     }
 
     public static void toggleMaterialYou() {
+        if (editor == null) {
+            return;
+        }
         editor.putBoolean("materialYouEnabled", materialYouEnabled ^= true).apply();
         applyAppearance();
     }
 
     public static void toggleCustomAccent() {
+        if (editor == null) {
+            return;
+        }
         editor.putBoolean("customAccentEnabled", customAccentEnabled ^= true).apply();
         applyAppearance();
     }
 
     public static void setCustomAccentColor(int color) {
+        if (editor == null) {
+            return;
+        }
         customAccentColor = color;
         editor.putInt("customAccentColor", color).apply();
         applyAppearance();
     }
 
     public static void setAppFont(int font) {
+        if (editor == null) {
+            return;
+        }
         appFont = font;
         editor.putInt("appFont", font).apply();
         applyAppearance();
@@ -397,6 +424,9 @@ public class LuminaConfig {
     public static org.json.JSONObject exportAll() {
         org.json.JSONObject out = new org.json.JSONObject();
         try {
+            if (preferences == null) {
+                return out;
+            }
             java.util.Map<String, ?> all = preferences.getAll();
             for (java.util.Map.Entry<String, ?> e : all.entrySet()) {
                 Object val = e.getValue();
@@ -425,7 +455,7 @@ public class LuminaConfig {
                 }
                 out.put(e.getKey(), entry);
             }
-        } catch (org.json.JSONException ignore) {
+        } catch (Throwable ignore) {
         }
         return out;
     }

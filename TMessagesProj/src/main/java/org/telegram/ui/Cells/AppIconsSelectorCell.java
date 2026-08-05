@@ -151,6 +151,15 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
     private void updateIconsVisibility() {
         availableIcons.clear();
         availableIcons.addAll(Arrays.asList(LauncherIconController.LauncherIcon.values()));
+        // LuminaGram: never surface the stealth camouflage aliases (CALCULATOR/NOTES/CLOCK)
+        // in the stock App-Icon picker. They are disguise launchers driven by
+        // LuminaDisguiseActivity, not user-selectable icon themes.
+        for (int i = 0; i < availableIcons.size(); i++) {
+            if (availableIcons.get(i).isDisguise()) {
+                availableIcons.remove(i);
+                i--;
+            }
+        }
         if (MessagesController.getInstance(currentAccount).premiumFeaturesBlocked()) {
             for (int i = 0; i < availableIcons.size(); i++) {
                 if (availableIcons.get(i).premium) {

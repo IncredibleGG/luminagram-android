@@ -1439,7 +1439,7 @@ public class LocaleController {
     private static final HashSet<String> LUMINA_BRAND_LOCKED_KEYS = new HashSet<>(Arrays.asList(
         "AllowFillNumber", "AllowReadCall", "AllowReadCallAndLog", "AllowReadCallLog",
         "AppLocked", "AppName", "AppNameBeta", "CallAvailableIn2", "CallText",
-        "InviteText2", "InviteToTelegram", "LoginEmailResetMessage", "NoChats",
+        "InviteFriendsHelp", "InviteText2", "InviteToTelegram", "LoginEmailResetMessage", "NoChats",
         "NotificationContactJoined", "NotificationHiddenChatName", "NotificationHiddenName",
         "NotificationsPermissionAlertSubtitle", "OptimizingTelegram",
         "Page1Title", "Page2Message", "Page3Message", "Page4Message", "Page5Message", "Page6Message",
@@ -1450,7 +1450,7 @@ public class LocaleController {
         "PermissionNoLocation", "PermissionNoLocationFriends", "PermissionNoLocationNavigation",
         "PermissionNoLocationStory", "PermissionNoStorageAvatar", "PermissionStorageWithHint",
         "PermissionXiaomiLockscreen", "ProfilePopupNotificationInfo", "SecretChatName",
-        "SentCallCode", "ShareTelegram2", "TelegramVersion", "UnlockToUse", "UpdateAppAlert"
+        "SentCallCode", "ShareTelegram2", "TelegramFeatures", "TelegramVersion", "UnlockToUse", "UpdateAppAlert"
     ));
 
     private String getStringInternal(String key, int res) {
