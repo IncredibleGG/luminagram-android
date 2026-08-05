@@ -37,6 +37,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaTrSendPickerTitle", "翻译语言");
         zhHans.put("LuminaTrSendSetLangMenu", "设置此对话的翻译语言");
         zhHans.put("LuminaTrSendLangLocked", "消息将翻译为 %1$s");
+        zhHans.put("LuminaTrSendTimeout", "翻译超时，已还原消息，请重试");
         zhHans.put("LuminaGramSettings", "LuminaGram 设置");
         zhHans.put("LuminaGramSettingsInfo", "专属功能");
         zhHans.put("LuminaGramChatList", "聊天列表");
@@ -350,6 +351,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaTrSendPickerTitle", "翻譯語言");
         zhHant.put("LuminaTrSendSetLangMenu", "設定此對話翻譯語言");
         zhHant.put("LuminaTrSendLangLocked", "訊息將翻譯為 %1$s");
+        zhHant.put("LuminaTrSendTimeout", "翻譯逾時，已還原訊息，請再試");
         zhHant.put("LuminaGramSettings", "LuminaGram 設定");
         zhHant.put("LuminaGramSettingsInfo", "專屬功能");
         zhHant.put("LuminaGramChatList", "聊天列表");
@@ -663,6 +665,7 @@ public final class LuminaLocale {
         ar.put("LuminaTrSendPickerTitle", "لغة الترجمة");
         ar.put("LuminaTrSendSetLangMenu", "تعيين لغة الترجمة");
         ar.put("LuminaTrSendLangLocked", "ستتم ترجمة الرسائل إلى %1$s");
+        ar.put("LuminaTrSendTimeout", "انتهت مهلة الترجمة؛ تمت استعادة رسالتك. حاول مرة أخرى.");
         ar.put("LuminaGramSettings", "إعدادات LuminaGram");
         ar.put("LuminaGramSettingsInfo", "ميزات حصرية");
         ar.put("LuminaGramChatList", "قائمة الدردشات");
@@ -975,6 +978,7 @@ public final class LuminaLocale {
         ru.put("LuminaTrSendPickerTitle", "Язык перевода");
         ru.put("LuminaTrSendSetLangMenu", "Задать язык перевода");
         ru.put("LuminaTrSendLangLocked", "Сообщения будут переведены на %1$s");
+        ru.put("LuminaTrSendTimeout", "Время перевода истекло; сообщение восстановлено. Попробуйте ещё раз.");
         ru.put("LuminaGramSettings", "Настройки LuminaGram");
         ru.put("LuminaGramSettingsInfo", "Эксклюзивные функции");
         ru.put("LuminaGramChatList", "Список чатов");
@@ -1287,6 +1291,7 @@ public final class LuminaLocale {
         fa.put("LuminaTrSendPickerTitle", "زبان ترجمه");
         fa.put("LuminaTrSendSetLangMenu", "تنظیم زبان ترجمه");
         fa.put("LuminaTrSendLangLocked", "پیام‌ها به %1$s ترجمه می‌شوند");
+        fa.put("LuminaTrSendTimeout", "زمان ترجمه به پایان رسید؛ پیام شما بازیابی شد. لطفاً دوباره تلاش کنید.");
         fa.put("LuminaGramSettings", "تنظیمات LuminaGram");
         fa.put("LuminaGramSettingsInfo", "امکانات ویژه");
         fa.put("LuminaGramChatList", "فهرست گفتگوها");
@@ -1599,6 +1604,7 @@ public final class LuminaLocale {
         tr.put("LuminaTrSendPickerTitle", "Çeviri dili");
         tr.put("LuminaTrSendSetLangMenu", "Çeviri dilini ayarla");
         tr.put("LuminaTrSendLangLocked", "Mesajlar %1$s diline çevrilecek");
+        tr.put("LuminaTrSendTimeout", "Çeviri zaman aşımına uğradı; mesajınız geri yüklendi. Lütfen tekrar deneyin.");
         tr.put("LuminaGramSettings", "LuminaGram Ayarları");
         tr.put("LuminaGramSettingsInfo", "Özel özellikler");
         tr.put("LuminaGramChatList", "Sohbet listesi");
@@ -1911,6 +1917,7 @@ public final class LuminaLocale {
         es.put("LuminaTrSendPickerTitle", "Idioma de traducción");
         es.put("LuminaTrSendSetLangMenu", "Definir idioma de traducción");
         es.put("LuminaTrSendLangLocked", "Los mensajes se traducirán a %1$s");
+        es.put("LuminaTrSendTimeout", "Se agotó el tiempo de traducción; tu mensaje se restauró. Inténtalo de nuevo.");
         es.put("LuminaGramSettings", "Ajustes de LuminaGram");
         es.put("LuminaGramSettingsInfo", "Funciones exclusivas");
         es.put("LuminaGramChatList", "Lista de chats");
@@ -2223,6 +2230,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaTrSendPickerTitle", "Idioma da tradução");
         ptBr.put("LuminaTrSendSetLangMenu", "Definir idioma da tradução");
         ptBr.put("LuminaTrSendLangLocked", "As mensagens serão traduzidas para %1$s");
+        ptBr.put("LuminaTrSendTimeout", "O tempo de tradução esgotou; sua mensagem foi restaurada. Tente novamente.");
         ptBr.put("LuminaGramSettings", "Configurações do LuminaGram");
         ptBr.put("LuminaGramSettingsInfo", "Recursos exclusivos");
         ptBr.put("LuminaGramChatList", "Lista de conversas");
@@ -2535,6 +2543,7 @@ public final class LuminaLocale {
         id.put("LuminaTrSendPickerTitle", "Bahasa terjemahan");
         id.put("LuminaTrSendSetLangMenu", "Atur bahasa terjemahan");
         id.put("LuminaTrSendLangLocked", "Pesan akan diterjemahkan ke %1$s");
+        id.put("LuminaTrSendTimeout", "Waktu terjemahan habis; pesan Anda dipulihkan. Coba lagi.");
         id.put("LuminaGramSettings", "Pengaturan LuminaGram");
         id.put("LuminaGramSettingsInfo", "Fitur eksklusif");
         id.put("LuminaGramChatList", "Daftar obrolan");
