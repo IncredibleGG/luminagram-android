@@ -11374,6 +11374,7 @@
     <string name="LuminaSecurityFakeCrashCodeSet">Set</string>
     <string name="LuminaSecurityFakeCrashCodeNotSet">Not set</string>
     <string name="LuminaSecurityFakeCrashCodeDialogTitle">Fake-crash code</string>
+    <string name="LuminaSecurityFakeCrashCodeSameAsPasscode">This code can\'t be the same as your passcode lock.</string>
     <string name="LuminaSecurityFakeCrashInfo">When on, entering this code at the passcode screen shows a fake Android crash and closes the app instead of unlocking. This code is separate from your Telegram passcode and from the decoy calculator lock.</string>
     <string name="LuminaFakeCrashTitle">LuminaGram keeps stopping</string>
     <string name="LuminaFakeCrashCloseApp">Close app</string>

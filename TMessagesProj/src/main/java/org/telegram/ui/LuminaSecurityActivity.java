@@ -17,7 +17,9 @@ import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.R;
+import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.UserConfig;
+import org.telegram.messenger.Utilities;
 import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
@@ -158,7 +160,21 @@ public class LuminaSecurityActivity extends BaseFragment {
         builder.setTitle(LuminaLocale.getString(R.string.LuminaSecurityFakeCrashCodeDialogTitle));
         builder.setView(container);
         builder.setPositiveButton(LocaleController.getString(R.string.Save), (dialog, which) -> {
-            LuminaConfig.putString(KEY_FAKECRASH_CODE, edit.getText().toString().trim());
+            final String entered = edit.getText().toString().trim();
+            // Duress code must NOT equal the real Telegram passcode. PasscodeView runs the
+            // fake-crash check BEFORE SharedConfig.checkPasscode, so a collision would fire the
+            // fake crash on every correct unlock and lock the user out permanently. Reject it.
+            if (!entered.isEmpty() && SharedConfig.checkPasscode(entered)) {
+                if (getParentActivity() != null) {
+                    AlertDialog.Builder err = new AlertDialog.Builder(getParentActivity());
+                    err.setTitle(LuminaLocale.getString(R.string.LuminaSecurityFakeCrashCodeDialogTitle));
+                    err.setMessage(LuminaLocale.getString(R.string.LuminaSecurityFakeCrashCodeSameAsPasscode));
+                    err.setPositiveButton(LocaleController.getString(R.string.OK), null);
+                    showDialog(err.create());
+                }
+                return;
+            }
+            LuminaConfig.putString(KEY_FAKECRASH_CODE, entered);
             if (listView != null && listView.adapter != null) {
                 listView.adapter.update(true);
             }
@@ -187,19 +203,28 @@ public class LuminaSecurityActivity extends BaseFragment {
     }
 
     /**
-     * Panic wipe: clear cached media, then log out every activated account. Each
-     * {@link MessagesController#performLogout(int)} drops that account's local message
-     * database and config; the final logout posts {@code appDidLogout}, which
-     * LaunchActivity turns into a switch back to the intro/login screen.
+     * Panic wipe: log out every ACTIVATED account FIRST (server session + local DB), THEN
+     * erase cached media off the main thread. Order matters under duress: logging out before
+     * the (potentially slow) cache delete means that if we are killed mid-wipe the accounts
+     * are already gone server-side. Moving the recursive delete off the UI thread avoids an
+     * ANR on a large cache. Each {@link MessagesController#performLogout(int)} drops that
+     * account's local message database and config; the final logout posts {@code appDidLogout},
+     * which LaunchActivity turns into a switch back to the intro/login screen.
      */
     private void performPanicWipe() {
-        clearLocalMediaCache();
+        // (a) Kill each activated account first, on the main thread. Wrap each logout so one
+        // failing account cannot skip the rest.
         for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
-            if (UserConfig.getInstance(a).isClientActivated()) {
-                // type 1 = full logout: unregister push + server-side auth.logOut + local wipe.
-                MessagesController.getInstance(a).performLogout(1);
+            try {
+                if (UserConfig.getInstance(a).isClientActivated()) {
+                    // type 1 = full logout: unregister push + server-side auth.logOut + local wipe.
+                    MessagesController.getInstance(a).performLogout(1);
+                }
+            } catch (Exception ignored) {
             }
         }
+        // (b) THEN erase cached media OFF the main thread to avoid an ANR on a large cache.
+        Utilities.globalQueue.postRunnable(() -> clearLocalMediaCache());
     }
 
     /** Best-effort recursive wipe of every local media/cache directory. */
