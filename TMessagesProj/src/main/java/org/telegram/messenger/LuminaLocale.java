@@ -190,6 +190,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaBookmarksTitle", "书签");
         zhHans.put("LuminaBookmarksEmpty", "你还没有收藏任何消息。");
         zhHans.put("LuminaBookmarkDeleteTitle", "删除书签？");
+        zhHans.put("LuminaShowBookmarks", "显示书签菜单项");
         zhHans.put("LuminaQuickRepliesTitle", "快捷回复");
         zhHans.put("LuminaQuickRepliesHeader", "模板");
         zhHans.put("LuminaQuickRepliesAdd", "添加模板");
@@ -503,6 +504,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaBookmarksTitle", "書籤");
         zhHant.put("LuminaBookmarksEmpty", "你還沒有收藏任何訊息。");
         zhHant.put("LuminaBookmarkDeleteTitle", "刪除書籤？");
+        zhHant.put("LuminaShowBookmarks", "顯示書籤選單項目");
         zhHant.put("LuminaQuickRepliesTitle", "快捷回覆");
         zhHant.put("LuminaQuickRepliesHeader", "範本");
         zhHant.put("LuminaQuickRepliesAdd", "新增範本");
@@ -816,6 +818,7 @@ public final class LuminaLocale {
         ar.put("LuminaBookmarksTitle", "الإشارات المرجعية");
         ar.put("LuminaBookmarksEmpty", "لم تحفظ أي رسالة في الإشارات المرجعية بعد.");
         ar.put("LuminaBookmarkDeleteTitle", "حذف الإشارة المرجعية؟");
+        ar.put("LuminaShowBookmarks", "إظهار عنصر قائمة الإشارة المرجعية");
         ar.put("LuminaQuickRepliesTitle", "الردود السريعة");
         ar.put("LuminaQuickRepliesHeader", "القوالب");
         ar.put("LuminaQuickRepliesAdd", "إضافة قالب");
@@ -1128,6 +1131,7 @@ public final class LuminaLocale {
         ru.put("LuminaBookmarksTitle", "Закладки");
         ru.put("LuminaBookmarksEmpty", "У вас пока нет закладок.");
         ru.put("LuminaBookmarkDeleteTitle", "Удалить закладку?");
+        ru.put("LuminaShowBookmarks", "Показывать пункт меню «Закладка»");
         ru.put("LuminaQuickRepliesTitle", "Быстрые ответы");
         ru.put("LuminaQuickRepliesHeader", "Шаблоны");
         ru.put("LuminaQuickRepliesAdd", "Добавить шаблон");
@@ -1440,6 +1444,7 @@ public final class LuminaLocale {
         fa.put("LuminaBookmarksTitle", "نشانک‌ها");
         fa.put("LuminaBookmarksEmpty", "هنوز هیچ پیامی را نشانک نکرده‌اید.");
         fa.put("LuminaBookmarkDeleteTitle", "حذف نشانک؟");
+        fa.put("LuminaShowBookmarks", "نمایش گزینهٔ نشانک در منو");
         fa.put("LuminaQuickRepliesTitle", "پاسخ‌های سریع");
         fa.put("LuminaQuickRepliesHeader", "قالب‌ها");
         fa.put("LuminaQuickRepliesAdd", "افزودن قالب");
@@ -1752,6 +1757,7 @@ public final class LuminaLocale {
         tr.put("LuminaBookmarksTitle", "Yer imleri");
         tr.put("LuminaBookmarksEmpty", "Henüz hiçbir mesajı yer imlerine eklemediniz.");
         tr.put("LuminaBookmarkDeleteTitle", "Yer imi silinsin mi?");
+        tr.put("LuminaShowBookmarks", "Yer imi menü öğesini göster");
         tr.put("LuminaQuickRepliesTitle", "Hızlı yanıtlar");
         tr.put("LuminaQuickRepliesHeader", "Şablonlar");
         tr.put("LuminaQuickRepliesAdd", "Şablon ekle");
@@ -2064,6 +2070,7 @@ public final class LuminaLocale {
         es.put("LuminaBookmarksTitle", "Marcadores");
         es.put("LuminaBookmarksEmpty", "Aún no has guardado ningún mensaje en marcadores.");
         es.put("LuminaBookmarkDeleteTitle", "¿Eliminar marcador?");
+        es.put("LuminaShowBookmarks", "Mostrar opción de marcador en el menú");
         es.put("LuminaQuickRepliesTitle", "Respuestas rápidas");
         es.put("LuminaQuickRepliesHeader", "Plantillas");
         es.put("LuminaQuickRepliesAdd", "Añadir plantilla");
@@ -2376,6 +2383,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaBookmarksTitle", "Marcadores");
         ptBr.put("LuminaBookmarksEmpty", "Você ainda não salvou nenhuma mensagem nos marcadores.");
         ptBr.put("LuminaBookmarkDeleteTitle", "Excluir marcador?");
+        ptBr.put("LuminaShowBookmarks", "Mostrar item de marcador no menu");
         ptBr.put("LuminaQuickRepliesTitle", "Respostas rápidas");
         ptBr.put("LuminaQuickRepliesHeader", "Modelos");
         ptBr.put("LuminaQuickRepliesAdd", "Adicionar modelo");
@@ -2688,6 +2696,7 @@ public final class LuminaLocale {
         id.put("LuminaBookmarksTitle", "Penanda");
         id.put("LuminaBookmarksEmpty", "Anda belum menyimpan pesan apa pun ke penanda.");
         id.put("LuminaBookmarkDeleteTitle", "Hapus penanda?");
+        id.put("LuminaShowBookmarks", "Tampilkan item menu penanda");
         id.put("LuminaQuickRepliesTitle", "Balasan cepat");
         id.put("LuminaQuickRepliesHeader", "Templat");
         id.put("LuminaQuickRepliesAdd", "Tambah templat");
