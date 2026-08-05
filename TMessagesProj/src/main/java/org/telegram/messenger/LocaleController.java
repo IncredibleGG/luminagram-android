@@ -49,6 +49,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Currency;
@@ -1429,6 +1430,29 @@ public class LocaleController {
         return localeInfo == null || TextUtils.isEmpty(localeInfo.name) ? getString("LanguageName", R.string.LanguageName) : localeInfo.name;
     }
 
+    // LuminaGram: STOCK identity strings we rebranded in res/values/strings.xml.
+    // Telegram's cloud language pack ships these standard keys and would otherwise
+    // reintroduce the word "Telegram" after login (langpack value wins over the
+    // resource default). We resolve each value NORMALLY (keeping the user's language),
+    // then post-process only these keys to swap the brand word in-place (case-preserving).
+    // STOCK keys only (not Lumina*, which are the fork's own strings via LuminaLocale).
+    private static final HashSet<String> LUMINA_BRAND_LOCKED_KEYS = new HashSet<>(Arrays.asList(
+        "AllowFillNumber", "AllowReadCall", "AllowReadCallAndLog", "AllowReadCallLog",
+        "AppLocked", "AppName", "AppNameBeta", "CallAvailableIn2", "CallText",
+        "InviteText2", "InviteToTelegram", "LoginEmailResetMessage", "NoChats",
+        "NotificationContactJoined", "NotificationHiddenChatName", "NotificationHiddenName",
+        "NotificationsPermissionAlertSubtitle", "OptimizingTelegram",
+        "Page1Title", "Page2Message", "Page3Message", "Page4Message", "Page5Message", "Page6Message",
+        "PermissionBackgroundLocation", "PermissionDrawAboveOtherApps", "PermissionDrawAboveOtherAppsGroupCall",
+        "PermissionFSILockscreen", "PermissionNoAudioStorageStory", "PermissionNoAudioVideoWithHint",
+        "PermissionNoAudioWithHint", "PermissionNoBluetoothWithHint", "PermissionNoCameraMicVideo",
+        "PermissionNoCameraWithHint", "PermissionNoContactsSaving", "PermissionNoContactsSharing",
+        "PermissionNoLocation", "PermissionNoLocationFriends", "PermissionNoLocationNavigation",
+        "PermissionNoLocationStory", "PermissionNoStorageAvatar", "PermissionStorageWithHint",
+        "PermissionXiaomiLockscreen", "ProfilePopupNotificationInfo", "SecretChatName",
+        "SentCallCode", "ShareTelegram2", "TelegramVersion", "UnlockToUse", "UpdateAppAlert"
+    ));
+
     private String getStringInternal(String key, int res) {
         return getStringInternal(key, null, 0, res);
     }
@@ -1454,6 +1478,9 @@ public class LocaleController {
         }
         if (value == null) {
             value = "LOC_ERR:" + key;
+        }
+        if (value != null && LUMINA_BRAND_LOCKED_KEYS.contains(key)) {
+            value = value.replace("TELEGRAM", "LUMINAGRAM").replace("Telegram", "LuminaGram").replace("telegram", "luminagram");
         }
         return value;
     }
@@ -1696,6 +1723,9 @@ public class LocaleController {
                 }
             }
 
+            if (value != null && LUMINA_BRAND_LOCKED_KEYS.contains(key)) {
+                value = value.replace("TELEGRAM", "LUMINAGRAM").replace("Telegram", "LuminaGram").replace("telegram", "luminagram");
+            }
             if (getInstance().currentLocale != null) {
                 return String.format(getInstance().currentLocale, value, args);
             } else {
@@ -1745,6 +1775,9 @@ public class LocaleController {
                 }
             }
 
+            if (value != null && LUMINA_BRAND_LOCKED_KEYS.contains(key)) {
+                value = value.replace("TELEGRAM", "LUMINAGRAM").replace("Telegram", "LuminaGram").replace("telegram", "luminagram");
+            }
             SpannableStringBuilder builder = new SpannableStringBuilder(value);
             for (int i = 0; i < args.length; i++) {
                 String formatter = "s";
