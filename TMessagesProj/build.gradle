@@ -78,6 +78,10 @@ dependencies {
     }
     implementation 'com.google.android.recaptcha:recaptcha:18.7.1'
 
+    // LuminaGram offline voice-to-text (Vosk). Ships native .so (libvosk.so + JNA
+    // libjnidispatch.so) for arm64-v8a, armeabi-v7a, x86, x86_64 via the AAR.
+    implementation 'com.alphacephei:vosk-android:0.3.47'
+
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 }
 
@@ -99,6 +103,12 @@ android {
         disable 'MissingTranslation'
         disable 'ExtraTranslation'
         disable 'BlockedPrivateApi'
+    }
+
+    // Vosk bundles JNA, whose libjnidispatch.so can collide during native-lib merge;
+    // keep the first copy instead of failing the build.
+    packagingOptions {
+        pickFirst '**/libjnidispatch.so'
     }
 
     compileOptions {
