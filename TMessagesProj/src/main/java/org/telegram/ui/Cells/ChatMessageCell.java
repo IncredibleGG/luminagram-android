@@ -7745,6 +7745,14 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     totalHeight = messageObject.richLayout.getHeight() + dp(19.5f) + namesOffset;
                 } else {
                     totalHeight = messageObject.textHeight() + dualLanguageHeight + dp(19.5f) + namesOffset;
+                    // LuminaGram: reserve an extra bottom row for the timestamp when a dual-language
+                    // translation sub-line is present. The sub-line takes the place of the last text
+                    // line but reserves no horizontal space for the time, so the bottom-right time
+                    // would otherwise draw on top of the translation. Gated on dualLanguageLayout so
+                    // plain (non dual-language) bubbles keep their exact original time positioning.
+                    if (dualLanguageLayout != null) {
+                        totalHeight += dp(14);
+                    }
                 }
 
                 if (!reactionsLayoutInBubble.isSmall) {
