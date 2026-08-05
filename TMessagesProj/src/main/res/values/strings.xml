@@ -11288,6 +11288,7 @@
     <string name="LuminaTrSendPickerTitle">Translation language</string>
     <string name="LuminaTrSendSetLangMenu">Set translation language</string>
     <string name="LuminaTrSendLangLocked">Messages will be translated to %1$s</string>
+    <string name="LuminaTrSendTimeout">Translation timed out; your message was restored. Please try again.</string>
     <string name="LuminaArticleTranslate">Translate article</string>
     <string name="LuminaTranslateSelection">Translate</string>
     <!-- LuminaGram multi-provider translation -->

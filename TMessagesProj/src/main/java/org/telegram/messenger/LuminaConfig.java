@@ -421,6 +421,53 @@ public class LuminaConfig {
         putString(KEY_TR_SEND_LANG_DIALOG, o.toString());
     }
 
+    // ---- Undo-send durability (b25) ----
+    // The undo-send window holds a just-"sent" plain message in memory for a few seconds. To
+    // survive a hard process kill inside that window, the held text is also persisted here as a
+    // JSON object { "dialogId": <long>, "text": <String> } under "undoSendPending" (via
+    // getString/putString) -- never sent to Telegram. Cleared the moment the message is actually
+    // dispatched or the user undoes; restored into the composer on next open of the same chat.
+    // Only one pending entry at a time (the window allows a single hold).
+    public static final String KEY_UNDO_SEND_PENDING = "undoSendPending";
+
+    /** Persist the held undo-send text for a dialog. Empty/null text clears the entry. */
+    public static void setUndoSendPending(long dialogId, String text) {
+        if (text == null || text.length() == 0) {
+            clearUndoSendPending();
+            return;
+        }
+        try {
+            org.json.JSONObject o = new org.json.JSONObject();
+            o.put("dialogId", dialogId);
+            o.put("text", text);
+            putString(KEY_UNDO_SEND_PENDING, o.toString());
+        } catch (org.json.JSONException ignore) {
+        }
+    }
+
+    /** Held undo-send text for this dialog, or null when none pending / a different dialog. */
+    public static String getUndoSendPending(long dialogId) {
+        String raw = getString(KEY_UNDO_SEND_PENDING, "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                org.json.JSONObject o = new org.json.JSONObject(raw);
+                if (o.optLong("dialogId") == dialogId) {
+                    String t = o.optString("text", "");
+                    if (t != null && t.length() > 0) {
+                        return t;
+                    }
+                }
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return null;
+    }
+
+    /** Drop any persisted undo-send entry (dispatched, undone, or restored). */
+    public static void clearUndoSendPending() {
+        putString(KEY_UNDO_SEND_PENDING, "");
+    }
+
     public static org.json.JSONObject exportAll() {
         org.json.JSONObject out = new org.json.JSONObject();
         try {

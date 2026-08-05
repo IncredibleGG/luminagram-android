@@ -671,6 +671,13 @@ public class ChatActivityEnterView extends FrameLayout implements
     // further Send tap is ignored while true, and the terminal send / confirm-dialog dismiss /
     // onDestroy clears it. Default translate-before-send off => never set, behaviour unchanged.
     private boolean luminaTbsInFlight;
+    // LuminaGram (b25): watchdog for a stalled translate-before-send network round-trip. The
+    // default provider (google_web) has no socket timeout, so a stuck connection would otherwise
+    // leave luminaTbsInFlight true forever — every later Send silently no-ops and the captured
+    // text is lost. luminaTbsWatchdog holds the pending 20s timeout runnable; luminaTbsGeneration
+    // is a token so a completed send's cancel can never be mistaken for a later send's watchdog.
+    private Runnable luminaTbsWatchdog;
+    private int luminaTbsGeneration;
     // LuminaGram: undo-send window — the pending dispatch runnable while a just-sent
     // plain-text message is held; null when no window is active.
     private Runnable luminaUndoSendRunnable;
@@ -6575,6 +6582,7 @@ public class ChatActivityEnterView extends FrameLayout implements
 
     public void onDestroy() {
         luminaFlushUndoSend();
+        luminaCancelTbsWatchdog(); // b25: drop any armed stall watchdog so it can't fire post-teardown.
         luminaTbsInFlight = false; // P1-4: never leave the send guard stuck across a chat close.
         if (audioTimelineView != null) {
             audioTimelineView.destroy();
@@ -6799,6 +6807,24 @@ public class ChatActivityEnterView extends FrameLayout implements
         if (messageEditText != null) {
             updateSendAsButton(parentFragment != null && parentFragment.getFragmentBeginToShow());
         }
+        // b25: undo-send durability — if a hard kill left a persisted held message for THIS chat,
+        // drop it back into an empty composer now that the dialog id is known.
+        luminaMaybeRestoreUndoSend();
+    }
+
+    // b25: restore any undo-send text persisted by luminaUndoSendWindow before a hard process
+    // kill. Only fires for a matching dialog and an empty composer (never clobbering a draft),
+    // and clears the pref once consumed. No-op when nothing was persisted.
+    private void luminaMaybeRestoreUndoSend() {
+        if (messageEditText == null || messageEditText.length() != 0) {
+            return;
+        }
+        final String pending = LuminaConfig.getUndoSendPending(dialog_id);
+        if (pending == null || pending.length() == 0) {
+            return;
+        }
+        LuminaConfig.clearUndoSendPending();
+        setFieldText(pending);
     }
 
     public void setChatInfo(TLRPC.ChatFull chatInfo) {
@@ -8003,6 +8029,11 @@ public class ChatActivityEnterView extends FrameLayout implements
         // Clear the composer so it reads as sent; restored verbatim if the user undoes.
         setFieldText("");
 
+        // b25: durability — the held text lives only in memory, so a hard process kill inside the
+        // 5s window would lose it. Persist {dialogId, text} now; it is cleared the moment the
+        // message is actually dispatched or the user undoes, and restored on next open of this chat.
+        LuminaConfig.setUndoSendPending(dialog_id, held == null ? "" : held.toString());
+
         final Bulletin[] bulletinRef = new Bulletin[1];
         final Runnable dispatch = new Runnable() {
             @Override
@@ -8011,6 +8042,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                     return; // already undone or flushed
                 }
                 luminaUndoSendRunnable = null;
+                LuminaConfig.clearUndoSendPending(); // b25: dispatched — drop the persisted copy.
                 if (bulletinRef[0] != null) {
                     bulletinRef[0].hide();
                 }
@@ -8030,7 +8062,13 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
             AndroidUtilities.cancelRunOnUIThread(dispatch);
             luminaUndoSendRunnable = null;
-            setFieldText(held);
+            LuminaConfig.clearUndoSendPending(); // b25: undone — drop the persisted copy.
+            // b25: only restore into an EMPTY composer. During the 5s window the user may have
+            // started typing a new message; unconditionally setting the held text (as before)
+            // would clobber that fresh draft. Mirrors the translate-before-send restore guards.
+            if (messageEditText != null && messageEditText.length() == 0) {
+                setFieldText(held);
+            }
         };
 
         if (parentFragment != null) {
@@ -8246,6 +8284,13 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
             final String chosen = langs.get(which).code;
             LuminaConfig.setDialogSendLang(dialog_id, chosen);
+            // b25: the send language changed, so the preview cache (keyed on SOURCE text only)
+            // is now stale — it holds a translation for the OLD language. Invalidate it before
+            // refreshing, or the live panel would keep showing the old-language translation AND
+            // the Send fast-path (luminaTranslateBeforeSend) would dispatch that stale language.
+            luminaPreviewGeneration++;
+            luminaPreviewTranslatedFor = null;
+            luminaPreviewTranslatedText = null;
             luminaUpdateTranslatePreview();
             if (parentFragment != null) {
                 String langName = TranslateAlert2.capitalFirst(TranslateAlert2.languageName(chosen));
@@ -8271,6 +8316,10 @@ public class ChatActivityEnterView extends FrameLayout implements
         // and text typed during the round-trip is a fresh draft the async result must not overwrite.
         luminaTbsInFlight = true;
         setFieldText("");
+        // b25: arm the stall watchdog now that a network round-trip is starting. If no callback
+        // ever arrives (a provider with no socket timeout on a dead connection), the watchdog
+        // clears the guard, restores this captured text and asks the user to retry.
+        luminaScheduleTbsWatchdog(original);
         // Route through the selected provider (Telegram / Google / DeepL / LLM). On a
         // provider error, fall back to Telegram, then to send-as-typed — a bad key or a
         // dead endpoint must never block sending. Callbacks arrive on the UI thread.
@@ -8303,6 +8352,10 @@ public class ChatActivityEnterView extends FrameLayout implements
     }
 
     private void luminaHandleTranslateResult(final String original, final String translated, final String toLang, final boolean livePreviewVisible, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        // b25: the round-trip returned — the stall risk is over. Cancel the watchdog before any
+        // branch below (the confirm-preview branch keeps the guard set while its dialog is open,
+        // so a live watchdog would otherwise fire mid-dialog and wrongly "time out" a good result).
+        luminaCancelTbsWatchdog();
         if (translated == null || translated.trim().length() == 0 || translated.equals(original)) {
             // Translation unavailable or a no-op (same language): send the text as typed.
             luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars);
@@ -8370,6 +8423,10 @@ public class ChatActivityEnterView extends FrameLayout implements
     }
 
     private void luminaSendPreparedText(CharSequence text, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
+        // b25: a real send reached the terminal — cancel any armed stall watchdog so it can never
+        // later fire and clobber the composer (also covers the error paths that skip
+        // luminaHandleTranslateResult and land straight here).
+        luminaCancelTbsWatchdog();
         // P1-4: consume the in-flight guard here — this is the single terminal reached from every
         // translate-before-send success and error callback, so clearing it here reopens sending
         // and lets the confirm dialog tell a real send apart from a cancel.
@@ -8387,6 +8444,52 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
         }
         updateSendButtonPaid();
+    }
+
+    // b25: arm a 20s timeout for the in-flight translate-before-send round-trip. If the provider
+    // never calls back (e.g. google_web has no socket timeout and the connection stalls), the guard
+    // would otherwise stay stuck forever — silently no-op'ing every later Send and losing the
+    // captured text. On firing, the watchdog clears the guard, restores the captured original into
+    // the composer (only when the user has not typed a fresh draft) and shows a retry bulletin. The
+    // generation token means a newer send's watchdog supersedes an older one, and a completed send
+    // cancels it via luminaCancelTbsWatchdog().
+    private void luminaScheduleTbsWatchdog(final String original) {
+        luminaCancelTbsWatchdog();
+        final int gen = ++luminaTbsGeneration;
+        final Runnable watchdog = new Runnable() {
+            @Override
+            public void run() {
+                if (luminaTbsWatchdog != this || gen != luminaTbsGeneration) {
+                    return; // superseded by a newer send, or already cancelled
+                }
+                luminaTbsWatchdog = null;
+                if (!luminaTbsInFlight) {
+                    return; // the send already completed between dequeue and run
+                }
+                luminaTbsInFlight = false;
+                if (messageEditText != null && messageEditText.length() == 0 && original != null) {
+                    setFieldText(original);
+                }
+                if (parentFragment != null) {
+                    BulletinFactory.of(parentFragment).createSimpleBulletin(
+                            R.raw.chats_infotip,
+                            LuminaLocale.getString(R.string.LuminaTrSendTimeout)
+                    ).show();
+                }
+            }
+        };
+        luminaTbsWatchdog = watchdog;
+        AndroidUtilities.runOnUIThread(watchdog, 20000);
+    }
+
+    // b25: cancel any armed translate-before-send watchdog. Bumps the generation so a watchdog
+    // that was already dequeued can still recognise itself as stale. Safe when none is armed.
+    private void luminaCancelTbsWatchdog() {
+        if (luminaTbsWatchdog != null) {
+            AndroidUtilities.cancelRunOnUIThread(luminaTbsWatchdog);
+            luminaTbsWatchdog = null;
+        }
+        luminaTbsGeneration++;
     }
 
     // ===== LuminaGram: confirm before sending voice / round-video =====
