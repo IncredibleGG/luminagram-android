@@ -33,6 +33,7 @@ public class PremiumAppIconsPreviewView extends FrameLayout implements PagerHead
         this.resourcesProvider = resourcesProvider;
 
         for (LauncherIconController.LauncherIcon icon : LauncherIconController.LauncherIcon.values()) {
+            if (icon.isDisguise()) continue;
             if (icon.premium) {
                 icons.add(icon);
             }
