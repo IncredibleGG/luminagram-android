@@ -130,20 +130,24 @@ public class LauncherIconController {
         // LuminaGram disguise: Calculator camouflage alias. The launcher icon/label come
         // from the CalculatorIcon <activity-alias> in the manifest; the preview fields here
         // reuse existing adaptive assets so the shared app-icon system keeps compiling.
-        CALCULATOR("CalculatorIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseAppLabel),
+        CALCULATOR("CalculatorIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseAppLabel, false, true),
         // LuminaGram disguise: Notes / Clock camouflage aliases (preset switcher in LuminaDisguiseActivity).
         // The launcher icon + label come from the matching <activity-alias> in the manifest; the preview
         // fields here reuse existing adaptive assets so the shared app-icon system keeps compiling and so
         // tryFixLauncherIconIfNeeded() recognises an active Notes/Clock disguise instead of re-enabling
         // the real icon behind it.
-        NOTES("NotesIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseNotesLabel),
-        CLOCK("ClockIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseClockLabel);
+        NOTES("NotesIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseNotesLabel, false, true),
+        CLOCK("ClockIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.LuminaDisguiseClockLabel, false, true);
 
         public final String key;
         public final int background;
         public final int foreground;
         public final int title;
         public final boolean premium;
+        // LuminaGram: true for the CALCULATOR/NOTES/CLOCK camouflage aliases. These are
+        // stealth launcher disguises driven by LuminaDisguiseActivity, NOT user-selectable
+        // themes, so the stock App-Icon picker must hide them (see AppIconsSelectorCell).
+        public final boolean disguise;
 
         private ComponentName componentName;
 
@@ -154,16 +158,25 @@ public class LauncherIconController {
             return componentName;
         }
 
+        public boolean isDisguise() {
+            return disguise;
+        }
+
         LauncherIcon(String key, int background, int foreground, int title) {
-            this(key, background, foreground, title, false);
+            this(key, background, foreground, title, false, false);
         }
 
         LauncherIcon(String key, int background, int foreground, int title, boolean premium) {
+            this(key, background, foreground, title, premium, false);
+        }
+
+        LauncherIcon(String key, int background, int foreground, int title, boolean premium, boolean disguise) {
             this.key = key;
             this.background = background;
             this.foreground = foreground;
             this.title = title;
             this.premium = premium;
+            this.disguise = disguise;
         }
     }
 }
