@@ -418,6 +418,17 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:exported="false" />
         <!-- ==== end LuminaGram decoy calculator lock =============================== -->
+        <!-- ==== LuminaGram decoy notepad lock (vnotepad) =========================== -->
+        <!-- Standalone gate shown before the real app when the notepad vault is on.
+             NOT a launcher; started explicitly from LaunchActivity. Uses a plain system
+             theme so it never depends on Telegram theme/init (may run before app init). -->
+        <activity
+            android:name="org.telegram.ui.LuminaNotepadActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="false" />
+        <!-- ==== end LuminaGram decoy notepad lock ================================== -->
 
         <activity-alias
             android:name="org.telegram.ui.CallsActivity"
