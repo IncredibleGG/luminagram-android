@@ -666,6 +666,11 @@ public class ChatActivityEnterView extends FrameLayout implements
     private int luminaPreviewGeneration = 0;
     private String luminaPreviewTranslatedFor;
     private String luminaPreviewTranslatedText;
+    // LuminaGram (P1-4): guards a translate-before-send whose async network round-trip is in
+    // flight. Set true at dispatch (the composer is captured+cleared at the same moment); any
+    // further Send tap is ignored while true, and the terminal send / confirm-dialog dismiss /
+    // onDestroy clears it. Default translate-before-send off => never set, behaviour unchanged.
+    private boolean luminaTbsInFlight;
     // LuminaGram: undo-send window — the pending dispatch runnable while a just-sent
     // plain-text message is held; null when no window is active.
     private Runnable luminaUndoSendRunnable;
@@ -6559,6 +6564,7 @@ public class ChatActivityEnterView extends FrameLayout implements
 
     public void onDestroy() {
         luminaFlushUndoSend();
+        luminaTbsInFlight = false; // P1-4: never leave the send guard stuck across a chat close.
         if (audioTimelineView != null) {
             audioTimelineView.destroy();
         }
@@ -8044,6 +8050,11 @@ public class ChatActivityEnterView extends FrameLayout implements
     // language (reusing Telegram's own TL_messages_translateText endpoint on a network
     // thread), previewed (original -> translation) and only the confirmed text is sent.
     private void luminaTranslateBeforeSend(CharSequence outgoing, final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        // P1-4: a translate-before-send is already mid network round-trip. Ignore this Send tap
+        // so we can never dispatch a second (double-send) translation for the same message.
+        if (luminaTbsInFlight) {
+            return;
+        }
         final String original = outgoing.toString();
         final boolean livePreviewVisible = luminaPreviewPanel != null && luminaPreviewPanel.getVisibility() == View.VISIBLE;
         // The live preview already shows a ready translation for exactly this text: the panel IS the
@@ -8054,6 +8065,13 @@ public class ChatActivityEnterView extends FrameLayout implements
             return;
         }
         final String toLang = TranslateAlert2.getToLanguage();
+        // P1-4: from here an async translation round-trip is in flight. Mark it and immediately
+        // capture+clear the composer (original is already captured above): the message visibly
+        // leaves the input like a normal send, a second Send tap is ignored by the guard at the
+        // top of this method, and anything typed during the round-trip is a fresh draft that the
+        // async result must not overwrite.
+        luminaTbsInFlight = true;
+        setFieldText("");
         // Route through the selected provider (Telegram / Google / DeepL / LLM). On a
         // provider error, fall back to Telegram, then to send-as-typed — a bad key or a
         // dead endpoint must never block sending. Callbacks arrive on the UI thread.
@@ -8118,6 +8136,18 @@ public class ChatActivityEnterView extends FrameLayout implements
         builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaSendTranslation), (dialog, which) -> luminaSendTranslatedText(original, translated, notify, scheduleDate, scheduleRepeatPeriod, payStars));
         builder.setNeutralButton(LuminaLocale.getString(R.string.LuminaSendOriginal), (dialog, which) -> luminaSendPreparedText(original, notify, scheduleDate, scheduleRepeatPeriod, payStars));
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        // P1-4: the composer was cleared at dispatch. Both Send buttons above route through
+        // luminaSendPreparedText, which clears luminaTbsInFlight; so if the flag is still set when
+        // the dialog is dismissed, the user cancelled (Cancel / back / tap-outside) and nothing
+        // was sent — restore the captured draft (unless a new one was typed in the meantime).
+        builder.setOnDismissListener(dialog -> {
+            if (luminaTbsInFlight) {
+                luminaTbsInFlight = false;
+                if (messageEditText != null && messageEditText.length() == 0) {
+                    setFieldText(original);
+                }
+            }
+        });
         builder.show();
     }
 
@@ -8141,8 +8171,16 @@ public class ChatActivityEnterView extends FrameLayout implements
     }
 
     private void luminaSendPreparedText(CharSequence text, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
+        // P1-4: consume the in-flight guard here — this is the single terminal reached from every
+        // translate-before-send success and error callback, so clearing it here reopens sending
+        // and lets the confirm dialog tell a real send apart from a cancel.
+        final boolean wasInFlight = luminaTbsInFlight;
+        luminaTbsInFlight = false;
         if (processSendingText(text, notify, scheduleDate, scheduleRepeatPeriod, payStars)) {
-            if (messageEditText != null) {
+            // Only clear the composer when this was NOT an in-flight translate-before-send: those
+            // already cleared it at dispatch, and re-clearing here would wipe any fresh draft the
+            // user typed during the async round-trip.
+            if (!wasInFlight && messageEditText != null) {
                 messageEditText.setText("");
             }
             if (delegate != null) {
