@@ -994,14 +994,20 @@ public class PasscodeView extends FrameLayout implements NotificationCenter.Noti
             // it only fires when the feature is enabled AND the entered text EXACTLY equals the
             // (non-empty) configured code. Any other input, including a normal wrong passcode,
             // falls through to the usual checkPasscode() handling below and behaves normally.
-            if (LuminaConfig.getBoolean("fakeCrashEnabled", false)) {
-                String fakeCrashCode = LuminaConfig.getString("fakeCrashCode", "");
-                if (fakeCrashCode != null && fakeCrashCode.length() > 0 && fakeCrashCode.equals(password)) {
-                    passwordEditText.setText("");
-                    passwordEditText2.eraseAllCharacters(true);
-                    showFakeCrash();
-                    return;
+            try {
+                if (LuminaConfig.getBoolean("fakeCrashEnabled", false)) {
+                    String fakeCrashCode = LuminaConfig.getString("fakeCrashCode", "");
+                    if (fakeCrashCode != null && fakeCrashCode.length() > 0 && fakeCrashCode.equals(password)) {
+                        passwordEditText.setText("");
+                        passwordEditText2.eraseAllCharacters(true);
+                        showFakeCrash();
+                        return;
+                    }
                 }
+            } catch (Throwable e) {
+                // A LuminaGram config error must NEVER block passcode entry (would brick the
+                // user out of their app). Swallow it and fall through to the normal
+                // SharedConfig.checkPasscode() handling below.
             }
             if (!SharedConfig.checkPasscode(password)) {
                 SharedConfig.increaseBadPasscodeTries();

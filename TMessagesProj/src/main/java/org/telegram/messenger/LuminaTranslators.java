@@ -44,6 +44,9 @@ public final class LuminaTranslators {
 
     /** The provider chosen in settings, falling back to Telegram when unset/unknown. */
     public static LuminaTranslator current() {
-        return byId(LuminaConfig.getString("translateProvider", "telegram"));
+        // Default to the free, keyless Google web engine (registered id "google_web") so
+        // translation works out-of-box for non-premium users instead of defaulting to
+        // Telegram's engine. byId() still falls back to Telegram for an unknown stored id.
+        return byId(LuminaConfig.getString("translateProvider", "google_web"));
     }
 }
