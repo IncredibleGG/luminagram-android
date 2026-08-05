@@ -333,6 +333,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaProfileCardShareInfo", "将名片生成为纯文本摘要，然后分享，或复制后粘贴到任意聊天中。");
         zhHans.put("LuminaProfileCardCopied", "名片已复制");
         zhHans.put("LuminaProfileCardEmptyShare", "请先填写你的名片");
+        zhHans.put("LuminaTranslateThisChat", "翻译此对话");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -640,6 +641,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaProfileCardShareInfo", "將名片產生為純文字摘要，然後分享，或複製後貼到任意聊天中。");
         zhHant.put("LuminaProfileCardCopied", "名片已複製");
         zhHant.put("LuminaProfileCardEmptyShare", "請先填寫你的名片");
+        zhHant.put("LuminaTranslateThisChat", "翻譯此對話");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -946,6 +948,7 @@ public final class LuminaLocale {
         ar.put("LuminaProfileCardShareInfo", "أنشئ ملخصًا نصيًا لبطاقتك ثم شاركه، أو انسخه والصقه في أي محادثة.");
         ar.put("LuminaProfileCardCopied", "تم نسخ البطاقة");
         ar.put("LuminaProfileCardEmptyShare", "املأ بطاقتك أولاً");
+        ar.put("LuminaTranslateThisChat", "ترجمة هذه المحادثة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1252,6 +1255,7 @@ public final class LuminaLocale {
         ru.put("LuminaProfileCardShareInfo", "Создайте текстовую сводку визитки, затем поделитесь ею или скопируйте и вставьте в любой чат.");
         ru.put("LuminaProfileCardCopied", "Визитка скопирована");
         ru.put("LuminaProfileCardEmptyShare", "Сначала заполните визитку");
+        ru.put("LuminaTranslateThisChat", "Перевести этот чат");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1558,6 +1562,7 @@ public final class LuminaLocale {
         fa.put("LuminaProfileCardShareInfo", "یک خلاصهٔ متنی از کارت خود بسازید، سپس آن را هم‌رسانی کنید یا کپی کرده و در هر گفتگویی بچسبانید.");
         fa.put("LuminaProfileCardCopied", "کارت کپی شد");
         fa.put("LuminaProfileCardEmptyShare", "ابتدا کارت خود را پر کنید");
+        fa.put("LuminaTranslateThisChat", "ترجمهٔ این گفتگو");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -1864,6 +1869,7 @@ public final class LuminaLocale {
         tr.put("LuminaProfileCardShareInfo", "Kartınızın düz metin özetini oluşturun, ardından paylaşın ya da kopyalayıp herhangi bir sohbete yapıştırın.");
         tr.put("LuminaProfileCardCopied", "Kart kopyalandı");
         tr.put("LuminaProfileCardEmptyShare", "Önce kartınızı doldurun");
+        tr.put("LuminaTranslateThisChat", "Bu sohbeti çevir");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2170,6 +2176,7 @@ public final class LuminaLocale {
         es.put("LuminaProfileCardShareInfo", "Crea un resumen en texto de tu tarjeta y compártelo, o cópialo y pégalo en cualquier chat.");
         es.put("LuminaProfileCardCopied", "Tarjeta copiada");
         es.put("LuminaProfileCardEmptyShare", "Primero completa tu tarjeta");
+        es.put("LuminaTranslateThisChat", "Traducir este chat");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2476,6 +2483,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaProfileCardShareInfo", "Gere um resumo em texto do seu cartão e compartilhe, ou copie e cole em qualquer conversa.");
         ptBr.put("LuminaProfileCardCopied", "Cartão copiado");
         ptBr.put("LuminaProfileCardEmptyShare", "Preencha seu cartão primeiro");
+        ptBr.put("LuminaTranslateThisChat", "Traduzir esta conversa");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -2782,6 +2790,7 @@ public final class LuminaLocale {
         id.put("LuminaProfileCardShareInfo", "Buat ringkasan teks kartumu, lalu bagikan, atau salin dan tempel ke obrolan mana pun.");
         id.put("LuminaProfileCardCopied", "Kartu disalin");
         id.put("LuminaProfileCardEmptyShare", "Isi kartumu terlebih dahulu");
+        id.put("LuminaTranslateThisChat", "Terjemahkan obrolan ini");
         T.put("id", id);
     }
 

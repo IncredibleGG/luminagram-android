@@ -215,6 +215,12 @@ public class TranslateController extends BaseController {
         if (!LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
             return false;
         }
+        // LuminaGram: only auto-enable incoming/whole-chat translation in "all" mode.
+        // In the default "manual" mode nothing auto-translates; the user turns translation
+        // on per-chat via the header translate icon (or the header overflow menu item).
+        if (!"all".equals(LuminaConfig.getString("trMode", "manual"))) {
+            return false;
+        }
         if (DialogObject.isUserDialog(dialogId)) {
             return LuminaConfig.getBoolean("trScopePrivate", true);
         }
