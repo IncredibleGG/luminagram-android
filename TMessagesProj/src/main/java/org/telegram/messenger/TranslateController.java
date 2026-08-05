@@ -206,7 +206,30 @@ public class TranslateController extends BaseController {
         );
     }
 
+    // LuminaGram: dual-language incoming translation -- should this dialog auto-enable
+    // whole-chat translation eagerly (bypassing the sample-based detection threshold)?
+    // True only when dual-language display is on AND the dialog matches the configured
+    // scope: real 1:1 user chats -> trScopePrivate, groups/channels -> trScopeGroup.
+    // isUserDialog/isChatDialog both exclude encrypted & folder pseudo-dialogs.
+    public boolean luminaShouldAutoTranslate(long dialogId) {
+        if (!LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+            return false;
+        }
+        if (DialogObject.isUserDialog(dialogId)) {
+            return LuminaConfig.getBoolean("trScopePrivate", true);
+        }
+        if (DialogObject.isChatDialog(dialogId)) {
+            return LuminaConfig.getBoolean("trScopeGroup", true);
+        }
+        return false;
+    }
+
     public boolean isDialogTranslatable(long dialogId) {
+        // LuminaGram: eager auto-enable -- treat scope-matching dialogs as translatable
+        // immediately so the translate pipeline turns on without waiting for detection.
+        if (luminaShouldAutoTranslate(dialogId)) {
+            return true;
+        }
         return (
             translatableDialogs.contains(dialogId) &&
             isFeatureAvailable(dialogId) &&
@@ -279,6 +302,18 @@ public class TranslateController extends BaseController {
     }
 
     public String getDialogTranslateTo(long dialogId) {
+        // LuminaGram: dual-language incoming display -- always translate INTO the user's
+        // configured READ language (trReadLang; empty => app language), overriding the
+        // stored/auto/outgoing target logic below. Placed first so it wins whenever
+        // dual-language display is enabled; untouched when the feature is off.
+        if (LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+            final String r = LuminaConfig.getString("trReadLang", "");
+            String readLang = (r == null || r.isEmpty()) ? currentLanguage() : r;
+            if ("nb".equals(readLang)) {
+                readLang = "no";
+            }
+            return readLang;
+        }
         String lang = translateDialogLanguage.get(dialogId);
         if (lang == null) {
             // LuminaGram (Wave 8): restore the per-dialog target language chosen
@@ -694,6 +729,17 @@ public class TranslateController extends BaseController {
         }
 
         final String language = getDialogTranslateTo(dialogId);
+
+        // LuminaGram: dual-language display -- skip a redundant translation when this
+        // message's own detected source language already equals the target/read language,
+        // so no identical "translation" line is rendered under the original text.
+        if (LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+            final String detected = messageObject.messageOwner.originalLanguage;
+            if (detected != null && !UNKNOWN_LANGUAGE.equals(detected) && detected.equals(language)) {
+                return;
+            }
+        }
+
         MessageObject potentialReplyMessageObject;
         if (!keepReply && messageObject.type != MessageObject.TYPE_ARTICLE && (
                 (messageObject.messageOwner.voiceTranscriptionOpen && messageObject.messageOwner.voiceTranscriptionFinal ? messageObject.messageOwner.translatedVoiceTranscription : messageObject.messageOwner.translatedText) == null && messageObject.messageOwner.translatedPoll == null ||
