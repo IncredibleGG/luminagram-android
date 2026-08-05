@@ -855,8 +855,32 @@ public class TranslateController extends BaseController {
                         if (finalMessageObject.getId() != id) {
                             FileLog.e("wtf, asked to translate " + finalMessageObject.getId() + " but got " + id + "!");
                         }
+                        // LuminaGram: dual-language display -- for FRESH incoming messages the pre-request
+                        // skip guard cannot fire (originalLanguage is null until async detection runs), so
+                        // drop a redundant translation here at apply time when the provider returned text
+                        // identical to the original, or the source is now known to equal the target. Keep
+                        // translatedText null so no identical sub-line renders, and record originalLanguage
+                        // so the pre-request guard fires next time (no re-translate loop).
+                        boolean luminaSkipSameLang = false;
+                        if (LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+                            final String luminaOriginal = isTranscription ? finalMessageObject.messageOwner.voiceTranscription : finalMessageObject.messageOwner.message;
+                            final String luminaTranslated = text != null ? text.text : null;
+                            final String luminaDetected = finalMessageObject.messageOwner.originalLanguage;
+                            if (luminaTranslated != null && luminaOriginal != null && luminaTranslated.trim().equalsIgnoreCase(luminaOriginal.trim())) {
+                                luminaSkipSameLang = true;
+                            } else if (luminaDetected != null && !UNKNOWN_LANGUAGE.equals(luminaDetected) && luminaDetected.equals(lang)) {
+                                luminaSkipSameLang = true;
+                            }
+                        }
                         finalMessageObject.messageOwner.translatedToLanguage = lang;
-                        if (isTranscription) {
+                        if (luminaSkipSameLang) {
+                            if (isTranscription) {
+                                finalMessageObject.messageOwner.translatedVoiceTranscription = null;
+                            } else {
+                                finalMessageObject.messageOwner.translatedText = null;
+                            }
+                            finalMessageObject.messageOwner.originalLanguage = lang;
+                        } else if (isTranscription) {
                             finalMessageObject.messageOwner.translatedVoiceTranscription = text;
                         } else {
                             finalMessageObject.messageOwner.translatedText = text;
@@ -875,7 +899,14 @@ public class TranslateController extends BaseController {
                                 MessageObject dialogMessage = dialogMessages.get(i);
                                 if (dialogMessage != null && dialogMessage.getId() == finalMessageObject.getId()) {
                                     dialogMessage.messageOwner.translatedToLanguage = lang;
-                                    if (isTranscription) {
+                                    if (luminaSkipSameLang) {
+                                        if (isTranscription) {
+                                            dialogMessage.messageOwner.translatedVoiceTranscription = null;
+                                        } else {
+                                            dialogMessage.messageOwner.translatedText = null;
+                                        }
+                                        dialogMessage.messageOwner.originalLanguage = lang;
+                                    } else if (isTranscription) {
                                         dialogMessage.messageOwner.translatedVoiceTranscription = text;
                                     } else {
                                         dialogMessage.messageOwner.translatedText = text;
