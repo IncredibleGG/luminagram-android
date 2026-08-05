@@ -408,16 +408,23 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             luminaDecoyGate = false;
         }
         if (luminaDecoyGate) {
+            boolean decoyPresented = false;
             try {
                 Intent luminaDecoyIntent = new Intent(this, LuminaCalculatorActivity.class);
                 luminaDecoyIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(luminaDecoyIntent);
+                decoyPresented = true;
+            } catch (Throwable ignore) {
+                // Could not present the decoy — fall through so the user is never locked out of
+                // their own app. super.onCreate() has NOT been called yet, so the normal launch
+                // path below calls it exactly once.
+            }
+            if (decoyPresented) {
+                // Complete this Activity's lifecycle cleanly (single super.onCreate) and hand the
+                // screen to the decoy calculator.
                 super.onCreate(savedInstanceState);
                 finish();
                 return;
-            } catch (Throwable ignore) {
-                // Could not present the decoy (super.onCreate not reached if startActivity
-                // threw) — fall through so the user is never locked out of their own app.
             }
         }
         isActive = true;

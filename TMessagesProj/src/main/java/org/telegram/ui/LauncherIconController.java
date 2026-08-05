@@ -5,31 +5,114 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 
 import org.telegram.messenger.ApplicationLoader;
+import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaDisguiseController;
 import org.telegram.messenger.R;
 
 public class LauncherIconController {
+    /**
+     * Runs on every cold start from {@link ApplicationLoader#onCreate()}. It reconciles the
+     * launcher aliases so exactly one component stays enabled and the enabled one matches the
+     * persisted state.
+     *
+     * FAIL-SAFE: the entire body is wrapped in a catch-all. This method executes inside
+     * {@code Application.onCreate()}; an exception escaping here would crash the process before
+     * any Activity is shown (a hard 闪退 on every launch that cannot self-heal). Reconciling
+     * launcher icons is never important enough to justify that, so any error is swallowed.
+     */
     public static void tryFixLauncherIconIfNeeded() {
-        for (LauncherIcon icon : LauncherIcon.values()) {
-            if (isEnabled(icon)) {
+        try {
+            // Consolidation: fold the legacy single "disguiseIcon" toggle (LuminaSecurityActivity)
+            // into the new preset system so only ONE controller ever drives the CalculatorIcon
+            // alias. Idempotent + guarded; a no-op once migrated.
+            try {
+                LuminaDisguiseController.migrateStaleDisguiseToggle(ApplicationLoader.applicationContext);
+            } catch (Throwable ignore) {
+            }
+
+            // If a disguise is active, force the launcher to exactly the persisted preset's alias.
+            // applyDisguise() enables the target first, then disables every sibling, guaranteeing
+            // one launcher component that matches the persisted disguise state.
+            boolean disguiseOn = false;
+            try {
+                disguiseOn = LuminaConfig.getBoolean(LuminaDisguiseController.KEY_ENABLED, false);
+            } catch (Throwable ignore) {
+            }
+            if (disguiseOn) {
+                String preset = LuminaDisguiseController.PRESET_DEFAULT;
+                try {
+                    preset = LuminaConfig.getString(LuminaDisguiseController.KEY_PRESET, LuminaDisguiseController.PRESET_DEFAULT);
+                } catch (Throwable ignore) {
+                }
+                LuminaDisguiseController.applyDisguise(ApplicationLoader.applicationContext, preset);
                 return;
             }
+
+            // Disguise off: keep whatever cosmetic app-icon the user picked; only self-heal when
+            // NOTHING is enabled (which would otherwise hide the app / make it unopenable).
+            for (LauncherIcon icon : LauncherIcon.values()) {
+                if (isEnabled(icon)) {
+                    return;
+                }
+            }
+            setIcon(LauncherIcon.DEFAULT);
+        } catch (Throwable ignore) {
+            // Never crash app startup because of launcher-icon reconciliation.
         }
-
-        setIcon(LauncherIcon.DEFAULT);
     }
 
+    /**
+     * Whether {@code icon}'s alias is the active launcher component. FAIL-SAFE: a null context or
+     * any PackageManager error returns false (except that a missing context still reports DEFAULT
+     * as enabled, preserving the "at least the real icon is on" invariant) so callers — including
+     * {@link #tryFixLauncherIconIfNeeded()} on the startup path — can never be crashed by it.
+     */
     public static boolean isEnabled(LauncherIcon icon) {
-        Context ctx = ApplicationLoader.applicationContext;
-        int i = ctx.getPackageManager().getComponentEnabledSetting(icon.getComponentName(ctx));
-        return i == PackageManager.COMPONENT_ENABLED_STATE_ENABLED || i == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT && icon == LauncherIcon.DEFAULT;
+        try {
+            Context ctx = ApplicationLoader.applicationContext;
+            if (ctx == null) {
+                return icon == LauncherIcon.DEFAULT;
+            }
+            int i = ctx.getPackageManager().getComponentEnabledSetting(icon.getComponentName(ctx));
+            return i == PackageManager.COMPONENT_ENABLED_STATE_ENABLED || i == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT && icon == LauncherIcon.DEFAULT;
+        } catch (Throwable t) {
+            return false;
+        }
     }
 
+    /**
+     * Switch the launcher to exactly {@code icon}. FAIL-SAFE: the target is ENABLED first and only
+     * then are the siblings DISABLED, each in its own try/catch, so there is never an instant with
+     * zero launcher entries and a PackageManager error on one component can neither crash the caller
+     * nor brick the app (hide every icon). If even enabling the target fails, the current launcher
+     * state is left untouched rather than risk disabling everything.
+     */
     public static void setIcon(LauncherIcon icon) {
-        Context ctx = ApplicationLoader.applicationContext;
-        PackageManager pm = ctx.getPackageManager();
-        for (LauncherIcon i : LauncherIcon.values()) {
-            pm.setComponentEnabledSetting(i.getComponentName(ctx), i == icon ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
-                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        try {
+            Context ctx = ApplicationLoader.applicationContext;
+            if (ctx == null) {
+                return;
+            }
+            PackageManager pm = ctx.getPackageManager();
+            try {
+                pm.setComponentEnabledSetting(icon.getComponentName(ctx),
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+            } catch (Throwable t) {
+                // Could not enable the requested icon: do not disable the others, or the app could
+                // end up with no launcher entry at all.
+                return;
+            }
+            for (LauncherIcon i : LauncherIcon.values()) {
+                if (i == icon) {
+                    continue;
+                }
+                try {
+                    pm.setComponentEnabledSetting(i.getComponentName(ctx),
+                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+                } catch (Throwable ignore) {
+                }
+            }
+        } catch (Throwable ignore) {
         }
     }
 

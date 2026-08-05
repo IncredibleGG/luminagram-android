@@ -31,6 +31,13 @@ public final class LuminaDisguiseController {
     /** LuminaConfig boolean key for the master disguise switch. */
     public static final String KEY_ENABLED = "disguiseEnabled";
 
+    /**
+     * Legacy LuminaConfig boolean key from the old LuminaSecurityActivity "Disguise" switch, which
+     * drove the CalculatorIcon alias directly. Kept only so {@link #migrateStaleDisguiseToggle} can
+     * fold it into this preset system; no code should read it as a live toggle any more.
+     */
+    public static final String KEY_LEGACY_DISGUISE_ICON = "disguiseIcon";
+
     private LuminaDisguiseController() {}
 
     /** Map a preset id to its launcher alias; null / unknown / "default" -> the real DEFAULT icon. */
@@ -83,6 +90,36 @@ public final class LuminaDisguiseController {
                         PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
             } catch (Exception ignored) {
             }
+        }
+    }
+
+    /**
+     * One-time consolidation of the retired LuminaSecurityActivity "Disguise" switch.
+     *
+     * That old toggle wrote {@link #KEY_LEGACY_DISGUISE_ICON} and flipped the CalculatorIcon alias
+     * through {@link LauncherIconController#setIcon}, i.e. a SECOND controller fighting this preset
+     * system over the same alias. This migrates any tester who had it on into the preset system —
+     * {@code disguiseEnabled = true}, {@code disguisePreset = calculator} — then clears the legacy
+     * flag so the two systems can never contend again. It never re-enables anything on its own; the
+     * caller ({@link LauncherIconController#tryFixLauncherIconIfNeeded}) applies the resulting state.
+     *
+     * FAIL-SAFE and idempotent: guarded end-to-end, and a no-op once the legacy flag is cleared (the
+     * common case), so it is cheap to call on every cold start.
+     */
+    public static void migrateStaleDisguiseToggle(Context context) {
+        try {
+            if (!LuminaConfig.getBoolean(KEY_LEGACY_DISGUISE_ICON, false)) {
+                return;
+            }
+            // Only adopt the legacy disguise if the user has not already configured the new system,
+            // so we never clobber an explicit new-system choice.
+            if (!LuminaConfig.getBoolean(KEY_ENABLED, false)) {
+                LuminaConfig.putBoolean(KEY_ENABLED, true);
+                LuminaConfig.putString(KEY_PRESET, PRESET_CALCULATOR);
+            }
+            // Retire the legacy flag so only the preset system drives the launcher aliases now.
+            LuminaConfig.putBoolean(KEY_LEGACY_DISGUISE_ICON, false);
+        } catch (Throwable ignore) {
         }
     }
 }
