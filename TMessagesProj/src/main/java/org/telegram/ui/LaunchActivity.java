@@ -420,8 +420,9 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                 // path below calls it exactly once.
             }
             if (decoyPresented) {
-                // Complete this Activity's lifecycle cleanly (single super.onCreate) and hand the
-                // screen to the decoy calculator.
+                // Hand the screen to the decoy calculator. Mark this instance so onDestroy
+                // skips teardown it never set up (no registerReceiver / activeInstanceCount++).
+                luminaDecoyFinished = true;
                 super.onCreate(savedInstanceState);
                 finish();
                 return;
@@ -6876,15 +6877,19 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
     }
 
     private final int instanceId = System.identityHashCode(this);
+    // LuminaGram: true when this instance took the decoy-gate early return (it never ran
+    // registerReceiver / activeInstanceCount++), so onDestroy must NOT unregister/decrement.
+    private boolean luminaDecoyFinished = false;
 
     @Override
     protected void onDestroy() {
         isActive = false;
-        activeInstanceCount--;
-        unregisterReceiver(batteryReceiver);
-
-        if (activeInstanceCount == 0) {
-            onDestroyStaticResources();
+        if (!luminaDecoyFinished) {
+            activeInstanceCount--;
+            try { unregisterReceiver(batteryReceiver); } catch (Throwable ignore) {}
+            if (activeInstanceCount == 0) {
+                onDestroyStaticResources();
+            }
         }
 
 
