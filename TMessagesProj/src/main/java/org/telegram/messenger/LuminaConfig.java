@@ -42,21 +42,30 @@ public class LuminaConfig {
             if (configLoaded) {
                 return;
             }
-            preferences = ApplicationLoader.applicationContext
-                    .getSharedPreferences("luminagram", Activity.MODE_PRIVATE);
-            editor = preferences.edit();
+            try {
+                preferences = ApplicationLoader.applicationContext
+                        .getSharedPreferences("luminagram", Activity.MODE_PRIVATE);
+                editor = preferences.edit();
 
-            hideTabs = preferences.getBoolean("hideTabs", false);
-            hideStories = preferences.getBoolean("hideStories", false);
-            compactChatList = preferences.getBoolean("compactChatList", false);
-            translateBeforeSend = preferences.getBoolean("translateBeforeSend", false);
-            translateBeforeSendConfirm = preferences.getBoolean("translateBeforeSendConfirm", false);
-            materialYouEnabled = preferences.getBoolean("materialYouEnabled", false);
-            customAccentEnabled = preferences.getBoolean("customAccentEnabled", false);
-            customAccentColor = preferences.getInt("customAccentColor", 0);
-            appFont = preferences.getInt("appFont", 0);
+                hideTabs = preferences.getBoolean("hideTabs", false);
+                hideStories = preferences.getBoolean("hideStories", false);
+                compactChatList = preferences.getBoolean("compactChatList", false);
+                translateBeforeSend = preferences.getBoolean("translateBeforeSend", false);
+                translateBeforeSendConfirm = preferences.getBoolean("translateBeforeSendConfirm", false);
+                materialYouEnabled = preferences.getBoolean("materialYouEnabled", false);
+                customAccentEnabled = preferences.getBoolean("customAccentEnabled", false);
+                customAccentColor = preferences.getInt("customAccentColor", 0);
+                appFont = preferences.getInt("appFont", 0);
 
-            configLoaded = true;
+                configLoaded = true;
+            } catch (Throwable e) {
+                // A prefs failure here must never poison this class: an uncaught throw in the
+                // static initializer becomes ExceptionInInitializerError and bricks EVERY
+                // LuminaConfig access (incl. the passcode screen). Leave fields at their safe
+                // defaults and null out the store; the accessors below null-guard it.
+                preferences = null;
+                editor = null;
+            }
             // Push the persisted appearance into the render hooks (Theme accent + font override).
             applyAppearance();
         }
@@ -64,10 +73,16 @@ public class LuminaConfig {
 
     // Generic accessors (used by later feature batches)
     public static boolean getBoolean(String key, boolean def) {
+        if (preferences == null) {
+            return def;
+        }
         return preferences.getBoolean(key, def);
     }
 
     public static void putBoolean(String key, boolean value) {
+        if (editor == null) {
+            return;
+        }
         editor.putBoolean(key, value).apply();
     }
 
@@ -75,19 +90,31 @@ public class LuminaConfig {
     // (provider id, per-provider API keys, base URL, model, prompt). Values live only
     // in the app-private "luminagram" prefs and are never logged.
     public static String getString(String key, String def) {
+        if (preferences == null) {
+            return def;
+        }
         return preferences.getString(key, def);
     }
 
     public static void putString(String key, String value) {
+        if (editor == null) {
+            return;
+        }
         editor.putString(key, value).apply();
     }
 
     // Generic int accessors (percent-style feature values, e.g. sticker render scale).
     public static int getInt(String key, int def) {
+        if (preferences == null) {
+            return def;
+        }
         return preferences.getInt(key, def);
     }
 
     public static void putInt(String key, int value) {
+        if (editor == null) {
+            return;
+        }
         editor.putInt(key, value).apply();
     }
 

@@ -75,14 +75,11 @@ public class LuminaPrivacyActivity extends BaseFragment {
     }
 
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
-        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacyGhostHeader)));
-        items.add(UItem.asSwitch(ID_READ, LuminaLocale.getString(R.string.LuminaPrivacySendReadReceipts))
-                .setChecked(LuminaConfig.getBoolean("sendReadPackets", true)));
-        items.add(UItem.asSwitch(ID_TYPING, LuminaLocale.getString(R.string.LuminaPrivacySendTyping))
-                .setChecked(LuminaConfig.getBoolean("sendTyping", true)));
-        items.add(UItem.asSwitch(ID_ONLINE, LuminaLocale.getString(R.string.LuminaPrivacySendOnline))
-                .setChecked(LuminaConfig.getBoolean("sendOnlineStatus", true)));
-        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacySendOnlineInfo)));
+        // GREY / DEFERRED: the read-receipt / typing / online suppression rows (keys
+        // sendReadPackets / sendTyping / sendOnlineStatus) are PARKED for the Safe milestone
+        // and intentionally not shown here, so no user can enable them. The interception in
+        // ConnectionsManager is additionally gated behind greyStealthUnlocked (default false).
+        // The grey final batch will restore these rows (ID_READ / ID_TYPING / ID_ONLINE kept).
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaPrivacyProfileHeader)));
         items.add(UItem.asSwitch(ID_REGDATE, LuminaLocale.getString(R.string.LuminaPrivacyShowRegistrationDate))
@@ -123,15 +120,6 @@ public class LuminaPrivacyActivity extends BaseFragment {
 
     private void onClick(UItem item, View view, int position, float x, float y) {
         switch (item.id) {
-            case ID_READ:
-                LuminaConfig.putBoolean("sendReadPackets", !LuminaConfig.getBoolean("sendReadPackets", true));
-                break;
-            case ID_TYPING:
-                LuminaConfig.putBoolean("sendTyping", !LuminaConfig.getBoolean("sendTyping", true));
-                break;
-            case ID_ONLINE:
-                LuminaConfig.putBoolean("sendOnlineStatus", !LuminaConfig.getBoolean("sendOnlineStatus", true));
-                break;
             case ID_REGDATE:
                 LuminaConfig.putBoolean("showRegistrationDate", !LuminaConfig.getBoolean("showRegistrationDate", true));
                 break;

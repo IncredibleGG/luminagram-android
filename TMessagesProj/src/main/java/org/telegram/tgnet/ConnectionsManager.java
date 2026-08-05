@@ -390,8 +390,12 @@ public class ConnectionsManager extends BaseController {
     }
 
     private void sendRequestInternal(TLObject object, RequestDelegate onComplete, RequestDelegateTimestamp onCompleteTimestamp, QuickAckDelegate onQuickAck, WriteToSocketDelegate onWriteToSocket, int flags, int datacenterId, int connectionType, boolean immediate, int requestToken) {
-        // LuminaGram privacy / stealth interception (safe, non-ToS)
-        if (object != null) {
+        // LuminaGram privacy / stealth interception -- GREY / DEFERRED cluster, PARKED for the
+        // Safe milestone (this is NOT "safe, non-ToS"): read-receipt / typing / online
+        // suppression. The whole block is gated behind the master flag greyStealthUnlocked
+        // (default false) so it stays fully INERT even if a per-feature key was previously
+        // toggled on. The grey final batch will flip greyStealthUnlocked and restore the UI.
+        if (object != null && LuminaConfig.getBoolean("greyStealthUnlocked", false)) {
             // (1) No read receipts: short-circuit read requests with a fake success.
             //     Local read state is already applied before sendRequest is called.
             if (!LuminaConfig.getBoolean("sendReadPackets", true)) {
