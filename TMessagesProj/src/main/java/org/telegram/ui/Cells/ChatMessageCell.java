@@ -9695,6 +9695,8 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         // LuminaGram: user-adjustable sticker render size (percent, default 100 = unchanged).
                         // Gated so 100% leaves photoWidth/photoHeight byte-identical; animated emoji/dice are handled above and unaffected.
                         int stickerScale = LuminaConfig.getInt("stickerScale", 100);
+                        // LuminaGram: clamp defensively — a backup-import can supply a value outside the settings UI's fixed choices (0 = invisible sticker, huge = OOM).
+                        stickerScale = Math.max(50, Math.min(250, stickerScale));
                         if (stickerScale != 100) {
                             photoWidth = (int) (photoWidth * stickerScale / 100f);
                             photoHeight = (int) (photoHeight * stickerScale / 100f);

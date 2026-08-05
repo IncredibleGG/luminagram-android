@@ -11356,6 +11356,7 @@
     <string name="LuminaBookmarksTitle">Bookmarks</string>
     <string name="LuminaBookmarksEmpty">You haven\'t bookmarked any messages yet.</string>
     <string name="LuminaBookmarkDeleteTitle">Delete bookmark?</string>
+    <string name="LuminaShowBookmarks">Show bookmark menu item</string>
     <!-- LuminaGram security: panic wipe + disguise -->
     <string name="LuminaSecurityTitle">Security</string>
     <string name="LuminaSecurityPanicHeader">Panic wipe</string>

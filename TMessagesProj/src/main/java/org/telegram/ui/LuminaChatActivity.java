@@ -60,6 +60,7 @@ public class LuminaChatActivity extends BaseFragment {
         items.add(UItem.asSwitch(2, LuminaLocale.getString(R.string.LuminaForwardNoCaptionTitle)).setChecked(LuminaConfig.getBoolean("forwardNoCaption", false)));
         items.add(UItem.asSwitch(3, LuminaLocale.getString(R.string.LuminaSaveToCloudTitle)).setChecked(LuminaConfig.getBoolean("saveToCloud", true)));
         items.add(UItem.asSwitch(4, LuminaLocale.getString(R.string.LuminaSelectFromAuthorTitle)).setChecked(LuminaConfig.getBoolean("selectFromAuthor", true)));
+        items.add(UItem.asSwitch(12, LuminaLocale.getString(R.string.LuminaShowBookmarks)).setChecked(LuminaConfig.getBoolean("showBookmarks", true)));
         items.add(UItem.asSwitch(11, LuminaLocale.getString(R.string.LuminaHideKeyboardOnScroll)).setChecked(LuminaConfig.getBoolean("hideKeyboardOnScroll", false)));
         items.add(UItem.asSwitch(13, LuminaLocale.getString(R.string.LuminaUndoSendWindow)).setChecked(LuminaConfig.getBoolean("undoSendWindow", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaUndoSendWindowInfo)));
@@ -91,6 +92,9 @@ public class LuminaChatActivity extends BaseFragment {
                 break;
             case 4:
                 LuminaConfig.putBoolean("selectFromAuthor", !LuminaConfig.getBoolean("selectFromAuthor", true));
+                break;
+            case 12:
+                LuminaConfig.putBoolean("showBookmarks", !LuminaConfig.getBoolean("showBookmarks", true));
                 break;
             case 5:
                 LuminaConfig.putBoolean("saveStickers", !LuminaConfig.getBoolean("saveStickers", true));
