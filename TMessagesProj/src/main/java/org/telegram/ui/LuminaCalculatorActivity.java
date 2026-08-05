@@ -48,28 +48,35 @@ public class LuminaCalculatorActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        LinearLayout root = new LinearLayout(this);
-        root.setOrientation(LinearLayout.VERTICAL);
-        root.setBackgroundColor(0xFFF2F2F2);
+        // FAIL-SAFE: building the decoy UI must never brick the app. If anything here throws
+        // (theme/inflation/OEM quirk), fail OPEN into the real app rather than leaving the user
+        // staring at a crashed, unopenable screen — matching the decoy's fail-open philosophy.
+        try {
+            LinearLayout root = new LinearLayout(this);
+            root.setOrientation(LinearLayout.VERTICAL);
+            root.setBackgroundColor(0xFFF2F2F2);
 
-        display = new TextView(this);
-        display.setText("0");
-        display.setTextColor(0xFF111111);
-        display.setTextSize(TypedValue.COMPLEX_UNIT_SP, 44);
-        display.setGravity(Gravity.END | Gravity.BOTTOM);
-        display.setMaxLines(2);
-        int pad = dp(20);
-        display.setPadding(pad, pad, pad, pad);
-        root.addView(display, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, 0, 2f));
+            display = new TextView(this);
+            display.setText("0");
+            display.setTextColor(0xFF111111);
+            display.setTextSize(TypedValue.COMPLEX_UNIT_SP, 44);
+            display.setGravity(Gravity.END | Gravity.BOTTOM);
+            display.setMaxLines(2);
+            int pad = dp(20);
+            display.setPadding(pad, pad, pad, pad);
+            root.addView(display, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 0, 2f));
 
-        addRow(root, new String[]{"C", "/", "*", "-"});
-        addRow(root, new String[]{"7", "8", "9", "+"});
-        addRow(root, new String[]{"4", "5", "6", "="});
-        addRow(root, new String[]{"1", "2", "3", "."});
-        addRow(root, new String[]{"0"});
+            addRow(root, new String[]{"C", "/", "*", "-"});
+            addRow(root, new String[]{"7", "8", "9", "+"});
+            addRow(root, new String[]{"4", "5", "6", "="});
+            addRow(root, new String[]{"1", "2", "3", "."});
+            addRow(root, new String[]{"0"});
 
-        setContentView(root);
+            setContentView(root);
+        } catch (Throwable t) {
+            proceedIntoApp();
+        }
     }
 
     private void addRow(LinearLayout root, String[] labels) {

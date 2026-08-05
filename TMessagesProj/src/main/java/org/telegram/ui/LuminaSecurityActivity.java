@@ -37,19 +37,20 @@ import java.util.ArrayList;
  * Panic wipe (Kaboom): one tap logs out every account (server + local) and erases
  * local chats and cached media, then returns to the login screen.
  *
- * Disguise: swaps the launcher icon/label to a plain Calculator using the same
- * activity-alias mechanism as the app-icon system ({@link LauncherIconController}).
+ * NOTE: the old "Disguise" launcher toggle that used to live here has been retired. App disguise
+ * (Calculator / Notes / Clock launcher presets) is now owned solely by LuminaDisguiseActivity /
+ * {@link org.telegram.messenger.LuminaDisguiseController}, so a single controller drives the
+ * launcher aliases. Any tester who had the old toggle on is migrated automatically by
+ * {@link org.telegram.messenger.LuminaDisguiseController#migrateStaleDisguiseToggle}.
  *
  * Toggles are persisted through {@link LuminaConfig#getBoolean}/{@link LuminaConfig#putBoolean}.
  */
 public class LuminaSecurityActivity extends BaseFragment {
 
     private static final int ID_PANIC_WIPE = 1;
-    private static final int ID_DISGUISE = 2;
     private static final int ID_FAKECRASH_ENABLED = 3;
     private static final int ID_FAKECRASH_SET_CODE = 4;
 
-    private static final String KEY_DISGUISE = "disguiseIcon";
     // Fake-crash duress unlock: a separate LOCAL code (NOT the Telegram passcode) that, when
     // entered at the passcode screen, shows a fake Android crash and exits. Read in PasscodeView.
     private static final String KEY_FAKECRASH_ENABLED = "fakeCrashEnabled";
@@ -88,10 +89,7 @@ public class LuminaSecurityActivity extends BaseFragment {
         items.add(UItem.asButton(ID_PANIC_WIPE, LuminaLocale.getString(R.string.LuminaSecurityPanicWipe)).red());
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSecurityPanicWipeInfo)));
 
-        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaSecurityDisguiseHeader)));
-        items.add(UItem.asSwitch(ID_DISGUISE, LuminaLocale.getString(R.string.LuminaSecurityDisguise))
-                .setChecked(LuminaConfig.getBoolean(KEY_DISGUISE, false)));
-        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSecurityDisguiseInfo)));
+        // App disguise moved to LuminaDisguiseActivity (single owner of the launcher aliases).
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaSecurityFakeCrashHeader)));
         boolean fakeCrashEnabled = LuminaConfig.getBoolean(KEY_FAKECRASH_ENABLED, false);
@@ -116,14 +114,6 @@ public class LuminaSecurityActivity extends BaseFragment {
         switch (item.id) {
             case ID_PANIC_WIPE:
                 showPanicConfirm();
-                break;
-            case ID_DISGUISE:
-                boolean enable = !LuminaConfig.getBoolean(KEY_DISGUISE, false);
-                LuminaConfig.putBoolean(KEY_DISGUISE, enable);
-                // Reversible: enabling swaps to the Calculator alias, disabling restores DEFAULT.
-                LauncherIconController.setIcon(enable
-                        ? LauncherIconController.LauncherIcon.CALCULATOR
-                        : LauncherIconController.LauncherIcon.DEFAULT);
                 break;
             case ID_FAKECRASH_ENABLED: {
                 LuminaConfig.putBoolean(KEY_FAKECRASH_ENABLED, !LuminaConfig.getBoolean(KEY_FAKECRASH_ENABLED, false));
