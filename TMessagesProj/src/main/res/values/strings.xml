@@ -1881,7 +1881,7 @@
     <string name="ShareContactTitle">Share Contact</string>
     <string name="AddContactPhonebookTitle">Add Contact</string>
     <string name="NoContacts">No contacts yet</string>
-    <string name="InviteText2">Hey, I\'m using Telegram to chat. Join me! Download it here: %1$s</string>
+    <string name="InviteText2">Hey, I\'m using LuminaGram to chat. Join me! Download it here: %1$s</string>
     <string name="TodayAt">at</string>
     <string name="YesterdayAt">yesterday at</string>
     <string name="TodayAtFormatted">at %1$s</string>
@@ -1903,8 +1903,8 @@
     <string name="ALongTimeAgo">last seen a long time ago</string>
     <string name="NewMessageTitle">New Message</string>
     <string name="InviteFriendsHelp">Select contacts to invite them to Telegram</string>
-    <string name="InviteToTelegram">INVITE TO TELEGRAM</string>
-    <string name="ShareTelegram2">Share Telegram</string>
+    <string name="InviteToTelegram">INVITE TO LUMINAGRAM</string>
+    <string name="ShareTelegram2">Share LuminaGram</string>
     <string name="UpdateContactsTitle">Update contacts?</string>
     <string name="UpdateContactsMessage">Telegram has detected many unsynced contacts, would you like to sync them now? Choose \'OK\' if you\'re using your own device, SIM card and Google account.</string>
     <string name="SortedByName">Sorted by name</string>
@@ -5242,7 +5242,7 @@
     <string name="ChatThemeSaveDialogText">Do you want to apply the new theme for this chat?</string>
     <string name="ChatThemeSaveDialogApply">Apply</string>
     <string name="ChatThemeSaveDialogDiscard">Discard</string>
-    <string name="OptimizingTelegram">Optimizing Telegram...</string>
+    <string name="OptimizingTelegram">Optimizing LuminaGram...</string>
     <string name="OptimizingTelegramDescription1">This may take a while, depending on the size of the database. Please keep the app open until the process is finished.</string>
     <string name="OptimizingTelegramDescription2">Sorry for the inconvenience.</string>
     <string name="EnjoyngAnimations">**oo** watching %1$s</string>
@@ -8295,11 +8295,11 @@
     <string name="ViewChannelProfile">View Channel Info ></string>
     <string name="BuyUsernameOnFragment">Buy on Fragment</string>
     <string name="ViewChannel">View Channel</string>
-    <string name="UnlockToUse">Unlock to use Telegram</string>
+    <string name="UnlockToUse">Unlock to use LuminaGram</string>
     <string name="UsePIN">Use PIN</string>
     <string name="EnterPINorFingerprint">Enter your PIN or use a fingerprint</string>
     <string name="EnterPIN">Enter your PIN</string>
-    <string name="AppLocked">Telegram Locked</string>
+    <string name="AppLocked">LuminaGram Locked</string>
     <string name="ShowSensitiveContent">Show 18+ Content</string>
     <string name="ShowSensitiveContentInfo">Do not hide media that contain content suitable only for adults</string>
     <string name="ConfirmSensitiveContentTitle">18+ Content</string>
