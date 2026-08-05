@@ -44,6 +44,9 @@ public class LuminaTranslateActivity extends BaseFragment {
     private static final String KEY_READ_LANG = "trReadLang";         // default ""     (follow app language)
     private static final String KEY_SCOPE_PRIVATE = "trScopePrivate"; // default true
     private static final String KEY_SCOPE_GROUP = "trScopeGroup";     // default true
+    private static final String KEY_TR_MODE = "trMode";              // default "manual"
+    private static final String TR_MODE_ALL = "all";
+    private static final String TR_MODE_MANUAL = "manual";
 
     private static final int ITEM_TRANSLATE_BEFORE_SEND = 3;
     private static final int ITEM_TRANSLATE_BEFORE_SEND_CONFIRM = 4;
@@ -58,6 +61,8 @@ public class LuminaTranslateActivity extends BaseFragment {
     private static final int ITEM_READ_LANG = 13;
     private static final int ITEM_SCOPE_PRIVATE = 14;
     private static final int ITEM_SCOPE_GROUP = 15;
+    private static final int ITEM_MODE_ALL = 16;
+    private static final int ITEM_MODE_MANUAL = 17;
 
     private UniversalRecyclerView listView;
 
@@ -124,6 +129,15 @@ public class LuminaTranslateActivity extends BaseFragment {
                 .setChecked(LuminaConfig.translateBeforeSendConfirm));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaTranslateBeforeSendConfirmInfo)));
 
+        // ---- Translate mode: auto-translate all chats vs only chats I turn on ----
+        final String trMode = LuminaConfig.getString(KEY_TR_MODE, TR_MODE_MANUAL);
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateModeHeader)));
+        items.add(UItem.asRadio(ITEM_MODE_ALL, LuminaLocale.getString(R.string.LuminaTranslateModeAll))
+                .setChecked(TR_MODE_ALL.equals(trMode)));
+        items.add(UItem.asRadio(ITEM_MODE_MANUAL, LuminaLocale.getString(R.string.LuminaTranslateModeManual))
+                .setChecked(!TR_MODE_ALL.equals(trMode)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaTranslateModeInfo)));
+
         // ---- 2) Receiving (incoming) ----
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateReceiveHeader)));
         items.add(UItem.asSwitch(ITEM_DUAL_LANGUAGE, LuminaLocale.getString(R.string.LuminaDualLanguageDisplay))
@@ -137,7 +151,7 @@ public class LuminaTranslateActivity extends BaseFragment {
                 .setChecked(LuminaConfig.getBoolean(KEY_SCOPE_PRIVATE, true)));
         items.add(UItem.asSwitch(ITEM_SCOPE_GROUP, LuminaLocale.getString(R.string.LuminaTranslateScopeGroup))
                 .setChecked(LuminaConfig.getBoolean(KEY_SCOPE_GROUP, true)));
-        items.add(UItem.asShadow(null));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaTranslateScopeInfo)));
 
         // ---- 4) Multi-provider translation (bring-your-own key) ----
         final LuminaTranslator provider = LuminaTranslators.current();
@@ -207,6 +221,14 @@ public class LuminaTranslateActivity extends BaseFragment {
                 break;
             case ITEM_SCOPE_GROUP:
                 LuminaConfig.putBoolean(KEY_SCOPE_GROUP, !LuminaConfig.getBoolean(KEY_SCOPE_GROUP, true));
+                update();
+                break;
+            case ITEM_MODE_ALL:
+                LuminaConfig.putString(KEY_TR_MODE, TR_MODE_ALL);
+                update();
+                break;
+            case ITEM_MODE_MANUAL:
+                LuminaConfig.putString(KEY_TR_MODE, TR_MODE_MANUAL);
                 update();
                 break;
             case ITEM_PROVIDER:
