@@ -8218,6 +8218,11 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
                             newMsgObj.send_state = MessageObject.MESSAGE_SEND_STATE_SENT;
                             newMsgObj.errorNewPriceStars = 0;
                             newMsgObj.errorAllowedPriceStars = 0;
+                            // LuminaGram dual-language: the outgoing message just got its real
+                            // server id; persist the captured translate-before-send original under
+                            // a stable dialogId+mid key so it survives the randoms_v2 prune and a
+                            // chat reload (no-op unless an original was captured for this random_id).
+                            LuminaTBS.onServerId(newMsgObj.dialog_id, newMsgObj.random_id, newMsgObj.id);
                             if (scheduled != currentSchedule) {
                                 final boolean finalCurrentSchedule = currentSchedule;
                                 ArrayList<Integer> messageIds = new ArrayList<>();
