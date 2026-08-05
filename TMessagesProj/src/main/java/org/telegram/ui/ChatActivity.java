@@ -185,6 +185,8 @@ import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaVoiceToText;
+import org.telegram.messenger.LuminaVoskModelManager;
 import org.telegram.messenger.Utilities;
 import org.telegram.messenger.VideoEditedInfo;
 import org.telegram.messenger.browser.Browser;
@@ -1251,6 +1253,7 @@ public class ChatActivity extends BaseFragment implements
     public final static int OPTION_SELECT_AUTHOR = 203;
     public final static int OPTION_DETAILS = 204;
     public final static int OPTION_BOOKMARK = 205;
+    public final static int OPTION_LUMINA_VOICE_TO_TEXT = 206;
 
     private final static int[] allowedNotificationsDuringChatListAnimations = new int[]{
             NotificationCenter.messagesRead,
@@ -33339,6 +33342,59 @@ public class ChatActivity extends BaseFragment implements
                 toggleMessageBookmark(selectedObject);
                 break;
             }
+            case OPTION_LUMINA_VOICE_TO_TEXT: {
+                try {
+                    if (selectedObject != null) {
+                        if (LuminaConfig.getString("sttEngine", "").isEmpty()) {
+                            final MessageObject voiceMsg = selectedObject;
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), themeDelegate);
+                            builder.setTitle(LuminaLocale.getString(R.string.LuminaSttUiPickTitle));
+                            builder.setItems(new CharSequence[]{
+                                    LuminaLocale.getString(R.string.LuminaSttUiPickOwnKey),
+                                    LuminaLocale.getString(R.string.LuminaSttUiPickFree)
+                            }, (dialog, which) -> {
+                                if (which == 0) {
+                                    presentFragment(new org.telegram.ui.LuminaVoiceToTextActivity());
+                                } else {
+                                    LuminaConfig.putString("sttEngine", "vosk");
+                                    String defLang = "en";
+                                    LocaleController.LocaleInfo li = LocaleController.getInstance().getCurrentLocaleInfo();
+                                    if (li != null && li.getLangCode() != null && li.getLangCode().length() > 0) {
+                                        defLang = li.getLangCode();
+                                        int di = defLang.indexOf('-');
+                                        if (di > 0) defLang = defLang.substring(0, di);
+                                    }
+                                    final String lang = LuminaConfig.getString("voskModelLang", defLang);
+                                    if (LuminaVoskModelManager.isModelReady(lang)) {
+                                        LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this);
+                                    } else {
+                                        BulletinFactory.of(ChatActivity.this).createSimpleBulletin(R.raw.chats_infotip, LuminaLocale.getString(R.string.LuminaSttUiDownloading)).show();
+                                        LuminaVoskModelManager.ensureModel(lang, new LuminaVoskModelManager.ModelCallback() {
+                                            @Override
+                                            public void onReady(java.io.File model) {
+                                                AndroidUtilities.runOnUIThread(() -> LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this));
+                                            }
+                                            @Override
+                                            public void onProgress(float progress) {
+                                            }
+                                            @Override
+                                            public void onError(String error) {
+                                                AndroidUtilities.runOnUIThread(() -> BulletinFactory.of(ChatActivity.this).createErrorBulletin(LuminaLocale.getString(R.string.LuminaSttUiError)).show());
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                            builder.show();
+                        } else {
+                            LuminaVoiceToText.transcribe(selectedObject, currentAccount, ChatActivity.this);
+                        }
+                    }
+                } catch (Exception e) {
+                    FileLog.e(e);
+                }
+                break;
+            }
             case OPTION_FORWARD_NO_AUTHOR:
             case OPTION_FORWARD_NO_CAPTION:
             case OPTION_FORWARD: {
@@ -46195,6 +46251,12 @@ public class ChatActivity extends BaseFragment implements
             items.add(LuminaLocale.getString(bookmarked ? R.string.LuminaBookmarkRemove : R.string.LuminaBookmark));
             options.add(OPTION_BOOKMARK);
             icons.add(R.drawable.msg_saved);
+        }
+        // LuminaGram: local voice-to-text (transcribe voice / round video via on-device engine)
+        if (selectedObject != null && (selectedObject.isVoice() || selectedObject.isRoundVideo()) && LuminaConfig.getBoolean("voiceToTextEnabled", true)) {
+            items.add(LuminaLocale.getString(R.string.LuminaSttUiMenuItem));
+            options.add(OPTION_LUMINA_VOICE_TO_TEXT);
+            icons.add(R.drawable.msg_translate);
         }
     }
 
