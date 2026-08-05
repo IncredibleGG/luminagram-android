@@ -358,6 +358,26 @@ public final class LuminaLocale {
         zhHans.put("LuminaVaultDoorHint", "密码");
         zhHans.put("LuminaVaultDoorConfirm", "确定");
         zhHans.put("LuminaNotepadTitle", "笔记");
+        zhHans.put("LuminaVoiceToTextTitle", "语音转文字");
+        zhHans.put("LuminaSttEnable", "启用语音转文字");
+        zhHans.put("LuminaSttEngine", "引擎");
+        zhHans.put("LuminaSttEngineVosk", "Vosk（离线・免费）");
+        zhHans.put("LuminaSttEngineWhisper", "OpenAI Whisper（自带 key）");
+        zhHans.put("LuminaSttEngineGoogle", "Google（自带 key）");
+        zhHans.put("LuminaSttKey", "API 密钥");
+        zhHans.put("LuminaSttBaseUrl", "接口地址");
+        zhHans.put("LuminaSttModel", "模型");
+        zhHans.put("LuminaSttManageModels", "下载/管理语音模型");
+        zhHans.put("LuminaSttDownloadModel", "下载语音模型");
+        zhHans.put("LuminaSttInfo", "Vosk 完全离线且免费，只需下载一次语音模型。Whisper 与 Google 准确度更高，但要用你自己的 API key、花你自己的额度。我方不提供 key。离线转录纯在本机进行，符合 Telegram 服务条款，安全无虞。");
+        zhHans.put("LuminaSttUiMenuItem", "转文字");
+        zhHans.put("LuminaSttUiPickTitle", "语音转文字");
+        zhHans.put("LuminaSttUiPickOwnKey", "用自己的 key（准确度高）");
+        zhHans.put("LuminaSttUiPickFree", "免费 · 需下载语音引擎");
+        zhHans.put("LuminaSttUiTranscribing", "转录中…");
+        zhHans.put("LuminaSttUiDownloading", "下载语音引擎中…");
+        zhHans.put("LuminaSttUiError", "转录失败");
+        zhHans.put("LuminaSttUiNoText", "没听出文字");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -690,6 +710,26 @@ public final class LuminaLocale {
         zhHant.put("LuminaVaultDoorHint", "密碼");
         zhHant.put("LuminaVaultDoorConfirm", "確定");
         zhHant.put("LuminaNotepadTitle", "筆記");
+        zhHant.put("LuminaVoiceToTextTitle", "語音轉文字");
+        zhHant.put("LuminaSttEnable", "啟用語音轉文字");
+        zhHant.put("LuminaSttEngine", "引擎");
+        zhHant.put("LuminaSttEngineVosk", "Vosk（離線・免費）");
+        zhHant.put("LuminaSttEngineWhisper", "OpenAI Whisper（自帶 key）");
+        zhHant.put("LuminaSttEngineGoogle", "Google（自帶 key）");
+        zhHant.put("LuminaSttKey", "API 金鑰");
+        zhHant.put("LuminaSttBaseUrl", "介面位址");
+        zhHant.put("LuminaSttModel", "模型");
+        zhHant.put("LuminaSttManageModels", "下載/管理語音模型");
+        zhHant.put("LuminaSttDownloadModel", "下載語音模型");
+        zhHant.put("LuminaSttInfo", "Vosk 完全離線且免費，只需下載一次語音模型。Whisper 與 Google 準確度更高，但要用你自己的 API key、花你自己的額度。我方不提供 key。離線轉錄純在本機進行，符合 Telegram 服務條款，安全無虞。");
+        zhHant.put("LuminaSttUiMenuItem", "轉文字");
+        zhHant.put("LuminaSttUiPickTitle", "語音轉文字");
+        zhHant.put("LuminaSttUiPickOwnKey", "用自己的 key（準確度高）");
+        zhHant.put("LuminaSttUiPickFree", "免費 · 需下載語音引擎");
+        zhHant.put("LuminaSttUiTranscribing", "轉錄中…");
+        zhHant.put("LuminaSttUiDownloading", "下載語音引擎中…");
+        zhHant.put("LuminaSttUiError", "轉錄失敗");
+        zhHant.put("LuminaSttUiNoText", "沒聽出文字");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1021,6 +1061,26 @@ public final class LuminaLocale {
         ar.put("LuminaVaultDoorHint", "كلمة المرور");
         ar.put("LuminaVaultDoorConfirm", "موافق");
         ar.put("LuminaNotepadTitle", "الملاحظات");
+        ar.put("LuminaVoiceToTextTitle", "تحويل الصوت إلى نص");
+        ar.put("LuminaSttEnable", "تفعيل تحويل الصوت إلى نص");
+        ar.put("LuminaSttEngine", "المحرّك");
+        ar.put("LuminaSttEngineVosk", "Vosk (دون اتصال، مجاني)");
+        ar.put("LuminaSttEngineWhisper", "OpenAI Whisper (مفتاحك الخاص)");
+        ar.put("LuminaSttEngineGoogle", "Google (مفتاحك الخاص)");
+        ar.put("LuminaSttKey", "مفتاح API");
+        ar.put("LuminaSttBaseUrl", "عنوان الواجهة");
+        ar.put("LuminaSttModel", "النموذج");
+        ar.put("LuminaSttManageModels", "تنزيل / إدارة نماذج الصوت");
+        ar.put("LuminaSttDownloadModel", "تنزيل نموذج الصوت");
+        ar.put("LuminaSttInfo", "يعمل Vosk دون اتصال ومجانًا تمامًا، لكنه يحتاج إلى تنزيل نموذج صوتي لمرة واحدة. أمّا Whisper وGoogle فهما أدقّ لكنهما يستخدمان مفتاح API الخاص بك وحصّتك. لا يوفّر LuminaGram أي مفتاح. يبقى التحويل دون اتصال على جهازك، وهو آمن وفق شروط خدمة Telegram.");
+        ar.put("LuminaSttUiMenuItem", "تحويل إلى نص");
+        ar.put("LuminaSttUiPickTitle", "تحويل الصوت إلى نص");
+        ar.put("LuminaSttUiPickOwnKey", "استخدم مفتاحك الخاص (دقة أعلى)");
+        ar.put("LuminaSttUiPickFree", "مجاني · يتطلّب تنزيل محرك صوتي");
+        ar.put("LuminaSttUiTranscribing", "جارٍ التحويل…");
+        ar.put("LuminaSttUiDownloading", "جارٍ تنزيل محرك الصوت…");
+        ar.put("LuminaSttUiError", "فشل التحويل");
+        ar.put("LuminaSttUiNoText", "لم يُكتشف أي كلام");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1352,6 +1412,26 @@ public final class LuminaLocale {
         ru.put("LuminaVaultDoorHint", "Пароль");
         ru.put("LuminaVaultDoorConfirm", "OK");
         ru.put("LuminaNotepadTitle", "Заметки");
+        ru.put("LuminaVoiceToTextTitle", "Голос в текст");
+        ru.put("LuminaSttEnable", "Включить голос в текст");
+        ru.put("LuminaSttEngine", "Движок");
+        ru.put("LuminaSttEngineVosk", "Vosk (офлайн, бесплатно)");
+        ru.put("LuminaSttEngineWhisper", "OpenAI Whisper (свой ключ)");
+        ru.put("LuminaSttEngineGoogle", "Google (свой ключ)");
+        ru.put("LuminaSttKey", "Ключ API");
+        ru.put("LuminaSttBaseUrl", "Базовый URL");
+        ru.put("LuminaSttModel", "Модель");
+        ru.put("LuminaSttManageModels", "Загрузка / управление голосовыми моделями");
+        ru.put("LuminaSttDownloadModel", "Загрузить голосовую модель");
+        ru.put("LuminaSttInfo", "Vosk работает полностью офлайн и бесплатно — нужно один раз загрузить голосовую модель. Whisper и Google точнее, но используют ваш собственный ключ API и вашу квоту. LuminaGram не предоставляет ключ. Офлайн-распознавание остаётся на вашем устройстве и безопасно с точки зрения условий Telegram.");
+        ru.put("LuminaSttUiMenuItem", "В текст");
+        ru.put("LuminaSttUiPickTitle", "Голос в текст");
+        ru.put("LuminaSttUiPickOwnKey", "Использовать свой ключ (выше точность)");
+        ru.put("LuminaSttUiPickFree", "Бесплатно · нужна загрузка голосового движка");
+        ru.put("LuminaSttUiTranscribing", "Распознавание…");
+        ru.put("LuminaSttUiDownloading", "Загрузка голосового движка…");
+        ru.put("LuminaSttUiError", "Не удалось распознать");
+        ru.put("LuminaSttUiNoText", "Речь не распознана");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1683,6 +1763,26 @@ public final class LuminaLocale {
         fa.put("LuminaVaultDoorHint", "رمز عبور");
         fa.put("LuminaVaultDoorConfirm", "تأیید");
         fa.put("LuminaNotepadTitle", "یادداشت‌ها");
+        fa.put("LuminaVoiceToTextTitle", "تبدیل گفتار به متن");
+        fa.put("LuminaSttEnable", "فعال‌سازی تبدیل گفتار به متن");
+        fa.put("LuminaSttEngine", "موتور");
+        fa.put("LuminaSttEngineVosk", "Vosk (آفلاین، رایگان)");
+        fa.put("LuminaSttEngineWhisper", "OpenAI Whisper (کلید خودتان)");
+        fa.put("LuminaSttEngineGoogle", "Google (کلید خودتان)");
+        fa.put("LuminaSttKey", "کلید API");
+        fa.put("LuminaSttBaseUrl", "آدرس پایه");
+        fa.put("LuminaSttModel", "مدل");
+        fa.put("LuminaSttManageModels", "دانلود / مدیریت مدل‌های گفتاری");
+        fa.put("LuminaSttDownloadModel", "دانلود مدل گفتاری");
+        fa.put("LuminaSttInfo", "Vosk کاملاً آفلاین و رایگان است و فقط یک‌بار باید مدل گفتاری دانلود شود. Whisper و Google دقیق‌ترند اما از کلید API و سهمیهٔ خودتان استفاده می‌کنند. LuminaGram هیچ کلیدی ارائه نمی‌دهد. رونویسی آفلاین روی دستگاه شما می‌ماند و طبق شرایط استفادهٔ Telegram امن است.");
+        fa.put("LuminaSttUiMenuItem", "به متن");
+        fa.put("LuminaSttUiPickTitle", "تبدیل گفتار به متن");
+        fa.put("LuminaSttUiPickOwnKey", "از کلید خودتان استفاده کنید (دقت بالاتر)");
+        fa.put("LuminaSttUiPickFree", "رایگان · نیازمند دانلود موتور گفتاری");
+        fa.put("LuminaSttUiTranscribing", "در حال رونویسی…");
+        fa.put("LuminaSttUiDownloading", "در حال دانلود موتور گفتاری…");
+        fa.put("LuminaSttUiError", "رونویسی ناموفق بود");
+        fa.put("LuminaSttUiNoText", "گفتاری تشخیص داده نشد");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2014,6 +2114,26 @@ public final class LuminaLocale {
         tr.put("LuminaVaultDoorHint", "Parola");
         tr.put("LuminaVaultDoorConfirm", "Tamam");
         tr.put("LuminaNotepadTitle", "Notlar");
+        tr.put("LuminaVoiceToTextTitle", "Sesi Yazıya Dönüştür");
+        tr.put("LuminaSttEnable", "Sesi yazıya dönüştürmeyi etkinleştir");
+        tr.put("LuminaSttEngine", "Motor");
+        tr.put("LuminaSttEngineVosk", "Vosk (çevrimdışı, ücretsiz)");
+        tr.put("LuminaSttEngineWhisper", "OpenAI Whisper (kendi anahtarın)");
+        tr.put("LuminaSttEngineGoogle", "Google (kendi anahtarın)");
+        tr.put("LuminaSttKey", "API anahtarı");
+        tr.put("LuminaSttBaseUrl", "Temel URL");
+        tr.put("LuminaSttModel", "Model");
+        tr.put("LuminaSttManageModels", "Ses modellerini indir / yönet");
+        tr.put("LuminaSttDownloadModel", "Ses modelini indir");
+        tr.put("LuminaSttInfo", "Vosk tamamen çevrimdışı ve ücretsiz çalışır; yalnızca bir kez ses modeli indirmen gerekir. Whisper ve Google daha doğrudur ama kendi API anahtarını ve kotanı kullanır. LuminaGram anahtar sağlamaz. Çevrimdışı dönüştürme cihazında kalır ve Telegram Kullanım Koşulları açısından güvenlidir.");
+        tr.put("LuminaSttUiMenuItem", "Yazıya dönüştür");
+        tr.put("LuminaSttUiPickTitle", "Sesi yazıya dönüştür");
+        tr.put("LuminaSttUiPickOwnKey", "Kendi anahtarını kullan (daha yüksek doğruluk)");
+        tr.put("LuminaSttUiPickFree", "Ücretsiz · ses motoru indirmesi gerekir");
+        tr.put("LuminaSttUiTranscribing", "Dönüştürülüyor…");
+        tr.put("LuminaSttUiDownloading", "Ses motoru indiriliyor…");
+        tr.put("LuminaSttUiError", "Dönüştürme başarısız");
+        tr.put("LuminaSttUiNoText", "Konuşma algılanmadı");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2345,6 +2465,26 @@ public final class LuminaLocale {
         es.put("LuminaVaultDoorHint", "Contraseña");
         es.put("LuminaVaultDoorConfirm", "Aceptar");
         es.put("LuminaNotepadTitle", "Notas");
+        es.put("LuminaVoiceToTextTitle", "Voz a texto");
+        es.put("LuminaSttEnable", "Activar voz a texto");
+        es.put("LuminaSttEngine", "Motor");
+        es.put("LuminaSttEngineVosk", "Vosk (sin conexión, gratis)");
+        es.put("LuminaSttEngineWhisper", "OpenAI Whisper (tu propia clave)");
+        es.put("LuminaSttEngineGoogle", "Google (tu propia clave)");
+        es.put("LuminaSttKey", "Clave de API");
+        es.put("LuminaSttBaseUrl", "URL base");
+        es.put("LuminaSttModel", "Modelo");
+        es.put("LuminaSttManageModels", "Descargar / administrar modelos de voz");
+        es.put("LuminaSttDownloadModel", "Descargar modelo de voz");
+        es.put("LuminaSttInfo", "Vosk funciona totalmente sin conexión y es gratis; solo necesita descargar una vez un modelo de voz. Whisper y Google son más precisos, pero usan tu propia clave de API y tu cuota. LuminaGram nunca proporciona una clave. La transcripción sin conexión se queda en tu dispositivo y es segura según las Condiciones de Telegram.");
+        es.put("LuminaSttUiMenuItem", "Transcribir");
+        es.put("LuminaSttUiPickTitle", "Voz a texto");
+        es.put("LuminaSttUiPickOwnKey", "Usar tu propia clave (mayor precisión)");
+        es.put("LuminaSttUiPickFree", "Gratis · requiere descargar un motor de voz");
+        es.put("LuminaSttUiTranscribing", "Transcribiendo…");
+        es.put("LuminaSttUiDownloading", "Descargando motor de voz…");
+        es.put("LuminaSttUiError", "Error al transcribir");
+        es.put("LuminaSttUiNoText", "No se detectó voz");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2676,6 +2816,26 @@ public final class LuminaLocale {
         ptBr.put("LuminaVaultDoorHint", "Senha");
         ptBr.put("LuminaVaultDoorConfirm", "OK");
         ptBr.put("LuminaNotepadTitle", "Notas");
+        ptBr.put("LuminaVoiceToTextTitle", "Voz para texto");
+        ptBr.put("LuminaSttEnable", "Ativar voz para texto");
+        ptBr.put("LuminaSttEngine", "Mecanismo");
+        ptBr.put("LuminaSttEngineVosk", "Vosk (offline, grátis)");
+        ptBr.put("LuminaSttEngineWhisper", "OpenAI Whisper (sua própria chave)");
+        ptBr.put("LuminaSttEngineGoogle", "Google (sua própria chave)");
+        ptBr.put("LuminaSttKey", "Chave de API");
+        ptBr.put("LuminaSttBaseUrl", "URL base");
+        ptBr.put("LuminaSttModel", "Modelo");
+        ptBr.put("LuminaSttManageModels", "Baixar / gerenciar modelos de voz");
+        ptBr.put("LuminaSttDownloadModel", "Baixar modelo de voz");
+        ptBr.put("LuminaSttInfo", "O Vosk funciona totalmente offline e é grátis; só precisa baixar um modelo de voz uma vez. Whisper e Google são mais precisos, mas usam sua própria chave de API e sua cota. O LuminaGram nunca fornece uma chave. A transcrição offline fica no seu dispositivo e é segura segundo os Termos do Telegram.");
+        ptBr.put("LuminaSttUiMenuItem", "Transcrever");
+        ptBr.put("LuminaSttUiPickTitle", "Voz para texto");
+        ptBr.put("LuminaSttUiPickOwnKey", "Usar sua própria chave (mais precisão)");
+        ptBr.put("LuminaSttUiPickFree", "Grátis · requer baixar um mecanismo de voz");
+        ptBr.put("LuminaSttUiTranscribing", "Transcrevendo…");
+        ptBr.put("LuminaSttUiDownloading", "Baixando mecanismo de voz…");
+        ptBr.put("LuminaSttUiError", "Falha na transcrição");
+        ptBr.put("LuminaSttUiNoText", "Nenhuma fala detectada");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3007,6 +3167,26 @@ public final class LuminaLocale {
         id.put("LuminaVaultDoorHint", "Kata sandi");
         id.put("LuminaVaultDoorConfirm", "OK");
         id.put("LuminaNotepadTitle", "Catatan");
+        id.put("LuminaVoiceToTextTitle", "Suara ke Teks");
+        id.put("LuminaSttEnable", "Aktifkan suara ke teks");
+        id.put("LuminaSttEngine", "Mesin");
+        id.put("LuminaSttEngineVosk", "Vosk (luring, gratis)");
+        id.put("LuminaSttEngineWhisper", "OpenAI Whisper (kunci sendiri)");
+        id.put("LuminaSttEngineGoogle", "Google (kunci sendiri)");
+        id.put("LuminaSttKey", "Kunci API");
+        id.put("LuminaSttBaseUrl", "URL dasar");
+        id.put("LuminaSttModel", "Model");
+        id.put("LuminaSttManageModels", "Unduh / kelola model suara");
+        id.put("LuminaSttDownloadModel", "Unduh model suara");
+        id.put("LuminaSttInfo", "Vosk berjalan sepenuhnya luring dan gratis; hanya perlu mengunduh model suara satu kali. Whisper dan Google lebih akurat, tetapi memakai kunci API dan kuota Anda sendiri. LuminaGram tidak pernah menyediakan kunci. Transkripsi luring tetap di perangkat Anda dan aman menurut Ketentuan Telegram.");
+        id.put("LuminaSttUiMenuItem", "Transkripsikan");
+        id.put("LuminaSttUiPickTitle", "Suara ke teks");
+        id.put("LuminaSttUiPickOwnKey", "Gunakan kunci sendiri (akurasi lebih tinggi)");
+        id.put("LuminaSttUiPickFree", "Gratis · perlu mengunduh mesin suara");
+        id.put("LuminaSttUiTranscribing", "Mentranskripsi…");
+        id.put("LuminaSttUiDownloading", "Mengunduh mesin suara…");
+        id.put("LuminaSttUiError", "Transkripsi gagal");
+        id.put("LuminaSttUiNoText", "Tidak ada ucapan terdeteksi");
         T.put("id", id);
     }
 

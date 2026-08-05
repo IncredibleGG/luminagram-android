@@ -11538,5 +11538,26 @@
     <string name="LuminaProfileCardShareInfo">Build a plain-text summary of your card, then share it or copy it and paste it into any chat.</string>
     <string name="LuminaProfileCardCopied">Card copied</string>
     <string name="LuminaProfileCardEmptyShare">Fill in your card first</string>
+    <!-- LuminaGram voice-to-text (speech transcription) -->
+    <string name="LuminaVoiceToTextTitle">Voice to Text</string>
+    <string name="LuminaSttEnable">Enable voice to text</string>
+    <string name="LuminaSttEngine">Engine</string>
+    <string name="LuminaSttEngineVosk">Vosk (offline, free)</string>
+    <string name="LuminaSttEngineWhisper">OpenAI Whisper (your own key)</string>
+    <string name="LuminaSttEngineGoogle">Google (your own key)</string>
+    <string name="LuminaSttKey">API key</string>
+    <string name="LuminaSttBaseUrl">Base URL</string>
+    <string name="LuminaSttModel">Model</string>
+    <string name="LuminaSttManageModels">Download / manage voice models</string>
+    <string name="LuminaSttDownloadModel">Download voice model</string>
+    <string name="LuminaSttInfo">Vosk runs fully offline and free — it needs a one-time voice model download. Whisper and Google are more accurate but use your own API key and quota. LuminaGram never provides a key. Offline transcription stays on your device, which is safe under Telegram\'s Terms.</string>
+    <string name="LuminaSttUiMenuItem">Transcribe</string>
+    <string name="LuminaSttUiPickTitle">Voice to text</string>
+    <string name="LuminaSttUiPickOwnKey">Use your own key (higher accuracy)</string>
+    <string name="LuminaSttUiPickFree">Free · downloads a voice engine</string>
+    <string name="LuminaSttUiTranscribing">Transcribing…</string>
+    <string name="LuminaSttUiDownloading">Downloading voice engine…</string>
+    <string name="LuminaSttUiError">Transcription failed</string>
+    <string name="LuminaSttUiNoText">No speech detected</string>
 </resources>
 
