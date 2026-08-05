@@ -410,7 +410,24 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         if (luminaDecoyGate) {
             boolean decoyPresented = false;
             try {
-                Intent luminaDecoyIntent = new Intent(this, LuminaCalculatorActivity.class);
+                // Route by vault mode: "passwordDoor" shows a discreet password prompt first;
+                // "decoyApp" (and legacy users) jump straight into the decoy skin (notepad or
+                // the original calculator). Any failure here is caught below and falls through.
+                Intent luminaDecoyIntent;
+                String luminaVaultMode = org.telegram.messenger.LuminaDecoy.resolveVaultMode(this);
+                if (org.telegram.messenger.LuminaDecoy.MODE_PASSWORD_DOOR.equals(luminaVaultMode)) {
+                    luminaDecoyIntent = new Intent(this, LuminaVaultDoorActivity.class);
+                } else {
+                    String luminaSkin = org.telegram.messenger.LuminaDecoy.resolveDecoySkin(this);
+                    if (org.telegram.messenger.LuminaDecoy.SKIN_NOTEPAD.equals(luminaSkin)) {
+                        // Referenced by class name so LaunchActivity compiles/merges independently
+                        // of the parallel agent that adds LuminaNotepadActivity.
+                        luminaDecoyIntent = new Intent();
+                        luminaDecoyIntent.setClassName(this, "org.telegram.ui.LuminaNotepadActivity");
+                    } else {
+                        luminaDecoyIntent = new Intent(this, LuminaCalculatorActivity.class);
+                    }
+                }
                 luminaDecoyIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(luminaDecoyIntent);
                 decoyPresented = true;
@@ -420,7 +437,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                 // path below calls it exactly once.
             }
             if (decoyPresented) {
-                // Hand the screen to the decoy calculator. Mark this instance so onDestroy
+                // Hand the screen to the vault door / decoy. Mark this instance so onDestroy
                 // skips teardown it never set up (no registerReceiver / activeInstanceCount++).
                 luminaDecoyFinished = true;
                 super.onCreate(savedInstanceState);

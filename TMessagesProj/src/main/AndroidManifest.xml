@@ -419,6 +419,19 @@
             android:exported="false" />
         <!-- ==== end LuminaGram decoy calculator lock =============================== -->
 
+        <!-- ==== LuminaGram disguise vault password door (vgate) ==================== -->
+        <!-- Discreet password prompt shown before the real app when the vault is in
+             "passwordDoor" mode. NOT a launcher; started explicitly from LaunchActivity.
+             Uses a plain system theme so it never depends on Telegram theme/init (may run
+             before app init). Mirrors the calculator lock block above. -->
+        <activity
+            android:name="org.telegram.ui.LuminaVaultDoorActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
+            android:windowSoftInputMode="stateVisible"
+            android:exported="false" />
+        <!-- ==== end LuminaGram disguise vault password door ======================= -->
+
         <activity-alias
             android:name="org.telegram.ui.CallsActivity"
             android:targetActivity="org.telegram.ui.LaunchActivity"

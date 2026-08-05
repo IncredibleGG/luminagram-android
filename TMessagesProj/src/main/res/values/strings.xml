@@ -11469,6 +11469,9 @@
     <string name="LuminaConfirmSendVoiceVideoMessage">Send this voice or video message?</string>
     <!-- LuminaGram decoy calculator lock -->
     <string name="LuminaCalculatorError">Error</string>
+    <!-- LuminaGram disguise vault password door -->
+    <string name="LuminaVaultDoorHint">Password</string>
+    <string name="LuminaVaultDoorConfirm">OK</string>
     <!-- LuminaGram interface & display preferences (Wave 6) -->
     <string name="LuminaInterfaceTitle">Interface</string>
     <string name="LuminaInterfaceEmojiHeader">Emoji</string>
