@@ -11443,6 +11443,7 @@
     <string name="LuminaReplacerInfo">Automatically replace text in messages you send. Each rule swaps a whole word (for example brb → be right back). Matching is case-sensitive and is skipped for messages with formatting.</string>
     <string name="LuminaReplacerManage">Manage rules…</string>
     <string name="LuminaGoToFirstMessage">Go to first message</string>
+    <string name="LuminaTranslateThisChat">Translate this chat</string>
     <!-- LuminaGram media and download preferences -->
     <string name="LuminaMediaTitle">Media</string>
     <string name="LuminaMediaHeader">Downloads</string>

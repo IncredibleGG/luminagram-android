@@ -444,6 +444,7 @@ public class ChatActivity extends BaseFragment implements
     protected ActionBarMenuItem topicCreateItem;
     private ActionBarMenuItem.Item translateItem;
     private ActionBarMenuItem searchIconItem;
+    private ActionBarMenuItem luminaTranslateHeaderItem; // LuminaGram: per-chat translate toggle icon in the chat header
     private ActionBarMenu.LazyItem audioCallIconItem;
     private boolean searchItemVisible;
     private RadialProgressView progressBar;
@@ -1677,6 +1678,7 @@ public class ChatActivity extends BaseFragment implements
 
     private final static int chat_menu_topic_create = 73;
     private final static int go_to_first_message = 75;
+    private final static int lumina_translate_toggle = 76; // LuminaGram: header per-chat translate toggle
 
     private final static int id_chat_compose_panel = 1000;
 
@@ -3957,6 +3959,18 @@ public class ChatActivity extends BaseFragment implements
                     if (!getMessagesController().getTranslateController().toggleTranslatingDialog(getDialogId(), true)) {
                         updateTopPanel(true);
                     }
+                } else if (id == lumina_translate_toggle) {
+                    // LuminaGram: header per-chat translate toggle. Turn translation on/off for
+                    // THIS dialog; when turning on, un-hide first so a previously hidden chat can
+                    // be re-enabled. The icon tint is refreshed in updateTranslateItemVisibility().
+                    TranslateController luminaTr = getMessagesController().getTranslateController();
+                    boolean turningOn = !luminaTr.isTranslatingDialog(getDialogId());
+                    if (turningOn && luminaTr.isTranslateDialogHidden(getDialogId())) {
+                        luminaTr.setHideTranslateDialog(getDialogId(), false, true);
+                    }
+                    luminaTr.toggleTranslatingDialog(getDialogId(), turningOn);
+                    updateTranslateItemVisibility();
+                    updateTopPanel(true);
                 } else if (id == call || id == video_call) {
                     if (currentUser != null && getParentActivity() != null) {
                         VoIPHelper.startCall(currentUser, id == video_call, userInfo != null && userInfo.video_calls_available, getParentActivity(), getMessagesController().getUserFull(currentUser.id), getAccountInstance());
@@ -4270,6 +4284,14 @@ public class ChatActivity extends BaseFragment implements
         }, 1);
         */
 
+        // LuminaGram: per-chat translate toggle icon in the chat header, sitting between the
+        // call button and the overflow (⋮) menu. Its visibility and on/off tint are managed in
+        // updateTranslateItemVisibility(); it starts GONE so default behavior is unchanged.
+        if (chatMode == 0 && (threadMessageId == 0 || isTopic) && !UserObject.isReplyUser(currentUser) && !isReport()) {
+            luminaTranslateHeaderItem = menu.addItem(lumina_translate_toggle, R.drawable.msg_translate);
+            luminaTranslateHeaderItem.setContentDescription(LuminaLocale.getString(R.string.LuminaTranslateThisChat));
+            luminaTranslateHeaderItem.setVisibility(View.GONE);
+        }
         editTextItem = menu.lazilyAddItem(chat_menu_edit_text_options, R.drawable.ic_ab_other, themeDelegate);
         editTextItem.setContentDescription(LocaleController.getString(R.string.AccDescrMoreOptions));
         editTextItem.setTag(null);
@@ -11179,10 +11201,36 @@ public class ChatActivity extends BaseFragment implements
     }
 
     private void updateTranslateItemVisibility() {
-        if (translateItem == null) {
-            return;
+        final TranslateController translateController = getMessagesController().getTranslateController();
+        // LuminaGram: a dialog is "manual-eligible" for per-chat translation when dual-language
+        // display is on, the dialog is in the configured scope, and the translate feature is
+        // available. With the feature off this is false everywhere, so behavior stays stock.
+        boolean inScope = DialogObject.isUserDialog(getDialogId())
+            ? LuminaConfig.getBoolean("trScopePrivate", true)
+            : LuminaConfig.getBoolean("trScopeGroup", true);
+        boolean manualEligible = LuminaConfig.getBoolean("dualLanguageDisplay", false)
+            && inScope
+            && translateController.isFeatureAvailable(getDialogId());
+        if (translateItem != null) {
+            // Stock case: show the overflow translate item when translation is hidden for this
+            // dialog yet the dialog is translatable. Manual case: also show it so the user can
+            // enable translation for THIS chat regardless of sample-based detection.
+            boolean visible = translateController.isTranslateDialogHidden(getDialogId())
+                && translateController.isDialogTranslatable(getDialogId());
+            if (!visible && manualEligible) {
+                visible = true;
+            }
+            translateItem.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
-        translateItem.setVisibility(getMessagesController().getTranslateController().isTranslateDialogHidden(getDialogId()) && getMessagesController().getTranslateController().isDialogTranslatable(getDialogId()) ? View.VISIBLE : View.GONE);
+        if (luminaTranslateHeaderItem != null) {
+            // Header per-chat translate toggle: visible only for manual-eligible dialogs. Tint
+            // accent when translation is currently ON for this dialog, default otherwise.
+            luminaTranslateHeaderItem.setVisibility(manualEligible ? View.VISIBLE : View.GONE);
+            if (manualEligible) {
+                boolean on = translateController.isTranslatingDialog(getDialogId());
+                luminaTranslateHeaderItem.setIconColor(getThemedColor(on ? Theme.key_chat_addContact : Theme.key_actionBarDefaultIcon));
+            }
+        }
     }
 
     private Animator infoTopViewAnimator;
@@ -24144,6 +24192,7 @@ public class ChatActivity extends BaseFragment implements
             }
 
             updateTopPanel(true);
+            updateTranslateItemVisibility(); // LuminaGram: refresh header translate icon on/off tint
             if (chatListView != null && chatAdapter != null) {
                 boolean updatedPinned = false;
                 saveGeneralScroll();
