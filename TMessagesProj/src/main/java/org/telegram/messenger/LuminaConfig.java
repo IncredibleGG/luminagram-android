@@ -351,6 +351,49 @@ public class LuminaConfig {
      * entry maps a key to {@code {"t":<type>,"v":<value>}} where type is one of
      * b(oolean)/i(nt)/l(ong)/f(loat)/s(tring)/ss(string-set). Never null.
      */
+    // ---- Per-dialog translate-before-send language lock ("auto" mode) ----
+    // In "auto" send-language mode, translate-before-send asks ONCE per chat which language to
+    // translate outgoing messages into, then remembers the choice here so it never re-prompts.
+    // Stored app-privately as a JSON object string { "<dialogId>": "<langCode>" } under the
+    // "trSendLangDialog" key (via getString/putString) -- never sent to Telegram.
+    public static final String KEY_TR_SEND_LANG_DIALOG = "trSendLangDialog";
+
+    /** Locked outgoing-translation language for a dialog, or null when none is chosen yet. */
+    public static String getDialogSendLang(long dialogId) {
+        String raw = getString(KEY_TR_SEND_LANG_DIALOG, "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                org.json.JSONObject o = new org.json.JSONObject(raw);
+                String v = o.optString(String.valueOf(dialogId), null);
+                if (v != null && v.length() > 0) {
+                    return v;
+                }
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return null;
+    }
+
+    /** Lock (or overwrite) the outgoing-translation language for a dialog; empty/null clears it. */
+    public static void setDialogSendLang(long dialogId, String lang) {
+        org.json.JSONObject o;
+        String raw = getString(KEY_TR_SEND_LANG_DIALOG, "");
+        try {
+            o = (raw != null && raw.length() > 0) ? new org.json.JSONObject(raw) : new org.json.JSONObject();
+        } catch (org.json.JSONException e) {
+            o = new org.json.JSONObject();
+        }
+        try {
+            if (lang == null || lang.length() == 0) {
+                o.remove(String.valueOf(dialogId));
+            } else {
+                o.put(String.valueOf(dialogId), lang);
+            }
+        } catch (org.json.JSONException ignore) {
+        }
+        putString(KEY_TR_SEND_LANG_DIALOG, o.toString());
+    }
+
     public static org.json.JSONObject exportAll() {
         org.json.JSONObject out = new org.json.JSONObject();
         try {
