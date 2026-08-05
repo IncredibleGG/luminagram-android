@@ -118,6 +118,16 @@ public class LuminaConfig {
         editor.putInt(key, value).apply();
     }
 
+    // True only when {@code key} has actually been written to the prefs (as opposed to
+    // returning a caller-supplied default). Used by the disguise vault to detect legacy
+    // decoy-lock users whose new {@code vaultEnabled} flag has never been persisted.
+    public static boolean contains(String key) {
+        if (preferences == null) {
+            return false;
+        }
+        return preferences.contains(key);
+    }
+
     // ---- Message bookmarks / collections (Wave 3) ----
     // A local, client-side alternative to Saved Messages. Bookmarks live only in the
     // app-private "luminagram" prefs as a JSON array string under the "bookmarks" key

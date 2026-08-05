@@ -11416,6 +11416,20 @@
     <string name="LuminaDisguiseDecoyCodeNotSet">Not set</string>
     <string name="LuminaDisguiseDecoyCodeDialogTitle">Unlock code</string>
     <string name="LuminaDisguiseDecoyInfo">When on, the app opens as a working calculator; entering this code reveals the app. This passcode is separate from Telegram\'s built-in passcode.</string>
+    <!-- LuminaGram disguise vault (unified decoy: mode / skin / secret code) -->
+    <string name="LuminaVaultHeader">Disguise vault</string>
+    <string name="LuminaVaultEnable">Enable vault</string>
+    <string name="LuminaVaultInfo">Everything here stays on this device. Choose how LuminaGram hides behind a harmless-looking app and how you get back into the real one.</string>
+    <string name="LuminaVaultMode">Vault mode</string>
+    <string name="LuminaVaultModePasswordDoor">Password door</string>
+    <string name="LuminaVaultModeDecoyApp">Decoy app</string>
+    <string name="LuminaVaultModePasswordDoorInfo">Opening asks for a code: the right one opens the real app, a wrong one opens the decoy app.</string>
+    <string name="LuminaVaultModeDecoyAppInfo">Opening shows the decoy app directly; enter your secret code to unlock the real app.</string>
+    <string name="LuminaVaultSkin">Decoy app style</string>
+    <string name="LuminaVaultSkinNotepad">Notepad</string>
+    <string name="LuminaVaultSkinCalculator">Calculator</string>
+    <string name="LuminaVaultSecretCode">Secret code</string>
+    <string name="LuminaVaultSecretCodeDialogTitle">Secret code</string>
     <string name="LuminaUnblockAll">Unblock all</string>
     <string name="LuminaUnblockAllAlert">Unblock all blocked users?</string>
     <string name="LuminaAppearanceTitle">Appearance</string>
