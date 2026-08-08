@@ -28,6 +28,11 @@ public class LuminaChangelogActivity extends BaseFragment {
     // Changelog entries: newest first. Each entry is {versionName, versionCode, changes[]}.
     // Changes are NOT localized — changelog is always in English (standard practice).
     private static final Object[][] CHANGELOG = {
+        {"1.2.7", 7019, new String[]{
+            "Drag-to-reorder photos and files before sending",
+            "Forward-origin warning label on forwarded messages",
+            "Unread digest banner when returning after absence",
+        }},
         {"1.2.6", 7018, new String[]{
             "Auto-blur incoming media until you tap to reveal",
             "Screenshot detection alerts in private chats",

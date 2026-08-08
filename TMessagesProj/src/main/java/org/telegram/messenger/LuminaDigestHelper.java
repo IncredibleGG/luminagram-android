@@ -1,5 +1,6 @@
 package org.telegram.messenger;
 
+import org.telegram.tgnet.TLRPC;
 import java.util.ArrayList;
 
 /**
