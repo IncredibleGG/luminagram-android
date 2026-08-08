@@ -11212,7 +11212,11 @@ public class ChatActivity extends BaseFragment implements
         boolean inScope = DialogObject.isUserDialog(getDialogId())
             ? LuminaConfig.getBoolean("trScopePrivate", true)
             : LuminaConfig.getBoolean("trScopeGroup", true);
-        boolean manualEligible = LuminaConfig.getBoolean("dualLanguageDisplay", false)
+        // LuminaGram: the header icon is eligible when dual-language is on OR when
+        // translate-before-send is active (users of TBS want the icon to toggle receive-side
+        // translation for the same chat).
+        boolean manualEligible = (LuminaConfig.getBoolean("dualLanguageDisplay", false)
+                || LuminaConfig.translateBeforeSend)
             && inScope
             && translateController.isFeatureAvailable(getDialogId());
         if (translateItem != null) {

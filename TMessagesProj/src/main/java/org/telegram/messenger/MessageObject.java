@@ -3743,9 +3743,16 @@ public class MessageObject {
 
     // LuminaGram: true when dual-language display should keep the ORIGINAL message as the main
     // (big) text - only for plain text bubbles (no link/game/invoice preview, not sponsored,
-    // story mention, giveaway or restricted). Gated behind dualLanguageDisplay (default off).
+    // story mention, giveaway or restricted). For OUTGOING translate-before-send messages,
+    // always keep original as main regardless of dualLanguageDisplay — the user chose to translate,
+    // so they always want to see their own original text.
     private boolean luminaKeepOriginalAsMain() {
-        if (!LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+        // LuminaGram: for outgoing TBS messages, always keep original as main regardless
+        // of dualLanguageDisplay — the user chose to translate-before-send, so they must
+        // be able to see their own original. dualLanguageDisplay gates the RECEIVE side.
+        boolean dualOn = LuminaConfig.getBoolean("dualLanguageDisplay", false);
+        boolean tbsOn = LuminaConfig.translateBeforeSend;
+        if (!dualOn && !(tbsOn && isOutOwner())) {
             return false;
         }
         if (messageOwner == null || type != TYPE_TEXT) {
@@ -3777,7 +3784,11 @@ public class MessageObject {
         if (messageOwner == null) {
             return;
         }
-        if (!LuminaConfig.getBoolean("dualLanguageDisplay", false)) {
+        // LuminaGram: for outgoing TBS messages, always apply dual-original regardless of
+        // dualLanguageDisplay (the user chose to translate, so their original must be visible).
+        boolean dualOn = LuminaConfig.getBoolean("dualLanguageDisplay", false);
+        boolean tbsOutgoing = LuminaConfig.translateBeforeSend && isOutOwner();
+        if (!dualOn && !tbsOutgoing) {
             if (luminaDualOriginalApplied) {
                 luminaDualOriginalApplied = false;
                 applyNewText(messageOwner.message);
