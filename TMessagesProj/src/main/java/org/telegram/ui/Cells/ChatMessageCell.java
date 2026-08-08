@@ -123,6 +123,7 @@ import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -1712,6 +1713,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     private int forwardNameY;
     private int forwardHeight;
     private final float[] forwardNameOffsetX = new float[2];
+
+    // LuminaGram: forward-origin warning label
+    private boolean drawLuminaForwardWarning;
+    private static Paint luminaForwardChipPaint;
+    private static TextPaint luminaForwardLabelPaint;
 
     private float drawTimeX;
     private float drawTimeY;
@@ -19224,6 +19230,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                             namesOffset += dp(8);
                         }
                     }
+                    // LuminaGram: forward-origin warning label
+                    drawLuminaForwardWarning = drawForwardedName && LuminaConfig.getBoolean("forwardOriginWarning", true);
+                    if (drawLuminaForwardWarning) {
+                        namesOffset += dp(22);
+                    }
                 } catch (Exception e) {
                     FileLog.e(e);
                 }
@@ -22489,6 +22500,30 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     forwardedNameLayoutLocal[a].draw(canvas);
                 }
                 canvas.restore();
+            }
+            // LuminaGram: forward-origin warning chip
+            if (drawLuminaForwardWarning && forwardedNameLayoutLocal[0] != null) {
+                if (luminaForwardChipPaint == null) {
+                    luminaForwardChipPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                }
+                if (luminaForwardLabelPaint == null) {
+                    luminaForwardLabelPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+                    luminaForwardLabelPaint.setTypeface(AndroidUtilities.bold());
+                }
+                int fwdColor = getThemedColor(currentMessageObject.isOutOwner() ? Theme.key_chat_outForwardedNameText : Theme.key_chat_inForwardedNameText);
+                luminaForwardChipPaint.setColor(fwdColor & 0x33FFFFFF);
+                luminaForwardLabelPaint.setTextSize(dp(11));
+                luminaForwardLabelPaint.setColor(fwdColor);
+                String label = "↗ " + LuminaLocale.getString(R.string.LuminaForwardWarningLabel);
+                float textWidth = luminaForwardLabelPaint.measureText(label);
+                float chipY = forwardHeight + dp(2);
+                float chipW = textWidth + dp(12);
+                float chipH = dp(18);
+                int chipAlpha = (int) (255 * animatingAlpha * replyForwardAlpha);
+                luminaForwardChipPaint.setAlpha((int) (((fwdColor & 0x33FFFFFF) >>> 24) * animatingAlpha * replyForwardAlpha));
+                luminaForwardLabelPaint.setAlpha(chipAlpha);
+                canvas.drawRoundRect(0, chipY, chipW, chipY + chipH, dp(9), dp(9), luminaForwardChipPaint);
+                canvas.drawText(label, dp(6), chipY + dp(13), luminaForwardLabelPaint);
             }
             canvas.restore();
             if (clipContent) {

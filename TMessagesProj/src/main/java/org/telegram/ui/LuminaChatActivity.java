@@ -63,6 +63,7 @@ public class LuminaChatActivity extends BaseFragment {
         items.add(UItem.asSwitch(12, LuminaLocale.getString(R.string.LuminaShowBookmarks)).setChecked(LuminaConfig.getBoolean("showBookmarks", true)));
         items.add(UItem.asSwitch(11, LuminaLocale.getString(R.string.LuminaHideKeyboardOnScroll)).setChecked(LuminaConfig.getBoolean("hideKeyboardOnScroll", false)));
         items.add(UItem.asSwitch(13, LuminaLocale.getString(R.string.LuminaUndoSendWindow)).setChecked(LuminaConfig.getBoolean("undoSendWindow", false)));
+        items.add(UItem.asSwitch(14, LuminaLocale.getString(R.string.LuminaForwardWarningTitle)).setChecked(LuminaConfig.getBoolean("forwardOriginWarning", true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaUndoSendWindowInfo)));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMediaSaving)));
@@ -107,6 +108,9 @@ public class LuminaChatActivity extends BaseFragment {
                 break;
             case 13:
                 LuminaConfig.putBoolean("undoSendWindow", !LuminaConfig.getBoolean("undoSendWindow", false));
+                break;
+            case 14:
+                LuminaConfig.putBoolean("forwardOriginWarning", !LuminaConfig.getBoolean("forwardOriginWarning", true));
                 break;
             case 6:
                 LuminaConfig.putBoolean("showDcId", !LuminaConfig.getBoolean("showDcId", false));

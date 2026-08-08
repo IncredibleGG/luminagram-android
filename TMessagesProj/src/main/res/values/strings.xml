@@ -11569,5 +11569,8 @@
     <string name="LuminaScreenshotDetected">📸 A screenshot was just taken</string>
     <!-- LuminaGram changelog -->
     <string name="LuminaChangelogTitle">What\'s New</string>
+    <!-- LuminaGram forward-origin warning -->
+    <string name="LuminaForwardWarningTitle">Forward-origin warning</string>
+    <string name="LuminaForwardWarningInfo">Show a subtle label on forwarded messages to help identify potentially mass-forwarded content</string>
+    <string name="LuminaForwardWarningLabel">Forwarded</string>
 </resources>
-
