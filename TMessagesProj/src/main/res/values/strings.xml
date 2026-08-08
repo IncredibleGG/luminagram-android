@@ -11559,5 +11559,8 @@
     <string name="LuminaSttUiDownloading">Downloading voice engine…</string>
     <string name="LuminaSttUiError">Transcription failed</string>
     <string name="LuminaSttUiNoText">No speech detected</string>
+    <!-- LuminaGram auto-blur incoming media -->
+    <string name="LuminaAutoBlurIncoming">Auto-blur incoming media</string>
+    <string name="LuminaAutoBlurIncomingInfo">Blur incoming photos, videos, and GIFs until you tap to reveal. This does not affect the sender\'s message \u2014 only how you see it locally.</string>
 </resources>
 

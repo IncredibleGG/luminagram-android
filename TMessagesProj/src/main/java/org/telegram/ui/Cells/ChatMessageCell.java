@@ -126,6 +126,7 @@ import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
+import org.telegram.messenger.LuminaSpoilerManager;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
@@ -1735,6 +1736,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     private float mediaSpoilerRevealMaxRadius;
     private SpoilerEffect2 mediaSpoilerEffect2;
     private Integer mediaSpoilerEffect2Index;
+
+    // LuminaGram: render-only auto-blur for incoming media
+    private boolean hasLuminaBlur;
 
 //    private Drawable startsAtDrawable;
 //    private Text startsAtText, startsAtTextShorter;
@@ -4278,7 +4282,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 int offset = dp(27);
                 area2 = x >= buttonX + offset && x <= buttonX + offset + side && y >= buttonY + offset && y <= buttonY + offset + side;
             }
-            boolean allowClickButtons = currentMessageObject == null || !currentMessageObject.hasMediaSpoilers() || currentMessageObject.isMediaSpoilersRevealed || buttonState == 1;
+            boolean allowClickButtons = currentMessageObject == null || (!currentMessageObject.hasMediaSpoilers() && !hasLuminaBlur) || currentMessageObject.isMediaSpoilersRevealed || buttonState == 1;
             if (area2) {
                 miniButtonPressed = 1;
                 invalidate();
@@ -4404,7 +4408,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 int offset = dp(27);
                 area2 = x >= buttonX + offset && x <= buttonX + offset + side && y >= buttonY + offset && y <= buttonY + offset + side;
             }
-            if (!area2 && (currentMessageObject == null || !currentMessageObject.hasMediaSpoilers() || currentMessageObject.isVoice() || currentMessageObject.isMediaSpoilersRevealed)) {
+            if (!area2 && (currentMessageObject == null || (!currentMessageObject.hasMediaSpoilers() && !hasLuminaBlur) || currentMessageObject.isVoice() || currentMessageObject.isMediaSpoilersRevealed)) {
                 if (buttonState == 0 || buttonState == 1 || buttonState == 2) {
                     area = x >= buttonX - dp(12) && x <= buttonX - dp(12) + backgroundWidth && y >= (drawInstantView ? buttonY : namesOffset + mediaOffsetY) && y <= (drawInstantView ? buttonY + side : namesOffset + mediaOffsetY + dp(82));
                 } else {
@@ -5994,6 +5998,13 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     }
 
     private void didClickedImage() {
+        // LuminaGram: tap-to-reveal auto-blur
+        if (hasLuminaBlur) {
+            LuminaSpoilerManager.reveal(currentMessageObject);
+            hasLuminaBlur = false;
+            startRevealMedia(lastTouchX, lastTouchY);
+            return;
+        }
         if (currentMessageObject.hasMediaSpoilers() && !currentMessageObject.needDrawBluredPreview() && !currentMessageObject.isMediaSpoilersRevealed) {
             if (delegate != null && currentMessageObject.isSensitive()) {
                 delegate.didPressRevealSensitiveContent(this);
@@ -6757,6 +6768,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         lastWidth = getParentWidth();
         isRoundVideo = messageObject != null && messageObject.isRoundVideo();
         mediaSpoilerRevealProgress = 0f;
+        hasLuminaBlur = LuminaSpoilerManager.shouldBlur(messageObject);
         TLRPC.Message newReply = messageObject.hasValidReplyMessageObject() ? messageObject.replyMessageObject.messageOwner : null;
         boolean messageIdChanged = currentMessageObject == null || currentMessageObject.getId() != messageObject.getId();
         boolean messageChanged = currentMessageObject != messageObject || messageObject.forceUpdate || (isRoundVideo && isPlayingRound != (MediaController.getInstance().isPlayingMessage(currentMessageObject) && delegate != null && !delegate.keyboardIsOpened()));
@@ -8693,7 +8705,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                             } else if (documentAttachType == DOCUMENT_ATTACH_TYPE_VIDEO) {
                                 photoImage.setNeedsQualityThumb(true);
                                 photoImage.setShouldGenerateQualityThumb(true);
-                                if (!isSmallImage && !currentMessageObject.isHiddenSensitive() && (documentCover == null || currentMessageObject.isLivePhoto()) && SharedConfig.isAutoplayVideo() && !currentMessageObject.isRepostPreview && (!currentMessageObject.hasMediaSpoilers() || currentMessageObject.isMediaSpoilersRevealed || currentMessageObject.revealingMediaSpoilers) && (
+                                if (!isSmallImage && !currentMessageObject.isHiddenSensitive() && (documentCover == null || currentMessageObject.isLivePhoto()) && SharedConfig.isAutoplayVideo() && !currentMessageObject.isRepostPreview && ((!currentMessageObject.hasMediaSpoilers() && !hasLuminaBlur) || currentMessageObject.isMediaSpoilersRevealed || currentMessageObject.revealingMediaSpoilers) && (
                                     (currentMessageObject.mediaExists || currentMessageObject.attachPathExists) ||
                                     messageObject.canStreamVideo() && DownloadController.getInstance(currentAccount).canDownloadMedia(currentMessageObject)
                                 )) {
@@ -8754,7 +8766,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                                 }
                             }
                             clearBlurredImage(blurredPhotoImage);
-                            if (photoImage.getBitmap() != null && !photoImage.getBitmap().isRecycled() && (currentMessageObject.hasMediaSpoilers() && !currentMessageObject.isMediaSpoilersRevealed || fitPhotoImage)) {
+                            if (photoImage.getBitmap() != null && !photoImage.getBitmap().isRecycled() && ((currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) && !currentMessageObject.isMediaSpoilersRevealed || fitPhotoImage)) {
                                 blurredPhotoImage.setImageBitmap(Utilities.stackBlurBitmapMax(photoImage.getBitmap(), currentMessageObject.isRoundVideo()));
                                 blurredPhotoImage.setColorFilter(getFancyBlurFilter());
                             }
@@ -9809,7 +9821,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     }
 
                     clearBlurredImage(blurredPhotoImage);
-                    if (photoImage.getBitmap() != null && !photoImage.getBitmap().isRecycled() && (currentMessageObject.hasMediaSpoilers() && !currentMessageObject.isMediaSpoilersRevealed || fitPhotoImage)) {
+                    if (photoImage.getBitmap() != null && !photoImage.getBitmap().isRecycled() && ((currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) && !currentMessageObject.isMediaSpoilersRevealed || fitPhotoImage)) {
                         blurredPhotoImage.setImageBitmap(Utilities.stackBlurBitmapMax(photoImage.getBitmap(), currentMessageObject.isRoundVideo()));
                         blurredPhotoImage.setColorFilter(getFancyBlurFilter());
                     }
@@ -10330,7 +10342,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         currentPhotoObjectThumb.size = -1;
                     }
 
-                    if (!currentMessageObject.isHiddenSensitive() && SharedConfig.isAutoplayVideo() && (!currentMessageObject.hasVideoCover() || currentMessageObject.isLivePhoto()) && !currentMessageObject.isRepostPreview && (!currentMessageObject.hasMediaSpoilers() || currentMessageObject.isMediaSpoilersRevealed || currentMessageObject.revealingMediaSpoilers) && (messageObject.type == MessageObject.TYPE_VIDEO /*|| messageObject.type == MessageObject.TYPE_STORY && messageObject.getDocument() != null*/) && !messageObject.needDrawBluredPreview() &&
+                    if (!currentMessageObject.isHiddenSensitive() && SharedConfig.isAutoplayVideo() && (!currentMessageObject.hasVideoCover() || currentMessageObject.isLivePhoto()) && !currentMessageObject.isRepostPreview && ((!currentMessageObject.hasMediaSpoilers() && !hasLuminaBlur) || currentMessageObject.isMediaSpoilersRevealed || currentMessageObject.revealingMediaSpoilers) && (messageObject.type == MessageObject.TYPE_VIDEO /*|| messageObject.type == MessageObject.TYPE_STORY && messageObject.getDocument() != null*/) && !messageObject.needDrawBluredPreview() &&
                             ((currentMessageObject.mediaExists || currentMessageObject.attachPathExists) || messageObject.canStreamVideo() && DownloadController.getInstance(currentAccount).canDownloadMedia(currentMessageObject))
                     ) {
                         if (currentPosition != null) {
@@ -10484,7 +10496,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     }
                 }
                 clearBlurredImage(blurredPhotoImage);
-                if (photoImage.getBitmap() != null && !photoImage.getBitmap().isRecycled() && (currentMessageObject.hasMediaSpoilers() && !currentMessageObject.isMediaSpoilersRevealed || fitPhotoImage)) {
+                if (photoImage.getBitmap() != null && !photoImage.getBitmap().isRecycled() && ((currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) && !currentMessageObject.isMediaSpoilersRevealed || fitPhotoImage)) {
                     blurredPhotoImage.setImageBitmap(Utilities.stackBlurBitmapMax(photoImage.getBitmap(), currentMessageObject.isRoundVideo()));
                     blurredPhotoImage.setColorFilter(getFancyBlurFilter());
                 }
@@ -10562,7 +10574,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 } else {
                     photoImage.setImageCoords(0, y + namesOffset + additionalTop, photoWidth, photoHeight);
                 }
-                if (messageObject.hasMediaSpoilers() && SpoilerEffect2.supports()) {
+                if ((messageObject.hasMediaSpoilers() || hasLuminaBlur) && SpoilerEffect2.supports()) {
                     if (mediaSpoilerEffect2 == null && attachedToWindow) {
                         mediaSpoilerEffect2 = makeSpoilerEffect();
                         if (mediaSpoilerEffect2Index != null) {
@@ -14499,7 +14511,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                                 } else {
                                     imageDrawn = true;
                                 }
-                                if (currentMessageObject.hasMediaSpoilers()) {
+                                if (currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) {
                                     drawBlurredPhoto(canvas);
                                 }
                             }
@@ -14528,7 +14540,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                                 } else {
                                     imageDrawn = true;
                                 }
-                                if (currentMessageObject.hasMediaSpoilers()) {
+                                if (currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) {
                                     drawBlurredPhoto(canvas);
                                 }
                             }
@@ -15584,7 +15596,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         } else {
                             imageDrawn = true;
                         }
-                        if (currentMessageObject.hasMediaSpoilers()) {
+                        if (currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) {
                             blurredPhotoImage.setAlpha(alpha);
                             drawBlurredPhoto(canvas);
                             blurredPhotoImage.setAlpha(1f);
@@ -15596,7 +15608,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         } else {
                             imageDrawn = true;
                         }
-                        if (currentMessageObject.hasMediaSpoilers()) {
+                        if (currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) {
                             drawBlurredPhoto(canvas);
                         }
                     }
@@ -15782,7 +15794,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                             } else {
                                 imageDrawn = true;
                             }
-                            if (currentMessageObject.hasMediaSpoilers()) {
+                            if (currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) {
                                 blurredPhotoImage.setAlpha(alpha);
                                 drawBlurredPhoto(canvas);
                                 blurredPhotoImage.setAlpha(1f);
@@ -15794,7 +15806,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                             } else {
                                 imageDrawn = true;
                             }
-                            if (currentMessageObject.hasMediaSpoilers()) {
+                            if (currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) {
                                 drawBlurredPhoto(canvas);
                             }
                         }
@@ -15926,7 +15938,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         } else {
                             imageDrawn = true;
                         }
-                        if (currentMessageObject.hasMediaSpoilers()) {
+                        if (currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) {
                             blurredPhotoImage.setAlpha(alpha);
                             drawBlurredPhoto(canvas);
                             blurredPhotoImage.setAlpha(1f);
@@ -15938,7 +15950,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         } else {
                             imageDrawn = true;
                         }
-                        if (currentMessageObject.hasMediaSpoilers()) {
+                        if (currentMessageObject.hasMediaSpoilers() || hasLuminaBlur) {
                             drawBlurredPhoto(canvas);
                         }
                     }
@@ -18217,7 +18229,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         }
         if (set && currentMessageObject != null) {
             clearBlurredImage(blurredPhotoImage);
-            if ((currentMessageObject.hasMediaSpoilers() || fitPhotoImage) && imageReceiver.getBitmap() != null && !imageReceiver.getBitmap().isRecycled()) {
+            if ((currentMessageObject.hasMediaSpoilers() || hasLuminaBlur || fitPhotoImage) && imageReceiver.getBitmap() != null && !imageReceiver.getBitmap().isRecycled()) {
                 blurredPhotoImage.setImageBitmap(Utilities.stackBlurBitmapMax(imageReceiver.getBitmap(), currentMessageObject.isRoundVideo()));
                 blurredPhotoImage.setColorFilter(getFancyBlurFilter());
             }

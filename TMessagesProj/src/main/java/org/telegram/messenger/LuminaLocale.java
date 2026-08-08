@@ -336,6 +336,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaPrivacyScamKeywordWarning", "诈骗关键词警告");
         zhHans.put("LuminaPrivacyScamKeywordWarningInfo", "当不在你联系人中的人发来的消息提到常见诈骗手段（汇款、礼品卡、加密货币“投资”、验证费或索要验证码）时，显示一次性提醒，提醒你保持警惕。消息永远不会被拦截或修改。检查在你的设备上离线运行。");
         zhHans.put("LuminaScamKeywordWarning", "⚠ 这条消息来自不在你联系人中的人，且提到了钱款或验证——小心诈骗。");
+        zhHans.put("LuminaAutoBlurIncoming", "自动模糊收到的媒体");
+        zhHans.put("LuminaAutoBlurIncomingInfo", "模糊收到的照片、视频和GIF，直到你点击查看。这不影响发送者的消息——只改变你本地看到的效果。");
         zhHans.put("LuminaProfileCardTitle", "个人名片");
         zhHans.put("LuminaProfileCardHeader", "我的名片");
         zhHans.put("LuminaProfileCardTagline", "标语");
@@ -688,6 +690,8 @@ public final class LuminaLocale {
         zhHant.put("LuminaPrivacyScamKeywordWarning", "詐騙關鍵字警告");
         zhHant.put("LuminaPrivacyScamKeywordWarningInfo", "當不在你聯絡人中的人傳來的訊息提到常見詐騙手法（匯款、禮品卡、加密貨幣「投資」、驗證費或索取驗證碼）時，顯示一次性提醒，提醒你保持警覺。訊息永遠不會被攜截或修改。檢查在你的裝置上離線執行。");
         zhHant.put("LuminaScamKeywordWarning", "⚠ 這則訊息來自不在你聯絡人中的人，且提到金錢或驗證——小心詐騙。");
+        zhHant.put("LuminaAutoBlurIncoming", "自動模糊收到的媒體");
+        zhHant.put("LuminaAutoBlurIncomingInfo", "模糊收到的照片、影片和GIF，直到你點擊查看。這不影響發送者的訊息——只改變你本地看到的效果。");
         zhHant.put("LuminaProfileCardTitle", "個人名片");
         zhHant.put("LuminaProfileCardHeader", "我的名片");
         zhHant.put("LuminaProfileCardTagline", "標語");
@@ -1039,6 +1043,8 @@ public final class LuminaLocale {
         ar.put("LuminaPrivacyScamKeywordWarning", "تحذير من كلمات الاحتيال");
         ar.put("LuminaPrivacyScamKeywordWarningInfo", "عندما تذكر رسالة من شخص ليس ضمن جهات اتصالك أساليب احتيال شائعة — تحويل الأموال، بطاقات الهدايا، «استثمار» العملات المشفّرة، رسوم التحقق أو طلب الرموز — يظهر تذكير لمرة واحدة لتوخّي الحذر. لا يتم حظر الرسالة أو تغييرها أبدًا. تُجرى الفحوص دون اتصال على جهازك.");
         ar.put("LuminaScamKeywordWarning", "⚠ تذكر هذه الرسالة أموالًا أو تحققًا وهي من شخص ليس ضمن جهات اتصالك — احذر من الاحتيال.");
+        ar.put("LuminaAutoBlurIncoming", "طمس الوسائط الواردة تلقائيًا");
+        ar.put("LuminaAutoBlurIncomingInfo", "طمس الصور والفيديوهات وملفات GIF الواردة حتى تنقر للكشف. هذا لا يؤثر على رسالة المرسل — فقط على ما تراه محليًا.");
         ar.put("LuminaProfileCardTitle", "بطاقة التعريف");
         ar.put("LuminaProfileCardHeader", "بطاقتي");
         ar.put("LuminaProfileCardTagline", "شعار");
@@ -1390,6 +1396,8 @@ public final class LuminaLocale {
         ru.put("LuminaPrivacyScamKeywordWarning", "Предупреждение о мошенничестве");
         ru.put("LuminaPrivacyScamKeywordWarningInfo", "Когда в сообщении от человека не из ваших контактов упоминаются типичные уловки мошенников — переводы денег, подарочные карты, «инвестиции» в криптовалюту, плата за верификацию или просьба прислать код — показывается однократное напоминание быть осторожнее. Сообщение никогда не блокируется и не изменяется. Проверка выполняется офлайн на вашем устройстве.");
         ru.put("LuminaScamKeywordWarning", "⚠ Это сообщение упоминает деньги или верификацию и пришло от человека не из ваших контактов — остерегайтесь мошенничества.");
+        ru.put("LuminaAutoBlurIncoming", "Автоматическое размытие входящих медиа");
+        ru.put("LuminaAutoBlurIncomingInfo", "Размывать входящие фото, видео и GIF до нажатия. Это не влияет на сообщение отправителя — только на то, что вы видите локально.");
         ru.put("LuminaProfileCardTitle", "Визитка");
         ru.put("LuminaProfileCardHeader", "Моя визитка");
         ru.put("LuminaProfileCardTagline", "Слоган");
@@ -1741,6 +1749,8 @@ public final class LuminaLocale {
         fa.put("LuminaPrivacyScamKeywordWarning", "هشدار واژگان کلاه‌برداری");
         fa.put("LuminaPrivacyScamKeywordWarningInfo", "وقتی پیامی از شخصی که در مخاطبان شما نیست به ترفندهای رایج کلاه‌برداری اشاره کند — انتقال پول، کارت هدیه، «سرمایه‌گذاری» رمزارز، هزینهٔ تأیید یا درخواست کد — یک یادآوری یک‌باره برای احتیاط نمایش داده می‌شود. پیام هرگز مسدود یا تغییر داده نمی‌شود. بررسی‌ها به‌صورت آفلاین روی دستگاه شما انجام می‌شود.");
         fa.put("LuminaScamKeywordWarning", "⚠ این پیام به پول یا تأیید اشاره دارد و از شخصی است که در مخاطبان شما نیست — مراقب کلاه‌برداری باشید.");
+        fa.put("LuminaAutoBlurIncoming", "تار کردن خودکار رسانه‌های دریافتی");
+        fa.put("LuminaAutoBlurIncomingInfo", "عکس‌ها، ویدیوها و GIF‌های دریافتی تا زمان لمس تار می‌شوند. این تأثیری بر پیام فرستنده ندارد — فقط نمای محلی شما تغییر می‌کند.");
         fa.put("LuminaProfileCardTitle", "کارت معرفی");
         fa.put("LuminaProfileCardHeader", "کارت من");
         fa.put("LuminaProfileCardTagline", "شعار");
@@ -2092,6 +2102,8 @@ public final class LuminaLocale {
         tr.put("LuminaPrivacyScamKeywordWarning", "Dolandırıcılık kelime uyarısı");
         tr.put("LuminaPrivacyScamKeywordWarningInfo", "Kişilerinizde olmayan birinden gelen bir mesaj yaygın dolandırıcılık taktiklerinden söz ettiğinde — para transferi, hediye kartı, kripto “yatırımı”, doğrulama ücreti veya kod isteme — dikkatli olmanız için tek seferlik bir hatırlatma gösterilir. Mesaj asla engellenmez veya değiştirilmez. Kontroller cihazınızda çevrimdışı çalışır.");
         tr.put("LuminaScamKeywordWarning", "⚠ Bu mesaj para veya doğrulamadan söz ediyor ve kişilerinizde olmayan birinden geliyor — dolandırıcılığa karşı dikkatli olun.");
+        tr.put("LuminaAutoBlurIncoming", "Gelen medyayı otomatik bulanıklaştır");
+        tr.put("LuminaAutoBlurIncomingInfo", "Gelen fotoğrafları, videoları ve GIF'leri dokunana kadar bulanıklaştırır. Gönderenin mesajını etkilemez — yalnızca yerel görünümünüzü değiştirir.");
         tr.put("LuminaProfileCardTitle", "Profil kartı");
         tr.put("LuminaProfileCardHeader", "Kartım");
         tr.put("LuminaProfileCardTagline", "Slogan");
@@ -2443,6 +2455,8 @@ public final class LuminaLocale {
         es.put("LuminaPrivacyScamKeywordWarning", "Aviso de palabras de estafa");
         es.put("LuminaPrivacyScamKeywordWarningInfo", "Cuando un mensaje de alguien que no está en tus contactos menciona tácticas de estafa habituales —transferencias de dinero, tarjetas de regalo, «inversiones» en criptomonedas, tarifas de verificación o pedir códigos— se muestra un recordatorio único para que tengas cuidado. El mensaje nunca se bloquea ni se modifica. Las comprobaciones se realizan sin conexión en tu dispositivo.");
         es.put("LuminaScamKeywordWarning", "⚠ Este mensaje menciona dinero o verificación y proviene de alguien que no está en tus contactos: ten cuidado con las estafas.");
+        es.put("LuminaAutoBlurIncoming", "Desenfocar automáticamente medios recibidos");
+        es.put("LuminaAutoBlurIncomingInfo", "Desenfoca fotos, vídeos y GIF recibidos hasta que toques para revelar. No afecta al mensaje del remitente, solo a cómo lo ves localmente.");
         es.put("LuminaProfileCardTitle", "Tarjeta de perfil");
         es.put("LuminaProfileCardHeader", "Mi tarjeta");
         es.put("LuminaProfileCardTagline", "Lema");
@@ -2794,6 +2808,8 @@ public final class LuminaLocale {
         ptBr.put("LuminaPrivacyScamKeywordWarning", "Aviso de palavras de golpe");
         ptBr.put("LuminaPrivacyScamKeywordWarningInfo", "Quando uma mensagem de alguém que não está nos seus contatos menciona táticas comuns de golpe — transferências de dinheiro, cartões-presente, “investimentos” em cripto, taxas de verificação ou pedir códigos — é exibido um lembrete único para você ter cuidado. A mensagem nunca é bloqueada nem alterada. As verificações são feitas off-line no seu dispositivo.");
         ptBr.put("LuminaScamKeywordWarning", "⚠ Esta mensagem menciona dinheiro ou verificação e vem de alguém que não está nos seus contatos — cuidado com golpes.");
+        ptBr.put("LuminaAutoBlurIncoming", "Desfocar automaticamente mídia recebida");
+        ptBr.put("LuminaAutoBlurIncomingInfo", "Desfoca fotos, vídeos e GIFs recebidos até que você toque para revelar. Não afeta a mensagem do remetente — só muda como você vê localmente.");
         ptBr.put("LuminaProfileCardTitle", "Cartão de perfil");
         ptBr.put("LuminaProfileCardHeader", "Meu cartão");
         ptBr.put("LuminaProfileCardTagline", "Lema");
@@ -3145,6 +3161,8 @@ public final class LuminaLocale {
         id.put("LuminaPrivacyScamKeywordWarning", "Peringatan kata penipuan");
         id.put("LuminaPrivacyScamKeywordWarningInfo", "Saat pesan dari seseorang yang tidak ada di kontak Anda menyebutkan taktik penipuan umum — transfer uang, kartu hadiah, “investasi” kripto, biaya verifikasi, atau meminta kode — sebuah pengingat sekali muncul agar Anda berhati-hati. Pesan tidak pernah diblokir atau diubah. Pemeriksaan berjalan luring di perangkat Anda.");
         id.put("LuminaScamKeywordWarning", "⚠ Pesan ini menyebutkan uang atau verifikasi dan berasal dari seseorang yang tidak ada di kontak Anda — waspadalah terhadap penipuan.");
+        id.put("LuminaAutoBlurIncoming", "Otomatis buramkan media masuk");
+        id.put("LuminaAutoBlurIncomingInfo", "Buramkan foto, video, dan GIF yang masuk hingga Anda ketuk untuk melihat. Ini tidak memengaruhi pesan pengirim — hanya tampilan lokal Anda.");
         id.put("LuminaProfileCardTitle", "Kartu profil");
         id.put("LuminaProfileCardHeader", "Kartu saya");
         id.put("LuminaProfileCardTagline", "Slogan");
