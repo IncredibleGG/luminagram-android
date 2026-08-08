@@ -38,11 +38,13 @@ public class LuminaMediaActivity extends BaseFragment {
     private static final int ID_AUTO_PAUSE_BG_VIDEO = 2;
     private static final int ID_UNLOCK_AUDIO_SPEED = 3;
     private static final int ID_SAVE_MEDIA_FOLDER = 4;
+    private static final int ID_ATTACH_DRAG_REORDER = 5;
 
     private static final String KEY_KEEP_ORIGINAL_FILENAME = "keepOriginalFilename";
     private static final String KEY_AUTO_PAUSE_BG_VIDEO = "autoPauseBgVideo";
     private static final String KEY_UNLOCK_AUDIO_SPEED = "unlockAudioSpeed";
     private static final String KEY_SAVE_MEDIA_FOLDER = "saveMediaFolder";
+    private static final String KEY_ATTACH_DRAG_REORDER = "attachDragReorder";
 
     private UniversalRecyclerView listView;
 
@@ -87,6 +89,10 @@ public class LuminaMediaActivity extends BaseFragment {
                 .setChecked(LuminaConfig.getBoolean(KEY_UNLOCK_AUDIO_SPEED, false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaMediaUnlockAudioSpeedInfo)));
 
+        items.add(UItem.asSwitch(ID_ATTACH_DRAG_REORDER, LuminaLocale.getString(R.string.LuminaMediaDragReorder))
+                .setChecked(LuminaConfig.getBoolean(KEY_ATTACH_DRAG_REORDER, true)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaMediaDragReorderInfo)));
+
         String saveFolder = LuminaConfig.getString(KEY_SAVE_MEDIA_FOLDER, "");
         items.add(UItem.asButton(ID_SAVE_MEDIA_FOLDER, LuminaLocale.getString(R.string.LuminaMediaSaveFolder),
                 saveFolder.isEmpty() ? "Telegram" : saveFolder));
@@ -111,6 +117,13 @@ public class LuminaMediaActivity extends BaseFragment {
                             listView.adapter.update(true);
                         }
                     });
+            return;
+        }
+        if (item.id == ID_ATTACH_DRAG_REORDER) {
+            LuminaConfig.putBoolean(KEY_ATTACH_DRAG_REORDER, !LuminaConfig.getBoolean(KEY_ATTACH_DRAG_REORDER, true));
+            if (listView != null && listView.adapter != null) {
+                listView.adapter.update(true);
+            }
             return;
         }
         final String key;

@@ -84,6 +84,7 @@ import org.telegram.messenger.FileLog;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -699,7 +700,8 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
 
     // Wave11: drag a SELECTED attachment to reorder the send order (selectedPhotosOrder).
     private boolean isPhotoReorderAllowed() {
-        return parentAlert != null && !parentAlert.storyMediaPicker
+        return LuminaConfig.getBoolean("attachDragReorder", true)
+                && parentAlert != null && !parentAlert.storyMediaPicker
                 && parentAlert.baseFragment instanceof ChatActivity && parentAlert.allowOrder
                 && selectedPhotosOrder.size() > 1;
     }
@@ -760,6 +762,10 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
                 photoReorderLastTargetKey = null;
                 gridView.hideSelector(true);
                 gridView.cancelClickRunnables(false);
+                if (viewHolder != null && viewHolder.itemView != null) {
+                    viewHolder.itemView.setScaleX(1.05f);
+                    viewHolder.itemView.setScaleY(1.05f);
+                }
             }
             super.onSelectedChanged(viewHolder, actionState);
         }
@@ -776,6 +782,10 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
         @Override
         public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             super.clearView(recyclerView, viewHolder);
+            if (viewHolder != null && viewHolder.itemView != null) {
+                viewHolder.itemView.setScaleX(1.0f);
+                viewHolder.itemView.setScaleY(1.0f);
+            }
             photoReorderLastTargetKey = null;
             if (parentAlert != null) {
                 parentAlert.applyCaption();

@@ -11569,5 +11569,8 @@
     <string name="LuminaScreenshotDetected">📸 A screenshot was just taken</string>
     <!-- LuminaGram changelog -->
     <string name="LuminaChangelogTitle">What\'s New</string>
+    <!-- LuminaGram drag-reorder attachments -->
+    <string name="LuminaMediaDragReorder">Drag to reorder attachments</string>
+    <string name="LuminaMediaDragReorderInfo">Long-press and drag to rearrange photos and files before sending</string>
 </resources>
 
