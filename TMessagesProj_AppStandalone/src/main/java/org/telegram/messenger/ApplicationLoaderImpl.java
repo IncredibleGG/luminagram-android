@@ -52,6 +52,10 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
     private volatile boolean cancelUpdateDownload;
     private volatile float updateDownloadProgress;
     private long lastUpdateCheckTime;
+    // LuminaGram: true when the last manifest fetch threw (offline, DNS, timeout, bad JSON).
+    // Without this the caller cannot tell "nothing newer" from "we never reached the server",
+    // and reports the misleading "your version is latest" while the device is offline.
+    private volatile boolean lastUpdateCheckFailed;
     @Override
     protected String onGetApplicationId() {
         return BuildConfig.APPLICATION_ID;
@@ -320,6 +324,11 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
     }
 
     @Override
+    public boolean didLastUpdateCheckFail() {
+        return lastUpdateCheckFailed;
+    }
+
+    @Override
     public void checkUpdate(boolean force, Runnable whenDone) {
         // Rate-limit background (non-forced) checks so the resume hook doesn't hit the
         // network every time; manual "Check for updates" passes force=true.
@@ -332,6 +341,7 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
         Utilities.globalQueue.postRunnable(() -> {
             BetaUpdate parsed = null;
             String parsedUrl = null;
+            boolean failed = false;
             HttpURLConnection connection = null;
             try {
                 URL url = new URL(LUMINA_UPDATE_MANIFEST_URL);
@@ -374,6 +384,9 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
                     parsedUrl = apkUrl;
                 }
             } catch (Exception e) {
+                // LuminaGram: the fetch failed rather than found nothing - remember that so the
+                // UI can offer "check your connection" instead of claiming we are up to date.
+                failed = true;
                 FileLog.e(e);
             } finally {
                 if (connection != null) {
@@ -384,6 +397,7 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
                 }
             }
             lastUpdateCheckTime = System.currentTimeMillis();
+            lastUpdateCheckFailed = failed;
             final BetaUpdate result = parsed;
             final String resultUrl = parsedUrl;
             AndroidUtilities.runOnUIThread(() -> {
@@ -423,7 +437,10 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
         return downloadedApk;
     }
 
-    private void startDownload(Utilities.Callback<Float> onProgress, Utilities.Callback<File> onComplete) {
+    // LuminaGram: onProgress receives (downloadedBytes, totalBytes) rather than a bare
+    // fraction so the UI can render absolute sizes. totalBytes is <= 0 when the server sends
+    // no Content-Length (chunked transfer).
+    private void startDownload(Utilities.Callback2<Long, Long> onProgress, Utilities.Callback<File> onComplete) {
         if (downloadingUpdate) {
             return;
         }
@@ -454,11 +471,12 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
                 connection.setReadTimeout(30000);
                 connection.setInstanceFollowRedirects(true);
                 connection.connect();
-                int total = connection.getContentLength();
+                final long totalBytes = connection.getContentLength();
                 InputStream in = connection.getInputStream();
                 FileOutputStream fos = new FileOutputStream(out);
                 byte[] buffer = new byte[16 * 1024];
                 long downloaded = 0;
+                long lastProgressPost = 0;
                 int read;
                 while ((read = in.read(buffer)) != -1) {
                     if (cancelUpdateDownload) {
@@ -466,12 +484,17 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
                     }
                     fos.write(buffer, 0, read);
                     downloaded += read;
-                    if (total > 0) {
-                        final float progress = Math.min(1f, (float) downloaded / (float) total);
-                        updateDownloadProgress = progress;
-                        if (onProgress != null) {
-                            AndroidUtilities.runOnUIThread(() -> onProgress.run(progress));
-                        }
+                    if (totalBytes > 0) {
+                        updateDownloadProgress = Math.min(1f, (float) downloaded / (float) totalBytes);
+                    }
+                    // LuminaGram: the APK is ~140 MB, so with a 16 KB buffer this loop runs about
+                    // 9000 times; posting to the UI thread on every chunk would flood the looper.
+                    // Throttle to ~10 updates/s, plus one final post when the last byte lands.
+                    final long now = System.currentTimeMillis();
+                    if (onProgress != null && (now - lastProgressPost >= 100 || (totalBytes > 0 && downloaded >= totalBytes))) {
+                        lastProgressPost = now;
+                        final long downloadedSoFar = downloaded;
+                        AndroidUtilities.runOnUIThread(() -> onProgress.run(downloadedSoFar, totalBytes));
                     }
                 }
                 fos.flush();
@@ -544,7 +567,18 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
         progressDialog.setOnCancelListener(dialog -> cancelDownloadingUpdate());
         progressDialog.show();
         startDownload(
-                progress -> progressDialog.setProgress((int) (progress * 100)),
+                (downloaded, total) -> {
+                    // LuminaGram: a ~140 MB APK on a slow link sits on the same percentage for a
+                    // long time, so show the absolute MB counts as well. When Content-Length is
+                    // missing we cannot compute either, so keep the plain "Downloading update..."
+                    if (downloaded == null || total == null || total <= 0) {
+                        return;
+                    }
+                    progressDialog.setProgress((int) (downloaded * 100L / total));
+                    progressDialog.setMessage(String.format(java.util.Locale.US,
+                            LuminaLocale.getString(R.string.LuminaUpdateDownloadingProgress),
+                            formatUpdateSizeMb(downloaded), formatUpdateSizeMb(total)));
+                },
                 file -> {
                     try {
                         progressDialog.dismiss();
@@ -560,6 +594,13 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
                     }
                 }
         );
+    }
+
+    // LuminaGram: bytes -> "138.0". Always Locale.US so the decimal separator is stable no
+    // matter which in-app language supplies the surrounding template (the number is injected
+    // through the template's %1$s / %2$s placeholders, which carry the localized unit).
+    private static String formatUpdateSizeMb(long bytes) {
+        return String.format(java.util.Locale.US, "%.1f", bytes / (1024f * 1024f));
     }
 
     private void installApk(Activity activity, File apk) {

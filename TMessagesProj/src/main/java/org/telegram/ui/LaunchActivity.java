@@ -133,6 +133,7 @@ import org.telegram.messenger.PushListenerController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SendMessagesHelper;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.SharedPrefsHelper;
 import org.telegram.messenger.TopicsController;
@@ -6016,18 +6017,70 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             final BetaUpdate prevUpdate = ApplicationLoader.applicationLoaderInstance.getUpdate();
             final boolean first = firstAppUpdateCheck;
             firstAppUpdateCheck = false;
+            // LuminaGram: the custom updater fetches a manifest over HTTPS and can block for up to
+            // ~45s (15s connect + 30s read timeout). This branch used to return before the
+            // progress.init() call further down was ever reached, and the settings entry hands us a
+            // listener-less Browser.Progress, so tapping "Check for updates" showed nothing at all
+            // until the fetch finished. Drive our own spinner instead so the tap has instant,
+            // cancellable feedback. Manual checks only: the background check on resume passes
+            // progress == null and must stay completely silent.
+            final AlertDialog[] checkingDialog = new AlertDialog[1];
+            final boolean[] checkCancelled = new boolean[1];
+            final Runnable dismissCheckingDialog = () -> {
+                if (checkingDialog[0] != null) {
+                    try {
+                        checkingDialog[0].dismiss();
+                    } catch (Exception e) {
+                        FileLog.e(e);
+                    }
+                    checkingDialog[0] = null;
+                }
+            };
+            if (progress != null) {
+                progress.init();
+                try {
+                    if (!isFinishing() && !isDestroyed()) {
+                        final AlertDialog dialog = new AlertDialog(LaunchActivity.this, AlertDialog.ALERT_TYPE_SPINNER);
+                        dialog.setMessage(LuminaLocale.getString(R.string.LuminaUpdateChecking));
+                        dialog.setCanCancel(true);
+                        dialog.setOnCancelListener(d -> {
+                            // AlertDialog dismisses itself right after this listener runs, so just
+                            // drop our reference - dismissing again here would be a no-op at best.
+                            checkCancelled[0] = true;
+                            checkingDialog[0] = null;
+                        });
+                        checkingDialog[0] = dialog;
+                        dialog.show();
+                    }
+                } catch (Exception e) {
+                    FileLog.e(e);
+                    checkingDialog[0] = null;
+                }
+                progress.onCancel(() -> {
+                    checkCancelled[0] = true;
+                    dismissCheckingDialog.run();
+                });
+            }
             ApplicationLoader.applicationLoaderInstance.checkUpdate(force, () -> {
                 final BetaUpdate pendingUpdate = ApplicationLoader.applicationLoaderInstance.getUpdate();
+                dismissCheckingDialog.run();
                 if (progress != null) {
                     progress.end();
-                    if (pendingUpdate == null) {
+                    if (!checkCancelled[0]) {
                         BaseFragment fragment = getLastFragment();
-                        if (fragment != null) {
-                            BulletinFactory.of(fragment).createSimpleBulletin(R.raw.chats_infotip, LocaleController.getString(R.string.YourVersionIsLatest)).show();
+                        if (ApplicationLoader.applicationLoaderInstance.didLastUpdateCheckFail()) {
+                            // We never reached the manifest - do not claim the app is up to date.
+                            if (fragment != null) {
+                                BulletinFactory.of(fragment).createErrorBulletin(LuminaLocale.getString(R.string.LuminaUpdateCheckFailed)).show();
+                            }
+                        } else if (pendingUpdate == null) {
+                            if (fragment != null) {
+                                BulletinFactory.of(fragment).createSimpleBulletin(R.raw.chats_infotip, LocaleController.getString(R.string.YourVersionIsLatest)).show();
+                            }
                         }
                     }
                 }
-                if (pendingUpdate != null && !ApplicationLoader.applicationLoaderInstance.isDownloadingUpdate() && (first || prevUpdate == null || pendingUpdate.higherThan(prevUpdate))) {
+                if (!checkCancelled[0] && pendingUpdate != null && !ApplicationLoader.applicationLoaderInstance.isDownloadingUpdate() && (first || prevUpdate == null || pendingUpdate.higherThan(prevUpdate))) {
                     ApplicationLoader.applicationLoaderInstance.showCustomUpdateAppPopup(LaunchActivity.this, pendingUpdate, currentAccount);
                 }
             });

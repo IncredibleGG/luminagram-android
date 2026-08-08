@@ -393,6 +393,9 @@ zhHans.put("LuminaMediaDragReorder", "拖拽排序附件");
 zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaDigestInfo", "当你离开一段时间后返回应用时，显示未读消息摘要");
         zhHans.put("LuminaDigestSummary", "你不在时：来自 %2$d 个聊天的 %1$d 条消息");
+        zhHans.put("LuminaUpdateChecking", "正在检查更新…");
+        zhHans.put("LuminaUpdateCheckFailed", "无法检查更新，请检查网络连接后重试。");
+        zhHans.put("LuminaUpdateDownloadingProgress", "正在下载更新… %1$s / %2$s MB");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -760,6 +763,9 @@ zhHant.put("LuminaMediaDragReorder", "拖曳排序附件");
 zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaDigestInfo", "當你離開一段時間後返回應用時，顯示未讀訊息摘要");
         zhHant.put("LuminaDigestSummary", "你不在時：來自 %2$d 個聊天的 %1$d 則訊息");
+        zhHant.put("LuminaUpdateChecking", "正在檢查更新…");
+        zhHant.put("LuminaUpdateCheckFailed", "無法檢查更新，請檢查網路連線後重試。");
+        zhHant.put("LuminaUpdateDownloadingProgress", "正在下載更新… %1$s / %2$s MB");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1126,6 +1132,9 @@ ar.put("LuminaMediaDragReorder", "سحب لإعادة ترتيب المرفقا�
 ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaDigestInfo", "عرض ملخص للرسائل الفائتة عند العودة إلى التطبيق بعد الغياب");
         ar.put("LuminaDigestSummary", "أثناء غيابك: %1$d رسالة من %2$d محادثة");
+        ar.put("LuminaUpdateChecking", "جارٍ التحقق من التحديثات…");
+        ar.put("LuminaUpdateCheckFailed", "تعذّر التحقق من التحديثات. تحقق من اتصالك وحاول مرة أخرى.");
+        ar.put("LuminaUpdateDownloadingProgress", "جارٍ تنزيل التحديث… %1$s / %2$s ميغابايت");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1492,6 +1501,9 @@ ru.put("LuminaMediaDragReorder", "Перетаскивание для сорти
 ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaDigestInfo", "Показывать сводку пропущенных сообщений при возвращении в приложение после отсутствия");
         ru.put("LuminaDigestSummary", "Пока вас не было: %1$d сообщений из %2$d чатов");
+        ru.put("LuminaUpdateChecking", "Проверка обновлений…");
+        ru.put("LuminaUpdateCheckFailed", "Не удалось проверить обновления. Проверьте подключение и повторите попытку.");
+        ru.put("LuminaUpdateDownloadingProgress", "Загрузка обновления… %1$s / %2$s МБ");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1858,6 +1870,9 @@ fa.put("LuminaMediaDragReorder", "کشیدن برای مرتب‌سازی پیو
 fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaDigestInfo", "نمایش خلاصه پیام‌های از دست رفته هنگام بازگشت به برنامه پس از غیبت");
         fa.put("LuminaDigestSummary", "در غیاب شما: %1$d پیام از %2$d چت");
+        fa.put("LuminaUpdateChecking", "در حال بررسی به‌روزرسانی…");
+        fa.put("LuminaUpdateCheckFailed", "بررسی به‌روزرسانی ممکن نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.");
+        fa.put("LuminaUpdateDownloadingProgress", "در حال دانلود به‌روزرسانی… %1$s / %2$s مگابایت");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2224,6 +2239,9 @@ tr.put("LuminaMediaDragReorder", "Ekleri yeniden sıralamak için sürükle");
 tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaDigestInfo", "Uygulamaya uzun bir aradan sonra döndüğünüzde kaçırılan mesajların özetini göster");
         tr.put("LuminaDigestSummary", "Yokken: %2$d sohbetten %1$d mesaj");
+        tr.put("LuminaUpdateChecking", "Güncellemeler denetleniyor…");
+        tr.put("LuminaUpdateCheckFailed", "Güncellemeler denetlenemedi. Bağlantınızı kontrol edip tekrar deneyin.");
+        tr.put("LuminaUpdateDownloadingProgress", "Güncelleme indiriliyor… %1$s / %2$s MB");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2590,6 +2608,9 @@ es.put("LuminaMediaDragReorder", "Arrastrar para reordenar adjuntos");
 es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaDigestInfo", "Mostrar un resumen de mensajes perdidos al volver a la app después de estar ausente");
         es.put("LuminaDigestSummary", "Mientras no estabas: %1$d mensajes de %2$d chats");
+        es.put("LuminaUpdateChecking", "Buscando actualizaciones…");
+        es.put("LuminaUpdateCheckFailed", "No se pudo buscar actualizaciones. Comprueba tu conexión e inténtalo de nuevo.");
+        es.put("LuminaUpdateDownloadingProgress", "Descargando actualización… %1$s / %2$s MB");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2956,6 +2977,9 @@ ptBr.put("LuminaMediaDragReorder", "Arrastar para reordenar anexos");
 ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaDigestInfo", "Mostrar um resumo de mensagens perdidas ao voltar ao app após ficar ausente");
         ptBr.put("LuminaDigestSummary", "Enquanto você estava fora: %1$d mensagens de %2$d conversas");
+        ptBr.put("LuminaUpdateChecking", "Verificando atualizações…");
+        ptBr.put("LuminaUpdateCheckFailed", "Não foi possível verificar atualizações. Verifique sua conexão e tente novamente.");
+        ptBr.put("LuminaUpdateDownloadingProgress", "Baixando atualização… %1$s / %2$s MB");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3322,6 +3346,9 @@ id.put("LuminaMediaDragReorder", "Seret untuk mengurutkan ulang lampiran");
 id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaDigestInfo", "Tampilkan ringkasan pesan yang terlewat saat kembali ke aplikasi setelah tidak aktif");
         id.put("LuminaDigestSummary", "Saat Anda pergi: %1$d pesan dari %2$d obrolan");
+        id.put("LuminaUpdateChecking", "Memeriksa pembaruan…");
+        id.put("LuminaUpdateCheckFailed", "Tidak dapat memeriksa pembaruan. Periksa koneksi Anda dan coba lagi.");
+        id.put("LuminaUpdateDownloadingProgress", "Mengunduh pembaruan… %1$s / %2$s MB");
         T.put("id", id);
     }
 
