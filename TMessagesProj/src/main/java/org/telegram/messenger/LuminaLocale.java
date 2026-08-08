@@ -388,8 +388,11 @@ public final class LuminaLocale {
         zhHans.put("LuminaForwardWarningInfo", "在转发消息上显示醒目标签，帮助识别可能被大量转发的内容");
         zhHans.put("LuminaForwardWarningLabel", "已转发");
         zhHans.put("LuminaChangelogTitle", "新功能");
-        zhHans.put("LuminaMediaDragReorder", "拖拽排序附件");
+zhHans.put("LuminaMediaDragReorder", "拖拽排序附件");
         zhHans.put("LuminaMediaDragReorderInfo", "长按并拖动以在发送前重新排列照片和文件");
+zhHans.put("LuminaDigestTitle", "未读摘要");
+        zhHans.put("LuminaDigestInfo", "当你离开一段时间后返回应用时，显示未读消息摘要");
+        zhHans.put("LuminaDigestSummary", "你不在时：来自 %2$d 个聊天的 %1$d 条消息");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -752,8 +755,11 @@ public final class LuminaLocale {
         zhHant.put("LuminaForwardWarningInfo", "在轉發訊息上顯示醒目標籤，幫助識別可能被大量轉發的內容");
         zhHant.put("LuminaForwardWarningLabel", "已轉發");
         zhHant.put("LuminaChangelogTitle", "新功能");
-        zhHant.put("LuminaMediaDragReorder", "拖曳排序附件");
+zhHant.put("LuminaMediaDragReorder", "拖曳排序附件");
         zhHant.put("LuminaMediaDragReorderInfo", "長按並拖動以在傳送前重新排列照片和檔案");
+zhHant.put("LuminaDigestTitle", "未讀摘要");
+        zhHant.put("LuminaDigestInfo", "當你離開一段時間後返回應用時，顯示未讀訊息摘要");
+        zhHant.put("LuminaDigestSummary", "你不在時：來自 %2$d 個聊天的 %1$d 則訊息");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1115,8 +1121,11 @@ public final class LuminaLocale {
         ar.put("LuminaForwardWarningInfo", "عرض ملصق على الرسائل المحوّلة للمساعدة في تحديد المحتوى المحوّل بكثرة");
         ar.put("LuminaForwardWarningLabel", "محوّلة");
         ar.put("LuminaChangelogTitle", "ما الجديد");
-        ar.put("LuminaMediaDragReorder", "سحب لإعادة ترتيب المرفقات");
+ar.put("LuminaMediaDragReorder", "سحب لإعادة ترتيب المرفقات");
         ar.put("LuminaMediaDragReorderInfo", "اضغط مطولاً واسحب لإعادة ترتيب الصور والملفات قبل الإرسال");
+ar.put("LuminaDigestTitle", "ملخص غير المقروء");
+        ar.put("LuminaDigestInfo", "عرض ملخص للرسائل الفائتة عند العودة إلى التطبيق بعد الغياب");
+        ar.put("LuminaDigestSummary", "أثناء غيابك: %1$d رسالة من %2$d محادثة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1478,8 +1487,11 @@ public final class LuminaLocale {
         ru.put("LuminaForwardWarningInfo", "Показывать метку на пересланных сообщениях для выявления массово пересылаемого контента");
         ru.put("LuminaForwardWarningLabel", "Переслано");
         ru.put("LuminaChangelogTitle", "Что нового");
-        ru.put("LuminaMediaDragReorder", "Перетаскивание для сортировки вложений");
+ru.put("LuminaMediaDragReorder", "Перетаскивание для сортировки вложений");
         ru.put("LuminaMediaDragReorderInfo", "Нажмите и удерживайте, затем перетащите для перестановки фото и файлов перед отправкой");
+ru.put("LuminaDigestTitle", "Сводка непрочитанных");
+        ru.put("LuminaDigestInfo", "Показывать сводку пропущенных сообщений при возвращении в приложение после отсутствия");
+        ru.put("LuminaDigestSummary", "Пока вас не было: %1$d сообщений из %2$d чатов");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1841,8 +1853,11 @@ public final class LuminaLocale {
         fa.put("LuminaForwardWarningInfo", "نمایش برچسب روی پیام‌های فوروارد شده برای شناسایی محتوای احتمالاً فوروارد شده انبوه");
         fa.put("LuminaForwardWarningLabel", "فوروارد شده");
         fa.put("LuminaChangelogTitle", "تازه‌ها");
-        fa.put("LuminaMediaDragReorder", "کشیدن برای مرتب‌سازی پیوست‌ها");
+fa.put("LuminaMediaDragReorder", "کشیدن برای مرتب‌سازی پیوست‌ها");
         fa.put("LuminaMediaDragReorderInfo", "برای مرتب‌سازی عکس‌ها و فایل‌ها قبل از ارسال، نگه دارید و بکشید");
+fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
+        fa.put("LuminaDigestInfo", "نمایش خلاصه پیام‌های از دست رفته هنگام بازگشت به برنامه پس از غیبت");
+        fa.put("LuminaDigestSummary", "در غیاب شما: %1$d پیام از %2$d چت");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2204,8 +2219,11 @@ public final class LuminaLocale {
         tr.put("LuminaForwardWarningInfo", "İletilmiş mesajlarda toplu iletilmiş olabilecek içeriği belirlemeye yardımcı bir etiket göster");
         tr.put("LuminaForwardWarningLabel", "İletildi");
         tr.put("LuminaChangelogTitle", "Yenilikler");
-        tr.put("LuminaMediaDragReorder", "Ekleri yeniden sıralamak için sürükle");
+tr.put("LuminaMediaDragReorder", "Ekleri yeniden sıralamak için sürükle");
         tr.put("LuminaMediaDragReorderInfo", "Göndermeden önce fotoğraf ve dosyaları yeniden sıralamak için basılı tutun ve sürükleyin");
+tr.put("LuminaDigestTitle", "Okunmamış özeti");
+        tr.put("LuminaDigestInfo", "Uygulamaya uzun bir aradan sonra döndüğünüzde kaçırılan mesajların özetini göster");
+        tr.put("LuminaDigestSummary", "Yokken: %2$d sohbetten %1$d mesaj");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2567,8 +2585,11 @@ public final class LuminaLocale {
         es.put("LuminaForwardWarningInfo", "Mostrar una etiqueta en mensajes reenviados para identificar contenido potencialmente reenviado en masa");
         es.put("LuminaForwardWarningLabel", "Reenviado");
         es.put("LuminaChangelogTitle", "Novedades");
-        es.put("LuminaMediaDragReorder", "Arrastrar para reordenar adjuntos");
+es.put("LuminaMediaDragReorder", "Arrastrar para reordenar adjuntos");
         es.put("LuminaMediaDragReorderInfo", "Mantén presionado y arrastra para reorganizar fotos y archivos antes de enviar");
+es.put("LuminaDigestTitle", "Resumen de no leídos");
+        es.put("LuminaDigestInfo", "Mostrar un resumen de mensajes perdidos al volver a la app después de estar ausente");
+        es.put("LuminaDigestSummary", "Mientras no estabas: %1$d mensajes de %2$d chats");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2930,8 +2951,11 @@ public final class LuminaLocale {
         ptBr.put("LuminaForwardWarningInfo", "Exibir um rótulo em mensagens encaminhadas para identificar conteúdo potencialmente encaminhado em massa");
         ptBr.put("LuminaForwardWarningLabel", "Encaminhado");
         ptBr.put("LuminaChangelogTitle", "Novidades");
-        ptBr.put("LuminaMediaDragReorder", "Arrastar para reordenar anexos");
+ptBr.put("LuminaMediaDragReorder", "Arrastar para reordenar anexos");
         ptBr.put("LuminaMediaDragReorderInfo", "Pressione e arraste para reorganizar fotos e arquivos antes de enviar");
+ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
+        ptBr.put("LuminaDigestInfo", "Mostrar um resumo de mensagens perdidas ao voltar ao app após ficar ausente");
+        ptBr.put("LuminaDigestSummary", "Enquanto você estava fora: %1$d mensagens de %2$d conversas");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3293,8 +3317,11 @@ public final class LuminaLocale {
         id.put("LuminaForwardWarningInfo", "Tampilkan label pada pesan yang diteruskan untuk membantu mengidentifikasi konten yang mungkin diteruskan secara massal");
         id.put("LuminaForwardWarningLabel", "Diteruskan");
         id.put("LuminaChangelogTitle", "Yang Baru");
-        id.put("LuminaMediaDragReorder", "Seret untuk mengurutkan ulang lampiran");
+id.put("LuminaMediaDragReorder", "Seret untuk mengurutkan ulang lampiran");
         id.put("LuminaMediaDragReorderInfo", "Tekan lama dan seret untuk mengatur ulang foto dan file sebelum mengirim");
+id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
+        id.put("LuminaDigestInfo", "Tampilkan ringkasan pesan yang terlewat saat kembali ke aplikasi setelah tidak aktif");
+        id.put("LuminaDigestSummary", "Saat Anda pergi: %1$d pesan dari %2$d obrolan");
         T.put("id", id);
     }
 
