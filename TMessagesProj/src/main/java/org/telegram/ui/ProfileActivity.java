@@ -654,6 +654,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int phoneRow;
     private int registrationDateRow;
     private int dcIdRow;
+    private int photoDateRow;
     private int newContactRiskRow;
     private int chatDateRow;
     private int luminaPrivateNoteRow;
@@ -10559,6 +10560,47 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         return 0;
     }
 
+    // LuminaGram (wave30): upload date (unix seconds) of the profile photo currently shown.
+    // Read from the already-synced TLRPC.Photo of the *Full object, so it costs no request;
+    // returns 0 when there is no photo yet or the server did not send a usable date.
+    private int getProfilePhotoDate() {
+        TLRPC.Photo photo = null;
+        if (userId != 0) {
+            TLRPC.User user = getMessagesController().getUser(userId);
+            if (user != null && user.photo != null && userInfo != null) {
+                // Same precedence as openAvatar(): personal override, then the photo the
+                // user object actually points at, then whatever profile photo we have.
+                if (user.photo.personal && userInfo.personal_photo instanceof TLRPC.TL_photo) {
+                    photo = userInfo.personal_photo;
+                } else if (userInfo.profile_photo instanceof TLRPC.TL_photo && userInfo.profile_photo.id == user.photo.photo_id) {
+                    photo = userInfo.profile_photo;
+                } else if (userInfo.fallback_photo instanceof TLRPC.TL_photo && userInfo.fallback_photo.id == user.photo.photo_id) {
+                    photo = userInfo.fallback_photo;
+                } else if (userInfo.profile_photo instanceof TLRPC.TL_photo) {
+                    photo = userInfo.profile_photo;
+                }
+            }
+        } else if (chatId != 0) {
+            if (chatInfo != null && chatInfo.chat_photo instanceof TLRPC.TL_photo) {
+                photo = chatInfo.chat_photo;
+            }
+        }
+        return photo != null ? photo.date : 0;
+    }
+
+    // LuminaGram (wave30): "3 Feb 2026" for the photoDateRow; null when there is nothing to show.
+    private String getProfilePhotoDateString() {
+        int date = getProfilePhotoDate();
+        if (date == 0) {
+            return null;
+        }
+        try {
+            return new SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(new Date(date * 1000L));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private void updateRowsIds() {
         updateNotifications(false);
 
@@ -10574,6 +10616,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         birthdayRow = -1;
         registrationDateRow = -1;
         dcIdRow = -1;
+        photoDateRow = -1;
         newContactRiskRow = -1;
         luminaPrivateNoteRow = -1;
         chatDateRow = -1;
@@ -10842,6 +10885,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 if (LuminaConfig.getBoolean("showDcId", false) && getProfileDcId() > 0) {
                     dcIdRow = rowCount++;
                 }
+                // LuminaGram (wave30): when the current profile photo was uploaded (default off).
+                if (LuminaConfig.getBoolean("showPhotoUploadDate", false) && getProfilePhotoDateString() != null) {
+                    photoDateRow = rowCount++;
+                }
                 // LuminaGram (wave19): anti-scam "new-contact risk card" — trust signals for a stranger's profile.
                 if (userId != 0 && !myProfile && !isBot && user != null && !UserObject.isService(user.id)
                         && !getContactsController().isContact(userId)
@@ -11023,6 +11070,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             }
             if (LuminaConfig.getBoolean("showDcId", false) && getProfileDcId() > 0) {
                 dcIdRow = rowCount++;
+            }
+            // LuminaGram (wave30): when the current profile photo was uploaded (default off).
+            if (LuminaConfig.getBoolean("showPhotoUploadDate", false) && getProfilePhotoDateString() != null) {
+                photoDateRow = rowCount++;
             }
             if (actionsView == null) {
                 if (infoHeaderRow != -1) {
@@ -13631,6 +13682,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else if (position == dcIdRow) {
                         int dc = getProfileDcId();
                         detailCell.setTextAndValue(dc > 0 ? "DC" + dc : "—", LuminaLocale.getString(R.string.ProfileDcId), false);
+                    } else if (position == photoDateRow) {
+                        String photoDate = getProfilePhotoDateString();
+                        detailCell.setTextAndValue(photoDate != null ? photoDate : "—", LuminaLocale.getString(R.string.LuminaPhotoUploadedOn), false);
                     } else if (position == newContactRiskRow) {
                         detailCell.setTextAndValue(buildNewContactRiskSummary(userId), LuminaLocale.getString(R.string.ProfileRiskCardTitle), false);
                     } else if (position == luminaPrivateNoteRow) {
@@ -14488,7 +14542,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                     position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                 return VIEW_TYPE_HEADER;
-            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow || position == dcIdRow || position == luminaPrivateNoteRow || position == chatDateRow) {
+            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow || position == dcIdRow || position == photoDateRow || position == luminaPrivateNoteRow || position == chatDateRow) {
                 return VIEW_TYPE_TEXT_DETAIL;
             } else if (position == usernameRow || position == setUsernameRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE;

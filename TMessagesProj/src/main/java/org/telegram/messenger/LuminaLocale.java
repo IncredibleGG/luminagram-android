@@ -393,6 +393,9 @@ zhHans.put("LuminaMediaDragReorder", "拖拽排序附件");
 zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaDigestInfo", "当你离开一段时间后返回应用时，显示未读消息摘要");
         zhHans.put("LuminaDigestSummary", "你不在时：来自 %2$d 个聊天的 %1$d 条消息");
+        zhHans.put("LuminaShowPhotoUploadDate", "显示头像上传日期");
+        zhHans.put("LuminaShowPhotoUploadDateInfo", "显示当前头像的上传日期");
+        zhHans.put("LuminaPhotoUploadedOn", "头像上传于");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -760,6 +763,9 @@ zhHant.put("LuminaMediaDragReorder", "拖曳排序附件");
 zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaDigestInfo", "當你離開一段時間後返回應用時，顯示未讀訊息摘要");
         zhHant.put("LuminaDigestSummary", "你不在時：來自 %2$d 個聊天的 %1$d 則訊息");
+        zhHant.put("LuminaShowPhotoUploadDate", "顯示大頭貼上傳日期");
+        zhHant.put("LuminaShowPhotoUploadDateInfo", "顯示目前大頭貼的上傳日期");
+        zhHant.put("LuminaPhotoUploadedOn", "大頭貼上傳於");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1126,6 +1132,9 @@ ar.put("LuminaMediaDragReorder", "سحب لإعادة ترتيب المرفقا�
 ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaDigestInfo", "عرض ملخص للرسائل الفائتة عند العودة إلى التطبيق بعد الغياب");
         ar.put("LuminaDigestSummary", "أثناء غيابك: %1$d رسالة من %2$d محادثة");
+        ar.put("LuminaShowPhotoUploadDate", "عرض تاريخ صورة الملف الشخصي");
+        ar.put("LuminaShowPhotoUploadDateInfo", "عرض وقت رفع صورة الملف الشخصي الحالية");
+        ar.put("LuminaPhotoUploadedOn", "تم رفع الصورة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1492,6 +1501,9 @@ ru.put("LuminaMediaDragReorder", "Перетаскивание для сорти
 ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaDigestInfo", "Показывать сводку пропущенных сообщений при возвращении в приложение после отсутствия");
         ru.put("LuminaDigestSummary", "Пока вас не было: %1$d сообщений из %2$d чатов");
+        ru.put("LuminaShowPhotoUploadDate", "Показывать дату фото профиля");
+        ru.put("LuminaShowPhotoUploadDateInfo", "Показывать, когда было загружено текущее фото профиля");
+        ru.put("LuminaPhotoUploadedOn", "Фото загружено");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1858,6 +1870,9 @@ fa.put("LuminaMediaDragReorder", "کشیدن برای مرتب‌سازی پیو
 fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaDigestInfo", "نمایش خلاصه پیام‌های از دست رفته هنگام بازگشت به برنامه پس از غیبت");
         fa.put("LuminaDigestSummary", "در غیاب شما: %1$d پیام از %2$d چت");
+        fa.put("LuminaShowPhotoUploadDate", "نمایش تاریخ عکس نمایه");
+        fa.put("LuminaShowPhotoUploadDateInfo", "نمایش زمان بارگذاری عکس نمایهٔ کنونی");
+        fa.put("LuminaPhotoUploadedOn", "عکس بارگذاری شده");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2224,6 +2239,9 @@ tr.put("LuminaMediaDragReorder", "Ekleri yeniden sıralamak için sürükle");
 tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaDigestInfo", "Uygulamaya uzun bir aradan sonra döndüğünüzde kaçırılan mesajların özetini göster");
         tr.put("LuminaDigestSummary", "Yokken: %2$d sohbetten %1$d mesaj");
+        tr.put("LuminaShowPhotoUploadDate", "Profil fotoğrafı tarihini göster");
+        tr.put("LuminaShowPhotoUploadDateInfo", "Mevcut profil fotoğrafının ne zaman yüklendiğini göster");
+        tr.put("LuminaPhotoUploadedOn", "Fotoğraf yüklendi");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2590,6 +2608,9 @@ es.put("LuminaMediaDragReorder", "Arrastrar para reordenar adjuntos");
 es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaDigestInfo", "Mostrar un resumen de mensajes perdidos al volver a la app después de estar ausente");
         es.put("LuminaDigestSummary", "Mientras no estabas: %1$d mensajes de %2$d chats");
+        es.put("LuminaShowPhotoUploadDate", "Mostrar la fecha de la foto de perfil");
+        es.put("LuminaShowPhotoUploadDateInfo", "Muestra cuándo se subió la foto de perfil actual");
+        es.put("LuminaPhotoUploadedOn", "Foto subida el");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2956,6 +2977,9 @@ ptBr.put("LuminaMediaDragReorder", "Arrastar para reordenar anexos");
 ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaDigestInfo", "Mostrar um resumo de mensagens perdidas ao voltar ao app após ficar ausente");
         ptBr.put("LuminaDigestSummary", "Enquanto você estava fora: %1$d mensagens de %2$d conversas");
+        ptBr.put("LuminaShowPhotoUploadDate", "Mostrar data da foto do perfil");
+        ptBr.put("LuminaShowPhotoUploadDateInfo", "Mostrar quando a foto de perfil atual foi enviada");
+        ptBr.put("LuminaPhotoUploadedOn", "Foto enviada em");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3322,6 +3346,9 @@ id.put("LuminaMediaDragReorder", "Seret untuk mengurutkan ulang lampiran");
 id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaDigestInfo", "Tampilkan ringkasan pesan yang terlewat saat kembali ke aplikasi setelah tidak aktif");
         id.put("LuminaDigestSummary", "Saat Anda pergi: %1$d pesan dari %2$d obrolan");
+        id.put("LuminaShowPhotoUploadDate", "Tampilkan tanggal foto profil");
+        id.put("LuminaShowPhotoUploadDateInfo", "Tampilkan kapan foto profil saat ini diunggah");
+        id.put("LuminaPhotoUploadedOn", "Foto diunggah");
         T.put("id", id);
     }
 

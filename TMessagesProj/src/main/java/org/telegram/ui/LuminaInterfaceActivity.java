@@ -36,10 +36,12 @@ public class LuminaInterfaceActivity extends BaseFragment {
     private static final int ID_CONFIRM_VOICE_VIDEO = 2;
     private static final int ID_DISABLE_NUMBER_ROUNDING = 3;
     private static final int ID_UNREAD_DIGEST = 4;
+    private static final int ID_PHOTO_UPLOAD_DATE = 5;
 
     private static final String KEY_SYSTEM_EMOJI = "systemEmoji";
     private static final String KEY_CONFIRM_VOICE_VIDEO = "confirmSendVoiceVideo";
     private static final String KEY_DISABLE_NUMBER_ROUNDING = "disableNumberRounding";
+    private static final String KEY_PHOTO_UPLOAD_DATE = "showPhotoUploadDate";
 
     private UniversalRecyclerView listView;
 
@@ -89,6 +91,11 @@ public class LuminaInterfaceActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_UNREAD_DIGEST, LuminaLocale.getString(R.string.LuminaDigestTitle))
                 .setChecked(LuminaConfig.getBoolean("unreadDigest", true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaDigestInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaShowPhotoUploadDate)));
+        items.add(UItem.asSwitch(ID_PHOTO_UPLOAD_DATE, LuminaLocale.getString(R.string.LuminaShowPhotoUploadDate))
+                .setChecked(LuminaConfig.getBoolean(KEY_PHOTO_UPLOAD_DATE, false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaShowPhotoUploadDateInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -102,6 +109,9 @@ public class LuminaInterfaceActivity extends BaseFragment {
                 break;
             case ID_DISABLE_NUMBER_ROUNDING:
                 key = KEY_DISABLE_NUMBER_ROUNDING;
+                break;
+            case ID_PHOTO_UPLOAD_DATE:
+                key = KEY_PHOTO_UPLOAD_DATE;
                 break;
             case ID_UNREAD_DIGEST:
                 LuminaConfig.putBoolean("unreadDigest", !LuminaConfig.getBoolean("unreadDigest", true));
