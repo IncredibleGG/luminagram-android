@@ -384,6 +384,9 @@ public final class LuminaLocale {
         zhHans.put("LuminaScreenshotDetection", "截屏检测");
         zhHans.put("LuminaScreenshotDetectionInfo", "当私聊窗口打开时检测到截屏会显示警告。帮助你了解是否有人截取了你的屏幕。检测在你的设备上本地运行。");
         zhHans.put("LuminaScreenshotDetected", "📸 刚刚截取了屏幕截图");
+        zhHans.put("LuminaForwardWarningTitle", "转发来源警示");
+        zhHans.put("LuminaForwardWarningInfo", "在转发消息上显示醒目标签，帮助识别可能被大量转发的内容");
+        zhHans.put("LuminaForwardWarningLabel", "已转发");
         zhHans.put("LuminaChangelogTitle", "新功能");
         zhHans.put("LuminaMediaDragReorder", "拖拽排序附件");
         zhHans.put("LuminaMediaDragReorderInfo", "长按并拖动以在发送前重新排列照片和文件");
@@ -745,6 +748,9 @@ public final class LuminaLocale {
         zhHant.put("LuminaScreenshotDetection", "截圖偵測");
         zhHant.put("LuminaScreenshotDetectionInfo", "當私聊視窗打開時偵測到截圖會顯示警告。幫助你了解是否有人截取了你的螢幕。偵測在你的裝置上本地執行。");
         zhHant.put("LuminaScreenshotDetected", "📸 剛剛截取了螢幕截圖");
+        zhHant.put("LuminaForwardWarningTitle", "轉發來源警示");
+        zhHant.put("LuminaForwardWarningInfo", "在轉發訊息上顯示醒目標籤，幫助識別可能被大量轉發的內容");
+        zhHant.put("LuminaForwardWarningLabel", "已轉發");
         zhHant.put("LuminaChangelogTitle", "新功能");
         zhHant.put("LuminaMediaDragReorder", "拖曳排序附件");
         zhHant.put("LuminaMediaDragReorderInfo", "長按並拖動以在傳送前重新排列照片和檔案");
@@ -1105,6 +1111,9 @@ public final class LuminaLocale {
         ar.put("LuminaScreenshotDetection", "اكتشاف لقطات الشاشة");
         ar.put("LuminaScreenshotDetectionInfo", "إظهار تحذير عند التقاط لقطة شاشة أثناء فتح محادثة خاصة. يساعدك على معرفة ما إذا كان شخص ما يلتقط شاشتك. يعمل الكشف محليًا على جهازك.");
         ar.put("LuminaScreenshotDetected", "📸 تم التقاط لقطة شاشة للتو");
+        ar.put("LuminaForwardWarningTitle", "تحذير مصدر التحويل");
+        ar.put("LuminaForwardWarningInfo", "عرض ملصق على الرسائل المحوّلة للمساعدة في تحديد المحتوى المحوّل بكثرة");
+        ar.put("LuminaForwardWarningLabel", "محوّلة");
         ar.put("LuminaChangelogTitle", "ما الجديد");
         ar.put("LuminaMediaDragReorder", "سحب لإعادة ترتيب المرفقات");
         ar.put("LuminaMediaDragReorderInfo", "اضغط مطولاً واسحب لإعادة ترتيب الصور والملفات قبل الإرسال");
@@ -1465,6 +1474,9 @@ public final class LuminaLocale {
         ru.put("LuminaScreenshotDetection", "Обнаружение скриншотов");
         ru.put("LuminaScreenshotDetectionInfo", "Показывать предупреждение при создании скриншота, пока открыт личный чат. Помогает узнать, если кто-то захватывает ваш экран. Обнаружение работает локально на вашем устройстве.");
         ru.put("LuminaScreenshotDetected", "📸 Только что был сделан скриншот");
+        ru.put("LuminaForwardWarningTitle", "Предупреждение о пересылке");
+        ru.put("LuminaForwardWarningInfo", "Показывать метку на пересланных сообщениях для выявления массово пересылаемого контента");
+        ru.put("LuminaForwardWarningLabel", "Переслано");
         ru.put("LuminaChangelogTitle", "Что нового");
         ru.put("LuminaMediaDragReorder", "Перетаскивание для сортировки вложений");
         ru.put("LuminaMediaDragReorderInfo", "Нажмите и удерживайте, затем перетащите для перестановки фото и файлов перед отправкой");
@@ -1825,6 +1837,9 @@ public final class LuminaLocale {
         fa.put("LuminaScreenshotDetection", "شناسایی اسکرین‌شات");
         fa.put("LuminaScreenshotDetectionInfo", "هنگامی که در چت خصوصی اسکرین‌شات گرفته شود، هشدار نمایش داده شود. به شما کمک می‌کند بدانید آیا کسی از صفحه شما عکس می‌گیرد. شناسایی به صورت محلی روی دستگاه شما کار می‌کند.");
         fa.put("LuminaScreenshotDetected", "📸 همین الان اسکرین‌شات گرفته شد");
+        fa.put("LuminaForwardWarningTitle", "هشدار منبع فوروارد");
+        fa.put("LuminaForwardWarningInfo", "نمایش برچسب روی پیام‌های فوروارد شده برای شناسایی محتوای احتمالاً فوروارد شده انبوه");
+        fa.put("LuminaForwardWarningLabel", "فوروارد شده");
         fa.put("LuminaChangelogTitle", "تازه‌ها");
         fa.put("LuminaMediaDragReorder", "کشیدن برای مرتب‌سازی پیوست‌ها");
         fa.put("LuminaMediaDragReorderInfo", "برای مرتب‌سازی عکس‌ها و فایل‌ها قبل از ارسال، نگه دارید و بکشید");
@@ -2185,6 +2200,9 @@ public final class LuminaLocale {
         tr.put("LuminaScreenshotDetection", "Ekran görüntüsü algılama");
         tr.put("LuminaScreenshotDetectionInfo", "Özel bir sohbet açıkken ekran görüntüsü alındığında uyarı gösterir. Birinin ekranınızı yakalamasından haberdar olmanıza yardımcı olur. Algılama cihazınızda yerel olarak çalışır.");
         tr.put("LuminaScreenshotDetected", "📸 Az önce bir ekran görüntüsü alındı");
+        tr.put("LuminaForwardWarningTitle", "İletme kaynağı uyarısı");
+        tr.put("LuminaForwardWarningInfo", "İletilmiş mesajlarda toplu iletilmiş olabilecek içeriği belirlemeye yardımcı bir etiket göster");
+        tr.put("LuminaForwardWarningLabel", "İletildi");
         tr.put("LuminaChangelogTitle", "Yenilikler");
         tr.put("LuminaMediaDragReorder", "Ekleri yeniden sıralamak için sürükle");
         tr.put("LuminaMediaDragReorderInfo", "Göndermeden önce fotoğraf ve dosyaları yeniden sıralamak için basılı tutun ve sürükleyin");
@@ -2545,6 +2563,9 @@ public final class LuminaLocale {
         es.put("LuminaScreenshotDetection", "Detección de capturas de pantalla");
         es.put("LuminaScreenshotDetectionInfo", "Muestra una advertencia cuando se toma una captura de pantalla mientras un chat privado está abierto. Te ayuda a saber si alguien captura tu pantalla. La detección funciona localmente en tu dispositivo.");
         es.put("LuminaScreenshotDetected", "📸 Se acaba de tomar una captura de pantalla");
+        es.put("LuminaForwardWarningTitle", "Aviso de origen de reenvío");
+        es.put("LuminaForwardWarningInfo", "Mostrar una etiqueta en mensajes reenviados para identificar contenido potencialmente reenviado en masa");
+        es.put("LuminaForwardWarningLabel", "Reenviado");
         es.put("LuminaChangelogTitle", "Novedades");
         es.put("LuminaMediaDragReorder", "Arrastrar para reordenar adjuntos");
         es.put("LuminaMediaDragReorderInfo", "Mantén presionado y arrastra para reorganizar fotos y archivos antes de enviar");
@@ -2905,6 +2926,9 @@ public final class LuminaLocale {
         ptBr.put("LuminaScreenshotDetection", "Detecção de captura de tela");
         ptBr.put("LuminaScreenshotDetectionInfo", "Exibe um aviso quando uma captura de tela é feita enquanto um chat privado está aberto. Ajuda você a saber se alguém está capturando sua tela. A detecção funciona localmente no seu dispositivo.");
         ptBr.put("LuminaScreenshotDetected", "📸 Uma captura de tela acabou de ser feita");
+        ptBr.put("LuminaForwardWarningTitle", "Aviso de origem de encaminhamento");
+        ptBr.put("LuminaForwardWarningInfo", "Exibir um rótulo em mensagens encaminhadas para identificar conteúdo potencialmente encaminhado em massa");
+        ptBr.put("LuminaForwardWarningLabel", "Encaminhado");
         ptBr.put("LuminaChangelogTitle", "Novidades");
         ptBr.put("LuminaMediaDragReorder", "Arrastar para reordenar anexos");
         ptBr.put("LuminaMediaDragReorderInfo", "Pressione e arraste para reorganizar fotos e arquivos antes de enviar");
@@ -3265,6 +3289,9 @@ public final class LuminaLocale {
         id.put("LuminaScreenshotDetection", "Deteksi tangkapan layar");
         id.put("LuminaScreenshotDetectionInfo", "Tampilkan peringatan saat tangkapan layar diambil saat obrolan pribadi terbuka. Membantu Anda mengetahui jika seseorang menangkap layar Anda. Deteksi berjalan secara lokal di perangkat Anda.");
         id.put("LuminaScreenshotDetected", "📸 Tangkapan layar baru saja diambil");
+        id.put("LuminaForwardWarningTitle", "Peringatan asal terusan");
+        id.put("LuminaForwardWarningInfo", "Tampilkan label pada pesan yang diteruskan untuk membantu mengidentifikasi konten yang mungkin diteruskan secara massal");
+        id.put("LuminaForwardWarningLabel", "Diteruskan");
         id.put("LuminaChangelogTitle", "Yang Baru");
         id.put("LuminaMediaDragReorder", "Seret untuk mengurutkan ulang lampiran");
         id.put("LuminaMediaDragReorderInfo", "Tekan lama dan seret untuk mengatur ulang foto dan file sebelum mengirim");

@@ -11569,8 +11569,11 @@
     <string name="LuminaScreenshotDetected">📸 A screenshot was just taken</string>
     <!-- LuminaGram changelog -->
     <string name="LuminaChangelogTitle">What\'s New</string>
-    <!-- LuminaGram drag-reorder attachments -->
+<!-- LuminaGram drag-reorder attachments -->
     <string name="LuminaMediaDragReorder">Drag to reorder attachments</string>
     <string name="LuminaMediaDragReorderInfo">Long-press and drag to rearrange photos and files before sending</string>
+<!-- LuminaGram forward-origin warning -->
+    <string name="LuminaForwardWarningTitle">Forward-origin warning</string>
+    <string name="LuminaForwardWarningInfo">Show a subtle label on forwarded messages to help identify potentially mass-forwarded content</string>
+    <string name="LuminaForwardWarningLabel">Forwarded</string>
 </resources>
-
