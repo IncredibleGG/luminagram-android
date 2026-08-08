@@ -385,6 +385,10 @@ public final class LuminaLocale {
         zhHans.put("LuminaScreenshotDetectionInfo", "当私聊窗口打开时检测到截屏会显示警告。帮助你了解是否有人截取了你的屏幕。检测在你的设备上本地运行。");
         zhHans.put("LuminaScreenshotDetected", "📸 刚刚截取了屏幕截图");
         zhHans.put("LuminaChangelogTitle", "新功能");
+
+        zhHans.put("LuminaDigestTitle", "未读摘要");
+        zhHans.put("LuminaDigestInfo", "当你离开一段时间后返回应用时，显示未读消息摘要");
+        zhHans.put("LuminaDigestSummary", "你不在时：来自 %2$d 个聊天的 %1$d 条消息");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -744,6 +748,10 @@ public final class LuminaLocale {
         zhHant.put("LuminaScreenshotDetectionInfo", "當私聊視窗打開時偵測到截圖會顯示警告。幫助你了解是否有人截取了你的螢幕。偵測在你的裝置上本地執行。");
         zhHant.put("LuminaScreenshotDetected", "📸 剛剛截取了螢幕截圖");
         zhHant.put("LuminaChangelogTitle", "新功能");
+
+        zhHant.put("LuminaDigestTitle", "未讀摘要");
+        zhHant.put("LuminaDigestInfo", "當你離開一段時間後返回應用時，顯示未讀訊息摘要");
+        zhHant.put("LuminaDigestSummary", "你不在時：來自 %2$d 個聊天的 %1$d 則訊息");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1102,6 +1110,10 @@ public final class LuminaLocale {
         ar.put("LuminaScreenshotDetectionInfo", "إظهار تحذير عند التقاط لقطة شاشة أثناء فتح محادثة خاصة. يساعدك على معرفة ما إذا كان شخص ما يلتقط شاشتك. يعمل الكشف محليًا على جهازك.");
         ar.put("LuminaScreenshotDetected", "📸 تم التقاط لقطة شاشة للتو");
         ar.put("LuminaChangelogTitle", "ما الجديد");
+
+        ar.put("LuminaDigestTitle", "ملخص غير المقروء");
+        ar.put("LuminaDigestInfo", "عرض ملخص للرسائل الفائتة عند العودة إلى التطبيق بعد الغياب");
+        ar.put("LuminaDigestSummary", "أثناء غيابك: %1$d رسالة من %2$d محادثة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1460,6 +1472,10 @@ public final class LuminaLocale {
         ru.put("LuminaScreenshotDetectionInfo", "Показывать предупреждение при создании скриншота, пока открыт личный чат. Помогает узнать, если кто-то захватывает ваш экран. Обнаружение работает локально на вашем устройстве.");
         ru.put("LuminaScreenshotDetected", "📸 Только что был сделан скриншот");
         ru.put("LuminaChangelogTitle", "Что нового");
+
+        ru.put("LuminaDigestTitle", "Сводка непрочитанных");
+        ru.put("LuminaDigestInfo", "Показывать сводку пропущенных сообщений при возвращении в приложение после отсутствия");
+        ru.put("LuminaDigestSummary", "Пока вас не было: %1$d сообщений из %2$d чатов");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1818,6 +1834,10 @@ public final class LuminaLocale {
         fa.put("LuminaScreenshotDetectionInfo", "هنگامی که در چت خصوصی اسکرین‌شات گرفته شود، هشدار نمایش داده شود. به شما کمک می‌کند بدانید آیا کسی از صفحه شما عکس می‌گیرد. شناسایی به صورت محلی روی دستگاه شما کار می‌کند.");
         fa.put("LuminaScreenshotDetected", "📸 همین الان اسکرین‌شات گرفته شد");
         fa.put("LuminaChangelogTitle", "تازه‌ها");
+
+        fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
+        fa.put("LuminaDigestInfo", "نمایش خلاصه پیام‌های از دست رفته هنگام بازگشت به برنامه پس از غیبت");
+        fa.put("LuminaDigestSummary", "در غیاب شما: %1$d پیام از %2$d چت");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2176,6 +2196,10 @@ public final class LuminaLocale {
         tr.put("LuminaScreenshotDetectionInfo", "Özel bir sohbet açıkken ekran görüntüsü alındığında uyarı gösterir. Birinin ekranınızı yakalamasından haberdar olmanıza yardımcı olur. Algılama cihazınızda yerel olarak çalışır.");
         tr.put("LuminaScreenshotDetected", "📸 Az önce bir ekran görüntüsü alındı");
         tr.put("LuminaChangelogTitle", "Yenilikler");
+
+        tr.put("LuminaDigestTitle", "Okunmamış özeti");
+        tr.put("LuminaDigestInfo", "Uygulamaya uzun bir aradan sonra döndüğünüzde kaçırılan mesajların özetini göster");
+        tr.put("LuminaDigestSummary", "Yokken: %2$d sohbetten %1$d mesaj");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2534,6 +2558,10 @@ public final class LuminaLocale {
         es.put("LuminaScreenshotDetectionInfo", "Muestra una advertencia cuando se toma una captura de pantalla mientras un chat privado está abierto. Te ayuda a saber si alguien captura tu pantalla. La detección funciona localmente en tu dispositivo.");
         es.put("LuminaScreenshotDetected", "📸 Se acaba de tomar una captura de pantalla");
         es.put("LuminaChangelogTitle", "Novedades");
+
+        es.put("LuminaDigestTitle", "Resumen de no leídos");
+        es.put("LuminaDigestInfo", "Mostrar un resumen de mensajes perdidos al volver a la app después de estar ausente");
+        es.put("LuminaDigestSummary", "Mientras no estabas: %1$d mensajes de %2$d chats");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2892,6 +2920,10 @@ public final class LuminaLocale {
         ptBr.put("LuminaScreenshotDetectionInfo", "Exibe um aviso quando uma captura de tela é feita enquanto um chat privado está aberto. Ajuda você a saber se alguém está capturando sua tela. A detecção funciona localmente no seu dispositivo.");
         ptBr.put("LuminaScreenshotDetected", "📸 Uma captura de tela acabou de ser feita");
         ptBr.put("LuminaChangelogTitle", "Novidades");
+
+        ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
+        ptBr.put("LuminaDigestInfo", "Mostrar um resumo de mensagens perdidas ao voltar ao app após ficar ausente");
+        ptBr.put("LuminaDigestSummary", "Enquanto você estava fora: %1$d mensagens de %2$d conversas");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3250,6 +3282,10 @@ public final class LuminaLocale {
         id.put("LuminaScreenshotDetectionInfo", "Tampilkan peringatan saat tangkapan layar diambil saat obrolan pribadi terbuka. Membantu Anda mengetahui jika seseorang menangkap layar Anda. Deteksi berjalan secara lokal di perangkat Anda.");
         id.put("LuminaScreenshotDetected", "📸 Tangkapan layar baru saja diambil");
         id.put("LuminaChangelogTitle", "Yang Baru");
+
+        id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
+        id.put("LuminaDigestInfo", "Tampilkan ringkasan pesan yang terlewat saat kembali ke aplikasi setelah tidak aktif");
+        id.put("LuminaDigestSummary", "Saat Anda pergi: %1$d pesan dari %2$d obrolan");
         T.put("id", id);
     }
 

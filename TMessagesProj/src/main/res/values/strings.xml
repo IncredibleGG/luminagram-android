@@ -11569,5 +11569,9 @@
     <string name="LuminaScreenshotDetected">📸 A screenshot was just taken</string>
     <!-- LuminaGram changelog -->
     <string name="LuminaChangelogTitle">What\'s New</string>
+    <!-- LuminaGram unread digest -->
+    <string name="LuminaDigestTitle">Unread digest</string>
+    <string name="LuminaDigestInfo">Show a summary of missed messages when you return to the app after being away</string>
+    <string name="LuminaDigestSummary">While you were away: %1$d messages from %2$d chats</string>
 </resources>
 

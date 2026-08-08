@@ -123,6 +123,7 @@ import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaDigestHelper;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.NotificationsController;
 import org.telegram.messenger.R;
@@ -550,6 +551,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
     private int messagesCount;
     private int hasPoll;
+    private boolean luminaDigestShown;
     private boolean hasInvoice;
 
     private PacmanAnimation pacmanAnimation;
@@ -7230,6 +7232,19 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                     filterTabsView.selectTabWithStableId(dialogFilter.localId);
                 }
             }
+        }
+        // LuminaGram: unread digest banner
+        if (!luminaDigestShown) {
+            luminaDigestShown = true;
+            AndroidUtilities.runOnUIThread(() -> {
+                String digest = LuminaDigestHelper.getDigestAndUpdate(currentAccount);
+                if (digest != null && getParentActivity() != null) {
+                    BulletinFactory.of(this).createSimpleBulletin(
+                        R.drawable.msg_info,
+                        digest
+                    ).show();
+                }
+            }, 1500);
         }
     }
 

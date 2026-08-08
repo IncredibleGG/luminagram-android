@@ -35,6 +35,7 @@ public class LuminaInterfaceActivity extends BaseFragment {
     private static final int ID_SYSTEM_EMOJI = 1;
     private static final int ID_CONFIRM_VOICE_VIDEO = 2;
     private static final int ID_DISABLE_NUMBER_ROUNDING = 3;
+    private static final int ID_UNREAD_DIGEST = 4;
 
     private static final String KEY_SYSTEM_EMOJI = "systemEmoji";
     private static final String KEY_CONFIRM_VOICE_VIDEO = "confirmSendVoiceVideo";
@@ -83,6 +84,11 @@ public class LuminaInterfaceActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_DISABLE_NUMBER_ROUNDING, LuminaLocale.getString(R.string.LuminaInterfaceExactNumbers))
                 .setChecked(LuminaConfig.getBoolean(KEY_DISABLE_NUMBER_ROUNDING, false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaInterfaceExactNumbersInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaDigestTitle)));
+        items.add(UItem.asSwitch(ID_UNREAD_DIGEST, LuminaLocale.getString(R.string.LuminaDigestTitle))
+                .setChecked(LuminaConfig.getBoolean("unreadDigest", true)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaDigestInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -97,6 +103,12 @@ public class LuminaInterfaceActivity extends BaseFragment {
             case ID_DISABLE_NUMBER_ROUNDING:
                 key = KEY_DISABLE_NUMBER_ROUNDING;
                 break;
+            case ID_UNREAD_DIGEST:
+                LuminaConfig.putBoolean("unreadDigest", !LuminaConfig.getBoolean("unreadDigest", true));
+                if (listView != null && listView.adapter != null) {
+                    listView.adapter.update(true);
+                }
+                return;
             default:
                 return;
         }
