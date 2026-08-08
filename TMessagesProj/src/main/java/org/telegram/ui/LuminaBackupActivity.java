@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.text.InputType;
-import android.util.Base64;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -19,6 +18,7 @@ import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.FileLoader;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaCrypto;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.ActionBar;
@@ -36,15 +36,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
 import java.util.ArrayList;
-
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
  * LuminaBackupActivity — passphrase-encrypted local backup of all LuminaGram data.
@@ -58,8 +50,9 @@ import javax.crypto.spec.SecretKeySpec;
  * keys back through {@link LuminaConfig#importAll}. Nothing is ever sent to Telegram, and
  * Telegram's own message storage is never touched.
  *
- * Crypto: AES/CBC/PKCS5Padding with a 256-bit key derived from the passphrase via
- * PBKDF2WithHmacSHA256 (random 16-byte salt + 16-byte IV, both stored in the envelope).
+ * Crypto: delegated to {@link LuminaCrypto} (AES/CBC/PKCS5Padding under a 256-bit key
+ * derived from the passphrase via PBKDF2WithHmacSHA256, random 16-byte salt + 16-byte IV
+ * stored in the envelope), so the chat exporter and this screen share one implementation.
  */
 public class LuminaBackupActivity extends BaseFragment {
 
@@ -69,16 +62,10 @@ public class LuminaBackupActivity extends BaseFragment {
     private static final int REQUEST_IMPORT_FILE = 9021;
     private static final int REQUEST_SHARE = 9022;
 
-    // Backup file / crypto container format.
+    // Backup file format. The crypto container itself (KDF, cipher, salt/IV, envelope
+    // fields) is implemented once in LuminaCrypto and shared with the chat exporter.
     private static final String MAGIC = "LuminaGramBackup";
-    private static final int FORMAT_VERSION = 1;
-    private static final String KDF_ALGORITHM = "PBKDF2WithHmacSHA256";
-    private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
-    private static final int PBKDF2_ITERATIONS = 120000;
-    private static final int KEY_LENGTH_BITS = 256;
-    private static final int SALT_LENGTH = 16;
-    private static final int IV_LENGTH = 16;
-    private static final int MIN_PASSPHRASE_LENGTH = 4;
+    private static final int MIN_PASSPHRASE_LENGTH = LuminaCrypto.MIN_PASSPHRASE_LENGTH;
     private static final int MAX_BACKUP_BYTES = 8 * 1024 * 1024; // backups are tiny; cap defensively
 
     private UniversalRecyclerView listView;
@@ -143,22 +130,7 @@ public class LuminaBackupActivity extends BaseFragment {
         }
         try {
             byte[] plaintext = LuminaConfig.exportAll().toString().getBytes(StandardCharsets.UTF_8);
-            byte[] salt = randomBytes(SALT_LENGTH);
-            byte[] iv = randomBytes(IV_LENGTH);
-            SecretKey key = deriveKey(passphrase.toCharArray(), salt, PBKDF2_ITERATIONS);
-            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));
-            byte[] ciphertext = cipher.doFinal(plaintext);
-
-            org.json.JSONObject env = new org.json.JSONObject();
-            env.put("magic", MAGIC);
-            env.put("version", FORMAT_VERSION);
-            env.put("kdf", KDF_ALGORITHM);
-            env.put("iter", PBKDF2_ITERATIONS);
-            env.put("cipher", TRANSFORMATION);
-            env.put("salt", Base64.encodeToString(salt, Base64.NO_WRAP));
-            env.put("iv", Base64.encodeToString(iv, Base64.NO_WRAP));
-            env.put("data", Base64.encodeToString(ciphertext, Base64.NO_WRAP));
+            org.json.JSONObject env = LuminaCrypto.seal(MAGIC, plaintext, passphrase);
 
             File dir = FileLoader.getDirectory(FileLoader.MEDIA_DIR_CACHE);
             File outFile = new File(dir, "luminagram-backup-" + fileTimestamp() + ".lgbak");
@@ -251,15 +223,7 @@ public class LuminaBackupActivity extends BaseFragment {
 
     private void doImport(org.json.JSONObject envelope, String passphrase) {
         try {
-            byte[] salt = Base64.decode(envelope.optString("salt"), Base64.NO_WRAP);
-            byte[] iv = Base64.decode(envelope.optString("iv"), Base64.NO_WRAP);
-            byte[] ciphertext = Base64.decode(envelope.optString("data"), Base64.NO_WRAP);
-            int iterations = envelope.optInt("iter", PBKDF2_ITERATIONS);
-
-            SecretKey key = deriveKey(passphrase.toCharArray(), salt, iterations);
-            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
-            byte[] plaintext = cipher.doFinal(ciphertext);
+            byte[] plaintext = LuminaCrypto.open(envelope, passphrase);
 
             org.json.JSONObject snapshot = new org.json.JSONObject(
                     new String(plaintext, StandardCharsets.UTF_8));
@@ -310,23 +274,6 @@ public class LuminaBackupActivity extends BaseFragment {
     }
 
     // ---- Crypto / helpers ----
-
-    private static SecretKey deriveKey(char[] passphrase, byte[] salt, int iterations) throws Exception {
-        PBEKeySpec spec = new PBEKeySpec(passphrase, salt, iterations, KEY_LENGTH_BITS);
-        try {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance(KDF_ALGORITHM);
-            byte[] keyBytes = factory.generateSecret(spec).getEncoded();
-            return new SecretKeySpec(keyBytes, "AES");
-        } finally {
-            spec.clearPassword();
-        }
-    }
-
-    private static byte[] randomBytes(int length) {
-        byte[] out = new byte[length];
-        new SecureRandom().nextBytes(out);
-        return out;
-    }
 
     private static String fileTimestamp() {
         return new java.text.SimpleDateFormat("yyyyMMdd-HHmmss", java.util.Locale.US)

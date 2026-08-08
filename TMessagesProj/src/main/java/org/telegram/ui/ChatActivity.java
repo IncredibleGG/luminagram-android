@@ -1683,6 +1683,7 @@ public class ChatActivity extends BaseFragment implements
     private final static int chat_menu_topic_create = 73;
     private final static int go_to_first_message = 75;
     private final static int lumina_translate_toggle = 76; // LuminaGram: header per-chat translate toggle
+    private final static int lumina_chat_export = 77; // LuminaGram: encrypted local chat export
 
     private final static int id_chat_compose_panel = 1000;
 
@@ -3958,6 +3959,9 @@ public class ChatActivity extends BaseFragment implements
                     openSearchWithText(isSupportedTags() ? "" : null);
                 } else if (id == go_to_first_message) {
                     jumpToDate(1);
+                } else if (id == lumina_chat_export) {
+                    // LuminaGram: open the encrypted local chat exporter for this dialog.
+                    presentFragment(new LuminaChatExportActivity(getDialogId()));
                 } else if (id == translate) {
                     getMessagesController().getTranslateController().setHideTranslateDialog(getDialogId(), false, true);
                     if (!getMessagesController().getTranslateController().toggleTranslatingDialog(getDialogId(), true)) {
@@ -4419,6 +4423,11 @@ public class ChatActivity extends BaseFragment implements
                 headerItem.lazilyAddSubItem(search, R.drawable.msg_search, LocaleController.getString(R.string.Search));
             }
             headerItem.lazilyAddSubItem(go_to_first_message, R.drawable.msg_go_up, LuminaLocale.getString(R.string.LuminaGoToFirstMessage));
+            // LuminaGram: encrypted local chat export (LuminaChatExportActivity). Gated so the
+            // row can be hidden entirely; nothing else in this fragment changes when it is off.
+            if (LuminaConfig.getBoolean(LuminaChatExportActivity.KEY_ENABLED, true)) {
+                headerItem.lazilyAddSubItem(lumina_chat_export, R.drawable.msg_download, LuminaLocale.getString(R.string.LuminaChatExportTitle));
+            }
             if (ChatObject.isBoostSupported(currentChat) && (getUserConfig().isPremium() || ChatObject.isBoosted(chatInfo) || ChatObject.hasAdminRights(currentChat))) {
                 RLottieDrawable drawable = new RLottieDrawable(R.raw.boosts, "" + R.raw.boosts, dp(24), dp(24));
                 headerItem.lazilyAddSubItem(boost_group, drawable, LocaleController.getString(ChatObject.isChannelAndNotMegaGroup(currentChat) ? R.string.BoostingBoostChannelMenu : R.string.BoostingBoostGroupMenu));

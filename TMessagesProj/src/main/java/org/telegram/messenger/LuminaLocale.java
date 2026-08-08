@@ -393,6 +393,16 @@ zhHans.put("LuminaMediaDragReorder", "拖拽排序附件");
 zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaDigestInfo", "当你离开一段时间后返回应用时，显示未读消息摘要");
         zhHans.put("LuminaDigestSummary", "你不在时：来自 %2$d 个聊天的 %1$d 条消息");
+        zhHans.put("LuminaChatExportTitle", "导出聊天");
+        zhHans.put("LuminaChatExportButton", "导出此聊天");
+        zhHans.put("LuminaChatExportInfo", "将此对话保存为本机上的加密文件。文件由你的密码短语保护——一旦遗失，导出内容将无法恢复。不会上传任何内容。");
+        zhHans.put("LuminaChatExportIncludeMedia", "包含媒体说明");
+        zhHans.put("LuminaChatExportIncludeService", "包含服务消息");
+        zhHans.put("LuminaChatExportOptionsInfo", "不会复制媒体文件。开启媒体说明后，照片、视频、文件或语音消息会写成一个简短标签加其说明文字。服务消息指加入、退出、置顶等事件。仅导出本机已缓存的历史记录，最多为最新的 20000 条消息。");
+        zhHans.put("LuminaChatExportPassphraseTitle", "设置密码短语");
+        zhHans.put("LuminaChatExportDone", "聊天已导出");
+        zhHans.put("LuminaChatExportFailed", "导出失败");
+        zhHans.put("LuminaChatExportEmpty", "没有可导出的内容");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -760,6 +770,16 @@ zhHant.put("LuminaMediaDragReorder", "拖曳排序附件");
 zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaDigestInfo", "當你離開一段時間後返回應用時，顯示未讀訊息摘要");
         zhHant.put("LuminaDigestSummary", "你不在時：來自 %2$d 個聊天的 %1$d 則訊息");
+        zhHant.put("LuminaChatExportTitle", "匯出聊天");
+        zhHant.put("LuminaChatExportButton", "匯出此聊天");
+        zhHant.put("LuminaChatExportInfo", "將此對話儲存為本機上的加密檔案。檔案由你的密碼短語保護——一旦遺失，匯出內容將無法復原。不會上傳任何內容。");
+        zhHant.put("LuminaChatExportIncludeMedia", "包含媒體說明");
+        zhHant.put("LuminaChatExportIncludeService", "包含服務訊息");
+        zhHant.put("LuminaChatExportOptionsInfo", "不會複製媒體檔案。開啟媒體說明後，照片、影片、檔案或語音訊息會寫成一個簡短標籤加上其說明文字。服務訊息指加入、離開、置頂等事件。僅匯出本機已快取的歷史紀錄，最多為最新的 20000 則訊息。");
+        zhHant.put("LuminaChatExportPassphraseTitle", "設定密碼短語");
+        zhHant.put("LuminaChatExportDone", "聊天已匯出");
+        zhHant.put("LuminaChatExportFailed", "匯出失敗");
+        zhHant.put("LuminaChatExportEmpty", "沒有可匯出的內容");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1126,6 +1146,16 @@ ar.put("LuminaMediaDragReorder", "سحب لإعادة ترتيب المرفقا�
 ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaDigestInfo", "عرض ملخص للرسائل الفائتة عند العودة إلى التطبيق بعد الغياب");
         ar.put("LuminaDigestSummary", "أثناء غيابك: %1$d رسالة من %2$d محادثة");
+        ar.put("LuminaChatExportTitle", "تصدير المحادثة");
+        ar.put("LuminaChatExportButton", "تصدير هذه المحادثة");
+        ar.put("LuminaChatExportInfo", "احفظ هذه المحادثة في ملف مشفّر على هذا الجهاز. الملف محمي بعبارة المرور الخاصة بك — إذا فقدتها، فلن يمكن استرجاع الملف المصدّر. لا يتم رفع أي شيء.");
+        ar.put("LuminaChatExportIncludeMedia", "تضمين أوصاف الوسائط");
+        ar.put("LuminaChatExportIncludeService", "تضمين الرسائل الخدمية");
+        ar.put("LuminaChatExportOptionsInfo", "لا يتم نسخ ملفات الوسائط أبدًا. عند تفعيل أوصاف الوسائط، تظهر الصورة أو الفيديو أو الملف أو الرسالة الصوتية كوصف قصير مع التعليق المرفق. الرسائل الخدمية هي أحداث مثل الانضمام والمغادرة والتثبيت. يتم تصدير السجل المخزّن على هذا الجهاز فقط، وبحد أقصى أحدث 20000 رسالة.");
+        ar.put("LuminaChatExportPassphraseTitle", "تعيين عبارة مرور");
+        ar.put("LuminaChatExportDone", "تم تصدير المحادثة");
+        ar.put("LuminaChatExportFailed", "فشل التصدير");
+        ar.put("LuminaChatExportEmpty", "لا يوجد ما يمكن تصديره");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1492,6 +1522,16 @@ ru.put("LuminaMediaDragReorder", "Перетаскивание для сорти
 ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaDigestInfo", "Показывать сводку пропущенных сообщений при возвращении в приложение после отсутствия");
         ru.put("LuminaDigestSummary", "Пока вас не было: %1$d сообщений из %2$d чатов");
+        ru.put("LuminaChatExportTitle", "Экспорт чата");
+        ru.put("LuminaChatExportButton", "Экспортировать этот чат");
+        ru.put("LuminaChatExportInfo", "Сохраните эту переписку в зашифрованный файл на этом устройстве. Файл защищён вашей парольной фразой — если вы её потеряете, восстановить экспорт будет невозможно. Ничего не загружается на сервер.");
+        ru.put("LuminaChatExportIncludeMedia", "Включать описания медиа");
+        ru.put("LuminaChatExportIncludeService", "Включать служебные сообщения");
+        ru.put("LuminaChatExportOptionsInfo", "Медиафайлы никогда не копируются. Если описания медиа включены, фото, видео, файл или голосовое сообщение записывается как краткая пометка и подпись к нему. Служебные сообщения — это вступления, выходы, закрепления и подобные события. Экспортируется только история, сохранённая на этом устройстве, не более 20 000 последних сообщений.");
+        ru.put("LuminaChatExportPassphraseTitle", "Задайте парольную фразу");
+        ru.put("LuminaChatExportDone", "Чат экспортирован");
+        ru.put("LuminaChatExportFailed", "Не удалось экспортировать");
+        ru.put("LuminaChatExportEmpty", "Нечего экспортировать");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1858,6 +1898,16 @@ fa.put("LuminaMediaDragReorder", "کشیدن برای مرتب‌سازی پیو
 fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaDigestInfo", "نمایش خلاصه پیام‌های از دست رفته هنگام بازگشت به برنامه پس از غیبت");
         fa.put("LuminaDigestSummary", "در غیاب شما: %1$d پیام از %2$d چت");
+        fa.put("LuminaChatExportTitle", "برون‌بری گفت‌وگو");
+        fa.put("LuminaChatExportButton", "برون‌بری این گفت‌وگو");
+        fa.put("LuminaChatExportInfo", "این گفت‌وگو را در یک فایل رمزگذاری‌شده روی همین دستگاه ذخیره کنید. فایل با عبارت عبور شما محافظت می‌شود — اگر آن را فراموش کنید، فایل قابل بازیابی نیست. هیچ چیزی بارگذاری نمی‌شود.");
+        fa.put("LuminaChatExportIncludeMedia", "افزودن توضیح رسانه‌ها");
+        fa.put("LuminaChatExportIncludeService", "افزودن پیام‌های سیستمی");
+        fa.put("LuminaChatExportOptionsInfo", "فایل‌های رسانه‌ای هرگز کپی نمی‌شوند. با روشن بودن توضیح رسانه‌ها، عکس، ویدیو، فایل یا پیام صوتی به شکل یک برچسب کوتاه به همراه شرح آن نوشته می‌شود. پیام‌های سیستمی رویدادهایی مانند پیوستن، ترک کردن و سنجاق کردن هستند. تنها تاریخچهٔ ذخیره‌شده روی این دستگاه و حداکثر 20000 پیام آخر برون‌بری می‌شود.");
+        fa.put("LuminaChatExportPassphraseTitle", "یک عبارت عبور تعیین کنید");
+        fa.put("LuminaChatExportDone", "گفت‌وگو برون‌بری شد");
+        fa.put("LuminaChatExportFailed", "برون‌بری ناموفق بود");
+        fa.put("LuminaChatExportEmpty", "چیزی برای برون‌بری نیست");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2224,6 +2274,16 @@ tr.put("LuminaMediaDragReorder", "Ekleri yeniden sıralamak için sürükle");
 tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaDigestInfo", "Uygulamaya uzun bir aradan sonra döndüğünüzde kaçırılan mesajların özetini göster");
         tr.put("LuminaDigestSummary", "Yokken: %2$d sohbetten %1$d mesaj");
+        tr.put("LuminaChatExportTitle", "Sohbeti dışa aktar");
+        tr.put("LuminaChatExportButton", "Bu sohbeti dışa aktar");
+        tr.put("LuminaChatExportInfo", "Bu konuşmayı bu cihazda şifreli bir dosyaya kaydedin. Dosya parolanızla korunur — parolanızı kaybederseniz dışa aktarım kurtarılamaz. Hiçbir şey yüklenmez.");
+        tr.put("LuminaChatExportIncludeMedia", "Medya açıklamalarını dahil et");
+        tr.put("LuminaChatExportIncludeService", "Servis mesajlarını dahil et");
+        tr.put("LuminaChatExportOptionsInfo", "Medya dosyaları asla kopyalanmaz. Medya açıklamaları açıkken fotoğraf, video, dosya veya sesli mesaj kısa bir etiket ve alt yazısı olarak yazılır. Servis mesajları katılma, ayrılma, sabitleme gibi olaylardır. Yalnızca bu cihazda önbelleğe alınmış geçmiş, en fazla en yeni 20.000 mesaj dışa aktarılır.");
+        tr.put("LuminaChatExportPassphraseTitle", "Bir parola belirleyin");
+        tr.put("LuminaChatExportDone", "Sohbet dışa aktarıldı");
+        tr.put("LuminaChatExportFailed", "Dışa aktarma başarısız");
+        tr.put("LuminaChatExportEmpty", "Dışa aktarılacak bir şey yok");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2590,6 +2650,16 @@ es.put("LuminaMediaDragReorder", "Arrastrar para reordenar adjuntos");
 es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaDigestInfo", "Mostrar un resumen de mensajes perdidos al volver a la app después de estar ausente");
         es.put("LuminaDigestSummary", "Mientras no estabas: %1$d mensajes de %2$d chats");
+        es.put("LuminaChatExportTitle", "Exportar chat");
+        es.put("LuminaChatExportButton", "Exportar este chat");
+        es.put("LuminaChatExportInfo", "Guarda esta conversación en un archivo cifrado en este dispositivo. El archivo está protegido por tu frase de contraseña: si la pierdes, la exportación no se podrá recuperar. No se sube nada.");
+        es.put("LuminaChatExportIncludeMedia", "Incluir descripciones de medios");
+        es.put("LuminaChatExportIncludeService", "Incluir mensajes de servicio");
+        es.put("LuminaChatExportOptionsInfo", "Los archivos multimedia nunca se copian. Con las descripciones de medios activadas, una foto, un video, un archivo o un mensaje de voz se guarda como una etiqueta breve junto con su texto. Los mensajes de servicio son entradas, salidas, mensajes anclados y eventos similares. Solo se exporta el historial guardado en este dispositivo, hasta los 20 000 mensajes más recientes.");
+        es.put("LuminaChatExportPassphraseTitle", "Elige una frase de contraseña");
+        es.put("LuminaChatExportDone", "Chat exportado");
+        es.put("LuminaChatExportFailed", "Error al exportar");
+        es.put("LuminaChatExportEmpty", "No hay nada que exportar");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2956,6 +3026,16 @@ ptBr.put("LuminaMediaDragReorder", "Arrastar para reordenar anexos");
 ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaDigestInfo", "Mostrar um resumo de mensagens perdidas ao voltar ao app após ficar ausente");
         ptBr.put("LuminaDigestSummary", "Enquanto você estava fora: %1$d mensagens de %2$d conversas");
+        ptBr.put("LuminaChatExportTitle", "Exportar conversa");
+        ptBr.put("LuminaChatExportButton", "Exportar esta conversa");
+        ptBr.put("LuminaChatExportInfo", "Salve esta conversa em um arquivo criptografado neste dispositivo. O arquivo é protegido pela sua frase secreta — se você perdê-la, a exportação não poderá ser recuperada. Nada é enviado para a internet.");
+        ptBr.put("LuminaChatExportIncludeMedia", "Incluir descrições de mídia");
+        ptBr.put("LuminaChatExportIncludeService", "Incluir mensagens de serviço");
+        ptBr.put("LuminaChatExportOptionsInfo", "Arquivos de mídia nunca são copiados. Com as descrições de mídia ativadas, uma foto, um vídeo, um arquivo ou uma mensagem de voz vira um rótulo curto acompanhado da legenda. Mensagens de serviço são entradas, saídas, fixações e eventos parecidos. Só o histórico guardado neste aparelho é exportado, no máximo as 20.000 mensagens mais recentes.");
+        ptBr.put("LuminaChatExportPassphraseTitle", "Defina uma frase secreta");
+        ptBr.put("LuminaChatExportDone", "Conversa exportada");
+        ptBr.put("LuminaChatExportFailed", "Falha na exportação");
+        ptBr.put("LuminaChatExportEmpty", "Nada para exportar");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3322,6 +3402,16 @@ id.put("LuminaMediaDragReorder", "Seret untuk mengurutkan ulang lampiran");
 id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaDigestInfo", "Tampilkan ringkasan pesan yang terlewat saat kembali ke aplikasi setelah tidak aktif");
         id.put("LuminaDigestSummary", "Saat Anda pergi: %1$d pesan dari %2$d obrolan");
+        id.put("LuminaChatExportTitle", "Ekspor obrolan");
+        id.put("LuminaChatExportButton", "Ekspor obrolan ini");
+        id.put("LuminaChatExportInfo", "Simpan percakapan ini ke berkas terenkripsi di perangkat ini. Berkas dilindungi frasa sandi Anda — jika Anda kehilangannya, hasil ekspor tidak bisa dipulihkan. Tidak ada yang diunggah.");
+        id.put("LuminaChatExportIncludeMedia", "Sertakan deskripsi media");
+        id.put("LuminaChatExportIncludeService", "Sertakan pesan layanan");
+        id.put("LuminaChatExportOptionsInfo", "Berkas media tidak pernah disalin. Bila deskripsi media aktif, foto, video, berkas, atau pesan suara ditulis sebagai label singkat beserta keterangannya. Pesan layanan adalah kejadian seperti bergabung, keluar, dan menyematkan pesan. Hanya riwayat yang tersimpan di perangkat ini yang diekspor, maksimal 20.000 pesan terbaru.");
+        id.put("LuminaChatExportPassphraseTitle", "Tetapkan frasa sandi");
+        id.put("LuminaChatExportDone", "Obrolan diekspor");
+        id.put("LuminaChatExportFailed", "Ekspor gagal");
+        id.put("LuminaChatExportEmpty", "Tidak ada yang bisa diekspor");
         T.put("id", id);
     }
 

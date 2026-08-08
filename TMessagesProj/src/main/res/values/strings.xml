@@ -11580,4 +11580,15 @@
     <string name="LuminaDigestTitle">Unread digest</string>
     <string name="LuminaDigestInfo">Show a summary of missed messages when you return to the app after being away</string>
     <string name="LuminaDigestSummary">While you were away: %1$d messages from %2$d chats</string>
+<!-- LuminaGram encrypted chat export -->
+    <string name="LuminaChatExportTitle">Export chat</string>
+    <string name="LuminaChatExportButton">Export this chat</string>
+    <string name="LuminaChatExportInfo">Save this conversation to an encrypted file on this device. The file is protected by your passphrase \u2014 if you lose it, the export cannot be recovered. Nothing is uploaded.</string>
+    <string name="LuminaChatExportIncludeMedia">Include media descriptions</string>
+    <string name="LuminaChatExportIncludeService">Include service messages</string>
+    <string name="LuminaChatExportOptionsInfo">Media files are never copied. With media descriptions on, a photo, video, file or voice message becomes a short label plus its caption. Service messages are joins, leaves, pins and similar events. Only history cached on this device is exported, up to the newest 20,000 messages.</string>
+    <string name="LuminaChatExportPassphraseTitle">Set a passphrase</string>
+    <string name="LuminaChatExportDone">Chat exported</string>
+    <string name="LuminaChatExportFailed">Export failed</string>
+    <string name="LuminaChatExportEmpty">Nothing to export</string>
 </resources>
