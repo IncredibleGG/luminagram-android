@@ -185,6 +185,7 @@ import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaScreenshotDetector;
 import org.telegram.messenger.LuminaVoiceToText;
 import org.telegram.messenger.LuminaVoskModelManager;
 import org.telegram.messenger.Utilities;
@@ -25269,6 +25270,8 @@ public class ChatActivity extends BaseFragment implements
     private Runnable updateStreamingTopic;
 
     private ArrayList<MessageObject> notPushedSponsoredMessages;
+    // LuminaGram: screenshot detection
+    private LuminaScreenshotDetector luminaScreenshotDetector;
     // LuminaGram: scam keyword warning (anti-scam, wave19).
     // When enabled (LuminaConfig "scamKeywordWarning", default OFF), show ONE gentle,
     // non-blocking bulletin per chat session if an incoming text from a NON-CONTACT in a
@@ -29887,6 +29890,23 @@ public class ChatActivity extends BaseFragment implements
         if (starReactionsOverlay != null) {
             starReactionsOverlay.bringToFront();
         }
+
+        // LuminaGram: screenshot detection
+        if (LuminaConfig.getBoolean("screenshotDetection", false) && currentUser != null && currentChat == null) {
+            if (luminaScreenshotDetector == null) {
+                luminaScreenshotDetector = new LuminaScreenshotDetector(
+                    ApplicationLoader.applicationContext.getContentResolver());
+            }
+            luminaScreenshotDetector.start(() -> {
+                if (BulletinFactory.canShowBulletin(ChatActivity.this)) {
+                    BulletinFactory.of(ChatActivity.this)
+                        .createSimpleBulletin(R.raw.chats_infotip,
+                            LuminaLocale.getString(R.string.LuminaScreenshotDetected))
+                        .setDuration(Bulletin.DURATION_LONG)
+                        .show();
+                }
+            });
+        }
     }
 
     public float getPullingDownOffset() {
@@ -29953,6 +29973,10 @@ public class ChatActivity extends BaseFragment implements
     @Override
     public void onPause() {
         super.onPause();
+        // LuminaGram: stop screenshot detection
+        if (luminaScreenshotDetector != null) {
+            luminaScreenshotDetector.stop();
+        }
         scrolling = false;
         if (scrimPopupWindow != null) {
             scrimPopupWindow.setPauseNotifications(false);

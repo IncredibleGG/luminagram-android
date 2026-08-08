@@ -380,6 +380,10 @@ public final class LuminaLocale {
         zhHans.put("LuminaSttUiDownloading", "下载语音引擎中…");
         zhHans.put("LuminaSttUiError", "转录失败");
         zhHans.put("LuminaSttUiNoText", "没听出文字");
+        zhHans.put("LuminaSecurityDetectionHeader", "检测");
+        zhHans.put("LuminaScreenshotDetection", "截屏检测");
+        zhHans.put("LuminaScreenshotDetectionInfo", "当私聊窗口打开时检测到截屏会显示警告。帮助你了解是否有人截取了你的屏幕。检测在你的设备上本地运行。");
+        zhHans.put("LuminaScreenshotDetected", "📸 刚刚截取了屏幕截图");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -734,6 +738,10 @@ public final class LuminaLocale {
         zhHant.put("LuminaSttUiDownloading", "下載語音引擎中…");
         zhHant.put("LuminaSttUiError", "轉錄失敗");
         zhHant.put("LuminaSttUiNoText", "沒聽出文字");
+        zhHant.put("LuminaSecurityDetectionHeader", "偵測");
+        zhHant.put("LuminaScreenshotDetection", "截圖偵測");
+        zhHant.put("LuminaScreenshotDetectionInfo", "當私聊視窗打開時偵測到截圖會顯示警告。幫助你了解是否有人截取了你的螢幕。偵測在你的裝置上本地執行。");
+        zhHant.put("LuminaScreenshotDetected", "📸 剛剛截取了螢幕截圖");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1087,6 +1095,10 @@ public final class LuminaLocale {
         ar.put("LuminaSttUiDownloading", "جارٍ تنزيل محرك الصوت…");
         ar.put("LuminaSttUiError", "فشل التحويل");
         ar.put("LuminaSttUiNoText", "لم يُكتشف أي كلام");
+        ar.put("LuminaSecurityDetectionHeader", "الكشف");
+        ar.put("LuminaScreenshotDetection", "اكتشاف لقطات الشاشة");
+        ar.put("LuminaScreenshotDetectionInfo", "إظهار تحذير عند التقاط لقطة شاشة أثناء فتح محادثة خاصة. يساعدك على معرفة ما إذا كان شخص ما يلتقط شاشتك. يعمل الكشف محليًا على جهازك.");
+        ar.put("LuminaScreenshotDetected", "📸 تم التقاط لقطة شاشة للتو");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1440,6 +1452,10 @@ public final class LuminaLocale {
         ru.put("LuminaSttUiDownloading", "Загрузка голосового движка…");
         ru.put("LuminaSttUiError", "Не удалось распознать");
         ru.put("LuminaSttUiNoText", "Речь не распознана");
+        ru.put("LuminaSecurityDetectionHeader", "Обнаружение");
+        ru.put("LuminaScreenshotDetection", "Обнаружение скриншотов");
+        ru.put("LuminaScreenshotDetectionInfo", "Показывать предупреждение при создании скриншота, пока открыт личный чат. Помогает узнать, если кто-то захватывает ваш экран. Обнаружение работает локально на вашем устройстве.");
+        ru.put("LuminaScreenshotDetected", "📸 Только что был сделан скриншот");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1793,6 +1809,10 @@ public final class LuminaLocale {
         fa.put("LuminaSttUiDownloading", "در حال دانلود موتور گفتاری…");
         fa.put("LuminaSttUiError", "رونویسی ناموفق بود");
         fa.put("LuminaSttUiNoText", "گفتاری تشخیص داده نشد");
+        fa.put("LuminaSecurityDetectionHeader", "شناسایی");
+        fa.put("LuminaScreenshotDetection", "شناسایی اسکرین‌شات");
+        fa.put("LuminaScreenshotDetectionInfo", "هنگامی که در چت خصوصی اسکرین‌شات گرفته شود، هشدار نمایش داده شود. به شما کمک می‌کند بدانید آیا کسی از صفحه شما عکس می‌گیرد. شناسایی به صورت محلی روی دستگاه شما کار می‌کند.");
+        fa.put("LuminaScreenshotDetected", "📸 همین الان اسکرین‌شات گرفته شد");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2146,6 +2166,10 @@ public final class LuminaLocale {
         tr.put("LuminaSttUiDownloading", "Ses motoru indiriliyor…");
         tr.put("LuminaSttUiError", "Dönüştürme başarısız");
         tr.put("LuminaSttUiNoText", "Konuşma algılanmadı");
+        tr.put("LuminaSecurityDetectionHeader", "Algılama");
+        tr.put("LuminaScreenshotDetection", "Ekran görüntüsü algılama");
+        tr.put("LuminaScreenshotDetectionInfo", "Özel bir sohbet açıkken ekran görüntüsü alındığında uyarı gösterir. Birinin ekranınızı yakalamasından haberdar olmanıza yardımcı olur. Algılama cihazınızda yerel olarak çalışır.");
+        tr.put("LuminaScreenshotDetected", "📸 Az önce bir ekran görüntüsü alındı");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2499,6 +2523,10 @@ public final class LuminaLocale {
         es.put("LuminaSttUiDownloading", "Descargando motor de voz…");
         es.put("LuminaSttUiError", "Error al transcribir");
         es.put("LuminaSttUiNoText", "No se detectó voz");
+        es.put("LuminaSecurityDetectionHeader", "Detección");
+        es.put("LuminaScreenshotDetection", "Detección de capturas de pantalla");
+        es.put("LuminaScreenshotDetectionInfo", "Muestra una advertencia cuando se toma una captura de pantalla mientras un chat privado está abierto. Te ayuda a saber si alguien captura tu pantalla. La detección funciona localmente en tu dispositivo.");
+        es.put("LuminaScreenshotDetected", "📸 Se acaba de tomar una captura de pantalla");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2852,6 +2880,10 @@ public final class LuminaLocale {
         ptBr.put("LuminaSttUiDownloading", "Baixando mecanismo de voz…");
         ptBr.put("LuminaSttUiError", "Falha na transcrição");
         ptBr.put("LuminaSttUiNoText", "Nenhuma fala detectada");
+        ptBr.put("LuminaSecurityDetectionHeader", "Detecção");
+        ptBr.put("LuminaScreenshotDetection", "Detecção de captura de tela");
+        ptBr.put("LuminaScreenshotDetectionInfo", "Exibe um aviso quando uma captura de tela é feita enquanto um chat privado está aberto. Ajuda você a saber se alguém está capturando sua tela. A detecção funciona localmente no seu dispositivo.");
+        ptBr.put("LuminaScreenshotDetected", "📸 Uma captura de tela acabou de ser feita");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3205,6 +3237,10 @@ public final class LuminaLocale {
         id.put("LuminaSttUiDownloading", "Mengunduh mesin suara…");
         id.put("LuminaSttUiError", "Transkripsi gagal");
         id.put("LuminaSttUiNoText", "Tidak ada ucapan terdeteksi");
+        id.put("LuminaSecurityDetectionHeader", "Deteksi");
+        id.put("LuminaScreenshotDetection", "Deteksi tangkapan layar");
+        id.put("LuminaScreenshotDetectionInfo", "Tampilkan peringatan saat tangkapan layar diambil saat obrolan pribadi terbuka. Membantu Anda mengetahui jika seseorang menangkap layar Anda. Deteksi berjalan secara lokal di perangkat Anda.");
+        id.put("LuminaScreenshotDetected", "📸 Tangkapan layar baru saja diambil");
         T.put("id", id);
     }
 

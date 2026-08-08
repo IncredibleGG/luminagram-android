@@ -52,6 +52,7 @@ public class LuminaSecurityActivity extends BaseFragment {
     private static final int ID_PANIC_WIPE = 1;
     private static final int ID_FAKECRASH_ENABLED = 3;
     private static final int ID_FAKECRASH_SET_CODE = 4;
+    private static final int ID_SCREENSHOT_DETECTION = 5;
 
     // Fake-crash duress unlock: a separate LOCAL code (NOT the Telegram passcode) that, when
     // entered at the passcode screen, shows a fake Android crash and exits. Read in PasscodeView.
@@ -102,6 +103,11 @@ public class LuminaSecurityActivity extends BaseFragment {
                     LuminaLocale.getString(R.string.LuminaSecurityFakeCrashSetCode), fakeCrashCodeValueText()));
         }
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSecurityFakeCrashInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaSecurityDetectionHeader)));
+        items.add(UItem.asSwitch(ID_SCREENSHOT_DETECTION, LuminaLocale.getString(R.string.LuminaScreenshotDetection))
+                .setChecked(LuminaConfig.getBoolean("screenshotDetection", false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaScreenshotDetectionInfo)));
     }
 
     private CharSequence fakeCrashCodeValueText() {
@@ -123,6 +129,9 @@ public class LuminaSecurityActivity extends BaseFragment {
             }
             case ID_FAKECRASH_SET_CODE:
                 showFakeCrashCodeDialog();
+                break;
+            case ID_SCREENSHOT_DETECTION:
+                LuminaConfig.putBoolean("screenshotDetection", !LuminaConfig.getBoolean("screenshotDetection", false));
                 break;
         }
         if (listView != null && listView.adapter != null) {
