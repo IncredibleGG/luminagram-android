@@ -11559,5 +11559,10 @@
     <string name="LuminaSttUiDownloading">Downloading voice engine…</string>
     <string name="LuminaSttUiError">Transcription failed</string>
     <string name="LuminaSttUiNoText">No speech detected</string>
+    <!-- LuminaGram screenshot detection -->
+    <string name="LuminaSecurityDetectionHeader">Detection</string>
+    <string name="LuminaScreenshotDetection">Screenshot detection</string>
+    <string name="LuminaScreenshotDetectionInfo">Show a warning when a screenshot is taken while a private chat is open. Helps you stay aware if someone captures your screen. Detection works locally on your device.</string>
+    <string name="LuminaScreenshotDetected">📸 A screenshot was just taken</string>
 </resources>
 
