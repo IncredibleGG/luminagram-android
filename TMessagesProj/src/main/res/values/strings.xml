@@ -11568,6 +11568,6 @@
     <string name="LuminaScreenshotDetectionInfo">Show a warning when a screenshot is taken while a private chat is open. Helps you stay aware if someone captures your screen. Detection works locally on your device.</string>
     <string name="LuminaScreenshotDetected">📸 A screenshot was just taken</string>
     <!-- LuminaGram changelog -->
-    <string name="LuminaChangelogTitle">What's New</string>
+    <string name="LuminaChangelogTitle">What\'s New</string>
 </resources>
 
