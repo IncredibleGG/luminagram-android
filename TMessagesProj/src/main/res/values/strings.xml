@@ -11559,5 +11559,7 @@
     <string name="LuminaSttUiDownloading">Downloading voice engine…</string>
     <string name="LuminaSttUiError">Transcription failed</string>
     <string name="LuminaSttUiNoText">No speech detected</string>
+    <!-- LuminaGram changelog -->
+    <string name="LuminaChangelogTitle">What's New</string>
 </resources>
 

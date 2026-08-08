@@ -26,6 +26,7 @@ public class LuminaGramSettingsActivity extends BaseFragment {
 
     private UniversalRecyclerView listView;
     private boolean onboardingHandled;
+    private boolean changelogHandled;
 
     @Override
     public View createView(Context context) {
@@ -73,6 +74,7 @@ public class LuminaGramSettingsActivity extends BaseFragment {
         items.add(UItem.asButton(23, LuminaLocale.getString(R.string.LuminaBackupTitle)));
         items.add(UItem.asButton(24, LuminaLocale.getString(R.string.LuminaProfileCardTitle)));
         items.add(UItem.asButton(25, LuminaLocale.getString(R.string.LuminaVoiceToTextTitle)));
+        items.add(UItem.asButton(26, LuminaLocale.getString(R.string.LuminaChangelogTitle)));
         items.add(UItem.asShadow(null));
         items.add(UItem.asButton(20, LuminaLocale.getString(R.string.LuminaCheckUpdate)));
         items.add(UItem.asShadow(null));
@@ -139,6 +141,10 @@ public class LuminaGramSettingsActivity extends BaseFragment {
             case 25:
                 presentFragment(new LuminaVoiceToTextActivity());
                 break;
+            case 26:
+                presentFragment(new LuminaChangelogActivity());
+                LuminaChangelogActivity.markCurrentVersionSeen();
+                break;
             case 20:
                 LaunchActivity launchActivity = LaunchActivity.instance;
                 if (launchActivity != null) {
@@ -165,6 +171,15 @@ public class LuminaGramSettingsActivity extends BaseFragment {
         if (!onboardingHandled && !LuminaConfig.getBoolean("onboardingShown", false)) {
             onboardingHandled = true;
             AndroidUtilities.runOnUIThread(this::showOnboardingCard, 400);
+        }
+        // LuminaGram: auto-show changelog after update (only if onboarding already done)
+        if (!changelogHandled && LuminaConfig.getBoolean("onboardingShown", false)
+                && LuminaChangelogActivity.hasUnseenChangelog()) {
+            changelogHandled = true;
+            AndroidUtilities.runOnUIThread(() -> {
+                presentFragment(new LuminaChangelogActivity());
+                LuminaChangelogActivity.markCurrentVersionSeen();
+            }, 500);
         }
     }
 

@@ -378,6 +378,7 @@ public final class LuminaLocale {
         zhHans.put("LuminaSttUiDownloading", "下载语音引擎中…");
         zhHans.put("LuminaSttUiError", "转录失败");
         zhHans.put("LuminaSttUiNoText", "没听出文字");
+        zhHans.put("LuminaChangelogTitle", "新功能");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -730,6 +731,7 @@ public final class LuminaLocale {
         zhHant.put("LuminaSttUiDownloading", "下載語音引擎中…");
         zhHant.put("LuminaSttUiError", "轉錄失敗");
         zhHant.put("LuminaSttUiNoText", "沒聽出文字");
+        zhHant.put("LuminaChangelogTitle", "新功能");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1081,6 +1083,7 @@ public final class LuminaLocale {
         ar.put("LuminaSttUiDownloading", "جارٍ تنزيل محرك الصوت…");
         ar.put("LuminaSttUiError", "فشل التحويل");
         ar.put("LuminaSttUiNoText", "لم يُكتشف أي كلام");
+        ar.put("LuminaChangelogTitle", "ما الجديد");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1432,6 +1435,7 @@ public final class LuminaLocale {
         ru.put("LuminaSttUiDownloading", "Загрузка голосового движка…");
         ru.put("LuminaSttUiError", "Не удалось распознать");
         ru.put("LuminaSttUiNoText", "Речь не распознана");
+        ru.put("LuminaChangelogTitle", "Что нового");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1783,6 +1787,7 @@ public final class LuminaLocale {
         fa.put("LuminaSttUiDownloading", "در حال دانلود موتور گفتاری…");
         fa.put("LuminaSttUiError", "رونویسی ناموفق بود");
         fa.put("LuminaSttUiNoText", "گفتاری تشخیص داده نشد");
+        fa.put("LuminaChangelogTitle", "تازه‌ها");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2134,6 +2139,7 @@ public final class LuminaLocale {
         tr.put("LuminaSttUiDownloading", "Ses motoru indiriliyor…");
         tr.put("LuminaSttUiError", "Dönüştürme başarısız");
         tr.put("LuminaSttUiNoText", "Konuşma algılanmadı");
+        tr.put("LuminaChangelogTitle", "Yenilikler");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2485,6 +2491,7 @@ public final class LuminaLocale {
         es.put("LuminaSttUiDownloading", "Descargando motor de voz…");
         es.put("LuminaSttUiError", "Error al transcribir");
         es.put("LuminaSttUiNoText", "No se detectó voz");
+        es.put("LuminaChangelogTitle", "Novedades");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -2836,6 +2843,7 @@ public final class LuminaLocale {
         ptBr.put("LuminaSttUiDownloading", "Baixando mecanismo de voz…");
         ptBr.put("LuminaSttUiError", "Falha na transcrição");
         ptBr.put("LuminaSttUiNoText", "Nenhuma fala detectada");
+        ptBr.put("LuminaChangelogTitle", "Novidades");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3187,6 +3195,7 @@ public final class LuminaLocale {
         id.put("LuminaSttUiDownloading", "Mengunduh mesin suara…");
         id.put("LuminaSttUiError", "Transkripsi gagal");
         id.put("LuminaSttUiNoText", "Tidak ada ucapan terdeteksi");
+        id.put("LuminaChangelogTitle", "Yang Baru");
         T.put("id", id);
     }
 
