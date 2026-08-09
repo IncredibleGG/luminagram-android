@@ -45,17 +45,35 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
     // --- LuminaGram in-app self-updater (R2 version.json -> download -> install) ---
     private static final String LUMINA_UPDATE_MANIFEST_URL = "https://pub-d6a54d2e5f5947e2b0b23fb8e27ce0a5.r2.dev/version.json";
 
+    // LuminaGram: an APK that finished downloading but has not been installed yet is
+    // remembered in the app-private "luminagram" prefs, so the offer to install survives
+    // the process being killed while the user is away.
+    private static final String KEY_READY_APK = "luminaUpdateReadyApk";
+    private static final String KEY_READY_VERSION = "luminaUpdateReadyVersion";
+    private static final String KEY_READY_VERSION_CODE = "luminaUpdateReadyVersionCode";
+    private static final String KEY_READY_PROMPTED = "luminaUpdateReadyPrompted";
+
     private volatile BetaUpdate pendingUpdate;
     private volatile String pendingUpdateUrl;
     private volatile File downloadedApk;
     private volatile boolean downloadingUpdate;
     private volatile boolean cancelUpdateDownload;
     private volatile float updateDownloadProgress;
+    // LuminaGram: absolute byte counters for the running download. They back both the
+    // progress dialog and the progress notification, and they are what lets a dialog that
+    // was dismissed (or a whole new "Check for updates" tap) re-attach to the download
+    // already in flight instead of starting a second one.
+    private volatile long updateDownloadedBytes;
+    private volatile long updateTotalBytes;
     private long lastUpdateCheckTime;
     // LuminaGram: true when the last manifest fetch threw (offline, DNS, timeout, bad JSON).
     // Without this the caller cannot tell "nothing newer" from "we never reached the server",
     // and reports the misleading "your version is latest" while the device is offline.
     private volatile boolean lastUpdateCheckFailed;
+    // UI thread only.
+    private AlertDialog updateProgressDialog;
+    private boolean updateInstallPromptScheduled;
+
     @Override
     protected String onGetApplicationId() {
         return BuildConfig.APPLICATION_ID;
@@ -294,6 +312,14 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
     public void onResume() {
         super.onResume();
         SMSJobsNotification.check();
+        // LuminaGram: an update that finished downloading while we were in the background
+        // could not open the installer (Android 10+ blocks background activity starts), so
+        // the offer was parked. Now that we are visible again, make good on it.
+        try {
+            checkPendingUpdateInstall();
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
     }
 
     @Override
@@ -330,6 +356,22 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
 
     @Override
     public void checkUpdate(boolean force, Runnable whenDone) {
+        // LuminaGram: a download is already in flight. Never fire a second manifest fetch
+        // (and, further down, never a second download) - just put the progress dialog back
+        // on screen so a repeat "Check for updates" re-attaches to what is already running
+        // instead of looking like it did nothing.
+        if (downloadingUpdate) {
+            lastUpdateCheckFailed = false;
+            AndroidUtilities.runOnUIThread(() -> {
+                if (force) {
+                    showUpdateProgressDialog(null);
+                }
+                if (whenDone != null) {
+                    whenDone.run();
+                }
+            });
+            return;
+        }
         // Rate-limit background (non-forced) checks so the resume hook doesn't hit the
         // network every time; manual "Check for updates" passes force=true.
         if (!force && System.currentTimeMillis() - lastUpdateCheckTime < 60L * 60L * 1000L) {
@@ -408,18 +450,33 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
                 if (whenDone != null) {
                     whenDone.run();
                 }
+                // LuminaGram: the APK for this update is already sitting on disk, finished but
+                // not installed (the user backed out of the installer, or the download landed
+                // while the app was away). A manual check must surface it again - LaunchActivity
+                // only pops the "Update available" alert for an update it has not seen before.
+                if (force) {
+                    final File ready = readyUpdateFile();
+                    if (ready != null) {
+                        promptInstallDownloadedUpdate(null, ready, true);
+                    }
+                }
             });
         });
     }
 
     @Override
     public void downloadUpdate() {
-        startDownload(null, null);
+        startDownload();
     }
 
     @Override
     public void cancelDownloadingUpdate() {
         cancelUpdateDownload = true;
+        try {
+            LuminaUpdateService.stop();
+        } catch (Throwable e) {
+            FileLog.e(e);
+        }
     }
 
     @Override
@@ -437,30 +494,39 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
         return downloadedApk;
     }
 
-    // LuminaGram: onProgress receives (downloadedBytes, totalBytes) rather than a bare
-    // fraction so the UI can render absolute sizes. totalBytes is <= 0 when the server sends
-    // no Content-Length (chunked transfer).
-    private void startDownload(Utilities.Callback2<Long, Long> onProgress, Utilities.Callback<File> onComplete) {
+    /**
+     * Starts the APK download, or does nothing at all when one is already running - the
+     * single guarantee that no tap anywhere can ever open a second transfer. Progress and
+     * completion are dispatched through {@link #onUpdateDownloadProgress} /
+     * {@link #onUpdateDownloadFinished} rather than through per-call callbacks, so the
+     * dialog can come and go (or be replaced by the notification) mid-download.
+     */
+    private void startDownload() {
         if (downloadingUpdate) {
             return;
         }
         final String downloadUrl = pendingUpdateUrl;
         if (downloadUrl == null || pendingUpdate == null) {
-            if (onComplete != null) {
-                AndroidUtilities.runOnUIThread(() -> onComplete.run(null));
-            }
+            AndroidUtilities.runOnUIThread(() -> onUpdateDownloadFinished(null));
             return;
         }
         if (downloadedApk != null && downloadedApk.exists()) {
-            if (onComplete != null) {
-                final File cached = downloadedApk;
-                AndroidUtilities.runOnUIThread(() -> onComplete.run(cached));
-            }
+            final File cached = downloadedApk;
+            AndroidUtilities.runOnUIThread(() -> onUpdateDownloadFinished(cached));
             return;
         }
         downloadingUpdate = true;
         cancelUpdateDownload = false;
         updateDownloadProgress = 0f;
+        updateDownloadedBytes = 0;
+        updateTotalBytes = 0;
+        // Started from a user tap, i.e. while we are foreground, which is exactly when a
+        // foreground service may legally be started on API 31+. Failure is non-fatal.
+        try {
+            LuminaUpdateService.start();
+        } catch (Throwable e) {
+            FileLog.e(e);
+        }
         Utilities.globalQueue.postRunnable(() -> {
             File result = null;
             HttpURLConnection connection = null;
@@ -491,10 +557,10 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
                     // 9000 times; posting to the UI thread on every chunk would flood the looper.
                     // Throttle to ~10 updates/s, plus one final post when the last byte lands.
                     final long now = System.currentTimeMillis();
-                    if (onProgress != null && (now - lastProgressPost >= 100 || (totalBytes > 0 && downloaded >= totalBytes))) {
+                    if (now - lastProgressPost >= 100 || (totalBytes > 0 && downloaded >= totalBytes)) {
                         lastProgressPost = now;
                         final long downloadedSoFar = downloaded;
-                        AndroidUtilities.runOnUIThread(() -> onProgress.run(downloadedSoFar, totalBytes));
+                        AndroidUtilities.runOnUIThread(() -> onUpdateDownloadProgress(downloadedSoFar, totalBytes));
                     }
                 }
                 fos.flush();
@@ -516,10 +582,60 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
             }
             final File finalResult = result;
             downloadedApk = finalResult;
-            if (onComplete != null) {
-                AndroidUtilities.runOnUIThread(() -> onComplete.run(finalResult));
-            }
+            AndroidUtilities.runOnUIThread(() -> onUpdateDownloadFinished(finalResult));
         });
+    }
+
+    /** UI thread. Feeds both the (optional) dialog and the (optional) notification. */
+    private void onUpdateDownloadProgress(long downloaded, long total) {
+        updateDownloadedBytes = downloaded;
+        updateTotalBytes = total;
+        applyProgressToDialog();
+        try {
+            LuminaUpdateService.setProgress(downloaded, total);
+        } catch (Throwable e) {
+            FileLog.e(e);
+        }
+    }
+
+    /** UI thread. */
+    private void onUpdateDownloadFinished(File file) {
+        dismissUpdateProgressDialog();
+        try {
+            LuminaUpdateService.stop();
+        } catch (Throwable e) {
+            FileLog.e(e);
+        }
+        if (file != null && file.exists()) {
+            rememberReadyUpdate(file);
+            // The user should never have to go hunting for the update they just waited for.
+            // In the foreground we open the installer right away; in the background Android
+            // 10+ forbids that, so we post a tappable notification AND leave the offer parked
+            // for onResume() - whichever the user reaches first wins.
+            boolean prompted = false;
+            if (!ApplicationLoader.mainInterfacePaused && !SharedConfig.appLocked) {
+                prompted = promptInstallDownloadedUpdate(null, file, true);
+            }
+            if (!prompted) {
+                try {
+                    LuminaUpdateService.showReadyNotification(file, LuminaConfig.getString(KEY_READY_VERSION, ""));
+                } catch (Throwable e) {
+                    FileLog.e(e);
+                }
+            }
+            return;
+        }
+        if (cancelUpdateDownload) {
+            return;
+        }
+        try {
+            BaseFragment fragment = LaunchActivity.getLastFragment();
+            if (fragment != null) {
+                BulletinFactory.of(fragment).createErrorBulletin(LuminaLocale.getString(R.string.LuminaUpdateFailed)).show();
+            }
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
     }
 
     @Override
@@ -530,6 +646,18 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
         AndroidUtilities.runOnUIThread(() -> {
             try {
                 final Activity activity = (context instanceof Activity) ? (Activity) context : LaunchActivity.instance;
+                // Already downloading? Show the live progress instead of offering to start
+                // the very same download over again.
+                if (downloadingUpdate) {
+                    showUpdateProgressDialog(activity);
+                    return;
+                }
+                // Already downloaded? Offer to install it, not to fetch it a second time.
+                final File ready = readyUpdateFile();
+                if (ready != null) {
+                    promptInstallDownloadedUpdate(activity, ready, true);
+                    return;
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(LuminaLocale.getString(R.string.LuminaUpdateAvailable));
                 StringBuilder message = new StringBuilder();
@@ -557,43 +685,270 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
     }
 
     private void beginDownloadAndInstall(final Activity activity) {
-        if (downloadedApk != null && downloadedApk.exists()) {
-            installApk(activity, downloadedApk);
+        File ready = readyUpdateFile();
+        if (ready == null && downloadedApk != null && downloadedApk.exists()) {
+            ready = downloadedApk;
+        }
+        if (ready != null) {
+            promptInstallDownloadedUpdate(activity, ready, true);
             return;
         }
-        final AlertDialog progressDialog = new AlertDialog(activity, AlertDialog.ALERT_TYPE_LOADING);
-        progressDialog.setCanCancel(true);
-        progressDialog.setMessage(LuminaLocale.getString(R.string.LuminaUpdateDownloading));
-        progressDialog.setOnCancelListener(dialog -> cancelDownloadingUpdate());
-        progressDialog.show();
-        startDownload(
-                (downloaded, total) -> {
-                    // LuminaGram: a ~140 MB APK on a slow link sits on the same percentage for a
-                    // long time, so show the absolute MB counts as well. When Content-Length is
-                    // missing we cannot compute either, so keep the plain "Downloading update..."
-                    if (downloaded == null || total == null || total <= 0) {
-                        return;
-                    }
-                    progressDialog.setProgress((int) (downloaded * 100L / total));
-                    progressDialog.setMessage(String.format(java.util.Locale.US,
-                            LuminaLocale.getString(R.string.LuminaUpdateDownloadingProgress),
-                            formatUpdateSizeMb(downloaded), formatUpdateSizeMb(total)));
-                },
-                file -> {
-                    try {
-                        progressDialog.dismiss();
-                    } catch (Exception ignore) {
-                    }
-                    if (file != null) {
-                        installApk(activity, file);
-                    } else if (!cancelUpdateDownload) {
-                        BaseFragment fragment = LaunchActivity.getLastFragment();
-                        if (fragment != null) {
-                            BulletinFactory.of(fragment).createErrorBulletin(LuminaLocale.getString(R.string.LuminaUpdateFailed)).show();
-                        }
+        showUpdateProgressDialog(activity);
+        // No-op when a download is already running: re-attaching above is all that happens.
+        startDownload();
+    }
+
+    // ------------------------------------------------------------------ progress dialog
+
+    /**
+     * Shows - or re-attaches to - the download progress dialog.
+     *
+     * <p>This used to be a plain cancellable loading dialog whose cancel listener aborted
+     * the transfer, so a stray tap anywhere outside it (or the back key) silently threw
+     * away a 140 MB download. It is now sealed: only the two explicit buttons can close
+     * it, and only one of them stops the download.
+     */
+    private void showUpdateProgressDialog(final Activity activity) {
+        final Activity host = (activity != null) ? activity : LaunchActivity.instance;
+        if (host == null || host.isFinishing() || host.isDestroyed()) {
+            return;
+        }
+        if (updateProgressDialog != null && updateProgressDialog.isShowing()) {
+            applyProgressToDialog();
+            return;
+        }
+        dismissUpdateProgressDialog();
+        try {
+            final AlertDialog dialog = new AlertDialog(host, AlertDialog.ALERT_TYPE_LOADING);
+            dialog.setCanCancel(false);
+            dialog.setCancelable(false);            // back key no longer aborts the download
+            dialog.setCanceledOnTouchOutside(false); // neither does a tap outside the box
+            dialog.setDismissDialogByButtons(false); // we decide what each button closes
+            dialog.setMessage(LuminaLocale.getString(R.string.LuminaUpdateDownloading));
+            // Keep downloading, just get out of the way: the transfer lives on globalQueue
+            // and is held up by LuminaUpdateService, so dismissing changes nothing about it.
+            dialog.setNeutralButton(LuminaLocale.getString(R.string.LuminaUpdateDownloadInBackground), (d, which) -> dismissUpdateProgressDialog());
+            // The only thing in the whole UI that actually stops the download.
+            dialog.setNegativeButton(LuminaLocale.getString(R.string.LuminaUpdateCancelDownload), (d, which) -> {
+                cancelDownloadingUpdate();
+                dismissUpdateProgressDialog();
+            });
+            dialog.setOnDismissListener(d -> {
+                if (updateProgressDialog == d) {
+                    updateProgressDialog = null;
+                }
+            });
+            updateProgressDialog = dialog;
+            dialog.show();
+            applyProgressToDialog();
+        } catch (Exception e) {
+            FileLog.e(e);
+            updateProgressDialog = null;
+        }
+    }
+
+    private void applyProgressToDialog() {
+        final AlertDialog dialog = updateProgressDialog;
+        if (dialog == null) {
+            return;
+        }
+        try {
+            final long downloaded = updateDownloadedBytes;
+            final long total = updateTotalBytes;
+            // LuminaGram: a ~140 MB APK on a slow link sits on the same percentage for a
+            // long time, so show the absolute MB counts as well. When Content-Length is
+            // missing we cannot compute either, so keep the plain "Downloading update..."
+            if (total > 0) {
+                dialog.setProgress((int) Math.max(0L, Math.min(100L, downloaded * 100L / total)));
+                dialog.setMessage(String.format(java.util.Locale.US,
+                        LuminaLocale.getString(R.string.LuminaUpdateDownloadingProgress),
+                        formatUpdateSizeMb(downloaded), formatUpdateSizeMb(total)));
+            } else {
+                dialog.setMessage(LuminaLocale.getString(R.string.LuminaUpdateDownloading));
+            }
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+    }
+
+    private void dismissUpdateProgressDialog() {
+        final AlertDialog dialog = updateProgressDialog;
+        updateProgressDialog = null;
+        if (dialog == null) {
+            return;
+        }
+        try {
+            dialog.dismiss();
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+    }
+
+    // ------------------------------------------------------- finished-but-not-installed
+
+    /** Persists "there is a finished APK waiting" so it survives the process being killed. */
+    private void rememberReadyUpdate(File apk) {
+        try {
+            final BetaUpdate update = pendingUpdate;
+            LuminaConfig.putString(KEY_READY_APK, apk.getAbsolutePath());
+            LuminaConfig.putString(KEY_READY_VERSION, update != null && update.version != null ? update.version : "");
+            LuminaConfig.putInt(KEY_READY_VERSION_CODE, update != null ? update.versionCode : 0);
+            LuminaConfig.putBoolean(KEY_READY_PROMPTED, false);
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+    }
+
+    private void forgetReadyUpdate(boolean deleteFile) {
+        try {
+            if (deleteFile) {
+                final String path = LuminaConfig.getString(KEY_READY_APK, "");
+                if (path != null && path.length() > 0) {
+                    final File stale = new File(path);
+                    if (stale.exists()) {
+                        stale.delete();
                     }
                 }
-        );
+                downloadedApk = null;
+            }
+            LuminaConfig.putString(KEY_READY_APK, "");
+            LuminaConfig.putString(KEY_READY_VERSION, "");
+            LuminaConfig.putInt(KEY_READY_VERSION_CODE, 0);
+            LuminaConfig.putBoolean(KEY_READY_PROMPTED, false);
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+    }
+
+    /**
+     * The downloaded-but-not-yet-installed APK, or null. Self-healing: once the running
+     * build is at or past the version that was downloaded, the record and the ~140 MB file
+     * are dropped, so a stale APK can never be offered forever.
+     */
+    private File readyUpdateFile() {
+        try {
+            final String path = LuminaConfig.getString(KEY_READY_APK, "");
+            if (path == null || path.length() == 0) {
+                return null;
+            }
+            final File apk = new File(path);
+            if (!apk.exists() || apk.length() <= 0) {
+                forgetReadyUpdate(false);
+                return null;
+            }
+            final int readyCode = LuminaConfig.getInt(KEY_READY_VERSION_CODE, 0);
+            final String readyName = LuminaConfig.getString(KEY_READY_VERSION, "");
+            final PackageInfo packageInfo = ApplicationLoader.applicationContext.getPackageManager()
+                    .getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
+            // Standalone flavor encodes the versionCode as base*10+abi, same as checkUpdate().
+            final int installedBaseCode = packageInfo.versionCode / 10;
+            final boolean alreadyInstalled = readyCode > 0
+                    && installedBaseCode >= readyCode
+                    && (readyName == null || readyName.length() == 0 || packageInfo.versionName == null
+                        || SharedConfig.versionBiggerOrEqual(packageInfo.versionName, readyName));
+            if (alreadyInstalled) {
+                forgetReadyUpdate(true);
+                return null;
+            }
+            return apk;
+        } catch (Exception e) {
+            FileLog.e(e);
+            return null;
+        }
+    }
+
+    /**
+     * Opens the system installer for a finished APK.
+     *
+     * @param userInitiated true when the user asked for it (tapped Update / Check for
+     *                      updates, or the download just finished under their eyes). When
+     *                      false this is the automatic on-return prompt, which fires at
+     *                      most once per downloaded file - if the user backs out of the
+     *                      installer we must not shove it at them on every single resume.
+     * @return true when the installer was actually launched.
+     */
+    private boolean promptInstallDownloadedUpdate(Activity activity, File apk, boolean userInitiated) {
+        if (apk == null || !apk.exists()) {
+            forgetReadyUpdate(false);
+            return false;
+        }
+        final Activity host = (activity != null) ? activity : LaunchActivity.instance;
+        if (host == null || host.isFinishing() || host.isDestroyed()) {
+            return false; // stays parked; the next onResume() tries again
+        }
+        if (!userInitiated && LuminaConfig.getBoolean(KEY_READY_PROMPTED, false)) {
+            return false;
+        }
+        LuminaConfig.putBoolean(KEY_READY_PROMPTED, true);
+        try {
+            LuminaUpdateService.cancelReadyNotification();
+        } catch (Throwable e) {
+            FileLog.e(e);
+        }
+        if (!checkApkInstallPermissions(host)) {
+            // The "allow installs from this source" dialog is up instead; report false so
+            // the caller still leaves a notification as the way back.
+            return false;
+        }
+        try {
+            installApk(host, apk);
+        } catch (Exception e) {
+            FileLog.e(e);
+            return false;
+        }
+        return true;
+    }
+
+    /** Called from onResume(). Re-offers an update that finished while we were away. */
+    private void checkPendingUpdateInstall() {
+        final File ready = readyUpdateFile();
+        if (ready == null) {
+            return;
+        }
+        // Re-seed the in-memory handle so that after a process restart tapping "Update"
+        // installs the file we already have instead of downloading it all over again.
+        if (downloadedApk == null) {
+            downloadedApk = ready;
+        }
+        if (LuminaConfig.getBoolean(KEY_READY_PROMPTED, false) || updateInstallPromptScheduled) {
+            return;
+        }
+        updateInstallPromptScheduled = true;
+        scheduleUpdateInstallPrompt(ready, 20);
+    }
+
+    /**
+     * Waits for the app to actually be usable before popping the installer: right after
+     * onResume() the passcode / disguise lock screen may still be up, and throwing the
+     * package installer over it would be both jarring and useless. Retries about once a
+     * second for ~20s, then gives up quietly leaving the offer parked for a later resume.
+     */
+    private void scheduleUpdateInstallPrompt(final File apk, final int attemptsLeft) {
+        AndroidUtilities.runOnUIThread(() -> {
+            try {
+                if (LuminaConfig.getBoolean(KEY_READY_PROMPTED, false)) {
+                    updateInstallPromptScheduled = false;
+                    return;
+                }
+                if (ApplicationLoader.mainInterfacePaused) {
+                    updateInstallPromptScheduled = false; // gone again; next resume retries
+                    return;
+                }
+                if (SharedConfig.appLocked || LaunchActivity.instance == null) {
+                    if (attemptsLeft > 0) {
+                        scheduleUpdateInstallPrompt(apk, attemptsLeft - 1);
+                    } else {
+                        updateInstallPromptScheduled = false;
+                    }
+                    return;
+                }
+                updateInstallPromptScheduled = false;
+                promptInstallDownloadedUpdate(null, apk, false);
+            } catch (Exception e) {
+                updateInstallPromptScheduled = false;
+                FileLog.e(e);
+            }
+        }, 1000);
     }
 
     // LuminaGram: bytes -> "138.0". Always Locale.US so the decimal separator is stable no

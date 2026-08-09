@@ -470,6 +470,14 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaSessionQrConfirmTitle", "要授权新设备登录吗？");
         zhHans.put("LuminaSessionQrConfirmMessage", "你正在授权一台新设备登录你的账号。除非你人就在那台电脑前面，否则对方会看到你全部的消息。不要扫别人发给你的登录二维码。");
         zhHans.put("LuminaSessionQrConfirmContinue", "我就在那台设备前，继续");
+        // updater: background download + install-when-ready
+        zhHans.put("LuminaUpdateDownloadInBackground", "后台下载");
+        zhHans.put("LuminaUpdateCancelDownload", "取消下载");
+        zhHans.put("LuminaUpdateNotificationTitle", "正在下载更新");
+        zhHans.put("LuminaUpdateNotificationProgress", "%1$s / %2$s MB");
+        zhHans.put("LuminaUpdateReadyTitle", "更新已下载");
+        zhHans.put("LuminaUpdateReadyText", "点击安装");
+        zhHans.put("LuminaUpdateReadyVersionText", "点击安装版本 %1$s");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -914,6 +922,14 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaSessionQrConfirmTitle", "要授權新裝置登入嗎？");
         zhHant.put("LuminaSessionQrConfirmMessage", "你正在授權一個新裝置登入你的帳號。除非你人就在那台電腦前面，否則對方會看到你全部的訊息。絕對不要掃別人傳給你的登入 QR code。");
         zhHant.put("LuminaSessionQrConfirmContinue", "我就在那台裝置前，繼續");
+        // updater: background download + install-when-ready
+        zhHant.put("LuminaUpdateDownloadInBackground", "背景下載");
+        zhHant.put("LuminaUpdateCancelDownload", "取消下載");
+        zhHant.put("LuminaUpdateNotificationTitle", "正在下載更新");
+        zhHant.put("LuminaUpdateNotificationProgress", "%1$s / %2$s MB");
+        zhHant.put("LuminaUpdateReadyTitle", "更新已下載");
+        zhHant.put("LuminaUpdateReadyText", "點擊安裝");
+        zhHant.put("LuminaUpdateReadyVersionText", "點擊安裝版本 %1$s");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1357,6 +1373,14 @@ ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaSessionQrConfirmTitle", "هل تريد تفويض جهاز جديد؟");
         ar.put("LuminaSessionQrConfirmMessage", "أنت على وشك السماح لجهاز جديد بتسجيل الدخول إلى حسابك. ما لم تكن جالسًا أمام ذلك الجهاز بنفسك، فسيتمكن من يتحكم به من قراءة كل رسائلك. لا تمسح أبدًا رمز QR أرسله لك شخص ما.");
         ar.put("LuminaSessionQrConfirmContinue", "أنا أمام ذلك الجهاز — متابعة");
+        // updater: background download + install-when-ready
+        ar.put("LuminaUpdateDownloadInBackground", "التنزيل في الخلفية");
+        ar.put("LuminaUpdateCancelDownload", "إلغاء التنزيل");
+        ar.put("LuminaUpdateNotificationTitle", "جارٍ تنزيل التحديث");
+        ar.put("LuminaUpdateNotificationProgress", "%1$s / %2$s ميغابايت");
+        ar.put("LuminaUpdateReadyTitle", "تم تنزيل التحديث");
+        ar.put("LuminaUpdateReadyText", "اضغط للتثبيت");
+        ar.put("LuminaUpdateReadyVersionText", "اضغط لتثبيت الإصدار %1$s");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1800,6 +1824,14 @@ ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaSessionQrConfirmTitle", "Авторизовать новое устройство?");
         ru.put("LuminaSessionQrConfirmMessage", "Вы собираетесь разрешить новому устройству войти в ваш аккаунт. Если вы не сидите за этим компьютером сами, тот, кто им управляет, сможет прочитать все ваши сообщения. Никогда не сканируйте QR-код для входа, который вам кто-то прислал.");
         ru.put("LuminaSessionQrConfirmContinue", "Я за этим устройством — продолжить");
+        // updater: background download + install-when-ready
+        ru.put("LuminaUpdateDownloadInBackground", "Скачать в фоне");
+        ru.put("LuminaUpdateCancelDownload", "Отменить загрузку");
+        ru.put("LuminaUpdateNotificationTitle", "Загрузка обновления");
+        ru.put("LuminaUpdateNotificationProgress", "%1$s / %2$s МБ");
+        ru.put("LuminaUpdateReadyTitle", "Обновление загружено");
+        ru.put("LuminaUpdateReadyText", "Нажмите, чтобы установить");
+        ru.put("LuminaUpdateReadyVersionText", "Нажмите, чтобы установить версию %1$s");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -2243,6 +2275,14 @@ fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaSessionQrConfirmTitle", "دستگاه جدید مجاز شود؟");
         fa.put("LuminaSessionQrConfirmMessage", "شما در حال اجازه دادن به یک دستگاه جدید برای ورود به حساب خود هستید. مگر اینکه خودتان پشت آن رایانه باشید، هر کسی که آن را در اختیار دارد می‌تواند همه پیام‌های شما را بخواند. هرگز کد QR ورودی را که کسی برایتان فرستاده اسکن نکنید.");
         fa.put("LuminaSessionQrConfirmContinue", "من پشت همان دستگاه هستم — ادامه");
+        // updater: background download + install-when-ready
+        fa.put("LuminaUpdateDownloadInBackground", "دانلود در پس‌زمینه");
+        fa.put("LuminaUpdateCancelDownload", "لغو دانلود");
+        fa.put("LuminaUpdateNotificationTitle", "در حال دانلود به‌روزرسانی");
+        fa.put("LuminaUpdateNotificationProgress", "%1$s / %2$s مگابایت");
+        fa.put("LuminaUpdateReadyTitle", "به‌روزرسانی دانلود شد");
+        fa.put("LuminaUpdateReadyText", "برای نصب ضربه بزنید");
+        fa.put("LuminaUpdateReadyVersionText", "برای نصب نسخه %1$s ضربه بزنید");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2686,6 +2726,14 @@ tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaSessionQrConfirmTitle", "Yeni cihaza izin verilsin mi?");
         tr.put("LuminaSessionQrConfirmMessage", "Hesabına giriş yapması için yeni bir cihaza izin vermek üzeresin. O bilgisayarın başında bizzat sen oturmuyorsan, cihazı kontrol eden kişi tüm mesajlarını okuyabilir. Birinin sana gönderdiği giriş QR kodunu asla tarama.");
         tr.put("LuminaSessionQrConfirmContinue", "O cihazın başındayım — devam et");
+        // updater: background download + install-when-ready
+        tr.put("LuminaUpdateDownloadInBackground", "Arka planda indir");
+        tr.put("LuminaUpdateCancelDownload", "İndirmeyi iptal et");
+        tr.put("LuminaUpdateNotificationTitle", "Güncelleme indiriliyor");
+        tr.put("LuminaUpdateNotificationProgress", "%1$s / %2$s MB");
+        tr.put("LuminaUpdateReadyTitle", "Güncelleme indirildi");
+        tr.put("LuminaUpdateReadyText", "Yüklemek için dokunun");
+        tr.put("LuminaUpdateReadyVersionText", "%1$s sürümünü yüklemek için dokunun");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -3129,6 +3177,14 @@ es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaSessionQrConfirmTitle", "¿Autorizar un dispositivo nuevo?");
         es.put("LuminaSessionQrConfirmMessage", "Estás a punto de autorizar a un dispositivo nuevo a iniciar sesión en tu cuenta. A menos que estés tú mismo delante de ese ordenador, quien lo controle podrá leer todos tus mensajes. Nunca escanees un código QR de inicio de sesión que alguien te haya enviado.");
         es.put("LuminaSessionQrConfirmContinue", "Estoy en ese dispositivo: continuar");
+        // updater: background download + install-when-ready
+        es.put("LuminaUpdateDownloadInBackground", "Descargar en segundo plano");
+        es.put("LuminaUpdateCancelDownload", "Cancelar descarga");
+        es.put("LuminaUpdateNotificationTitle", "Descargando actualización");
+        es.put("LuminaUpdateNotificationProgress", "%1$s / %2$s MB");
+        es.put("LuminaUpdateReadyTitle", "Actualización descargada");
+        es.put("LuminaUpdateReadyText", "Toca para instalar");
+        es.put("LuminaUpdateReadyVersionText", "Toca para instalar la versión %1$s");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -3572,6 +3628,14 @@ ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaSessionQrConfirmTitle", "Autorizar um novo dispositivo?");
         ptBr.put("LuminaSessionQrConfirmMessage", "Você está prestes a autorizar um novo dispositivo a entrar na sua conta. A não ser que você mesmo esteja na frente daquele computador, quem o controla vai conseguir ler todas as suas mensagens. Nunca escaneie um QR code de login que alguém enviou para você.");
         ptBr.put("LuminaSessionQrConfirmContinue", "Estou nesse dispositivo — continuar");
+        // updater: background download + install-when-ready
+        ptBr.put("LuminaUpdateDownloadInBackground", "Baixar em segundo plano");
+        ptBr.put("LuminaUpdateCancelDownload", "Cancelar download");
+        ptBr.put("LuminaUpdateNotificationTitle", "Baixando atualização");
+        ptBr.put("LuminaUpdateNotificationProgress", "%1$s / %2$s MB");
+        ptBr.put("LuminaUpdateReadyTitle", "Atualização baixada");
+        ptBr.put("LuminaUpdateReadyText", "Toque para instalar");
+        ptBr.put("LuminaUpdateReadyVersionText", "Toque para instalar a versão %1$s");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -4015,6 +4079,14 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaSessionQrConfirmTitle", "Izinkan perangkat baru?");
         id.put("LuminaSessionQrConfirmMessage", "Anda akan mengizinkan perangkat baru masuk ke akun Anda. Kecuali Anda sendiri yang duduk di depan komputer itu, siapa pun yang mengendalikannya bisa membaca semua pesan Anda. Jangan pernah memindai kode QR login yang dikirimkan orang lain.");
         id.put("LuminaSessionQrConfirmContinue", "Saya ada di perangkat itu — lanjutkan");
+        // updater: background download + install-when-ready
+        id.put("LuminaUpdateDownloadInBackground", "Unduh di latar belakang");
+        id.put("LuminaUpdateCancelDownload", "Batalkan unduhan");
+        id.put("LuminaUpdateNotificationTitle", "Mengunduh pembaruan");
+        id.put("LuminaUpdateNotificationProgress", "%1$s / %2$s MB");
+        id.put("LuminaUpdateReadyTitle", "Pembaruan telah diunduh");
+        id.put("LuminaUpdateReadyText", "Ketuk untuk memasang");
+        id.put("LuminaUpdateReadyVersionText", "Ketuk untuk memasang versi %1$s");
         T.put("id", id);
     }
 

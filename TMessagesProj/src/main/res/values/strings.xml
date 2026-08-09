@@ -11375,6 +11375,14 @@
     <string name="LuminaUpdateFailed">Update download failed</string>
     <string name="LuminaUpdateChecking">Checking for updates…</string>
     <string name="LuminaUpdateCheckFailed">Could not check for updates. Check your connection and try again.</string>
+    <!-- LuminaGram updater: background download + install-when-ready -->
+    <string name="LuminaUpdateDownloadInBackground">Download in background</string>
+    <string name="LuminaUpdateCancelDownload">Cancel download</string>
+    <string name="LuminaUpdateNotificationTitle">Downloading update</string>
+    <string name="LuminaUpdateNotificationProgress">%1$s / %2$s MB</string>
+    <string name="LuminaUpdateReadyTitle">Update downloaded</string>
+    <string name="LuminaUpdateReadyText">Tap to install</string>
+    <string name="LuminaUpdateReadyVersionText">Tap to install version %1$s</string>
     <!-- LuminaGram info density (wave 1) -->
     <string name="LuminaInfoDensity">Info density</string>
     <string name="LuminaShowDcId">Show datacenter ID</string>
