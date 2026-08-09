@@ -25,5 +25,15 @@
             android:exported="true"
             android:foregroundServiceType="dataSync|remoteMessaging"
         />
+
+        <!-- LuminaGram: keeps the self-updater's APK download alive in the
+             background and owns its progress notification. dataSync matches the
+             two services already declared above; FOREGROUND_SERVICE and
+             FOREGROUND_SERVICE_DATA_SYNC are declared in the library manifest. -->
+        <service
+            android:name="org.telegram.messenger.LuminaUpdateService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+        />
     </application>
 </manifest>
