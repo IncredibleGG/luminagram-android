@@ -15,6 +15,7 @@ import org.telegram.messenger.FileLoader;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaSessionGuard;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
@@ -24,6 +25,7 @@ import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Components.AlertsCreator;
 import org.telegram.ui.Components.EditTextBoldCursor;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.UItem;
@@ -53,6 +55,8 @@ public class LuminaSecurityActivity extends BaseFragment {
     private static final int ID_FAKECRASH_ENABLED = 3;
     private static final int ID_FAKECRASH_SET_CODE = 4;
     private static final int ID_SCREENSHOT_DETECTION = 5;
+    private static final int ID_SESSION_GUARD = 6;
+    private static final int ID_SESSION_GUARD_CHECK = 7;
 
     // Fake-crash duress unlock: a separate LOCAL code (NOT the Telegram passcode) that, when
     // entered at the passcode screen, shows a fake Android crash and exits. Read in PasscodeView.
@@ -108,6 +112,14 @@ public class LuminaSecurityActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_SCREENSHOT_DETECTION, LuminaLocale.getString(R.string.LuminaScreenshotDetection))
                 .setChecked(LuminaConfig.getBoolean("screenshotDetection", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaScreenshotDetectionInfo)));
+
+        // Login guard: diff the account's authorization list against the locally stored one
+        // and alert on anything new. Terminating is always the user's own tap.
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaSessionGuardHeader)));
+        items.add(UItem.asSwitch(ID_SESSION_GUARD, LuminaLocale.getString(R.string.LuminaSessionGuard))
+                .setChecked(LuminaSessionGuard.isEnabled()));
+        items.add(UItem.asButton(ID_SESSION_GUARD_CHECK, LuminaLocale.getString(R.string.LuminaSessionGuardCheckNow)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSessionGuardInfo)));
     }
 
     private CharSequence fakeCrashCodeValueText() {
@@ -133,10 +145,51 @@ public class LuminaSecurityActivity extends BaseFragment {
             case ID_SCREENSHOT_DETECTION:
                 LuminaConfig.putBoolean("screenshotDetection", !LuminaConfig.getBoolean("screenshotDetection", false));
                 break;
+            case ID_SESSION_GUARD:
+                LuminaSessionGuard.setEnabled(!LuminaSessionGuard.isEnabled());
+                break;
+            case ID_SESSION_GUARD_CHECK:
+                runSessionGuardCheck();
+                break;
         }
         if (listView != null && listView.adapter != null) {
             listView.adapter.update(true);
         }
+    }
+
+    /**
+     * Manual "check linked devices now". Runs the same official {@code account.getAuthorizations}
+     * diff as the automatic foreground check; any previously unknown login opens its own alert, so
+     * only the quiet outcomes are reported here. Nothing is ever terminated automatically.
+     */
+    private void runSessionGuardCheck() {
+        if (getParentActivity() == null) {
+            return;
+        }
+        final AlertDialog progress = new AlertDialog(getParentActivity(), AlertDialog.ALERT_TYPE_SPINNER);
+        progress.setCanCancel(false);
+        try {
+            progress.show();
+        } catch (Throwable ignore) {
+        }
+        LuminaSessionGuard.checkNow(currentAccount, (newLogins, failed) -> {
+            try {
+                progress.dismiss();
+            } catch (Throwable ignore) {
+            }
+            if (getParentActivity() == null) {
+                return;
+            }
+            if (failed) {
+                AlertsCreator.showSimpleAlert(LuminaSecurityActivity.this,
+                        LuminaLocale.getString(R.string.LuminaSessionGuardHeader),
+                        LuminaLocale.getString(R.string.LuminaSessionGuardCheckFailed));
+            } else if (newLogins <= 0) {
+                AlertsCreator.showSimpleAlert(LuminaSecurityActivity.this,
+                        LuminaLocale.getString(R.string.LuminaSessionGuardHeader),
+                        LuminaLocale.getString(R.string.LuminaSessionGuardNoNew));
+            }
+        });
     }
 
     /**
