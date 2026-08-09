@@ -11303,6 +11303,30 @@
     <string name="LuminaChatLangThemTitle">Their messages, translated into</string>
     <string name="LuminaChatLangMeTitle">My messages, translated into</string>
     <string name="LuminaChatLangNone">Not translated</string>
+    <!-- LuminaGram per-chat register (tone / formality / relationship) -->
+    <string name="LuminaChatRegister">Tone: %1$s</string>
+    <string name="LuminaChatRegisterOff">Tone: not set</string>
+    <string name="LuminaChatRegisterTitle">Tone for this chat</string>
+    <string name="LuminaChatRegisterNone">Not set</string>
+    <string name="LuminaChatRegisterNoneInfo">Translate as usual, with no tone instruction.</string>
+    <string name="LuminaChatRegisterClient">Client</string>
+    <string name="LuminaChatRegisterClientInfo">Polite, professional business language; formal honorifics where the language has them.</string>
+    <string name="LuminaChatRegisterColleague">Colleague</string>
+    <string name="LuminaChatRegisterColleagueInfo">Everyday polite workplace language — courteous, but not stiff.</string>
+    <string name="LuminaChatRegisterFriend">Friend</string>
+    <string name="LuminaChatRegisterFriendInfo">Casual, informal speech, the way you talk to a friend.</string>
+    <string name="LuminaChatRegisterFamily">Family</string>
+    <string name="LuminaChatRegisterFamilyInfo">Warm, familiar language of the kind used at home.</string>
+    <string name="LuminaChatRegisterElder">Elder</string>
+    <string name="LuminaChatRegisterElderInfo">Respectful and deferential, but still warm rather than corporate.</string>
+    <string name="LuminaChatRegisterRomance">Someone special</string>
+    <string name="LuminaChatRegisterRomanceInfo">Warm and playful, with a light flirtatious touch.</string>
+    <string name="LuminaChatRegisterCustom">Custom…</string>
+    <string name="LuminaChatRegisterCustomInfo">Describe the relationship in your own words.</string>
+    <string name="LuminaChatRegisterCustomTitle">Describe this relationship</string>
+    <string name="LuminaChatRegisterCustomHint">e.g. my thesis advisor — respectful but not stiff</string>
+    <string name="LuminaChatRegisterUnsupported">The current translation engine ignores tone</string>
+    <string name="LuminaChatRegisterDeepL">DeepL: formal/informal only, some languages</string>
     <string name="LuminaArticleTranslate">Translate article</string>
     <string name="LuminaTranslateSelection">Translate</string>
     <!-- LuminaGram multi-provider translation -->

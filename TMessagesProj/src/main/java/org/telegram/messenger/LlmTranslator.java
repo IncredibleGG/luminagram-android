@@ -55,6 +55,15 @@ final class LlmTranslator implements LuminaTranslator {
             prompt = LuminaTranslators.LLM_DEFAULT_PROMPT;
         }
         prompt = prompt.replace("{lang}", LuminaLang.name(toLang));
+        // LuminaGram: this chat's register (client / friend / elder / …) is layered ON TOP of the
+        // user's own system prompt, never in place of it -- whatever they told the model to do it
+        // still does, now in the tone the relationship calls for. Null when no register is set for
+        // this chat, or when the chat cannot be identified, which leaves the request byte-identical
+        // to what it was before this feature existed.
+        final String register = LuminaRegister.promptSuffix();
+        if (register != null) {
+            prompt = prompt + register;
+        }
 
         final String url = base + "/chat/completions";
         final String body;

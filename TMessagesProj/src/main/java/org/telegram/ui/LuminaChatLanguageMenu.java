@@ -3,13 +3,21 @@ package org.telegram.ui;
 import static org.telegram.messenger.AndroidUtilities.dp;
 
 import android.content.Context;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.FileLog;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaRegister;
 import org.telegram.messenger.R;
 import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.Utilities;
@@ -18,18 +26,21 @@ import org.telegram.ui.ActionBar.ActionBarPopupWindow;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Components.EditTextBoldCursor;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.TranslateAlert2;
 
 import java.util.ArrayList;
 
 /**
- * LuminaGram: the two-row menu behind the translate icon in a chat's title bar, ported from
+ * LuminaGram: the three-row menu behind the translate icon in a chat's title bar, ported from
  * the desktop client (lumina/lumina_chat_language_menu.cpp) so both platforms behave alike.
  *
  * One row per direction — what arrives, what is sent — each naming its own current state and
- * opening the language list when pressed. The rows are built fresh on every open, so they
- * never carry stale text; nothing here is retained between openings.
+ * opening the language list when pressed, and below them a third row for the chat's register:
+ * who this person is to you, and therefore how a translation of the chat should sound. The rows
+ * are built fresh on every open, so they never carry stale text; nothing here is retained
+ * between openings.
  */
 public final class LuminaChatLanguageMenu {
 
@@ -82,7 +93,7 @@ public final class LuminaChatLanguageMenu {
             });
             layout.addView(incoming, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 
-            final ActionBarMenuSubItem outgoing = new ActionBarMenuSubItem(context, false, true, resourcesProvider);
+            final ActionBarMenuSubItem outgoing = new ActionBarMenuSubItem(context, false, false, resourcesProvider);
             outgoing.setTextAndIcon(outgoingRowText(dialogId), R.drawable.msg_send);
             outgoing.setMultiline(false);
             outgoing.setMinimumWidth(dp(220));
@@ -91,6 +102,24 @@ public final class LuminaChatLanguageMenu {
                 showOutgoingPicker(fragment, dialogId, onChanged);
             });
             layout.addView(outgoing, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+
+            final ActionBarMenuSubItem register = new ActionBarMenuSubItem(context, false, true, resourcesProvider);
+            register.setTextAndIcon(registerRowText(dialogId), R.drawable.msg_customize);
+            register.setMultiline(false);
+            register.setMinimumWidth(dp(220));
+            // The caveat, when there is one, sits under the row in grey. An engine that cannot
+            // carry tone has to say so here: a register the user set and the engine silently drops
+            // is worse than no register at all, because it reads as having worked.
+            final CharSequence caveat = registerRowCaveat(dialogId);
+            if (caveat != null) {
+                register.setSubtext(caveat);
+                register.setSubtextColor(Theme.getColor(Theme.key_dialogTextGray2, resourcesProvider));
+            }
+            register.setOnClickListener(v -> {
+                dismiss(window);
+                showRegisterPicker(fragment, dialogId, onChanged);
+            });
+            layout.addView(register, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 
             layout.setupRadialSelectors(Theme.getColor(Theme.key_dialogButtonSelector, resourcesProvider));
 
@@ -269,6 +298,173 @@ public final class LuminaChatLanguageMenu {
                         onChanged.run();
                     }
                 });
+    }
+
+    // ---- register ------------------------------------------------------------------------
+
+    // The third row names the relationship this chat is in, because that is what decides how
+    // both halves above should sound. Unset is its own string: "Tone: not set" is a state, and
+    // substituting a word for "none" into "Tone: {1}" would read like a choice was made.
+    private static String registerRowText(long dialogId) {
+        final String stored = LuminaRegister.get(dialogId);
+        if (stored == null || stored.length() == 0) {
+            return LuminaLocale.getString(R.string.LuminaChatRegisterOff);
+        }
+        return String.format(LuminaLocale.getString(R.string.LuminaChatRegister), LuminaRegister.displayName(stored));
+    }
+
+    // What the currently selected engine can actually do with a register, said plainly, or null
+    // when there is nothing to warn about (no register set, or an engine that honours it fully).
+    private static CharSequence registerRowCaveat(long dialogId) {
+        final String stored = LuminaRegister.get(dialogId);
+        if (stored == null || stored.length() == 0) {
+            return null;
+        }
+        if (LuminaRegister.engineIgnoresRegister()) {
+            return LuminaLocale.getString(R.string.LuminaChatRegisterUnsupported);
+        }
+        if (LuminaRegister.engineIsDeepL()) {
+            return LuminaLocale.getString(R.string.LuminaChatRegisterDeepL);
+        }
+        return null;
+    }
+
+    /**
+     * The register list: "Not set" first, then the presets, then "Custom…". Each entry carries a
+     * sentence of its own, because "Client" and "Colleague" only differ in what they do to the
+     * translation — the name alone does not tell anyone which one they want.
+     *
+     * Built by hand rather than through {@code AlertDialog.setItems}, whose rows are a single
+     * fixed-height line with no room for the explanation.
+     */
+    private static void showRegisterPicker(BaseFragment fragment, long dialogId, Runnable onChanged) {
+        final Context context = fragment.getParentActivity();
+        if (context == null) {
+            return;
+        }
+        try {
+            final String current = LuminaRegister.get(dialogId);
+
+            final ArrayList<String> codes = new ArrayList<>();
+            codes.add(LuminaRegister.NONE);
+            for (int i = 0; i < LuminaRegister.CODES.length; ++i) {
+                codes.add(LuminaRegister.CODES[i]);
+            }
+            codes.add(LuminaRegister.CUSTOM);
+
+            final LinearLayout list = new LinearLayout(context);
+            list.setOrientation(LinearLayout.VERTICAL);
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context, fragment.getResourceProvider());
+            builder.setTitle(LuminaLocale.getString(R.string.LuminaChatRegisterTitle));
+            builder.setView(list);
+            builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+            final AlertDialog dialog = builder.create();
+
+            for (int i = 0; i < codes.size(); ++i) {
+                final String code = codes.get(i);
+                final boolean selected = LuminaRegister.CUSTOM.equals(code)
+                        ? LuminaRegister.isCustom(current)
+                        : code.equals(current == null ? LuminaRegister.NONE : current);
+                final View row = registerRow(context, registerOptionName(code), registerOptionInfo(code), selected);
+                row.setOnClickListener(v -> {
+                    dialog.dismiss();
+                    if (LuminaRegister.CUSTOM.equals(code)) {
+                        showCustomRegisterInput(fragment, dialogId, onChanged);
+                    } else {
+                        LuminaRegister.set(dialogId, code);
+                        if (onChanged != null) {
+                            onChanged.run();
+                        }
+                    }
+                });
+                list.addView(row, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+            }
+
+            fragment.showDialog(dialog);
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+    }
+
+    private static CharSequence registerOptionName(String code) {
+        final int res = LuminaRegister.nameRes(code);
+        return res == 0 ? LuminaLocale.getString(R.string.LuminaChatRegisterNone) : LuminaLocale.getString(res);
+    }
+
+    private static CharSequence registerOptionInfo(String code) {
+        final int res = LuminaRegister.infoRes(code);
+        return res == 0 ? LuminaLocale.getString(R.string.LuminaChatRegisterNoneInfo) : LuminaLocale.getString(res);
+    }
+
+    // One picker row: the name, and under it the sentence that says what choosing it does. The
+    // current choice is drawn in the accent colour rather than with a checkmark, so the row keeps
+    // its full width for the explanation.
+    private static View registerRow(Context context, CharSequence title, CharSequence info, boolean selected) {
+        final LinearLayout row = new LinearLayout(context);
+        row.setOrientation(LinearLayout.VERTICAL);
+        row.setBackground(Theme.createSelectorDrawable(Theme.getColor(Theme.key_dialogButtonSelector), 2));
+        row.setPadding(dp(22), dp(10), dp(22), dp(10));
+
+        final TextView name = new TextView(context);
+        name.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        name.setTextColor(Theme.getColor(selected ? Theme.key_dialogTextBlue2 : Theme.key_dialogTextBlack));
+        name.setText(title);
+        row.addView(name, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+
+        final TextView detail = new TextView(context);
+        detail.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        detail.setTextColor(Theme.getColor(Theme.key_dialogTextGray2));
+        detail.setText(info);
+        row.addView(detail, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 2, 0, 0));
+
+        return row;
+    }
+
+    // "Custom" is the escape hatch for every relationship the six presets do not name — a thesis
+    // advisor, a landlord, an ex. The sentence the user writes is handed to the model as-is.
+    private static void showCustomRegisterInput(BaseFragment fragment, long dialogId, Runnable onChanged) {
+        final Context context = fragment.getParentActivity();
+        if (context == null) {
+            return;
+        }
+        try {
+            final EditTextBoldCursor edit = new EditTextBoldCursor(context);
+            edit.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+            edit.setTextColor(Theme.getColor(Theme.key_dialogTextBlack));
+            edit.setHintTextColor(Theme.getColor(Theme.key_dialogTextHint));
+            edit.setCursorColor(Theme.getColor(Theme.key_dialogTextBlack));
+            edit.setCursorSize(dp(20));
+            edit.setCursorWidth(1.5f);
+            edit.setBackgroundDrawable(null);
+            edit.setSingleLine(false);
+            edit.setMaxLines(4);
+            edit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            edit.setHint(LuminaLocale.getString(R.string.LuminaChatRegisterCustomHint));
+            edit.setText(LuminaRegister.customText(LuminaRegister.get(dialogId)));
+            edit.setSelection(edit.length());
+
+            final FrameLayout container = new FrameLayout(context);
+            container.addView(edit, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT,
+                    Gravity.CENTER_VERTICAL, 24, 6, 24, 0));
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context, fragment.getResourceProvider());
+            builder.setTitle(LuminaLocale.getString(R.string.LuminaChatRegisterCustomTitle));
+            builder.setView(container);
+            builder.setPositiveButton(LocaleController.getString(R.string.Save), (d, which) -> {
+                // An empty description is not a register: it clears the chat back to unset rather
+                // than storing a "custom" that says nothing.
+                LuminaRegister.set(dialogId, LuminaRegister.custom(edit.getText().toString()));
+                AndroidUtilities.hideKeyboard(edit);
+                if (onChanged != null) {
+                    onChanged.run();
+                }
+            });
+            builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+            fragment.showDialog(builder.create());
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
     }
 
     // ---- shared picker -------------------------------------------------------------------
