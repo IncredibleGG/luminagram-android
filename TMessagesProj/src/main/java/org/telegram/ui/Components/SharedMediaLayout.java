@@ -86,6 +86,7 @@ import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
@@ -3830,7 +3831,9 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
     }
 
     protected boolean includeStories() {
-        return true;
+        // LuminaGram: drop the Stories / Archived stories tab from profiles when the
+        // kill switch is on. Dedicated stories fragments (isStoriesView) keep working.
+        return !LuminaConfig.isStoriesFullyOff() || isStoriesView();
     }
 
     protected boolean includeSavedDialogs() {

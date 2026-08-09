@@ -10364,6 +10364,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     }
 
     private boolean needInsetForStories() {
+        // LuminaGram: with stories fully off the avatar keeps its normal (un-inset) size.
+        if (LuminaConfig.isStoriesFullyOff()) {
+            return false;
+        }
         return getMessagesController().getStoriesController().hasStories(getDialogId()) && !isTopic;
     }
 
@@ -12547,7 +12551,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             actionsView.set(ProfileActionsView.KEY_VIDEO, videoCallItemVisible);
             actionsView.set(ProfileActionsView.KEY_DISCUSS, discussAction);
             actionsView.set(ProfileActionsView.KEY_LEAVE, leaveAction);
-            actionsView.set(ProfileActionsView.KEY_STORY, addStoryAction);
+            actionsView.set(ProfileActionsView.KEY_STORY, addStoryAction && !LuminaConfig.isStoriesPostEntryHidden());
             actionsView.set(ProfileActionsView.KEY_VOICE_CHAT, voiceChatAction);
             actionsView.set(ProfileActionsView.KEY_STREAM, streamAction);
 

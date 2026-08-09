@@ -21,6 +21,11 @@ public class LuminaConfig {
     // ---- Chat-list / tabs / stories customization ----
     public static boolean hideTabs;
     public static boolean hideStories;
+    // "Stories, fully off" master switch (Wave 32). Independent of hideStories so that
+    // existing users keep exactly their current behavior; when on it implies hideStories.
+    public static boolean storiesFullyOff;
+    // Sub-option of storiesFullyOff: also hide the entries that post YOUR OWN story.
+    public static boolean storiesHidePostEntry;
     public static boolean compactChatList;
 
     // ---- Translation ----
@@ -49,6 +54,8 @@ public class LuminaConfig {
 
                 hideTabs = preferences.getBoolean("hideTabs", false);
                 hideStories = preferences.getBoolean("hideStories", false);
+                storiesFullyOff = preferences.getBoolean("storiesFullyOff", false);
+                storiesHidePostEntry = preferences.getBoolean("storiesHidePostEntry", false);
                 compactChatList = preferences.getBoolean("compactChatList", false);
                 translateBeforeSend = preferences.getBoolean("translateBeforeSend", false);
                 translateBeforeSendConfirm = preferences.getBoolean("translateBeforeSendConfirm", false);
@@ -278,6 +285,39 @@ public class LuminaConfig {
             return;
         }
         editor.putBoolean("hideStories", hideStories ^= true).apply();
+    }
+
+    public static void toggleStoriesFullyOff() {
+        if (editor == null) {
+            return;
+        }
+        editor.putBoolean("storiesFullyOff", storiesFullyOff ^= true).apply();
+    }
+
+    public static void toggleStoriesHidePostEntry() {
+        if (editor == null) {
+            return;
+        }
+        editor.putBoolean("storiesHidePostEntry", storiesHidePostEntry ^= true).apply();
+    }
+
+    /**
+     * Master kill switch for stories. Purely a local display gate: no server state is
+     * touched and no API is called, we simply never render or notify about stories.
+     * Read from draw paths, so it must stay a plain static field read (no prefs I/O).
+     */
+    public static boolean isStoriesFullyOff() {
+        return storiesFullyOff;
+    }
+
+    /** The stories row above the chat list (and in Archive) is hidden. */
+    public static boolean isStoriesRowHidden() {
+        return hideStories || storiesFullyOff;
+    }
+
+    /** The "post my own story" camera entries are hidden (sub-option of the master switch). */
+    public static boolean isStoriesPostEntryHidden() {
+        return storiesFullyOff && storiesHidePostEntry;
     }
 
     public static void toggleCompactChatList() {

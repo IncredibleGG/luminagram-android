@@ -1079,6 +1079,10 @@ public class NotificationsController extends BaseController implements Notificat
                     continue;
                 }
                 if (messageObject.isStoryPush) {
+                    if (LuminaConfig.isStoriesFullyOff()) {
+                        // LuminaGram: stories are off -- never store or show a story push.
+                        continue;
+                    }
                     long date = messageObject.messageOwner == null ? System.currentTimeMillis() : messageObject.messageOwner.date * 1000L;
                     long dialogId = messageObject.getDialogId();
                     int id = messageObject.getId();
@@ -1104,6 +1108,10 @@ public class NotificationsController extends BaseController implements Notificat
                     }
 
                     Collections.sort(storyPushMessages, Comparator.comparingLong(n -> n.date));
+                    continue;
+                }
+                if ((messageObject.isStoryReactionPush || messageObject.isStoryMentionPush) && LuminaConfig.isStoriesFullyOff()) {
+                    // LuminaGram: story reactions / story mentions are stories too.
                     continue;
                 }
                 if (messageObject != null && messageObject.isOauthPush) {
@@ -4111,11 +4119,14 @@ public class NotificationsController extends BaseController implements Notificat
                     maxDate = message.messageOwner.date;
                 }
             }
-            for (int i = 0; i < storyPushMessages.size(); ++i) {
-                StoryNotification n = storyPushMessages.get(i);
-                if (maxDate < n.date / 1000L) {
-                    lastNotification = n;
-                    maxDate = n.date / 1000L;
+            // LuminaGram: with stories off, any story push left over in storage is ignored.
+            if (!LuminaConfig.isStoriesFullyOff()) {
+                for (int i = 0; i < storyPushMessages.size(); ++i) {
+                    StoryNotification n = storyPushMessages.get(i);
+                    if (maxDate < n.date / 1000L) {
+                        lastNotification = n;
+                        maxDate = n.date / 1000L;
+                    }
                 }
             }
             if (lastNotification == null) {
@@ -4851,7 +4862,7 @@ public class NotificationsController extends BaseController implements Notificat
         SharedPreferences preferences = getAccountInstance().getNotificationsSettings();
 
         ArrayList<DialogKey> sortedDialogs = new ArrayList<>();
-        if (!storyPushMessages.isEmpty()) {
+        if (!storyPushMessages.isEmpty() && !LuminaConfig.isStoriesFullyOff()) {
             sortedDialogs.add(new DialogKey(0, 0, true));
         }
         LongSparseArray<ArrayList<MessageObject>> messagesByDialogs = new LongSparseArray<>();

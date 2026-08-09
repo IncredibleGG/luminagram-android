@@ -40,6 +40,7 @@ import org.telegram.messenger.ImageLoader;
 import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
 import org.telegram.messenger.NotificationCenter;
@@ -118,6 +119,28 @@ public class StoriesUtilities {
     };
 
     public static void drawAvatarWithStory(long dialogId, Canvas canvas, ImageReceiver avatarImage, boolean hasStories, AvatarStoryParams params) {
+        // LuminaGram: "stories fully off" -- draw the bare avatar, never the story ring.
+        // Mirrors the STATE_EMPTY fast path below so callers keep identical avatar bounds.
+        if (LuminaConfig.isStoriesFullyOff() && params != null && avatarImage != null) {
+            if (params.dialogId != dialogId) {
+                params.dialogId = dialogId;
+                params.reset();
+            }
+            params.prevState = STATE_EMPTY;
+            params.currentState = STATE_EMPTY;
+            params.unreadState = STATE_EMPTY;
+            params.prevUnreadState = STATE_EMPTY;
+            params.progressToSate = 1f;
+            params.showProgress = false;
+            params.drawnLive = false;
+            float emptyScale = params.buttonBounce != null ? params.buttonBounce.getScale(0.08f) : 1f;
+            avatarImage.setImageCoords(params.originalAvatarRect);
+            canvas.save();
+            canvas.scale(emptyScale, emptyScale, params.originalAvatarRect.centerX(), params.originalAvatarRect.centerY());
+            avatarImage.draw(canvas);
+            canvas.restore();
+            return;
+        }
         StoriesController storiesController = MessagesController.getInstance(UserConfig.selectedAccount).getStoriesController();
         boolean animated = params.animate;
         if (params.dialogId != dialogId) {
@@ -555,7 +578,7 @@ public class StoriesUtilities {
     }
 
     public static int getPredictiveUnreadState(StoriesController storiesController, long dialogId) {
-        if (dialogId == 0) {
+        if (dialogId == 0 || LuminaConfig.isStoriesFullyOff()) {
             return STATE_EMPTY;
         }
         if (dialogId > 0) {
@@ -1312,6 +1335,10 @@ public class StoriesUtilities {
                     } else {
                         hasStories = (MessagesController.getInstance(UserConfig.selectedAccount).getStoriesController().hasStories(dialogId) || chat != null && !chat.stories_unavailable && chat.stories_max_id != null && chat.stories_max_id.max_id > 0);
                     }
+                }
+                if (LuminaConfig.isStoriesFullyOff()) {
+                    // LuminaGram: no ring, so tapping an avatar must not open the story viewer.
+                    hasStories = false;
                 }
                 if (dialogId != UserConfig.getInstance(UserConfig.selectedAccount).clientUserId && hasStories) {
                     if (buttonBounce == null) {

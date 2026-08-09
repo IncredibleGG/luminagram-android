@@ -1183,7 +1183,8 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                 break;
             }
         }
-        if (MessagesController.getInstance(currentAccount).storiesController.getTotalStoriesCount(true) > 0) {
+        // LuminaGram: the archive row preview never advertises stories when they are off.
+        if (!LuminaConfig.isStoriesFullyOff() && MessagesController.getInstance(currentAccount).storiesController.getTotalStoriesCount(true) > 0) {
             int totalCount;
             totalCount = Math.max(1, MessagesController.getInstance(currentAccount).storiesController.getTotalStoriesCount(true));
             if (builder.length() > 0) {
