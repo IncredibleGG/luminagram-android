@@ -413,6 +413,30 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaOtpGuardSendAnyway", "我知道风险，仍要发送");
         zhHans.put("LuminaOtpGuard", "登录码泄露防护");
         zhHans.put("LuminaOtpGuardInfo", "当 Telegram 刚给你发过登录码、而你正要发出含有验证码的消息时，先弹出警告。整个判断都在你的设备上完成，不会上传任何内容，也不会改动你的消息。");
+        // --- login guard ---
+        zhHans.put("LuminaSessionGuardHeader", "登录守卫");
+        zhHans.put("LuminaSessionGuard", "新登录提醒");
+        zhHans.put("LuminaSessionGuardInfo", "应用启动时检查你的已连接设备，发现你没确认过的登录就立刻提醒。扫描登录二维码等于把一个活跃会话交给对方，对方能看到你全部的聊天记录。检查最多每 30 分钟一次，走 Telegram 官方接口，数据不会离开你的设备。");
+        zhHans.put("LuminaSessionGuardCheckNow", "立即检查登录设备");
+        zhHans.put("LuminaSessionGuardNoNew", "没有新登录，所有已连接设备都是你确认过的。");
+        zhHans.put("LuminaSessionGuardCheckFailed", "无法检查已连接设备，请检查网络后重试。");
+        zhHans.put("LuminaSessionAlertTitle", "发现新登录");
+        zhHans.put("LuminaSessionAlertIntro", "有一台你没确认过的设备已登录你的账号。如果不是你本人操作，对方现在就能看到你全部的聊天记录。");
+        zhHans.put("LuminaSessionAlertDevice", "设备");
+        zhHans.put("LuminaSessionAlertApp", "应用");
+        zhHans.put("LuminaSessionAlertIp", "IP 地址");
+        zhHans.put("LuminaSessionAlertLocation", "位置");
+        zhHans.put("LuminaSessionAlertTime", "登录时间");
+        zhHans.put("LuminaSessionAlertNotMe", "不是我 — 立即终止此登录");
+        zhHans.put("LuminaSessionAlertItsMe", "是我");
+        zhHans.put("LuminaSessionTerminated", "已终止该登录");
+        zhHans.put("LuminaSessionTerminateFailed", "无法终止该登录。请到「设置 → 设备」手动移除。");
+        zhHans.put("LuminaSession2FAMessage", "该设备已被登出。建议开启两步验证，这样别人光有验证码也登不进来。");
+        zhHans.put("LuminaSession2FAButton", "立即设置");
+        zhHans.put("LuminaSessionLater", "以后再说");
+        zhHans.put("LuminaSessionQrConfirmTitle", "要授权新设备登录吗？");
+        zhHans.put("LuminaSessionQrConfirmMessage", "你正在授权一台新设备登录你的账号。除非你人就在那台电脑前面，否则对方会看到你全部的消息。不要扫别人发给你的登录二维码。");
+        zhHans.put("LuminaSessionQrConfirmContinue", "我就在那台设备前，继续");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -800,6 +824,30 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaOtpGuardSendAnyway", "我知道風險，仍要傳送");
         zhHant.put("LuminaOtpGuard", "登入碼外洩防護");
         zhHant.put("LuminaOtpGuardInfo", "當 Telegram 剛寄給你登入碼、而你正要送出含有驗證碼的訊息時，先跳出警告。整個判斷都在你的裝置上完成，不會上傳任何內容，也不會更動你的訊息。");
+        // --- login guard ---
+        zhHant.put("LuminaSessionGuardHeader", "登入守衛");
+        zhHant.put("LuminaSessionGuard", "新登入警示");
+        zhHant.put("LuminaSessionGuardInfo", "App 啟動時檢查你的已連結裝置，發現你沒確認過的登入就立刻提醒。掃描登入 QR code 等於把一個活躍的登入 session 交給對方，對方就能看到你全部的聊天紀錄。檢查最多每 30 分鐘一次，走 Telegram 官方 API，資料不會離開你的裝置。");
+        zhHant.put("LuminaSessionGuardCheckNow", "立即檢查登入裝置");
+        zhHant.put("LuminaSessionGuardNoNew", "沒有新的登入，所有已連結裝置都是你確認過的。");
+        zhHant.put("LuminaSessionGuardCheckFailed", "無法檢查已連結裝置，請確認網路後再試一次。");
+        zhHant.put("LuminaSessionAlertTitle", "偵測到新登入");
+        zhHant.put("LuminaSessionAlertIntro", "有一台你沒確認過的裝置登入了你的帳號。如果不是你本人，對方現在就看得到你全部的聊天紀錄。");
+        zhHant.put("LuminaSessionAlertDevice", "裝置");
+        zhHant.put("LuminaSessionAlertApp", "App");
+        zhHant.put("LuminaSessionAlertIp", "IP 位址");
+        zhHant.put("LuminaSessionAlertLocation", "位置");
+        zhHant.put("LuminaSessionAlertTime", "登入時間");
+        zhHant.put("LuminaSessionAlertNotMe", "不是我 — 立即終止此登入");
+        zhHant.put("LuminaSessionAlertItsMe", "是我");
+        zhHant.put("LuminaSessionTerminated", "已終止該登入");
+        zhHant.put("LuminaSessionTerminateFailed", "無法終止該登入。請到「設定 → 裝置」手動移除。");
+        zhHant.put("LuminaSession2FAMessage", "該裝置已登出。建議開啟兩步驟驗證，這樣別人光拿到驗證碼也登不進來。");
+        zhHant.put("LuminaSession2FAButton", "立即設定");
+        zhHant.put("LuminaSessionLater", "稍後再說");
+        zhHant.put("LuminaSessionQrConfirmTitle", "要授權新裝置登入嗎？");
+        zhHant.put("LuminaSessionQrConfirmMessage", "你正在授權一個新裝置登入你的帳號。除非你人就在那台電腦前面，否則對方會看到你全部的訊息。絕對不要掃別人傳給你的登入 QR code。");
+        zhHant.put("LuminaSessionQrConfirmContinue", "我就在那台裝置前，繼續");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1186,6 +1234,30 @@ ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaOtpGuardSendAnyway", "أدرك الخطر، أرسل على أي حال");
         ar.put("LuminaOtpGuard", "حماية رمز تسجيل الدخول");
         ar.put("LuminaOtpGuardInfo", "تحذيرك قبل إرسال رسالة تحتوي على رمز تسجيل الدخول، إذا كان تيليجرام قد أرسل لك رمزًا للتو. يتم الفحص بالكامل على جهازك، ولا يتم رفع أي شيء، ولا تُعدَّل رسالتك أبدًا.");
+        // --- login guard ---
+        ar.put("LuminaSessionGuardHeader", "حارس تسجيل الدخول");
+        ar.put("LuminaSessionGuard", "تنبيهات تسجيل الدخول الجديد");
+        ar.put("LuminaSessionGuardInfo", "يفحص الأجهزة المرتبطة بحسابك عند فتح التطبيق وينبّهك إلى أي جلسة لم توافق عليها. مسح رمز QR لتسجيل الدخول يمنح صاحبه جلسة نشطة تقرأ كل محادثاتك. يتم الفحص مرة كل 30 دقيقة على الأكثر عبر واجهة تيليجرام الرسمية، والبيانات لا تغادر جهازك.");
+        ar.put("LuminaSessionGuardCheckNow", "افحص الأجهزة المرتبطة الآن");
+        ar.put("LuminaSessionGuardNoNew", "لا توجد عمليات دخول جديدة. كل جهاز مرتبط سبق أن وافقت عليه.");
+        ar.put("LuminaSessionGuardCheckFailed", "تعذّر فحص الأجهزة المرتبطة. تحقق من اتصالك وحاول مجددًا.");
+        ar.put("LuminaSessionAlertTitle", "تم رصد تسجيل دخول جديد");
+        ar.put("LuminaSessionAlertIntro", "جهاز لم توافق عليه مسجَّل الدخول إلى حسابك. إن لم تكن أنت، فبإمكانه قراءة كل محادثاتك الآن.");
+        ar.put("LuminaSessionAlertDevice", "الجهاز");
+        ar.put("LuminaSessionAlertApp", "التطبيق");
+        ar.put("LuminaSessionAlertIp", "عنوان IP");
+        ar.put("LuminaSessionAlertLocation", "الموقع");
+        ar.put("LuminaSessionAlertTime", "وقت الدخول");
+        ar.put("LuminaSessionAlertNotMe", "ليس أنا — أنهِ الجلسة الآن");
+        ar.put("LuminaSessionAlertItsMe", "هذا أنا");
+        ar.put("LuminaSessionTerminated", "تم إنهاء الجلسة");
+        ar.put("LuminaSessionTerminateFailed", "تعذّر إنهاء تلك الجلسة. افتح الإعدادات ← الأجهزة وأزلها من هناك.");
+        ar.put("LuminaSession2FAMessage", "تم تسجيل خروج ذلك الجهاز. فعّل التحقق بخطوتين حتى لا يتمكن أحد من الدخول برمز فقط.");
+        ar.put("LuminaSession2FAButton", "فعّله الآن");
+        ar.put("LuminaSessionLater", "لاحقًا");
+        ar.put("LuminaSessionQrConfirmTitle", "هل تريد تفويض جهاز جديد؟");
+        ar.put("LuminaSessionQrConfirmMessage", "أنت على وشك السماح لجهاز جديد بتسجيل الدخول إلى حسابك. ما لم تكن جالسًا أمام ذلك الجهاز بنفسك، فسيتمكن من يتحكم به من قراءة كل رسائلك. لا تمسح أبدًا رمز QR أرسله لك شخص ما.");
+        ar.put("LuminaSessionQrConfirmContinue", "أنا أمام ذلك الجهاز — متابعة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1572,6 +1644,30 @@ ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaOtpGuardSendAnyway", "Понимаю риск, всё равно отправить");
         ru.put("LuminaOtpGuard", "Защита кода входа");
         ru.put("LuminaOtpGuardInfo", "Предупреждать перед отправкой сообщения с кодом входа, если Telegram только что прислал вам код. Проверка выполняется полностью на вашем устройстве: ничего не загружается, сообщение не изменяется.");
+        // --- login guard ---
+        ru.put("LuminaSessionGuardHeader", "Защита входа");
+        ru.put("LuminaSessionGuard", "Оповещения о новых входах");
+        ru.put("LuminaSessionGuardInfo", "Проверяет список подключённых устройств при запуске приложения и предупреждает о любом сеансе, который вы не подтверждали. Сканируя QR-код для входа, вы отдаёте другому человеку активный сеанс, из которого видна вся ваша переписка. Проверка выполняется не чаще раза в 30 минут через официальный API Telegram, данные не покидают устройство.");
+        ru.put("LuminaSessionGuardCheckNow", "Проверить устройства сейчас");
+        ru.put("LuminaSessionGuardNoNew", "Новых входов нет. Все подключённые устройства вы уже подтвердили.");
+        ru.put("LuminaSessionGuardCheckFailed", "Не удалось проверить подключённые устройства. Проверьте соединение и повторите попытку.");
+        ru.put("LuminaSessionAlertTitle", "Обнаружен новый вход");
+        ru.put("LuminaSessionAlertIntro", "В ваш аккаунт вошло устройство, которое вы не подтверждали. Если это были не вы, оно прямо сейчас видит всю вашу переписку.");
+        ru.put("LuminaSessionAlertDevice", "Устройство");
+        ru.put("LuminaSessionAlertApp", "Приложение");
+        ru.put("LuminaSessionAlertIp", "IP-адрес");
+        ru.put("LuminaSessionAlertLocation", "Местоположение");
+        ru.put("LuminaSessionAlertTime", "Время входа");
+        ru.put("LuminaSessionAlertNotMe", "Это не я — завершить сеанс");
+        ru.put("LuminaSessionAlertItsMe", "Это я");
+        ru.put("LuminaSessionTerminated", "Сеанс завершён");
+        ru.put("LuminaSessionTerminateFailed", "Не удалось завершить этот сеанс. Откройте «Настройки → Устройства» и удалите его там.");
+        ru.put("LuminaSession2FAMessage", "Это устройство отключено. Включите двухэтапную аутентификацию, чтобы войти было нельзя по одному коду.");
+        ru.put("LuminaSession2FAButton", "Настроить сейчас");
+        ru.put("LuminaSessionLater", "Позже");
+        ru.put("LuminaSessionQrConfirmTitle", "Авторизовать новое устройство?");
+        ru.put("LuminaSessionQrConfirmMessage", "Вы собираетесь разрешить новому устройству войти в ваш аккаунт. Если вы не сидите за этим компьютером сами, тот, кто им управляет, сможет прочитать все ваши сообщения. Никогда не сканируйте QR-код для входа, который вам кто-то прислал.");
+        ru.put("LuminaSessionQrConfirmContinue", "Я за этим устройством — продолжить");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1958,6 +2054,30 @@ fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaOtpGuardSendAnyway", "خطر را می‌دانم، باز هم بفرست");
         fa.put("LuminaOtpGuard", "محافظت از کد ورود");
         fa.put("LuminaOtpGuardInfo", "اگر تلگرام همین حالا برای شما کد ورود فرستاده باشد، پیش از ارسال پیامی که حاوی کد است هشدار می‌دهد. بررسی کاملاً روی دستگاه شما انجام می‌شود، چیزی آپلود نمی‌شود و پیام شما هرگز تغییر نمی‌کند.");
+        // --- login guard ---
+        fa.put("LuminaSessionGuardHeader", "نگهبان ورود");
+        fa.put("LuminaSessionGuard", "هشدار ورود جدید");
+        fa.put("LuminaSessionGuardInfo", "هنگام باز شدن برنامه دستگاه‌های متصل را بررسی می‌کند و درباره هر نشستی که تأیید نکرده‌اید هشدار می‌دهد. اسکن کد QR ورود یعنی دادن یک نشست فعال به طرف مقابل که همه گفتگوهای شما را می‌بیند. بررسی حداکثر هر ۳۰ دقیقه یک‌بار و از طریق API رسمی تلگرام انجام می‌شود و داده‌ای از دستگاه شما خارج نمی‌شود.");
+        fa.put("LuminaSessionGuardCheckNow", "همین حالا دستگاه‌های متصل را بررسی کن");
+        fa.put("LuminaSessionGuardNoNew", "ورود جدیدی نیست. همه دستگاه‌های متصل را قبلاً تأیید کرده‌اید.");
+        fa.put("LuminaSessionGuardCheckFailed", "بررسی دستگاه‌های متصل ممکن نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.");
+        fa.put("LuminaSessionAlertTitle", "ورود جدید شناسایی شد");
+        fa.put("LuminaSessionAlertIntro", "دستگاهی که تأیید نکرده‌اید وارد حساب شما شده است. اگر شما نبوده‌اید، همین حالا همه گفتگوهای شما را می‌بیند.");
+        fa.put("LuminaSessionAlertDevice", "دستگاه");
+        fa.put("LuminaSessionAlertApp", "برنامه");
+        fa.put("LuminaSessionAlertIp", "نشانی IP");
+        fa.put("LuminaSessionAlertLocation", "موقعیت");
+        fa.put("LuminaSessionAlertTime", "زمان ورود");
+        fa.put("LuminaSessionAlertNotMe", "من نبودم — همین حالا قطع کن");
+        fa.put("LuminaSessionAlertItsMe", "خودم بودم");
+        fa.put("LuminaSessionTerminated", "نشست قطع شد");
+        fa.put("LuminaSessionTerminateFailed", "قطع این نشست ممکن نشد. به «تنظیمات ← دستگاه‌ها» بروید و آن را از آنجا حذف کنید.");
+        fa.put("LuminaSession2FAMessage", "آن دستگاه خارج شد. تأیید دومرحله‌ای را روشن کنید تا کسی فقط با یک کد نتواند وارد شود.");
+        fa.put("LuminaSession2FAButton", "همین حالا تنظیم کن");
+        fa.put("LuminaSessionLater", "بعداً");
+        fa.put("LuminaSessionQrConfirmTitle", "دستگاه جدید مجاز شود؟");
+        fa.put("LuminaSessionQrConfirmMessage", "شما در حال اجازه دادن به یک دستگاه جدید برای ورود به حساب خود هستید. مگر اینکه خودتان پشت آن رایانه باشید، هر کسی که آن را در اختیار دارد می‌تواند همه پیام‌های شما را بخواند. هرگز کد QR ورودی را که کسی برایتان فرستاده اسکن نکنید.");
+        fa.put("LuminaSessionQrConfirmContinue", "من پشت همان دستگاه هستم — ادامه");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2344,6 +2464,30 @@ tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaOtpGuardSendAnyway", "Riski biliyorum, yine de gönder");
         tr.put("LuminaOtpGuard", "Giriş kodu koruması");
         tr.put("LuminaOtpGuardInfo", "Telegram size az önce bir giriş kodu gönderdiyse, kod içeren bir mesajı göndermeden önce sizi uyarır. Kontrol tamamen cihazınızda yapılır, hiçbir şey yüklenmez ve mesajınız asla değiştirilmez.");
+        // --- login guard ---
+        tr.put("LuminaSessionGuardHeader", "Giriş koruması");
+        tr.put("LuminaSessionGuard", "Yeni giriş uyarıları");
+        tr.put("LuminaSessionGuardInfo", "Uygulama açıldığında bağlı cihazlarını kontrol eder ve onaylamadığın her oturum için seni uyarır. Giriş QR kodunu taramak, kodu gösteren kişiye tüm sohbetlerini okuyabilen etkin bir oturum vermek demektir. Kontrol en fazla 30 dakikada bir, Telegram API üzerinden yapılır ve veriler cihazından çıkmaz.");
+        tr.put("LuminaSessionGuardCheckNow", "Bağlı cihazları şimdi kontrol et");
+        tr.put("LuminaSessionGuardNoNew", "Yeni giriş yok. Bağlı tüm cihazları daha önce onaylamıştın.");
+        tr.put("LuminaSessionGuardCheckFailed", "Bağlı cihazlar kontrol edilemedi. Bağlantını kontrol edip tekrar dene.");
+        tr.put("LuminaSessionAlertTitle", "Yeni giriş algılandı");
+        tr.put("LuminaSessionAlertIntro", "Onaylamadığın bir cihaz hesabına giriş yapmış. Bu sen değilsen, şu anda tüm sohbetlerini okuyabilir.");
+        tr.put("LuminaSessionAlertDevice", "Cihaz");
+        tr.put("LuminaSessionAlertApp", "Uygulama");
+        tr.put("LuminaSessionAlertIp", "IP adresi");
+        tr.put("LuminaSessionAlertLocation", "Konum");
+        tr.put("LuminaSessionAlertTime", "Giriş zamanı");
+        tr.put("LuminaSessionAlertNotMe", "Ben değilim — oturumu hemen sonlandır");
+        tr.put("LuminaSessionAlertItsMe", "Bendim");
+        tr.put("LuminaSessionTerminated", "Oturum sonlandırıldı");
+        tr.put("LuminaSessionTerminateFailed", "Bu oturum sonlandırılamadı. Ayarlar → Cihazlar bölümünden kaldır.");
+        tr.put("LuminaSession2FAMessage", "O cihazın oturumu kapatıldı. Kimse yalnızca bir kodla giremesin diye İki Adımlı Doğrulamayı aç.");
+        tr.put("LuminaSession2FAButton", "Şimdi ayarla");
+        tr.put("LuminaSessionLater", "Sonra");
+        tr.put("LuminaSessionQrConfirmTitle", "Yeni cihaza izin verilsin mi?");
+        tr.put("LuminaSessionQrConfirmMessage", "Hesabına giriş yapması için yeni bir cihaza izin vermek üzeresin. O bilgisayarın başında bizzat sen oturmuyorsan, cihazı kontrol eden kişi tüm mesajlarını okuyabilir. Birinin sana gönderdiği giriş QR kodunu asla tarama.");
+        tr.put("LuminaSessionQrConfirmContinue", "O cihazın başındayım — devam et");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2730,6 +2874,30 @@ es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaOtpGuardSendAnyway", "Entiendo el riesgo, enviar igualmente");
         es.put("LuminaOtpGuard", "Protección del código de acceso");
         es.put("LuminaOtpGuardInfo", "Te avisa antes de enviar un mensaje que contenga un código de inicio de sesión, si Telegram acaba de enviarte uno. La comprobación se hace por completo en tu dispositivo: no se sube nada y tu mensaje nunca se modifica.");
+        // --- login guard ---
+        es.put("LuminaSessionGuardHeader", "Protección de inicio de sesión");
+        es.put("LuminaSessionGuard", "Avisos de nuevos inicios de sesión");
+        es.put("LuminaSessionGuardInfo", "Revisa tus dispositivos vinculados al abrir la app y te avisa de cualquier sesión que no hayas aprobado. Escanear un código QR de inicio de sesión entrega a esa persona una sesión activa que puede leer todos tus chats. La comprobación se hace como mucho cada 30 minutos, usa la API oficial de Telegram y nada sale de tu dispositivo.");
+        es.put("LuminaSessionGuardCheckNow", "Comprobar dispositivos vinculados ahora");
+        es.put("LuminaSessionGuardNoNew", "No hay inicios de sesión nuevos. Ya habías aprobado todos los dispositivos vinculados.");
+        es.put("LuminaSessionGuardCheckFailed", "No se pudieron comprobar los dispositivos vinculados. Revisa tu conexión e inténtalo de nuevo.");
+        es.put("LuminaSessionAlertTitle", "Nuevo inicio de sesión detectado");
+        es.put("LuminaSessionAlertIntro", "Un dispositivo que no has aprobado ha iniciado sesión en tu cuenta. Si no fuiste tú, ahora mismo puede leer todos tus chats.");
+        es.put("LuminaSessionAlertDevice", "Dispositivo");
+        es.put("LuminaSessionAlertApp", "App");
+        es.put("LuminaSessionAlertIp", "Dirección IP");
+        es.put("LuminaSessionAlertLocation", "Ubicación");
+        es.put("LuminaSessionAlertTime", "Inicio de sesión");
+        es.put("LuminaSessionAlertNotMe", "No soy yo: cerrar la sesión ahora");
+        es.put("LuminaSessionAlertItsMe", "Fui yo");
+        es.put("LuminaSessionTerminated", "Sesión cerrada");
+        es.put("LuminaSessionTerminateFailed", "No se pudo cerrar esa sesión. Abre Ajustes → Dispositivos y elimínala allí.");
+        es.put("LuminaSession2FAMessage", "Ese dispositivo ha sido desconectado. Activa la verificación en dos pasos para que nadie pueda entrar solo con un código.");
+        es.put("LuminaSession2FAButton", "Configurar ahora");
+        es.put("LuminaSessionLater", "Más tarde");
+        es.put("LuminaSessionQrConfirmTitle", "¿Autorizar un dispositivo nuevo?");
+        es.put("LuminaSessionQrConfirmMessage", "Estás a punto de autorizar a un dispositivo nuevo a iniciar sesión en tu cuenta. A menos que estés tú mismo delante de ese ordenador, quien lo controle podrá leer todos tus mensajes. Nunca escanees un código QR de inicio de sesión que alguien te haya enviado.");
+        es.put("LuminaSessionQrConfirmContinue", "Estoy en ese dispositivo: continuar");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -3116,6 +3284,30 @@ ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaOtpGuardSendAnyway", "Entendo o risco, enviar mesmo assim");
         ptBr.put("LuminaOtpGuard", "Proteção do código de login");
         ptBr.put("LuminaOtpGuardInfo", "Avisa antes de você enviar uma mensagem com um código de login, se o Telegram acabou de enviar um para você. A verificação acontece inteiramente no seu aparelho: nada é enviado para fora e sua mensagem nunca é alterada.");
+        // --- login guard ---
+        ptBr.put("LuminaSessionGuardHeader", "Proteção de login");
+        ptBr.put("LuminaSessionGuard", "Alertas de novos logins");
+        ptBr.put("LuminaSessionGuardInfo", "Verifica seus dispositivos conectados ao abrir o app e avisa sobre qualquer sessão que você não aprovou. Escanear um QR code de login entrega à outra pessoa uma sessão ativa que lê todas as suas conversas. A verificação acontece no máximo a cada 30 minutos, usa a API oficial do Telegram e nada sai do seu aparelho.");
+        ptBr.put("LuminaSessionGuardCheckNow", "Verificar dispositivos conectados agora");
+        ptBr.put("LuminaSessionGuardNoNew", "Nenhum login novo. Todos os dispositivos conectados já foram aprovados por você.");
+        ptBr.put("LuminaSessionGuardCheckFailed", "Não foi possível verificar os dispositivos conectados. Confira sua conexão e tente de novo.");
+        ptBr.put("LuminaSessionAlertTitle", "Novo login detectado");
+        ptBr.put("LuminaSessionAlertIntro", "Um dispositivo que você não aprovou entrou na sua conta. Se não foi você, ele pode ler todas as suas conversas agora mesmo.");
+        ptBr.put("LuminaSessionAlertDevice", "Dispositivo");
+        ptBr.put("LuminaSessionAlertApp", "App");
+        ptBr.put("LuminaSessionAlertIp", "Endereço IP");
+        ptBr.put("LuminaSessionAlertLocation", "Local");
+        ptBr.put("LuminaSessionAlertTime", "Entrou em");
+        ptBr.put("LuminaSessionAlertNotMe", "Não fui eu — encerrar agora");
+        ptBr.put("LuminaSessionAlertItsMe", "Fui eu");
+        ptBr.put("LuminaSessionTerminated", "Sessão encerrada");
+        ptBr.put("LuminaSessionTerminateFailed", "Não foi possível encerrar essa sessão. Abra Configurações → Dispositivos e remova por lá.");
+        ptBr.put("LuminaSession2FAMessage", "Esse dispositivo foi desconectado. Ative a verificação em duas etapas para que ninguém entre só com um código.");
+        ptBr.put("LuminaSession2FAButton", "Configurar agora");
+        ptBr.put("LuminaSessionLater", "Depois");
+        ptBr.put("LuminaSessionQrConfirmTitle", "Autorizar um novo dispositivo?");
+        ptBr.put("LuminaSessionQrConfirmMessage", "Você está prestes a autorizar um novo dispositivo a entrar na sua conta. A não ser que você mesmo esteja na frente daquele computador, quem o controla vai conseguir ler todas as suas mensagens. Nunca escaneie um QR code de login que alguém enviou para você.");
+        ptBr.put("LuminaSessionQrConfirmContinue", "Estou nesse dispositivo — continuar");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3502,6 +3694,30 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaOtpGuardSendAnyway", "Saya paham risikonya, tetap kirim");
         id.put("LuminaOtpGuard", "Perlindungan kode masuk");
         id.put("LuminaOtpGuardInfo", "Memperingatkan sebelum Anda mengirim pesan yang berisi kode masuk, jika Telegram baru saja mengirimkannya kepada Anda. Pemeriksaan berjalan sepenuhnya di perangkat Anda: tidak ada yang diunggah, dan pesan Anda tidak pernah diubah.");
+        // --- login guard ---
+        id.put("LuminaSessionGuardHeader", "Penjaga login");
+        id.put("LuminaSessionGuard", "Peringatan login baru");
+        id.put("LuminaSessionGuardInfo", "Memeriksa perangkat tertaut saat aplikasi dibuka dan memperingatkan Anda tentang sesi apa pun yang belum Anda setujui. Memindai kode QR login berarti memberi orang lain sesi aktif yang bisa membaca seluruh obrolan Anda. Pemeriksaan dilakukan paling sering setiap 30 menit, memakai API resmi Telegram, dan datanya tidak pernah meninggalkan perangkat Anda.");
+        id.put("LuminaSessionGuardCheckNow", "Periksa perangkat tertaut sekarang");
+        id.put("LuminaSessionGuardNoNew", "Tidak ada login baru. Semua perangkat tertaut sudah Anda setujui.");
+        id.put("LuminaSessionGuardCheckFailed", "Tidak dapat memeriksa perangkat tertaut. Periksa koneksi Anda dan coba lagi.");
+        id.put("LuminaSessionAlertTitle", "Login baru terdeteksi");
+        id.put("LuminaSessionAlertIntro", "Sebuah perangkat yang belum Anda setujui masuk ke akun Anda. Jika itu bukan Anda, perangkat itu bisa membaca semua obrolan Anda sekarang.");
+        id.put("LuminaSessionAlertDevice", "Perangkat");
+        id.put("LuminaSessionAlertApp", "Aplikasi");
+        id.put("LuminaSessionAlertIp", "Alamat IP");
+        id.put("LuminaSessionAlertLocation", "Lokasi");
+        id.put("LuminaSessionAlertTime", "Waktu masuk");
+        id.put("LuminaSessionAlertNotMe", "Bukan saya — akhiri sekarang");
+        id.put("LuminaSessionAlertItsMe", "Itu saya");
+        id.put("LuminaSessionTerminated", "Sesi diakhiri");
+        id.put("LuminaSessionTerminateFailed", "Tidak dapat mengakhiri sesi itu. Buka Pengaturan → Perangkat dan hapus dari sana.");
+        id.put("LuminaSession2FAMessage", "Perangkat itu telah dikeluarkan. Aktifkan Verifikasi Dua Langkah agar tidak ada yang bisa masuk hanya dengan kode.");
+        id.put("LuminaSession2FAButton", "Atur sekarang");
+        id.put("LuminaSessionLater", "Nanti");
+        id.put("LuminaSessionQrConfirmTitle", "Izinkan perangkat baru?");
+        id.put("LuminaSessionQrConfirmMessage", "Anda akan mengizinkan perangkat baru masuk ke akun Anda. Kecuali Anda sendiri yang duduk di depan komputer itu, siapa pun yang mengendalikannya bisa membaca semua pesan Anda. Jangan pernah memindai kode QR login yang dikirimkan orang lain.");
+        id.put("LuminaSessionQrConfirmContinue", "Saya ada di perangkat itu — lanjutkan");
         T.put("id", id);
     }
 

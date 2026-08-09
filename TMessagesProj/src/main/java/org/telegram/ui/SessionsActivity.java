@@ -1217,6 +1217,12 @@ public class SessionsActivity extends BaseFragment implements NotificationCenter
     }
 
     private void openCameraScanActivity() {
+        // LuminaGram login guard: scanning a login QR hands whoever displayed it a live
+        // session that can read every chat. Confirm once before the camera opens.
+        LuminaSessionAlertBox.confirmQrAuthorisation(SessionsActivity.this, this::openCameraScanActivityInternal);
+    }
+
+    private void openCameraScanActivityInternal() {
         CameraScanActivity.showAsSheet(SessionsActivity.this, false, CameraScanActivity.TYPE_QR_LOGIN, new CameraScanActivity.CameraScanActivityDelegate() {
 
             private TLObject response = null;

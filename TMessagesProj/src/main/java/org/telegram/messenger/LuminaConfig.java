@@ -478,6 +478,77 @@ public class LuminaConfig {
         putString(KEY_UNDO_SEND_PENDING, "");
     }
 
+    // ---- Login guard / session guard (Wave: session guard) ----
+    // Local-only bookkeeping for {@link LuminaSessionGuard}: the set of authorization hashes the
+    // user has already seen or approved, plus the timestamp of the last automatic check. Both are
+    // per account (key + account index) and live only in the app-private "luminagram" prefs --
+    // nothing is ever sent to Telegram. The hash set is a JSON array of decimal strings.
+    public static final String KEY_SESSION_GUARD_ENABLED = "sessionGuardEnabled";
+    private static final String KEY_SESSION_GUARD_KNOWN = "sessionGuardKnown";
+    private static final String KEY_SESSION_GUARD_LAST_CHECK = "sessionGuardLastCheck";
+
+    private static String sessionGuardKnownKey(int account) {
+        return KEY_SESSION_GUARD_KNOWN + account;
+    }
+
+    /** True once a baseline has been stored for this account, i.e. this is not the first run. */
+    public static boolean hasKnownSessions(int account) {
+        return contains(sessionGuardKnownKey(account));
+    }
+
+    /** Mutable copy of the approved/seen authorization hashes for an account. Never null. */
+    public static java.util.HashSet<String> getKnownSessions(int account) {
+        java.util.HashSet<String> out = new java.util.HashSet<>();
+        String raw = getString(sessionGuardKnownKey(account), "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                org.json.JSONArray arr = new org.json.JSONArray(raw);
+                for (int i = 0; i < arr.length(); i++) {
+                    String v = arr.optString(i, "");
+                    if (v != null && v.length() > 0) {
+                        out.add(v);
+                    }
+                }
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return out;
+    }
+
+    public static void setKnownSessions(int account, java.util.Set<String> hashes) {
+        org.json.JSONArray arr = new org.json.JSONArray();
+        if (hashes != null) {
+            for (String h : hashes) {
+                if (h != null && h.length() > 0) {
+                    arr.put(h);
+                }
+            }
+        }
+        putString(sessionGuardKnownKey(account), arr.toString());
+    }
+
+    /** Wall-clock ms of the last automatic authorization check, or 0 when never run. */
+    public static long getSessionGuardLastCheck(int account) {
+        if (preferences == null) {
+            return 0L;
+        }
+        try {
+            return preferences.getLong(KEY_SESSION_GUARD_LAST_CHECK + account, 0L);
+        } catch (Throwable ignore) {
+            return 0L;
+        }
+    }
+
+    public static void setSessionGuardLastCheck(int account, long time) {
+        if (editor == null) {
+            return;
+        }
+        try {
+            editor.putLong(KEY_SESSION_GUARD_LAST_CHECK + account, time).apply();
+        } catch (Throwable ignore) {
+        }
+    }
+
     public static org.json.JSONObject exportAll() {
         org.json.JSONObject out = new org.json.JSONObject();
         try {

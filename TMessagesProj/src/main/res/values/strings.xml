@@ -11602,4 +11602,28 @@
     <string name="LuminaOtpGuardSendAnyway">I understand the risk, send anyway</string>
     <string name="LuminaOtpGuard">Login code protection</string>
     <string name="LuminaOtpGuardInfo">Warn you before sending a message that contains a login code, if Telegram has just sent you one. The check runs entirely on your device \u2014 nothing is uploaded, and your message is never changed.</string>
+<!-- LuminaGram login guard (session guard) -->
+    <string name="LuminaSessionGuardHeader">Login guard</string>
+    <string name="LuminaSessionGuard">New-login alerts</string>
+    <string name="LuminaSessionGuardInfo">Check your linked devices when the app opens and warn you about any session you have not approved. Scanning a login QR code hands whoever showed it a live session that can read all of your chats. Checks run at most once every 30 minutes, use Telegram\'s own API and never leave your device.</string>
+    <string name="LuminaSessionGuardCheckNow">Check linked devices now</string>
+    <string name="LuminaSessionGuardNoNew">No new logins. Every linked device is one you already approved.</string>
+    <string name="LuminaSessionGuardCheckFailed">Could not check your linked devices. Check your connection and try again.</string>
+    <string name="LuminaSessionAlertTitle">New login detected</string>
+    <string name="LuminaSessionAlertIntro">A device you have not approved is signed in to your account. If this was not you, it can read all of your chats right now.</string>
+    <string name="LuminaSessionAlertDevice">Device</string>
+    <string name="LuminaSessionAlertApp">App</string>
+    <string name="LuminaSessionAlertIp">IP address</string>
+    <string name="LuminaSessionAlertLocation">Location</string>
+    <string name="LuminaSessionAlertTime">Signed in</string>
+    <string name="LuminaSessionAlertNotMe">Not me \u2014 terminate now</string>
+    <string name="LuminaSessionAlertItsMe">That was me</string>
+    <string name="LuminaSessionTerminated">Session terminated</string>
+    <string name="LuminaSessionTerminateFailed">Could not terminate that session. Open Settings \u2192 Devices and remove it there.</string>
+    <string name="LuminaSession2FAMessage">That device has been signed out. Turn on Two-Step Verification so nobody can sign in again with just a code.</string>
+    <string name="LuminaSession2FAButton">Set up now</string>
+    <string name="LuminaSessionLater">Later</string>
+    <string name="LuminaSessionQrConfirmTitle">Authorise a new device?</string>
+    <string name="LuminaSessionQrConfirmMessage">You are about to authorise a new device to sign in to your account. Unless you are sitting at that computer yourself, whoever controls it will be able to read all of your messages. Never scan a login QR code that someone sent you.</string>
+    <string name="LuminaSessionQrConfirmContinue">I am at that device \u2014 continue</string>
 </resources>
