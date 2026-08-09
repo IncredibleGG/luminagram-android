@@ -11289,6 +11289,14 @@
     <string name="LuminaTrSendSetLangMenu">Set translation language</string>
     <string name="LuminaTrSendLangLocked">Messages will be translated to %1$s</string>
     <string name="LuminaTrSendTimeout">Translation timed out; your message was restored. Please try again.</string>
+    <!-- LuminaGram chat title-bar language menu (mirrors the desktop client) -->
+    <string name="LuminaChatLangThem">Them, translated into %1$s</string>
+    <string name="LuminaChatLangThemOff">Them, not translated</string>
+    <string name="LuminaChatLangMe">Me, translated into %1$s</string>
+    <string name="LuminaChatLangMeOff">Me, not translated</string>
+    <string name="LuminaChatLangThemTitle">Their messages, translated into</string>
+    <string name="LuminaChatLangMeTitle">My messages, translated into</string>
+    <string name="LuminaChatLangNone">Not translated</string>
     <string name="LuminaArticleTranslate">Translate article</string>
     <string name="LuminaTranslateSelection">Translate</string>
     <!-- LuminaGram multi-provider translation -->

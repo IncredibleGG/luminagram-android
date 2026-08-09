@@ -3964,17 +3964,15 @@ public class ChatActivity extends BaseFragment implements
                         updateTopPanel(true);
                     }
                 } else if (id == lumina_translate_toggle) {
-                    // LuminaGram: header per-chat translate toggle. Turn translation on/off for
-                    // THIS dialog; when turning on, un-hide first so a previously hidden chat can
-                    // be re-enabled. The icon tint is refreshed in updateTranslateItemVisibility().
-                    TranslateController luminaTr = getMessagesController().getTranslateController();
-                    boolean turningOn = !luminaTr.isTranslatingDialog(getDialogId());
-                    if (turningOn && luminaTr.isTranslateDialogHidden(getDialogId())) {
-                        luminaTr.setHideTranslateDialog(getDialogId(), false, true);
-                    }
-                    luminaTr.toggleTranslatingDialog(getDialogId(), turningOn);
-                    updateTranslateItemVisibility();
-                    updateTopPanel(true);
+                    // LuminaGram: header per-chat translate icon. The desktop client opens a
+                    // two-row menu here -- one row per direction, each naming its current state
+                    // and opening the language list -- so this opens the same menu instead of
+                    // flipping incoming translation on and off with no say in the language.
+                    // The icon's own visibility rules are untouched; only the press changed.
+                    LuminaChatLanguageMenu.show(ChatActivity.this, luminaTranslateHeaderItem, getDialogId(), () -> {
+                        updateTranslateItemVisibility();
+                        updateTopPanel(true);
+                    });
                 } else if (id == call || id == video_call) {
                     if (currentUser != null && getParentActivity() != null) {
                         VoIPHelper.startCall(currentUser, id == video_call, userInfo != null && userInfo.video_calls_available, getParentActivity(), getMessagesController().getUserFull(currentUser.id), getAccountInstance());
