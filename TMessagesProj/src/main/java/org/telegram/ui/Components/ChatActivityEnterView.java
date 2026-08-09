@@ -28,6 +28,7 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -133,6 +134,7 @@ import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaOtpGuard;
 import org.telegram.messenger.LuminaTranslator;
 import org.telegram.messenger.LuminaTranslators;
 import org.telegram.messenger.LuminaTBS;
@@ -671,6 +673,10 @@ public class ChatActivityEnterView extends FrameLayout implements
     // further Send tap is ignored while true, and the terminal send / confirm-dialog dismiss /
     // onDestroy clears it. Default translate-before-send off => never set, behaviour unchanged.
     private boolean luminaTbsInFlight;
+    // LuminaGram: OTP guard one-shot bypass. Set only by the warning dialog's "send anyway"
+    // button immediately around a single re-entry into sendMessageInternal(), and consumed by
+    // the guard check inside it. Never persisted, never true across two separate Send taps.
+    private boolean luminaOtpGuardBypass;
     // LuminaGram (b25): watchdog for a stalled translate-before-send network round-trip. The
     // default provider (google_web) has no socket timeout, so a stuck connection would otherwise
     // leave luminaTbsInFlight true forever — every later Send silently no-ops and the captured
@@ -6584,6 +6590,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         luminaFlushUndoSend();
         luminaCancelTbsWatchdog(); // b25: drop any armed stall watchdog so it can't fire post-teardown.
         luminaTbsInFlight = false; // P1-4: never leave the send guard stuck across a chat close.
+        luminaOtpGuardBypass = false; // OTP guard: never carry a one-shot bypass into another chat.
         if (audioTimelineView != null) {
             audioTimelineView.destroy();
         }
@@ -7497,6 +7504,19 @@ public class ChatActivityEnterView extends FrameLayout implements
             if (checkPremiumAnimatedEmoji(currentAccount, dialog_id, parentFragment, null, message)) {
                 return;
             }
+            // LuminaGram: OTP guard. Leaking the Telegram login code is the last step of an
+            // account takeover, so it is checked BEFORE translate-before-send / undo-send --
+            // whatever those paths do to the text afterwards, the digits would still leave the
+            // device. Advisory only: on a warning nothing is sent and the composer keeps its
+            // text; LuminaOtpGuard.shouldWarn() is itself fail-open (never throws, defaults to
+            // false), so a bug in the detector can only mean "no warning", never a blocked send.
+            if (luminaOtpGuardBypass) {
+                luminaOtpGuardBypass = false; // consumed: the user already accepted the risk
+            } else if (LuminaOtpGuard.shouldWarn(currentAccount, dialog_id, message)) {
+                luminaShowOtpGuardWarning(notify, scheduleDate, scheduleRepeatPeriod, payStars);
+                updateSendButtonPaid();
+                return;
+            }
             if (LuminaConfig.translateBeforeSend && parentFragment != null && message != null && message.toString().trim().length() > 0) {
                 luminaTranslateBeforeSend(message, notify, scheduleDate, scheduleRepeatPeriod, payStars);
                 updateSendButtonPaid();
@@ -8091,6 +8111,53 @@ public class ChatActivityEnterView extends FrameLayout implements
         if (r != null) {
             AndroidUtilities.cancelRunOnUIThread(r);
             r.run();
+        }
+    }
+
+    // ===== LuminaGram: OTP guard (login-code leak warning) =====
+    // Shown when the user is about to send a 5-6 digit code while Telegram's own service
+    // account (777000) delivered something in the last 10 minutes -- the exact shape of the
+    // "send me your login code" scam. Purely advisory: the message is never rewritten, and
+    // cancelling leaves the text sitting in the composer. The safe choice is the emphasized
+    // positive button; "send anyway" is the red, deliberate one.
+    private void luminaShowOtpGuardWarning(final boolean notify, final int scheduleDate, final int scheduleRepeatPeriod, final long payStars) {
+        final Context context = getContext();
+        if (context == null || parentActivity == null) {
+            // No UI to warn with -- fail open and send exactly what the user asked for.
+            luminaSendBypassingOtpGuard(notify, scheduleDate, scheduleRepeatPeriod, payStars);
+            return;
+        }
+        try {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context, resourcesProvider);
+            builder.setTitle(LuminaLocale.getString(R.string.LuminaOtpGuardTitle));
+            builder.setMessage(LuminaLocale.getString(R.string.LuminaOtpGuardMessage));
+            builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaOtpGuardCancel), null);
+            builder.setNegativeButton(LuminaLocale.getString(R.string.LuminaOtpGuardSendAnyway),
+                    (dialog, which) -> luminaSendBypassingOtpGuard(notify, scheduleDate, scheduleRepeatPeriod, payStars));
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+            // Buttons only exist after show(); null-guarded because the red tint is cosmetic.
+            final View sendAnyway = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+            if (sendAnyway instanceof TextView) {
+                ((TextView) sendAnyway).setTextColor(Theme.getColor(Theme.key_text_RedBold, resourcesProvider));
+            }
+        } catch (Throwable e) {
+            FileLog.e(e);
+            luminaSendBypassingOtpGuard(notify, scheduleDate, scheduleRepeatPeriod, payStars);
+        }
+    }
+
+    // Re-enter the normal send path once with the guard suppressed. allowConfirm=false mirrors
+    // how showConfirmAlert() / ensurePaidMessageConfirmation() resume a send after their own
+    // dialog, and the composer still holds the text, so nothing has to be captured or restored.
+    // The token is cleared in a finally: an aborted re-entry (slowmode alert, premium-emoji
+    // alert) must not leave the guard armed-off for the next, unrelated Send tap.
+    private void luminaSendBypassingOtpGuard(boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
+        luminaOtpGuardBypass = true;
+        try {
+            sendMessageInternal(notify, scheduleDate, scheduleRepeatPeriod, payStars, false);
+        } finally {
+            luminaOtpGuardBypass = false;
         }
     }
 

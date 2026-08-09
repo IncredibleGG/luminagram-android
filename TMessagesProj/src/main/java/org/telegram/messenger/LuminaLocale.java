@@ -407,6 +407,12 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaShowPhotoUploadDate", "显示头像上传日期");
         zhHans.put("LuminaShowPhotoUploadDateInfo", "显示当前头像的上传日期");
         zhHans.put("LuminaPhotoUploadedOn", "头像上传于");
+        zhHans.put("LuminaOtpGuardTitle", "警告");
+        zhHans.put("LuminaOtpGuardMessage", "你正要把 Telegram 登录码发给别人。对方拿到这组码，就能登录你的账号，看到你所有的消息。Telegram 官方永远不会跟你要这组码。");
+        zhHans.put("LuminaOtpGuardCancel", "取消发送");
+        zhHans.put("LuminaOtpGuardSendAnyway", "我知道风险，仍要发送");
+        zhHans.put("LuminaOtpGuard", "登录码泄露防护");
+        zhHans.put("LuminaOtpGuardInfo", "当 Telegram 刚给你发过登录码、而你正要发出含有验证码的消息时，先弹出警告。整个判断都在你的设备上完成，不会上传任何内容，也不会改动你的消息。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -788,6 +794,12 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaShowPhotoUploadDate", "顯示大頭貼上傳日期");
         zhHant.put("LuminaShowPhotoUploadDateInfo", "顯示目前大頭貼的上傳日期");
         zhHant.put("LuminaPhotoUploadedOn", "大頭貼上傳於");
+        zhHant.put("LuminaOtpGuardTitle", "警告");
+        zhHant.put("LuminaOtpGuardMessage", "你正要把 Telegram 登入碼傳給別人。對方拿到這組碼，就能登入你的帳號，看到你所有的訊息。Telegram 官方永遠不會跟你要這組碼。");
+        zhHant.put("LuminaOtpGuardCancel", "取消傳送");
+        zhHant.put("LuminaOtpGuardSendAnyway", "我知道風險，仍要傳送");
+        zhHant.put("LuminaOtpGuard", "登入碼外洩防護");
+        zhHant.put("LuminaOtpGuardInfo", "當 Telegram 剛寄給你登入碼、而你正要送出含有驗證碼的訊息時，先跳出警告。整個判斷都在你的裝置上完成，不會上傳任何內容，也不會更動你的訊息。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1168,6 +1180,12 @@ ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaShowPhotoUploadDate", "عرض تاريخ صورة الملف الشخصي");
         ar.put("LuminaShowPhotoUploadDateInfo", "عرض وقت رفع صورة الملف الشخصي الحالية");
         ar.put("LuminaPhotoUploadedOn", "تم رفع الصورة");
+        ar.put("LuminaOtpGuardTitle", "تحذير");
+        ar.put("LuminaOtpGuardMessage", "أنت على وشك إرسال رمز تسجيل الدخول الخاص بتيليجرام إلى شخص آخر. من يحصل عليه يمكنه الدخول إلى حسابك وقراءة كل رسائلك. تيليجرام لن يطلب منك هذا الرمز أبدًا.");
+        ar.put("LuminaOtpGuardCancel", "عدم الإرسال");
+        ar.put("LuminaOtpGuardSendAnyway", "أدرك الخطر، أرسل على أي حال");
+        ar.put("LuminaOtpGuard", "حماية رمز تسجيل الدخول");
+        ar.put("LuminaOtpGuardInfo", "تحذيرك قبل إرسال رسالة تحتوي على رمز تسجيل الدخول، إذا كان تيليجرام قد أرسل لك رمزًا للتو. يتم الفحص بالكامل على جهازك، ولا يتم رفع أي شيء، ولا تُعدَّل رسالتك أبدًا.");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1548,6 +1566,12 @@ ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaShowPhotoUploadDate", "Показывать дату фото профиля");
         ru.put("LuminaShowPhotoUploadDateInfo", "Показывать, когда было загружено текущее фото профиля");
         ru.put("LuminaPhotoUploadedOn", "Фото загружено");
+        ru.put("LuminaOtpGuardTitle", "Предупреждение");
+        ru.put("LuminaOtpGuardMessage", "Вы собираетесь отправить свой код входа в Telegram другому человеку. Тот, кто его получит, сможет войти в ваш аккаунт и прочитать все ваши сообщения. Telegram никогда не просит этот код.");
+        ru.put("LuminaOtpGuardCancel", "Не отправлять");
+        ru.put("LuminaOtpGuardSendAnyway", "Понимаю риск, всё равно отправить");
+        ru.put("LuminaOtpGuard", "Защита кода входа");
+        ru.put("LuminaOtpGuardInfo", "Предупреждать перед отправкой сообщения с кодом входа, если Telegram только что прислал вам код. Проверка выполняется полностью на вашем устройстве: ничего не загружается, сообщение не изменяется.");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1928,6 +1952,12 @@ fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaShowPhotoUploadDate", "نمایش تاریخ عکس نمایه");
         fa.put("LuminaShowPhotoUploadDateInfo", "نمایش زمان بارگذاری عکس نمایهٔ کنونی");
         fa.put("LuminaPhotoUploadedOn", "عکس بارگذاری شده");
+        fa.put("LuminaOtpGuardTitle", "هشدار");
+        fa.put("LuminaOtpGuardMessage", "شما در حال ارسال کد ورود تلگرام خود به شخص دیگری هستید. هر کسی آن را دریافت کند می‌تواند وارد حساب شما شود و همهٔ پیام‌هایتان را ببیند. تلگرام هرگز این کد را از شما نمی‌خواهد.");
+        fa.put("LuminaOtpGuardCancel", "ارسال نکن");
+        fa.put("LuminaOtpGuardSendAnyway", "خطر را می‌دانم، باز هم بفرست");
+        fa.put("LuminaOtpGuard", "محافظت از کد ورود");
+        fa.put("LuminaOtpGuardInfo", "اگر تلگرام همین حالا برای شما کد ورود فرستاده باشد، پیش از ارسال پیامی که حاوی کد است هشدار می‌دهد. بررسی کاملاً روی دستگاه شما انجام می‌شود، چیزی آپلود نمی‌شود و پیام شما هرگز تغییر نمی‌کند.");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2308,6 +2338,12 @@ tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaShowPhotoUploadDate", "Profil fotoğrafı tarihini göster");
         tr.put("LuminaShowPhotoUploadDateInfo", "Mevcut profil fotoğrafının ne zaman yüklendiğini göster");
         tr.put("LuminaPhotoUploadedOn", "Fotoğraf yüklendi");
+        tr.put("LuminaOtpGuardTitle", "Uyarı");
+        tr.put("LuminaOtpGuardMessage", "Telegram giriş kodunuzu başka birine göndermek üzeresiniz. Bu kodu alan kişi hesabınıza girip tüm mesajlarınızı okuyabilir. Telegram bu kodu sizden asla istemez.");
+        tr.put("LuminaOtpGuardCancel", "Gönderme");
+        tr.put("LuminaOtpGuardSendAnyway", "Riski biliyorum, yine de gönder");
+        tr.put("LuminaOtpGuard", "Giriş kodu koruması");
+        tr.put("LuminaOtpGuardInfo", "Telegram size az önce bir giriş kodu gönderdiyse, kod içeren bir mesajı göndermeden önce sizi uyarır. Kontrol tamamen cihazınızda yapılır, hiçbir şey yüklenmez ve mesajınız asla değiştirilmez.");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2688,6 +2724,12 @@ es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaShowPhotoUploadDate", "Mostrar la fecha de la foto de perfil");
         es.put("LuminaShowPhotoUploadDateInfo", "Muestra cuándo se subió la foto de perfil actual");
         es.put("LuminaPhotoUploadedOn", "Foto subida el");
+        es.put("LuminaOtpGuardTitle", "Advertencia");
+        es.put("LuminaOtpGuardMessage", "Estás a punto de enviar tu código de inicio de sesión de Telegram a otra persona. Quien lo reciba podrá entrar en tu cuenta y leer todos tus mensajes. Telegram nunca te pedirá este código.");
+        es.put("LuminaOtpGuardCancel", "No enviar");
+        es.put("LuminaOtpGuardSendAnyway", "Entiendo el riesgo, enviar igualmente");
+        es.put("LuminaOtpGuard", "Protección del código de acceso");
+        es.put("LuminaOtpGuardInfo", "Te avisa antes de enviar un mensaje que contenga un código de inicio de sesión, si Telegram acaba de enviarte uno. La comprobación se hace por completo en tu dispositivo: no se sube nada y tu mensaje nunca se modifica.");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -3068,6 +3110,12 @@ ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaShowPhotoUploadDate", "Mostrar data da foto do perfil");
         ptBr.put("LuminaShowPhotoUploadDateInfo", "Mostrar quando a foto de perfil atual foi enviada");
         ptBr.put("LuminaPhotoUploadedOn", "Foto enviada em");
+        ptBr.put("LuminaOtpGuardTitle", "Aviso");
+        ptBr.put("LuminaOtpGuardMessage", "Você está prestes a enviar o seu código de login do Telegram para outra pessoa. Quem receber esse código pode entrar na sua conta e ler todas as suas mensagens. O Telegram nunca pede esse código.");
+        ptBr.put("LuminaOtpGuardCancel", "Não enviar");
+        ptBr.put("LuminaOtpGuardSendAnyway", "Entendo o risco, enviar mesmo assim");
+        ptBr.put("LuminaOtpGuard", "Proteção do código de login");
+        ptBr.put("LuminaOtpGuardInfo", "Avisa antes de você enviar uma mensagem com um código de login, se o Telegram acabou de enviar um para você. A verificação acontece inteiramente no seu aparelho: nada é enviado para fora e sua mensagem nunca é alterada.");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3448,6 +3496,12 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaShowPhotoUploadDate", "Tampilkan tanggal foto profil");
         id.put("LuminaShowPhotoUploadDateInfo", "Tampilkan kapan foto profil saat ini diunggah");
         id.put("LuminaPhotoUploadedOn", "Foto diunggah");
+        id.put("LuminaOtpGuardTitle", "Peringatan");
+        id.put("LuminaOtpGuardMessage", "Anda akan mengirim kode masuk Telegram Anda kepada orang lain. Siapa pun yang menerimanya bisa masuk ke akun Anda dan membaca semua pesan Anda. Telegram tidak pernah meminta kode ini.");
+        id.put("LuminaOtpGuardCancel", "Jangan kirim");
+        id.put("LuminaOtpGuardSendAnyway", "Saya paham risikonya, tetap kirim");
+        id.put("LuminaOtpGuard", "Perlindungan kode masuk");
+        id.put("LuminaOtpGuardInfo", "Memperingatkan sebelum Anda mengirim pesan yang berisi kode masuk, jika Telegram baru saja mengirimkannya kepada Anda. Pemeriksaan berjalan sepenuhnya di perangkat Anda: tidak ada yang diunggah, dan pesan Anda tidak pernah diubah.");
         T.put("id", id);
     }
 
