@@ -815,7 +815,7 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHant.put("LuminaUndoSendWindowInfo", "開啟後，傳送純文字訊息時會先暫緩幾秒並顯示「復原」按鈕。點按復原可將文字放回輸入框；否則會正常傳送。媒體、語音、定時、已編輯和轉發的訊息不受影響。");
         zhHant.put("LuminaUndoSendBulletin", "正在傳送訊息…");
         zhHant.put("LuminaPrivacyScamKeywordWarning", "詐騙關鍵字警告");
-        zhHant.put("LuminaPrivacyScamKeywordWarningInfo", "當不在你聯絡人中的人傳來的訊息提到常見詐騙手法（匯款、禮品卡、加密貨幣「投資」、驗證費或索取驗證碼）時，顯示一次性提醒，提醒你保持警覺。訊息永遠不會被攜截或修改。檢查在你的裝置上離線執行。");
+        zhHant.put("LuminaPrivacyScamKeywordWarningInfo", "當不在你聯絡人中的人傳來的訊息提到常見詐騙手法（匯款、禮品卡、加密貨幣「投資」、驗證費或索取驗證碼）時，顯示一次性提醒，提醒你保持警覺。訊息永遠不會被攔截或修改。檢查在你的裝置上離線執行。");
         zhHant.put("LuminaScamKeywordWarning", "⚠ 這則訊息來自不在你聯絡人中的人，且提到金錢或驗證——小心詐騙。");
         zhHant.put("LuminaAutoBlurIncoming", "自動模糊收到的媒體");
         zhHant.put("LuminaAutoBlurIncomingInfo", "模糊收到的照片、影片和GIF，直到你點擊查看。這不影響發送者的訊息——只改變你本地看到的效果。");
