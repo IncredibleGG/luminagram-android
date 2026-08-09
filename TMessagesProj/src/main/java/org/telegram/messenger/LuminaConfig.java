@@ -68,6 +68,16 @@ public class LuminaConfig {
             }
             // Push the persisted appearance into the render hooks (Theme accent + font override).
             applyAppearance();
+            // Re-arm the receive-side voice-to-text auto pipeline across app restarts. Strictly
+            // opt-in (sttAutoPipeline defaults to false) and self-deferring onto the main thread,
+            // so the default build registers nothing at all. Never allowed to throw: this runs
+            // inside the static initializer.
+            try {
+                if (preferences != null && preferences.getBoolean("sttAutoPipeline", false)) {
+                    LuminaVoiceToText.ensureAutoPipelineInstalled();
+                }
+            } catch (Throwable ignore) {
+            }
         }
     }
 
