@@ -431,6 +431,52 @@ public class LuminaConfig {
         putString(KEY_TR_SEND_LANG_DIALOG, o.toString());
     }
 
+    // ---- Per-dialog translation register (tone / formality / relationship) ----
+    // Which relationship a chat stands in -- client, colleague, friend, family, elder, someone you
+    // are flirting with, or a sentence the user writes themselves -- so translations of that chat
+    // can be asked for the tone that relationship calls for. See LuminaRegister for the meaning of
+    // the stored codes and how each engine honours them. Stored app-privately as a JSON object
+    // string { "<dialogId>": "<code>" } under the "trRegisterDialog" key, exactly like the
+    // per-dialog send language above -- never sent to Telegram, and nothing in it leaves the device
+    // except as part of the translation request the user's own API key pays for.
+    public static final String KEY_TR_REGISTER_DIALOG = "trRegisterDialog";
+
+    /** Register chosen for a dialog ("client", "custom:<text>", …), or null when unset. */
+    public static String getDialogRegister(long dialogId) {
+        String raw = getString(KEY_TR_REGISTER_DIALOG, "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                org.json.JSONObject o = new org.json.JSONObject(raw);
+                String v = o.optString(String.valueOf(dialogId), null);
+                if (v != null && v.length() > 0) {
+                    return v;
+                }
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return null;
+    }
+
+    /** Set (or overwrite) the register for a dialog; empty/null clears it back to unset. */
+    public static void setDialogRegister(long dialogId, String register) {
+        org.json.JSONObject o;
+        String raw = getString(KEY_TR_REGISTER_DIALOG, "");
+        try {
+            o = (raw != null && raw.length() > 0) ? new org.json.JSONObject(raw) : new org.json.JSONObject();
+        } catch (org.json.JSONException e) {
+            o = new org.json.JSONObject();
+        }
+        try {
+            if (register == null || register.length() == 0) {
+                o.remove(String.valueOf(dialogId));
+            } else {
+                o.put(String.valueOf(dialogId), register);
+            }
+        } catch (org.json.JSONException ignore) {
+        }
+        putString(KEY_TR_REGISTER_DIALOG, o.toString());
+    }
+
     // ---- Undo-send durability (b25) ----
     // The undo-send window holds a just-"sent" plain message in memory for a few seconds. To
     // survive a hard process kill inside that window, the held text is also persisted here as a

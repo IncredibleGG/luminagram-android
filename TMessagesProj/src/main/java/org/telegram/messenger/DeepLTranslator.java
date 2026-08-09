@@ -50,10 +50,20 @@ final class DeepLTranslator implements LuminaTranslator {
         final String url = (key.endsWith(":fx") ? "https://api-free.deepl.com" : "https://api.deepl.com") + "/v2/translate";
         final String body;
         try {
-            body = new JSONObject()
+            final JSONObject request = new JSONObject()
                     .put("text", new JSONArray().put(text))
-                    .put("target_lang", LuminaLang.deepl(toLang))
-                    .toString();
+                    .put("target_lang", LuminaLang.deepl(toLang));
+            // LuminaGram: DeepL has no free-form tone channel, but it does have one native knob --
+            // formality. This chat's register collapses onto it where that is honest (client /
+            // colleague / elder -> more formal, friend / family / romance -> less) and is left off
+            // entirely otherwise, including for every target language DeepL does not support
+            // formality for: sending the parameter there is an error response, not a nicer
+            // translation. Null means "say nothing", which is the pre-feature request exactly.
+            final String formality = LuminaRegister.deeplFormality(toLang);
+            if (formality != null) {
+                request.put("formality", formality);
+            }
+            body = request.toString();
         } catch (Exception e) {
             cb.onError(false, e.getMessage());
             return;
