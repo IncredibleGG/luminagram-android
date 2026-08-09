@@ -404,6 +404,9 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaUpdateChecking", "正在检查更新…");
         zhHans.put("LuminaUpdateCheckFailed", "无法检查更新，请检查网络连接后重试。");
         zhHans.put("LuminaUpdateDownloadingProgress", "正在下载更新… %1$s / %2$s MB");
+        zhHans.put("LuminaShowPhotoUploadDate", "显示头像上传日期");
+        zhHans.put("LuminaShowPhotoUploadDateInfo", "显示当前头像的上传日期");
+        zhHans.put("LuminaPhotoUploadedOn", "头像上传于");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -782,6 +785,9 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaUpdateChecking", "正在檢查更新…");
         zhHant.put("LuminaUpdateCheckFailed", "無法檢查更新，請檢查網路連線後重試。");
         zhHant.put("LuminaUpdateDownloadingProgress", "正在下載更新… %1$s / %2$s MB");
+        zhHant.put("LuminaShowPhotoUploadDate", "顯示大頭貼上傳日期");
+        zhHant.put("LuminaShowPhotoUploadDateInfo", "顯示目前大頭貼的上傳日期");
+        zhHant.put("LuminaPhotoUploadedOn", "大頭貼上傳於");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1159,6 +1165,9 @@ ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaUpdateChecking", "جارٍ التحقق من التحديثات…");
         ar.put("LuminaUpdateCheckFailed", "تعذّر التحقق من التحديثات. تحقق من اتصالك وحاول مرة أخرى.");
         ar.put("LuminaUpdateDownloadingProgress", "جارٍ تنزيل التحديث… %1$s / %2$s ميغابايت");
+        ar.put("LuminaShowPhotoUploadDate", "عرض تاريخ صورة الملف الشخصي");
+        ar.put("LuminaShowPhotoUploadDateInfo", "عرض وقت رفع صورة الملف الشخصي الحالية");
+        ar.put("LuminaPhotoUploadedOn", "تم رفع الصورة");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1536,6 +1545,9 @@ ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaUpdateChecking", "Проверка обновлений…");
         ru.put("LuminaUpdateCheckFailed", "Не удалось проверить обновления. Проверьте подключение и повторите попытку.");
         ru.put("LuminaUpdateDownloadingProgress", "Загрузка обновления… %1$s / %2$s МБ");
+        ru.put("LuminaShowPhotoUploadDate", "Показывать дату фото профиля");
+        ru.put("LuminaShowPhotoUploadDateInfo", "Показывать, когда было загружено текущее фото профиля");
+        ru.put("LuminaPhotoUploadedOn", "Фото загружено");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -1913,6 +1925,9 @@ fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaUpdateChecking", "در حال بررسی به‌روزرسانی…");
         fa.put("LuminaUpdateCheckFailed", "بررسی به‌روزرسانی ممکن نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.");
         fa.put("LuminaUpdateDownloadingProgress", "در حال دانلود به‌روزرسانی… %1$s / %2$s مگابایت");
+        fa.put("LuminaShowPhotoUploadDate", "نمایش تاریخ عکس نمایه");
+        fa.put("LuminaShowPhotoUploadDateInfo", "نمایش زمان بارگذاری عکس نمایهٔ کنونی");
+        fa.put("LuminaPhotoUploadedOn", "عکس بارگذاری شده");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2290,6 +2305,9 @@ tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaUpdateChecking", "Güncellemeler denetleniyor…");
         tr.put("LuminaUpdateCheckFailed", "Güncellemeler denetlenemedi. Bağlantınızı kontrol edip tekrar deneyin.");
         tr.put("LuminaUpdateDownloadingProgress", "Güncelleme indiriliyor… %1$s / %2$s MB");
+        tr.put("LuminaShowPhotoUploadDate", "Profil fotoğrafı tarihini göster");
+        tr.put("LuminaShowPhotoUploadDateInfo", "Mevcut profil fotoğrafının ne zaman yüklendiğini göster");
+        tr.put("LuminaPhotoUploadedOn", "Fotoğraf yüklendi");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -2667,6 +2685,9 @@ es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaUpdateChecking", "Buscando actualizaciones…");
         es.put("LuminaUpdateCheckFailed", "No se pudo buscar actualizaciones. Comprueba tu conexión e inténtalo de nuevo.");
         es.put("LuminaUpdateDownloadingProgress", "Descargando actualización… %1$s / %2$s MB");
+        es.put("LuminaShowPhotoUploadDate", "Mostrar la fecha de la foto de perfil");
+        es.put("LuminaShowPhotoUploadDateInfo", "Muestra cuándo se subió la foto de perfil actual");
+        es.put("LuminaPhotoUploadedOn", "Foto subida el");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -3044,6 +3065,9 @@ ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaUpdateChecking", "Verificando atualizações…");
         ptBr.put("LuminaUpdateCheckFailed", "Não foi possível verificar atualizações. Verifique sua conexão e tente novamente.");
         ptBr.put("LuminaUpdateDownloadingProgress", "Baixando atualização… %1$s / %2$s MB");
+        ptBr.put("LuminaShowPhotoUploadDate", "Mostrar data da foto do perfil");
+        ptBr.put("LuminaShowPhotoUploadDateInfo", "Mostrar quando a foto de perfil atual foi enviada");
+        ptBr.put("LuminaPhotoUploadedOn", "Foto enviada em");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -3421,6 +3445,9 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaUpdateChecking", "Memeriksa pembaruan…");
         id.put("LuminaUpdateCheckFailed", "Tidak dapat memeriksa pembaruan. Periksa koneksi Anda dan coba lagi.");
         id.put("LuminaUpdateDownloadingProgress", "Mengunduh pembaruan… %1$s / %2$s MB");
+        id.put("LuminaShowPhotoUploadDate", "Tampilkan tanggal foto profil");
+        id.put("LuminaShowPhotoUploadDateInfo", "Tampilkan kapan foto profil saat ini diunggah");
+        id.put("LuminaPhotoUploadedOn", "Foto diunggah");
         T.put("id", id);
     }
 
