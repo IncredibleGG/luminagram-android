@@ -11180,6 +11180,12 @@
     <string name="LuminaGramChatList">Chat list</string>
     <string name="LuminaHideTabs">Hide folder tabs</string>
     <string name="LuminaHideStories">Hide stories</string>
+    <!-- LuminaGram stories kill switch -->
+    <string name="LuminaStoriesHeader">Stories</string>
+    <string name="LuminaStoriesFullyOff">Turn stories off completely</string>
+    <string name="LuminaStoriesFullyOffInfo">Removes stories from the whole app: the row above the chat list and the one in Archive, the colored rings on avatars everywhere, the stories block and Stories tab on profiles, and story notifications. Nothing is changed on Telegram\'s servers — your stories and everyone else\'s stay exactly as they are, they are simply never shown here.</string>
+    <string name="LuminaStoriesHidePostEntry">Also hide the post button</string>
+    <string name="LuminaStoriesHidePostEntryInfo">Hides the camera button used to post your own story, on the chat list and on profiles.</string>
     <string name="LuminaCompactChatList">Compact chat list</string>
     <!-- LuminaGram chat-list customization -->
     <string name="LuminaChatListRowHeader">Rows</string>

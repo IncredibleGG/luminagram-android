@@ -36,6 +36,7 @@ import org.telegram.messenger.ChatObject;
 import org.telegram.messenger.DialogObject;
 import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.SharedConfig;
@@ -202,6 +203,20 @@ public class ProfileStoriesView extends View implements NotificationCenter.Notif
 
     private void updateStories(boolean animated, boolean asUpdate) {
         if (isTopic) {
+            return;
+        }
+        // LuminaGram: "stories fully off" -- the profile stories block never gets any circles.
+        if (LuminaConfig.isStoriesFullyOff()) {
+            if (!circles.isEmpty()) {
+                for (int i = 0; i < circles.size(); ++i) {
+                    StoryCircle circle = circles.get(i);
+                    if (circle != null) {
+                        circle.destroy();
+                    }
+                }
+                circles.clear();
+                invalidate();
+            }
             return;
         }
         final boolean me = dialogId == UserConfig.getInstance(currentAccount).getClientUserId();
@@ -497,6 +512,9 @@ public class ProfileStoriesView extends View implements NotificationCenter.Notif
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        if (LuminaConfig.isStoriesFullyOff()) {
+            return;
+        }
         float rright = rightAnimated.set(this.right);
         float avatarPullProgress = Utilities.clamp((avatarContainer.getScaleX() - 1f) / 0.4f, 1f, 0f);
         float insetMain = lerp(dpf2(4f), dpf2(3.5f), avatarPullProgress);
@@ -1165,6 +1183,10 @@ public class ProfileStoriesView extends View implements NotificationCenter.Notif
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (LuminaConfig.isStoriesFullyOff()) {
+            // LuminaGram: nothing is drawn here, so never swallow the tap or open a story.
+            return super.onTouchEvent(event);
+        }
         boolean hit;
         if (expandProgress < .9f) {
             hit = rect2.contains(event.getX(), event.getY());

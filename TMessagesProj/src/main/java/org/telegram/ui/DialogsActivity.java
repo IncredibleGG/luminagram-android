@@ -4779,7 +4779,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             }
         });
 
-        if (!isArchive() && initialDialogsType == DIALOGS_TYPE_DEFAULT) {
+        if (!isArchive() && initialDialogsType == DIALOGS_TYPE_DEFAULT && !LuminaConfig.isStoriesFullyOff()) {
             if (MessagesController.getInstance(currentAccount).getMainSettings().getBoolean("storyhint", true)) {
                 storyHint = new HintView2(context, HintView2.DIRECTION_RIGHT)
                         .setRounding(8)
@@ -8885,7 +8885,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             floatingButton3.setButtonVisible(isVisible, animated);
         }
         if (floatingButtonStories != null) {
-            floatingButtonStories.setButtonVisible(isVisible, animated);
+            // LuminaGram: the "post a story" FAB goes away with the stories kill switch sub-option.
+            floatingButtonStories.setButtonVisible(isVisible && !LuminaConfig.isStoriesPostEntryHidden(), animated);
         }
     }
 
@@ -12786,7 +12787,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
         boolean onlySelfStories = !isArchive() && getStoriesController().hasOnlySelfStories();
         boolean newVisibility;
-        if (LuminaConfig.hideStories) {
+        if (LuminaConfig.isStoriesRowHidden()) {
             newVisibility = false;
             onlySelfStories = false;
         } else if (communityId != 0) {

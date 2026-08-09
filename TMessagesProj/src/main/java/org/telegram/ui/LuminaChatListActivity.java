@@ -41,6 +41,8 @@ public class LuminaChatListActivity extends BaseFragment {
     private static final int ID_SHOW_COUNT = 3;
     private static final int ID_ONLINE_DOT = 4;
     private static final int ID_RECENCY_DOT = 5;
+    private static final int ID_STORIES_OFF = 6;
+    private static final int ID_STORIES_POST = 7;
 
     private UniversalRecyclerView listView;
 
@@ -89,9 +91,20 @@ public class LuminaChatListActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_RECENCY_DOT, LuminaLocale.getString(R.string.LuminaChatListRecencyDot))
                 .setChecked(LuminaConfig.getBoolean("chatListRecencyDot", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaChatListRecencyDotInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaStoriesHeader)));
+        items.add(UItem.asSwitch(ID_STORIES_OFF, LuminaLocale.getString(R.string.LuminaStoriesFullyOff))
+                .setChecked(LuminaConfig.isStoriesFullyOff()));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaStoriesFullyOffInfo)));
+        if (LuminaConfig.isStoriesFullyOff()) {
+            items.add(UItem.asSwitch(ID_STORIES_POST, LuminaLocale.getString(R.string.LuminaStoriesHidePostEntry))
+                    .setChecked(LuminaConfig.storiesHidePostEntry));
+            items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaStoriesHidePostEntryInfo)));
+        }
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
+        boolean storiesChanged = false;
         switch (item.id) {
             case ID_COMPACT:
                 LuminaConfig.putBoolean("compactChatList", !LuminaConfig.getBoolean("compactChatList", false));
@@ -108,6 +121,18 @@ public class LuminaChatListActivity extends BaseFragment {
             case ID_RECENCY_DOT:
                 LuminaConfig.putBoolean("chatListRecencyDot", !LuminaConfig.getBoolean("chatListRecencyDot", false));
                 break;
+            case ID_STORIES_OFF:
+                LuminaConfig.toggleStoriesFullyOff();
+                storiesChanged = true;
+                break;
+            case ID_STORIES_POST:
+                LuminaConfig.toggleStoriesHidePostEntry();
+                storiesChanged = true;
+                break;
+        }
+        if (storiesChanged && getNotificationCenter() != null) {
+            // DialogsActivity re-runs updateStoriesVisibility() on storiesUpdated.
+            getNotificationCenter().postNotificationName(NotificationCenter.storiesUpdated);
         }
         if (listView != null && listView.adapter != null) {
             listView.adapter.update(true);
