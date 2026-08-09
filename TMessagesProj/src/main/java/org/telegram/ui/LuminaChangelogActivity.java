@@ -28,6 +28,18 @@ public class LuminaChangelogActivity extends BaseFragment {
     // Changelog entries: newest first. Each entry is {versionName, versionCode, changes[]}.
     // Changes are NOT localized — changelog is always in English (standard practice).
     private static final Object[][] CHANGELOG = {
+        {"1.3.0", 7022, new String[]{
+            "Login code leak guard: warns before you send a Telegram login code to anyone",
+            "Session guard: alerts on new logins, confirms before QR authorisation",
+            "Stories can now be switched off completely, rings and notifications included",
+            "Voice-to-text carries on into translation instead of stopping at the transcript",
+            "Per-chat tone: client, colleague, friend, family, elder or your own wording",
+        }},
+        {"1.2.9", 7021, new String[]{
+            "Chat language menu on the header translate icon: set their side and yours",
+            "Update check now reports progress instead of sitting silent",
+            "Profile photo upload date",
+        }},
         {"1.2.8", 7020, new String[]{
             "Fix: translation header icon always visible when translate-before-send is on",
             "Fix: sent messages now always show original + translation (no more lost originals)",
