@@ -28,6 +28,12 @@ public class LuminaChangelogActivity extends BaseFragment {
     // Changelog entries: newest first. Each entry is {versionName, versionCode, changes[]}.
     // Changes are NOT localized — changelog is always in English (standard practice).
     private static final Object[][] CHANGELOG = {
+        {"1.3.1", 7023, new String[]{
+            "A stray tap no longer throws away an update download",
+            "Downloads carry on in the background, with progress in the notification shade",
+            "A finished download offers to install itself, right away or when you come back",
+            "What's New had stopped at 1.2.8; the missing releases are written up",
+        }},
         {"1.3.0", 7022, new String[]{
             "Login code leak guard: warns before you send a Telegram login code to anyone",
             "Session guard: alerts on new logins, confirms before QR authorisation",
