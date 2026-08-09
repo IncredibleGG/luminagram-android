@@ -689,6 +689,13 @@ public class ApplicationLoader extends Application {
     public boolean isCustomUpdate() {
         return false;
     }
+    // LuminaGram: lets the UI tell "the check found nothing newer" apart from "the check
+    // itself failed" (offline / manifest host unreachable), so we do not claim the app is
+    // up to date when we never actually reached the server. Only the standalone flavor's
+    // custom updater overrides this; every other flavor keeps the false default.
+    public boolean didLastUpdateCheckFail() {
+        return false;
+    }
     public void downloadUpdate() {}
     public void cancelDownloadingUpdate() {}
     public boolean isDownloadingUpdate() {

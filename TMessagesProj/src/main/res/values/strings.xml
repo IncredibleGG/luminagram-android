@@ -11341,7 +11341,10 @@
     <string name="LuminaUpdateNewVersion">New version</string>
     <string name="LuminaUpdateNow">Update</string>
     <string name="LuminaUpdateDownloading">Downloading update…</string>
+    <string name="LuminaUpdateDownloadingProgress">Downloading update… %1$s / %2$s MB</string>
     <string name="LuminaUpdateFailed">Update download failed</string>
+    <string name="LuminaUpdateChecking">Checking for updates…</string>
+    <string name="LuminaUpdateCheckFailed">Could not check for updates. Check your connection and try again.</string>
     <!-- LuminaGram info density (wave 1) -->
     <string name="LuminaInfoDensity">Info density</string>
     <string name="LuminaShowDcId">Show datacenter ID</string>
