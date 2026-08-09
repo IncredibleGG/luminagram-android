@@ -1,29 +1,80 @@
 package org.telegram.messenger;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.TranscribeButton;
+import org.telegram.ui.Components.TranslateAlert2;
 
 /**
  * LuminaGram: local (on-device / own-key) voice-to-text orchestrator.
  *
- * Resolves the already-downloaded audio file for a voice / round-video message, runs the
+ * <p>Resolves the already-downloaded audio file for a voice / round-video message, runs the
  * currently selected local transcriber (see {@link LuminaTranscribers#current()}), and writes
  * the resulting text under the existing voice bubble by REUSING Telegram's own display path
  * ({@link TranscribeButton#finishTranscription}). Everything is LOCAL: no server RPC is issued,
  * so this is ToS-safe. v1 requires the voice note to already be on disk.
+ *
+ * <h3>Carrying on into translation</h3>
+ * Stopping at a foreign-language transcript is only half the job in a cross-language chat, so
+ * once the transcript exists this class continues into the ORDINARY translation pipeline
+ * ({@link LuminaTranslators#current()}, the same provider the rest of the fork uses) and
+ * rewrites the bubble as two segments:
+ * <pre>
+ *     &lt;transcript&gt;
+ *
+ *     &lt;translation&gt;
+ * </pre>
+ * Gated by {@link #KEY_AUTO_TRANSLATE} (default ON).
+ *
+ * <p><b>Why two segments in one string rather than a styled sub-line.</b> The transcript slot
+ * is {@code TLRPC.Message.voiceTranscription}, a plain {@code String} that is persisted through
+ * {@code MessagesStorage.updateMessageVoiceTranscription} and re-broadcast as a {@code String}
+ * in {@code NotificationCenter.voiceTranscriptionUpdate}. Spans cannot survive that round trip,
+ * and the dual-language sub-line in {@code ChatMessageCell} is built only for
+ * {@code MessageObject.TYPE_TEXT} bubbles (voice bubbles draw their transcript from
+ * {@code MessageObject.getVoiceTranscription()} instead). Rendering the transcript small/dimmed
+ * would therefore require editing {@code ChatMessageCell}/{@code MessageObject}, so we compose
+ * the two segments here and keep the render path untouched.
+ *
+ * <h3>Not translating twice</h3>
+ * When the dialog itself is already being translated, {@code TranslateController} picks up
+ * {@code voiceTranscription} on its own (see its {@code pushToTranslate}, which has a dedicated
+ * transcription branch) and stores the result in {@code translatedVoiceTranscription}. In that
+ * case we hand it the plain transcript and stop: translating here as well would spend quota
+ * twice AND feed our own combined "transcript + translation" string back into the translator.
  */
 public final class LuminaVoiceToText {
 
     private LuminaVoiceToText() {
     }
 
+    /** Master switch for the feature (owned by {@code LuminaVoiceToTextActivity}). */
+    private static final String KEY_ENABLED = "voiceToTextEnabled";
+    /** Engine id; empty means "the user has never picked one". */
+    private static final String KEY_ENGINE = "sttEngine";
+    /** Translate the transcript right after transcribing. Default ON. */
+    public static final String KEY_AUTO_TRANSLATE = "sttAutoTranslate";
+    /** Auto-run the whole pipeline for incoming voice in already-translated chats. Default OFF. */
+    public static final String KEY_AUTO_PIPELINE = "sttAutoPipeline";
+
+    /**
+     * Separator between the two segments written into the single transcription slot:
+     * segment 1 is the raw transcript, segment 2 its translation. A blank line is used because
+     * the slot is a plain String (see the class javadoc) — no styling can survive persistence.
+     */
+    private static final String SEGMENT_SEPARATOR = "\n\n";
+
     public static void transcribe(final MessageObject mo, final int currentAccount, final BaseFragment fragment) {
         if (mo == null || mo.messageOwner == null) {
             return;
         }
+        // Cheap place to arm the receive-side auto-pipeline: this always runs on the UI thread
+        // well after startup. No-op when the user has not enabled it.
+        ensureAutoPipelineInstalled();
         try {
             // 1. resolve the local audio file (v1 requires it already downloaded)
             File f = FileLoader.getInstance(currentAccount).getPathToMessage(mo.messageOwner);
@@ -62,23 +113,21 @@ public final class LuminaVoiceToText {
                 @Override
                 public void onResult(final String text) {
                     AndroidUtilities.runOnUIThread(() -> {
+                        autoPipelineFinished(mo, currentAccount);
                         if (text == null || text.trim().isEmpty()) {
                             showError(fragment, LuminaLocale.getString(R.string.LuminaSttUiNoText));
                         } else {
-                            try {
-                                // REUSE Telegram's own display path (local write, no RPC).
-                                TranscribeButton.finishTranscription(mo, Utilities.random.nextLong(), text);
-                            } catch (Exception e) {
-                                FileLog.e(e);
-                                showError(fragment, LuminaLocale.getString(R.string.LuminaSttUiError));
-                            }
+                            deliver(mo, currentAccount, fragment, text.trim());
                         }
                     });
                 }
 
                 @Override
                 public void onError(final String message) {
-                    AndroidUtilities.runOnUIThread(() -> showError(fragment, LuminaLocale.getString(R.string.LuminaSttUiError)));
+                    AndroidUtilities.runOnUIThread(() -> {
+                        autoPipelineFinished(mo, currentAccount);
+                        showError(fragment, LuminaLocale.getString(R.string.LuminaSttUiError));
+                    });
                 }
 
                 @Override
@@ -88,9 +137,339 @@ public final class LuminaVoiceToText {
             });
         } catch (Exception e) {
             FileLog.e(e);
+            autoPipelineFinished(mo, currentAccount);
             showError(fragment, LuminaLocale.getString(R.string.LuminaSttUiError));
         }
     }
+
+    // ------------------------------------------------------------------
+    // transcript -> (optional) translation
+    // ------------------------------------------------------------------
+
+    /**
+     * Publish the transcript, then — when it is not already in the user's reading language —
+     * carry on into translation and republish as "transcript + blank line + translation".
+     *
+     * <p>Fail-safe by construction: the transcript is written FIRST and unconditionally, so a
+     * translation that errors out, rate-limits or never returns can only leave the user with
+     * the plain transcript, never with an empty bubble.
+     */
+    private static void deliver(final MessageObject mo, final int currentAccount,
+                                final BaseFragment fragment, final String transcript) {
+        // 1. always show the transcript (this is the pre-existing behaviour, unchanged)
+        writeTranscription(mo, transcript, fragment);
+
+        if (!LuminaConfig.getBoolean(KEY_AUTO_TRANSLATE, true)) {
+            return;
+        }
+        // 2. this dialog is already being translated -> TranslateController owns the
+        //    transcription translation. Doing it here too would spend quota twice and would
+        //    later re-translate our own combined text.
+        if (isDialogTranslating(mo, currentAccount)) {
+            return;
+        }
+        final String target = readLanguage(mo, currentAccount);
+        if (target == null || target.length() == 0) {
+            return;
+        }
+        // 3. language detection: reuse the same ML Kit detector TranslateController uses
+        //    (LanguageDetector), and SKIP the translation entirely when the transcript is
+        //    already in the reading language — that is the quota saver.
+        try {
+            if (!LanguageDetector.hasSupport()) {
+                translateAndAppend(mo, transcript, target);
+                return;
+            }
+            LanguageDetector.detectLanguage(
+                    transcript,
+                    lng -> AndroidUtilities.runOnUIThread(() -> {
+                        if (sameLanguage(lng, target)) {
+                            return; // nothing to translate — do not spend a request
+                        }
+                        translateAndAppend(mo, transcript, target);
+                    }),
+                    // Detection unavailable: we cannot prove it is the same language, so
+                    // translate rather than silently leaving foreign text on screen.
+                    e -> AndroidUtilities.runOnUIThread(() -> translateAndAppend(mo, transcript, target))
+            );
+        } catch (Throwable t) {
+            translateAndAppend(mo, transcript, target);
+        }
+    }
+
+    /**
+     * Run the transcript through the user's chosen translation provider — the SAME entry point
+     * the rest of the fork uses ({@link LuminaTranslators#current()} +
+     * {@link LuminaTranslator#translate(String, String, LuminaTranslator.Callback)}), so the
+     * provider, key and quota settings on the translation screen apply here unchanged.
+     * The callback is documented to arrive on the UI thread.
+     */
+    private static void translateAndAppend(final MessageObject mo, final String transcript, final String target) {
+        if (mo == null || transcript == null || transcript.length() == 0 || target == null) {
+            return;
+        }
+        try {
+            final LuminaTranslator translator = LuminaTranslators.current();
+            if (translator == null) {
+                return;
+            }
+            translator.translate(transcript, target, new LuminaTranslator.Callback() {
+                @Override
+                public void onResult(String translated, String detectedSourceLang) {
+                    if (translated == null) {
+                        return; // transcript already on screen
+                    }
+                    final String t = translated.trim();
+                    if (t.length() == 0 || t.equals(transcript.trim())) {
+                        return; // provider echoed the source — nothing worth a second segment
+                    }
+                    writeTranscription(mo, transcript + SEGMENT_SEPARATOR + t, null);
+                }
+
+                @Override
+                public void onError(boolean rateLimited, String message) {
+                    // Fail-safe: the transcript is already displayed, so a failed translation
+                    // degrades to exactly the old behaviour instead of losing the transcript.
+                }
+            });
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+    }
+
+    /**
+     * Write {@code text} into the voice bubble through Telegram's own local display path.
+     * Marking the transcription open before the write means the persisted custom params carry
+     * {@code voiceTranscriptionOpen = true}, so an auto-transcribed message still shows its
+     * text when the chat is opened later (the notification handler that normally sets that flag
+     * only runs while the chat is on screen).
+     */
+    private static void writeTranscription(final MessageObject mo, final String text, final BaseFragment fragment) {
+        if (mo == null || mo.messageOwner == null || text == null) {
+            return;
+        }
+        try {
+            if (mo.isRoundVideo()) {
+                TranscribeButton.openVideoTranscription(mo);
+            }
+            mo.messageOwner.voiceTranscriptionOpen = true;
+            TranscribeButton.finishTranscription(mo, Utilities.random.nextLong(), text);
+        } catch (Exception e) {
+            FileLog.e(e);
+            showError(fragment, LuminaLocale.getString(R.string.LuminaSttUiError));
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // language helpers
+    // ------------------------------------------------------------------
+
+    /**
+     * The language the user READS in this dialog. Reuses
+     * {@code TranslateController.getDialogTranslateTo}, which already resolves (in order) the
+     * LuminaGram dual-language read language ({@code trReadLang}), the per-dialog remembered
+     * target, the auto target-language guess and finally the app language — so voice follows
+     * exactly the same target as text in the same chat.
+     */
+    private static String readLanguage(final MessageObject mo, final int currentAccount) {
+        try {
+            final TranslateController tc = MessagesController.getInstance(currentAccount).getTranslateController();
+            if (tc != null && mo != null) {
+                final String lang = tc.getDialogTranslateTo(mo.getDialogId());
+                if (lang != null && lang.length() > 0) {
+                    return lang;
+                }
+            }
+        } catch (Exception ignore) {
+        }
+        try {
+            return TranslateAlert2.getToLanguage();
+        } catch (Exception ignore) {
+        }
+        return null;
+    }
+
+    private static boolean isDialogTranslating(final MessageObject mo, final int currentAccount) {
+        try {
+            if (mo == null) {
+                return false;
+            }
+            final TranslateController tc = MessagesController.getInstance(currentAccount).getTranslateController();
+            final long dialogId = mo.getDialogId();
+            return tc != null && tc.isTranslatingDialog(dialogId) && !tc.isTranslateDialogHidden(dialogId);
+        } catch (Exception ignore) {
+        }
+        return false;
+    }
+
+    /** "pt-BR" / "zh_Hant" / null -> "pt" / "zh" / "". */
+    private static String baseLang(final String s) {
+        if (s == null) {
+            return "";
+        }
+        final String n = s.trim().toLowerCase().replace('_', '-');
+        final int i = n.indexOf('-');
+        return i < 0 ? n : n.substring(0, i);
+    }
+
+    /**
+     * Compared on the BASE tag so "pt" vs "pt-BR" counts as a match and no request is spent.
+     * "und" (ML Kit's undetermined marker) never matches — we would rather translate than
+     * silently leave foreign text on screen.
+     */
+    private static boolean sameLanguage(final String detected, final String target) {
+        final String d = baseLang(detected);
+        final String t = baseLang(target);
+        if (d.length() == 0 || t.length() == 0) {
+            return false;
+        }
+        if (TranslateController.UNKNOWN_LANGUAGE.equals(d)) {
+            return false;
+        }
+        return d.equals(t);
+    }
+
+    // ------------------------------------------------------------------
+    // optional: receive-side auto pipeline (default OFF)
+    // ------------------------------------------------------------------
+
+    private static final int MAX_IN_FLIGHT = 8;
+    private static final LinkedHashSet<String> inFlight = new LinkedHashSet<>();
+    private static volatile boolean autoPipelineInstalled;
+    private static NotificationCenter.NotificationCenterDelegate autoPipelineObserver;
+
+    /**
+     * Arm the receive-side auto pipeline: when {@link #KEY_AUTO_PIPELINE} is on, incoming voice
+     * messages in a chat that ALREADY has translation enabled are transcribed automatically, and
+     * the chat's own translation then renders the transcript in the reading language. Idempotent,
+     * cheap, and a hard no-op while the toggle is off.
+     *
+     * <p>Observing {@code didReceiveNewMessages} here (rather than from the chat screen) keeps the
+     * whole feature inside LuminaGram's own files.
+     */
+    public static void ensureAutoPipelineInstalled() {
+        if (autoPipelineInstalled) {
+            return;
+        }
+        if (!LuminaConfig.getBoolean(KEY_AUTO_PIPELINE, false)) {
+            return;
+        }
+        try {
+            if (ApplicationLoader.applicationHandler != null
+                    && Thread.currentThread() == ApplicationLoader.applicationHandler.getLooper().getThread()) {
+                installAutoPipeline();
+            } else {
+                AndroidUtilities.runOnUIThread(LuminaVoiceToText::installAutoPipeline);
+            }
+        } catch (Throwable ignore) {
+        }
+    }
+
+    /** Must run on the main thread — {@code NotificationCenter.addObserver} enforces it. */
+    private static void installAutoPipeline() {
+        if (autoPipelineInstalled) {
+            return;
+        }
+        try {
+            if (autoPipelineObserver == null) {
+                autoPipelineObserver = (id, account, args) -> {
+                    if (id != NotificationCenter.didReceiveNewMessages) {
+                        return;
+                    }
+                    try {
+                        onNewMessages(account, args);
+                    } catch (Exception e) {
+                        FileLog.e(e);
+                    }
+                };
+            }
+            for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
+                NotificationCenter.getInstance(a).addObserver(autoPipelineObserver, NotificationCenter.didReceiveNewMessages);
+            }
+            autoPipelineInstalled = true;
+        } catch (Throwable ignore) {
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void onNewMessages(final int account, final Object[] args) {
+        if (args == null || args.length < 2) {
+            return;
+        }
+        if (!LuminaConfig.getBoolean(KEY_AUTO_PIPELINE, false)
+                || !LuminaConfig.getBoolean(KEY_ENABLED, true)) {
+            return;
+        }
+        // No engine chosen yet -> nothing we could run without prompting the user.
+        final String engine = LuminaConfig.getString(KEY_ENGINE, "");
+        if (engine == null || engine.length() == 0) {
+            return;
+        }
+        if (!(args[1] instanceof ArrayList)) {
+            return;
+        }
+        final ArrayList<MessageObject> messages = (ArrayList<MessageObject>) args[1];
+        if (messages.isEmpty()) {
+            return;
+        }
+        // Scheduled messages are not "received"; skip them.
+        if (args.length > 2 && args[2] instanceof Boolean && (Boolean) args[2]) {
+            return;
+        }
+        for (int i = 0; i < messages.size(); i++) {
+            final MessageObject mo = messages.get(i);
+            if (!isAutoPipelineCandidate(mo, account)) {
+                continue;
+            }
+            final String key = inFlightKey(mo, account);
+            if (key == null || inFlight.contains(key) || inFlight.size() >= MAX_IN_FLIGHT) {
+                continue;
+            }
+            inFlight.add(key);
+            transcribe(mo, account, null);
+        }
+    }
+
+    private static boolean isAutoPipelineCandidate(final MessageObject mo, final int account) {
+        try {
+            if (mo == null || mo.messageOwner == null) {
+                return false;
+            }
+            if (mo.isOutOwner() || !mo.isSent()) {
+                return false;
+            }
+            if (!mo.isVoice() && !mo.isRoundVideo()) {
+                return false;
+            }
+            // Already transcribed (by us, by Telegram, or restored from storage).
+            if (mo.messageOwner.voiceTranscription != null && mo.messageOwner.voiceTranscription.length() > 0) {
+                return false;
+            }
+            // "Full pipeline" only applies where the user already asked for translation.
+            return isDialogTranslating(mo, account);
+        } catch (Exception ignore) {
+        }
+        return false;
+    }
+
+    private static String inFlightKey(final MessageObject mo, final int account) {
+        if (mo == null) {
+            return null;
+        }
+        return account + "_" + mo.getDialogId() + "_" + mo.getId();
+    }
+
+    private static void autoPipelineFinished(final MessageObject mo, final int account) {
+        try {
+            final String key = inFlightKey(mo, account);
+            if (key != null) {
+                inFlight.remove(key);
+            }
+        } catch (Exception ignore) {
+        }
+    }
+
+    // ------------------------------------------------------------------
 
     private static void showError(final BaseFragment fragment, final String message) {
         if (fragment == null) {

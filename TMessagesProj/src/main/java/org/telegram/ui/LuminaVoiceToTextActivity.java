@@ -11,6 +11,7 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaVoiceToText;
 import org.telegram.messenger.LuminaVoskModelManager;
 import org.telegram.messenger.R;
 import org.telegram.messenger.TranslateController;
@@ -48,6 +49,9 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
     private static final String KEY_CLOUD_BASE_URL = "sttCloudBaseUrl"; // whisper only
     private static final String KEY_MODEL = "sttModel";               // whisper only
     private static final String KEY_VOSK_LANG = "voskModelLang";      // chosen offline model language
+    // Carry-on-into-translation switches, consumed by LuminaVoiceToText.
+    private static final String KEY_AUTO_TRANSLATE = "sttAutoTranslate"; // default true
+    private static final String KEY_AUTO_PIPELINE = "sttAutoPipeline";   // default false (costs quota)
 
     private static final String ENGINE_VOSK = "vosk";
     private static final String ENGINE_WHISPER = "whisper";
@@ -62,6 +66,8 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
     private static final int ITEM_BASE_URL = 4;
     private static final int ITEM_MODEL = 5;
     private static final int ITEM_MANAGE_MODELS = 6;
+    private static final int ITEM_AUTO_TRANSLATE = 7;
+    private static final int ITEM_AUTO_PIPELINE = 8;
 
     private UniversalRecyclerView listView;
 
@@ -82,6 +88,9 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
         FrameLayout frameLayout = new FrameLayout(context);
         frameLayout.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundGray));
         fragmentView = frameLayout;
+
+        // Arm the receive-side auto pipeline if the user left it on (no-op while it is off).
+        LuminaVoiceToText.ensureAutoPipelineInstalled();
 
         listView = new UniversalRecyclerView(this, this::fillItems, this::onClick, null);
         listView.setSections();
@@ -150,6 +159,18 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
             }
         }
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSttInfo)));
+
+        // ---- Carry on into translation ----
+        // A transcript that stays in a language you cannot read is only half the feature, so
+        // the pipeline continues into the ordinary translation provider. Both switches are
+        // consumed by LuminaVoiceToText.
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateHeader)));
+        items.add(UItem.asSwitch(ITEM_AUTO_TRANSLATE, LuminaLocale.getString(R.string.LuminaSttAutoTranslate))
+                .setChecked(LuminaConfig.getBoolean(KEY_AUTO_TRANSLATE, true)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSttAutoTranslateInfo)));
+        items.add(UItem.asSwitch(ITEM_AUTO_PIPELINE, LuminaLocale.getString(R.string.LuminaSttAutoPipeline))
+                .setChecked(LuminaConfig.getBoolean(KEY_AUTO_PIPELINE, false)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSttAutoPipelineInfo)));
     }
 
     // Per-engine key: "sttKey_whisper" / "sttKey_google" (mirrors translate's "translateKey_<id>").
@@ -197,6 +218,16 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
                 break;
             case ITEM_MANAGE_MODELS:
                 showVoskModelPicker();
+                break;
+            case ITEM_AUTO_TRANSLATE:
+                LuminaConfig.putBoolean(KEY_AUTO_TRANSLATE, !LuminaConfig.getBoolean(KEY_AUTO_TRANSLATE, true));
+                update();
+                break;
+            case ITEM_AUTO_PIPELINE:
+                LuminaConfig.putBoolean(KEY_AUTO_PIPELINE, !LuminaConfig.getBoolean(KEY_AUTO_PIPELINE, false));
+                // Register the incoming-message observer the moment it is switched on.
+                LuminaVoiceToText.ensureAutoPipelineInstalled();
+                update();
                 break;
         }
     }
