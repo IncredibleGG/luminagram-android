@@ -11595,4 +11595,11 @@
     <string name="LuminaShowPhotoUploadDate">Show profile photo date</string>
     <string name="LuminaShowPhotoUploadDateInfo">Show when the current profile photo was uploaded</string>
     <string name="LuminaPhotoUploadedOn">Photo uploaded</string>
+    <!-- LuminaGram OTP guard (login-code leak warning) -->
+    <string name="LuminaOtpGuardTitle">Warning</string>
+    <string name="LuminaOtpGuardMessage">You are about to send your Telegram login code to someone else. Whoever receives it can sign in to your account and read all of your messages. Telegram will never ask you for this code.</string>
+    <string name="LuminaOtpGuardCancel">Don\'t send</string>
+    <string name="LuminaOtpGuardSendAnyway">I understand the risk, send anyway</string>
+    <string name="LuminaOtpGuard">Login code protection</string>
+    <string name="LuminaOtpGuardInfo">Warn you before sending a message that contains a login code, if Telegram has just sent you one. The check runs entirely on your device \u2014 nothing is uploaded, and your message is never changed.</string>
 </resources>

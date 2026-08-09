@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaOtpGuard;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.ActionBar;
@@ -46,6 +47,7 @@ public class LuminaPrivacyActivity extends BaseFragment {
     private static final int ID_INCOGNITO_KEYBOARD = 12;
     private static final int ID_SCAM_KEYWORD_WARNING = 13;
     private static final int ID_AUTO_BLUR_INCOMING = 14;
+    private static final int ID_OTP_GUARD = 15;
 
     private UniversalRecyclerView listView;
 
@@ -112,6 +114,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_SCAM_KEYWORD_WARNING, LuminaLocale.getString(R.string.LuminaPrivacyScamKeywordWarning))
                 .setChecked(LuminaConfig.getBoolean("scamKeywordWarning", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyScamKeywordWarningInfo)));
+        items.add(UItem.asSwitch(ID_OTP_GUARD, LuminaLocale.getString(R.string.LuminaOtpGuard))
+                .setChecked(LuminaOtpGuard.isEnabled()));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaOtpGuardInfo)));
         items.add(UItem.asSwitch(ID_AUTO_BLUR_INCOMING, LuminaLocale.getString(R.string.LuminaAutoBlurIncoming))
                 .setChecked(LuminaConfig.getBoolean("autoBlurIncoming", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaAutoBlurIncomingInfo)));
@@ -157,6 +162,10 @@ public class LuminaPrivacyActivity extends BaseFragment {
                 break;
             case ID_SCAM_KEYWORD_WARNING:
                 LuminaConfig.putBoolean("scamKeywordWarning", !LuminaConfig.getBoolean("scamKeywordWarning", false));
+                break;
+            case ID_OTP_GUARD:
+                // Default ON: this is a protection, not a preference. Off is opt-out.
+                LuminaOtpGuard.setEnabled(!LuminaOtpGuard.isEnabled());
                 break;
         }
         if (listView != null && listView.adapter != null) {
