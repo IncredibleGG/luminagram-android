@@ -115,6 +115,19 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
         return LuminaLocale.getString(R.string.LuminaSttEngineVosk);
     }
 
+    // Short form for the settings row. TextCell hard-ellipsizes its value at 40% of the
+    // screen width, which truncated the descriptive labels above in several languages, so
+    // the row shows the bare engine name and the picker keeps the full description.
+    private CharSequence engineLabelShort(String engine) {
+        if (ENGINE_WHISPER.equals(engine)) {
+            return LuminaLocale.getString(R.string.LuminaSttEngineWhisperShort);
+        }
+        if (ENGINE_GOOGLE.equals(engine)) {
+            return LuminaLocale.getString(R.string.LuminaSttEngineGoogleShort);
+        }
+        return LuminaLocale.getString(R.string.LuminaSttEngineVoskShort);
+    }
+
     // Display name for a stored language code, falling back to the raw code when unknown.
     private CharSequence languageDisplayName(String code) {
         if (code == null || code.length() == 0) {
@@ -143,7 +156,7 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
         // ---- Engine ----
         final String engine = currentEngine();
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaSttEngine)));
-        items.add(UItem.asButton(ITEM_ENGINE, LuminaLocale.getString(R.string.LuminaSttEngine), engineLabel(engine)));
+        items.add(UItem.asButton(ITEM_ENGINE, LuminaLocale.getString(R.string.LuminaSttEngine), engineLabelShort(engine)));
 
         if (ENGINE_VOSK.equals(engine)) {
             // Offline engine: pick + download a voice model.

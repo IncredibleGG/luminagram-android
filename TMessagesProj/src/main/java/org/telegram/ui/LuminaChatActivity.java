@@ -62,22 +62,29 @@ public class LuminaChatActivity extends BaseFragment {
         items.add(UItem.asSwitch(4, LuminaLocale.getString(R.string.LuminaSelectFromAuthorTitle)).setChecked(LuminaConfig.getBoolean("selectFromAuthor", true)));
         items.add(UItem.asSwitch(12, LuminaLocale.getString(R.string.LuminaShowBookmarks)).setChecked(LuminaConfig.getBoolean("showBookmarks", true)));
         items.add(UItem.asSwitch(11, LuminaLocale.getString(R.string.LuminaHideKeyboardOnScroll)).setChecked(LuminaConfig.getBoolean("hideKeyboardOnScroll", false)));
+        items.add(UItem.asShadow(null));
+
+        // Each explanatory shadow must directly follow the row it describes, so the
+        // toggles that carry their own description live in their own block.
         items.add(UItem.asSwitch(13, LuminaLocale.getString(R.string.LuminaUndoSendWindow)).setChecked(LuminaConfig.getBoolean("undoSendWindow", false)));
-        items.add(UItem.asSwitch(14, LuminaLocale.getString(R.string.LuminaForwardWarningTitle)).setChecked(LuminaConfig.getBoolean("forwardOriginWarning", true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaUndoSendWindowInfo)));
+
+        items.add(UItem.asSwitch(14, LuminaLocale.getString(R.string.LuminaForwardWarningTitle)).setChecked(LuminaConfig.getBoolean("forwardOriginWarning", true)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaForwardWarningInfo)));
 
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaMediaSaving)));
         items.add(UItem.asSwitch(5, LuminaLocale.getString(R.string.LuminaSaveStickers)).setChecked(LuminaConfig.getBoolean("saveStickers", true)));
         items.add(UItem.asSwitch(10, LuminaLocale.getString(R.string.LuminaSendAsFileDefault)).setChecked(LuminaConfig.getBoolean("sendAsFileDefault", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSendAsFileDefaultInfo)));
 
-
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaInfoDensity)));
         items.add(UItem.asSwitch(6, LuminaLocale.getString(R.string.LuminaShowDcId)).setChecked(LuminaConfig.getBoolean("showDcId", false)));
-        items.add(UItem.asSwitch(7, LuminaLocale.getString(R.string.LuminaShowChatDate)).setChecked(LuminaConfig.getBoolean("showChatDate", false)));
         items.add(UItem.asSwitch(8, LuminaLocale.getString(R.string.LuminaShowMessageDetails)).setChecked(LuminaConfig.getBoolean("showMessageDetails", true)));
-        items.add(UItem.asSwitch(9, LuminaLocale.getString(R.string.LuminaTimeWithSeconds)).setChecked(LuminaConfig.getBoolean("timeWithSeconds", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaShowDcIdInfo)));
+
+        items.add(UItem.asSwitch(7, LuminaLocale.getString(R.string.LuminaShowChatDate)).setChecked(LuminaConfig.getBoolean("showChatDate", false)));
+        items.add(UItem.asSwitch(9, LuminaLocale.getString(R.string.LuminaTimeWithSeconds)).setChecked(LuminaConfig.getBoolean("timeWithSeconds", false)));
+        items.add(UItem.asShadow(null));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
