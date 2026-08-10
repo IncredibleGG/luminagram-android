@@ -14,20 +14,16 @@ import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaVoiceToText;
 import org.telegram.messenger.LuminaVoskModelManager;
 import org.telegram.messenger.R;
-import org.telegram.messenger.TranslateController;
 import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
-import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.EditTextBoldCursor;
 import org.telegram.ui.Components.LayoutHelper;
-import org.telegram.ui.Components.TranslateAlert2;
 import org.telegram.ui.Components.UItem;
 import org.telegram.ui.Components.UniversalAdapter;
 import org.telegram.ui.Components.UniversalRecyclerView;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +32,8 @@ import java.util.ArrayList;
  * a provider/engine picker, a masked bring-your-own-key row and reusable text-input dialog.
  *
  * Engines:
- *   - vosk  : offline, free — needs a one-time voice-model download (managed here).
+ *   - vosk  : offline, free — needs a one-time voice-model download, chosen and managed in
+ *             {@link LuminaVoskModelsActivity}.
  *   - whisper / google : cloud, more accurate, use the user's own API key + quota.
  * The chat-side transcription trigger and the engines/decoders themselves live elsewhere;
  * this screen only owns the settings and their config keys.
@@ -48,7 +45,7 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
     private static final String KEY_ENGINE = "sttEngine";             // "vosk" | "whisper" | "google", default "vosk"
     private static final String KEY_CLOUD_BASE_URL = "sttCloudBaseUrl"; // whisper only
     private static final String KEY_MODEL = "sttModel";               // whisper only
-    private static final String KEY_VOSK_LANG = "voskModelLang";      // chosen offline model language
+    // The chosen offline model language lives in LuminaVoskModelManager.CONFIG_KEY_LANG.
     // Carry-on-into-translation switches, consumed by LuminaVoiceToText.
     private static final String KEY_AUTO_TRANSLATE = "sttAutoTranslate"; // default true
     private static final String KEY_AUTO_PIPELINE = "sttAutoPipeline";   // default false (costs quota)
@@ -115,22 +112,16 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
         return LuminaLocale.getString(R.string.LuminaSttEngineVosk);
     }
 
-    // Display name for a stored language code, falling back to the raw code when unknown.
-    private CharSequence languageDisplayName(String code) {
-        if (code == null || code.length() == 0) {
-            return code;
-        }
-        String name = TranslateAlert2.capitalFirst(TranslateAlert2.languageName(code));
-        return name != null ? name : code;
-    }
-
     // Value shown on the "manage voice models" row: the chosen offline language, or none yet.
+    // Anything the user picked before the catalogue existed (a translate-only language such as
+    // Zulu, for which Vosk has no model) no longer resolves and reads as "None".
     private CharSequence currentVoskLangName() {
-        String code = LuminaConfig.getString(KEY_VOSK_LANG, "");
-        if (code == null || code.length() == 0) {
-            return null;
+        final String lang = LuminaVoskModelManager.selectedLang();
+        final LuminaVoskModelManager.VoskModel model = LuminaVoskModelManager.modelFor(lang);
+        if (model == null) {
+            return LuminaLocale.getString(R.string.LuminaSttModelsNone);
         }
-        return languageDisplayName(code);
+        return LuminaVoskModelsActivity.displayName(model);
     }
 
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
@@ -217,7 +208,7 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
                         DEFAULT_MODEL, false, false);
                 break;
             case ITEM_MANAGE_MODELS:
-                showVoskModelPicker();
+                presentFragment(new LuminaVoskModelsActivity());
                 break;
             case ITEM_AUTO_TRANSLATE:
                 LuminaConfig.putBoolean(KEY_AUTO_TRANSLATE, !LuminaConfig.getBoolean(KEY_AUTO_TRANSLATE, true));
@@ -300,87 +291,11 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
         builder.show();
     }
 
-    /**
-     * Pick a language for the offline Vosk model, remember it under {@code voskModelLang},
-     * then hand off to {@link LuminaVoskModelManager#ensureModel(String, LuminaVoskModelManager.ModelCallback)}
-     * behind a progress dialog. The full translatable-language list is reused for the picker.
-     */
-    private void showVoskModelPicker() {
-        final Context context = getParentActivity();
-        if (context == null) {
-            return;
-        }
-        final ArrayList<TranslateController.Language> languages = TranslateController.getLanguages();
-        final CharSequence[] names = new CharSequence[languages.size()];
-        for (int i = 0; i < languages.size(); ++i) {
-            names[i] = languages.get(i).displayName;
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, getResourceProvider());
-        builder.setTitle(LuminaLocale.getString(R.string.LuminaSttDownloadModel));
-        builder.setItems(names, (dialog, which) -> {
-            if (which >= 0 && which < languages.size()) {
-                final String code = languages.get(which).code;
-                LuminaConfig.putString(KEY_VOSK_LANG, code);
-                update();
-                downloadVoskModel(code);
-            }
-        });
-        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
-        showDialog(builder.create());
-    }
-
-    private void downloadVoskModel(final String lang) {
-        final Context context = getParentActivity();
-        if (context == null) {
-            return;
-        }
-        final AlertDialog progress = new AlertDialog(context, AlertDialog.ALERT_TYPE_LOADING, getResourceProvider());
-        progress.setTitle(LuminaLocale.getString(R.string.LuminaSttDownloadModel));
-        progress.setMessage(LuminaLocale.getString(R.string.LuminaSttUiDownloading));
-        progress.setCanCancel(false);
-        progress.setProgress(0);
-        progress.show();
-
-        LuminaVoskModelManager.ensureModel(lang, new LuminaVoskModelManager.ModelCallback() {
-            @Override
-            public void onReady(final File model) {
-                AndroidUtilities.runOnUIThread(() -> {
-                    progress.dismiss();
-                    update();
-                    if (getParentActivity() != null) {
-                        BulletinFactory.of(LuminaVoiceToTextActivity.this)
-                                .createSimpleBulletin(R.raw.done, languageDisplayName(lang)).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onProgress(final float value) {
-                AndroidUtilities.runOnUIThread(() -> {
-                    // The manager may report a 0..1 fraction or a 0..100 percent — normalise both.
-                    int pct = value <= 1f ? Math.round(value * 100f) : Math.round(value);
-                    if (pct < 0) {
-                        pct = 0;
-                    } else if (pct > 100) {
-                        pct = 100;
-                    }
-                    progress.setProgress(pct);
-                });
-            }
-
-            @Override
-            public void onError(final String message) {
-                AndroidUtilities.runOnUIThread(() -> {
-                    progress.dismiss();
-                    if (getParentActivity() == null) {
-                        return;
-                    }
-                    final String prefix = LuminaLocale.getString(R.string.LuminaSttUiError);
-                    final CharSequence text = (message == null || message.length() == 0) ? prefix : (prefix + ": " + message);
-                    BulletinFactory.of(LuminaVoiceToTextActivity.this).createErrorBulletin(text).show();
-                });
-            }
-        });
+    @Override
+    public void onResume() {
+        super.onResume();
+        // The models screen can change the selection or delete a model behind our back.
+        update();
     }
 
     private void update() {

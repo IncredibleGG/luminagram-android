@@ -496,6 +496,10 @@ public final class LuminaVoiceToText {
         if (dash > 0) {
             appLang = appLang.substring(0, dash);
         }
-        return LuminaConfig.getString("voskModelLang", appLang);
+        // voskModelLang holds a Vosk language id ("cn", "ua", "en-us"), which is not always an
+        // ISO code. The hint travels to the cloud engines too (GoogleSpeechTranscriber turns it
+        // into a BCP-47 tag), so hand out the standard spelling; VoskTranscriber maps it back.
+        final String stored = LuminaConfig.getString(LuminaVoskModelManager.CONFIG_KEY_LANG, appLang);
+        return LuminaVoskModelManager.isoTag(stored);
     }
 }

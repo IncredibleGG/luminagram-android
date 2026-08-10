@@ -11619,6 +11619,16 @@
     <string name="LuminaSttAutoTranslateInfo">When a voice message is transcribed into a language you do not read, LuminaGram translates it straight away and shows the transcript first, then the translation. Nothing is translated when the transcript is already in your reading language, and chats that are already being translated are left to the chat translation so nothing is paid for twice.</string>
     <string name="LuminaSttAutoPipeline">Auto transcribe in translated chats</string>
     <string name="LuminaSttAutoPipelineInfo">In chats where translation is already turned on, transcribe incoming voice messages automatically instead of waiting for a long press. This spends transcription quota on every voice message, so it is off by default.</string>
+    <!-- LuminaGram offline (Vosk) voice model management -->
+    <string name="LuminaSttModelsTitle">Offline voice models</string>
+    <string name="LuminaSttModelsNone">None</string>
+    <string name="LuminaSttModelInstalled">Installed · %1$s</string>
+    <string name="LuminaSttModelDownloadSize">Download · %1$s</string>
+    <string name="LuminaSttModelsInfo">Vosk publishes offline models for these languages only — other languages cannot be transcribed on your device. Tap a language to download its model and use it for transcription. Long press a downloaded model to delete it.</string>
+    <string name="LuminaSttModelsStorage">Voice models on this device: %1$s</string>
+    <string name="LuminaSttDeleteModel">Delete voice model</string>
+    <string name="LuminaSttDeleteModelConfirm">Delete the %1$s voice model? This frees %2$s and you can download it again at any time.</string>
+    <string name="LuminaSttModelDeleted">%1$s voice model deleted</string>
     <!-- LuminaGram auto-blur incoming media -->
     <string name="LuminaAutoBlurIncoming">Auto-blur incoming media</string>
     <string name="LuminaAutoBlurIncomingInfo">Blur incoming photos, videos, and GIFs until you tap to reveal. This does not affect the sender\'s message \u2014 only how you see it locally.</string>
