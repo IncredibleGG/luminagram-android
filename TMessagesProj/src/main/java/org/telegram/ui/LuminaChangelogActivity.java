@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.telegram.messenger.BuildVars;
+import org.telegram.messenger.LuminaChangelogText;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.R;
@@ -25,8 +26,17 @@ import java.util.ArrayList;
  */
 public class LuminaChangelogActivity extends BaseFragment {
 
-    // Changelog entries: newest first. Each entry is {versionName, versionCode, changes[]}.
-    // Changes are NOT localized — changelog is always in English (standard practice).
+    // Changelog entries: newest first. Each entry is {versionName, versionCode, englishLines[]}.
+    //
+    // This array is the canonical release list and has to stay in this file, in this shape:
+    // release/publish.sh greps it for the build number of the newest entry and refuses to
+    // publish when that number does not match the release being cut. Keep the newest entry
+    // first, and keep each entry opening with the version string followed by the build int.
+    //
+    // The lines here are English and act as the fallback. Translations live in
+    // org.telegram.messenger.LuminaChangelogText, keyed by the version name: one call there
+    // per release covers all nine languages. A version (or language) with no translation
+    // simply shows these English lines.
     private static final Object[][] CHANGELOG = {
         {"1.3.1", 7023, new String[]{
             "A stray tap no longer throws away an update download",
@@ -162,7 +172,7 @@ public class LuminaChangelogActivity extends BaseFragment {
         for (int i = 0; i < CHANGELOG.length; i++) {
             String version = (String) CHANGELOG[i][0];
             int code = (int) CHANGELOG[i][1];
-            String[] changes = (String[]) CHANGELOG[i][2];
+            String[] changes = LuminaChangelogText.get(version, (String[]) CHANGELOG[i][2]);
 
             items.add(UItem.asHeader("v" + version + " (build " + code + ")"));
             StringBuilder sb = new StringBuilder();
