@@ -4219,6 +4219,18 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
     }
 
     private static Map<String, String> mapForCurrentLanguage() {
+        String key = currentLangKey();
+        return key == null ? null : T.get(key);
+    }
+
+    /**
+     * The table key this class uses for the current in-app language: "zh-hans",
+     * "zh-hant", "ar", "ru", "fa", "tr", "es", "pt-br", "id", or the raw two-letter
+     * code for a language we do not translate ("en", ...). Null only while the locale
+     * is not known yet. Public so other in-code tables — {@link LuminaChangelogText} —
+     * resolve the in-app language in exactly the same way.
+     */
+    public static String currentLangKey() {
         LocaleController.LocaleInfo info = LocaleController.getInstance().getCurrentLocaleInfo();
         if (info == null) {
             return null;
@@ -4232,7 +4244,7 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
             String probe = lang + "|" + base;
             boolean hant = probe.contains("hant") || probe.contains("tw")
                     || probe.contains("hk") || probe.contains("mo") || probe.contains("traditional");
-            return T.get(hant ? "zh-hant" : "zh-hans");
+            return hant ? "zh-hant" : "zh-hans";
         }
 
         // --- Everything else: reduce to our key set ---
@@ -4247,6 +4259,6 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         if ("in".equals(key)) {            // legacy Android code for Indonesian
             key = "id";
         }
-        return T.get(key);                 // null (en + untranslated) → English fallback via getString()
+        return key;                        // "en" / untranslated → no map → English fallback via getString()
     }
 }
