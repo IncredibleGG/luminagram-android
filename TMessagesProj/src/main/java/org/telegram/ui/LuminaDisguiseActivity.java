@@ -38,12 +38,22 @@ import java.util.ArrayList;
  *     is off the launcher is forced back to the real LuminaGram (Default) icon.
  *
  *  2. Disguise vault: a unified "vault" that hides LuminaGram behind a harmless-looking
- *     decoy app. A master switch ({@code vaultEnabled}) reveals three rows — a vault
- *     mode ({@code vaultMode}: {@code passwordDoor} / {@code decoyApp}), a decoy skin
+ *     decoy app. A master switch ({@code vaultEnabled}) reveals the vault mode
+ *     ({@code vaultMode}: {@code passwordDoor} / {@code decoyApp}), the decoy skin
  *     ({@code decoySkin}: {@code notepad} / {@code calculator}) and a secret code
  *     ({@code decoyUnlockCode}). The decoy/unlock behaviour itself is implemented
  *     separately (see {@code LuminaDecoy}); this page only renders the controls and
  *     persists the config keys.
+ *
+ *     Mode and skin are picked with in-list radio rows rather than an AlertDialog list:
+ *     {@code AlertDialog.Builder.setItems} renders single-line entries with no selection
+ *     marker, so the two-line mode labels were being ellipsized ("Password door Opening
+ *     asks for a co…") and the active choice was invisible. The radio rows reuse the very
+ *     same UItem pattern as the disguise presets right above them.
+ *
+ *     Launcher coupling: while the vault owns the launcher icon (see
+ *     {@link #syncVaultLauncherIcon(boolean)}) the home-screen icon and name follow the
+ *     decoy skin, so the camouflage is complete without a second manual step.
  *
  *     Legacy migration: earlier builds only had a single {@code decoyLockEnabled} toggle.
  *     When {@code vaultEnabled} has never been written we fall back to that flag for the
@@ -61,9 +71,11 @@ public class LuminaDisguiseActivity extends BaseFragment {
     private static final int ID_PRESET_NOTES = 4;
     private static final int ID_PRESET_CLOCK = 5;
     private static final int ID_VAULT_ENABLED = 6;
-    private static final int ID_VAULT_MODE = 7;
-    private static final int ID_VAULT_SKIN = 8;
-    private static final int ID_VAULT_SET_CODE = 9;
+    private static final int ID_VAULT_MODE_PASSWORD_DOOR = 7;
+    private static final int ID_VAULT_MODE_DECOY_APP = 8;
+    private static final int ID_VAULT_SKIN_NOTEPAD = 9;
+    private static final int ID_VAULT_SKIN_CALCULATOR = 10;
+    private static final int ID_VAULT_SET_CODE = 11;
 
     private static final String KEY_DISGUISE_ENABLED = LuminaDisguiseController.KEY_ENABLED;
     private static final String KEY_DISGUISE_PRESET = LuminaDisguiseController.KEY_PRESET;
@@ -74,6 +86,12 @@ public class LuminaDisguiseActivity extends BaseFragment {
     private static final String KEY_VAULT_MODE = "vaultMode";
     private static final String KEY_DECOY_SKIN = "decoySkin";
     private static final String KEY_DECOY_CODE = "decoyUnlockCode";
+    /**
+     * True while the launcher icon is being driven BY the vault (icon follows the decoy
+     * skin) rather than hand-picked in the "App disguise" section above. See
+     * {@link #syncVaultLauncherIcon(boolean)} for the full coupling rules.
+     */
+    private static final String KEY_VAULT_OWNS_ICON = "vaultOwnsDisguiseIcon";
 
     // vaultMode values.
     private static final String VAULT_MODE_PASSWORD_DOOR = "passwordDoor";
@@ -134,10 +152,31 @@ public class LuminaDisguiseActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_VAULT_ENABLED, LuminaLocale.getString(R.string.LuminaVaultEnable))
                 .setChecked(vaultEnabled));
         if (vaultEnabled) {
-            items.add(UItem.asButton(ID_VAULT_MODE,
-                    LuminaLocale.getString(R.string.LuminaVaultMode), vaultModeValueText()));
-            items.add(UItem.asButton(ID_VAULT_SKIN,
-                    LuminaLocale.getString(R.string.LuminaVaultSkin), decoySkinValueText()));
+            // Mode: asRadio2 (RadioButtonCell) gives a title line PLUS a wrapped explanation
+            // line and a radio marking the active choice — what the old AlertDialog.setItems
+            // list could not do (single-line rows, no selection state).
+            String mode = currentVaultMode();
+            boolean decoyAppMode = VAULT_MODE_DECOY_APP.equals(mode);
+            items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaVaultMode)));
+            items.add(UItem.asRadio2(ID_VAULT_MODE_PASSWORD_DOOR,
+                    LuminaLocale.getString(R.string.LuminaVaultModePasswordDoor),
+                    LuminaLocale.getString(R.string.LuminaVaultModePasswordDoorInfo))
+                    .setChecked(!decoyAppMode));
+            items.add(UItem.asRadio2(ID_VAULT_MODE_DECOY_APP,
+                    LuminaLocale.getString(R.string.LuminaVaultModeDecoyApp),
+                    LuminaLocale.getString(R.string.LuminaVaultModeDecoyAppInfo))
+                    .setChecked(decoyAppMode));
+
+            // Skin: plain single-line radios, identical to the disguise preset rows above.
+            boolean calculatorSkin = DECOY_SKIN_CALCULATOR.equals(currentDecoySkin());
+            items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaVaultSkin)));
+            items.add(UItem.asRadio(ID_VAULT_SKIN_NOTEPAD,
+                    LuminaLocale.getString(R.string.LuminaVaultSkinNotepad))
+                    .setChecked(!calculatorSkin));
+            items.add(UItem.asRadio(ID_VAULT_SKIN_CALCULATOR,
+                    LuminaLocale.getString(R.string.LuminaVaultSkinCalculator))
+                    .setChecked(calculatorSkin));
+
             items.add(UItem.asButton(ID_VAULT_SET_CODE,
                     LuminaLocale.getString(R.string.LuminaVaultSecretCode), decoyCodeValueText()));
         }
@@ -173,26 +212,15 @@ public class LuminaDisguiseActivity extends BaseFragment {
                 legacyDecoyPending() ? DECOY_SKIN_CALCULATOR : DECOY_SKIN_NOTEPAD);
     }
 
-    private CharSequence vaultModeValueText() {
-        return LuminaLocale.getString(VAULT_MODE_DECOY_APP.equals(currentVaultMode())
-                ? R.string.LuminaVaultModeDecoyApp
-                : R.string.LuminaVaultModePasswordDoor);
-    }
-
-    private CharSequence decoySkinValueText() {
-        return LuminaLocale.getString(DECOY_SKIN_CALCULATOR.equals(currentDecoySkin())
-                ? R.string.LuminaVaultSkinCalculator
-                : R.string.LuminaVaultSkinNotepad);
-    }
-
-    /** Footer info: general (local, ToS-safe) blurb plus the selected mode's one-line hint. */
+    /**
+     * Footer info: general (local, ToS-safe) blurb plus, while the vault is on, a note that
+     * the launcher icon follows the decoy skin. The per-mode hint is no longer appended here
+     * — each mode radio now carries its own explanation line.
+     */
     private CharSequence vaultInfoText(boolean vaultEnabled) {
         CharSequence info = LuminaLocale.getString(R.string.LuminaVaultInfo);
         if (vaultEnabled) {
-            int modeInfo = VAULT_MODE_DECOY_APP.equals(currentVaultMode())
-                    ? R.string.LuminaVaultModeDecoyAppInfo
-                    : R.string.LuminaVaultModePasswordDoorInfo;
-            info = info + "\n\n" + LuminaLocale.getString(modeInfo);
+            info = info + "\n\n" + LuminaLocale.getString(R.string.LuminaVaultIconInfo);
         }
         return info;
     }
@@ -209,6 +237,9 @@ public class LuminaDisguiseActivity extends BaseFragment {
         switch (item.id) {
             case ID_DISGUISE_ENABLED: {
                 boolean enable = !LuminaConfig.getBoolean(KEY_DISGUISE_ENABLED, false);
+                // The user is driving the launcher icon by hand from now on: hand ownership
+                // back so the vault stops re-pointing the icon at its decoy skin.
+                releaseVaultIconOwnership();
                 LuminaConfig.putBoolean(KEY_DISGUISE_ENABLED, enable);
                 if (enable) {
                     // Re-apply the stored preset (defaults to the real icon until one is picked).
@@ -238,14 +269,23 @@ public class LuminaDisguiseActivity extends BaseFragment {
                 // Snapshot legacy decoy state before the first write flips it out of range.
                 migrateLegacyIfNeeded();
                 LuminaConfig.putBoolean(KEY_VAULT_ENABLED, newValue);
+                // Flipping the master switch is the moment the vault may adopt (or must give
+                // back) the launcher icon.
+                syncVaultLauncherIcon(true);
                 update();
                 break;
             }
-            case ID_VAULT_MODE:
-                showVaultModePicker();
+            case ID_VAULT_MODE_PASSWORD_DOOR:
+                selectVaultMode(VAULT_MODE_PASSWORD_DOOR);
                 break;
-            case ID_VAULT_SKIN:
-                showDecoySkinPicker();
+            case ID_VAULT_MODE_DECOY_APP:
+                selectVaultMode(VAULT_MODE_DECOY_APP);
+                break;
+            case ID_VAULT_SKIN_NOTEPAD:
+                selectDecoySkin(DECOY_SKIN_NOTEPAD);
+                break;
+            case ID_VAULT_SKIN_CALCULATOR:
+                selectDecoySkin(DECOY_SKIN_CALCULATOR);
                 break;
             case ID_VAULT_SET_CODE:
                 showUnlockCodeDialog();
@@ -273,6 +313,8 @@ public class LuminaDisguiseActivity extends BaseFragment {
     }
 
     private void selectPreset(String presetId) {
+        // An explicit icon choice always wins over the vault's automatic coupling.
+        releaseVaultIconOwnership();
         LuminaConfig.putString(KEY_DISGUISE_PRESET, presetId);
         // Preset rows are only shown while the master switch is on, so applying here is safe.
         LuminaDisguiseController.applyDisguise(getParentActivity(), presetId);
@@ -285,52 +327,107 @@ public class LuminaDisguiseActivity extends BaseFragment {
         }
     }
 
-    private void showVaultModePicker() {
-        final Context context = getParentActivity();
-        if (context == null) {
-            return;
-        }
-        // Each choice shows its localized label plus a one-line explanation.
-        CharSequence[] names = new CharSequence[]{
-                LuminaLocale.getString(R.string.LuminaVaultModePasswordDoor) + "\n"
-                        + LuminaLocale.getString(R.string.LuminaVaultModePasswordDoorInfo),
-                LuminaLocale.getString(R.string.LuminaVaultModeDecoyApp) + "\n"
-                        + LuminaLocale.getString(R.string.LuminaVaultModeDecoyAppInfo)
-        };
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(LuminaLocale.getString(R.string.LuminaVaultMode));
-        builder.setItems(names, (dialog, which) -> {
-            // Any vault change migrates a legacy user and turns the vault on.
-            migrateLegacyIfNeeded();
-            LuminaConfig.putString(KEY_VAULT_MODE,
-                    which == 1 ? VAULT_MODE_DECOY_APP : VAULT_MODE_PASSWORD_DOOR);
-            LuminaConfig.putBoolean(KEY_VAULT_ENABLED, true);
-            update();
-        });
-        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
-        showDialog(builder.create());
+    /** Pick the vault mode. Any vault change migrates a legacy user and turns the vault on. */
+    private void selectVaultMode(String mode) {
+        migrateLegacyIfNeeded();
+        LuminaConfig.putString(KEY_VAULT_MODE, mode);
+        LuminaConfig.putBoolean(KEY_VAULT_ENABLED, true);
+        update();
     }
 
-    private void showDecoySkinPicker() {
-        final Context context = getParentActivity();
-        if (context == null) {
-            return;
+    /** Pick the decoy skin; the launcher icon follows it whenever the vault owns the icon. */
+    private void selectDecoySkin(String skin) {
+        migrateLegacyIfNeeded();
+        LuminaConfig.putString(KEY_DECOY_SKIN, skin);
+        LuminaConfig.putBoolean(KEY_VAULT_ENABLED, true);
+        syncVaultLauncherIcon(false);
+        update();
+    }
+
+    /**
+     * Stop coupling the launcher icon to the decoy skin, because the user just made an
+     * explicit icon choice in the "App disguise" section. Writing {@code false} (rather
+     * than removing the key) is deliberate: it records "already decided, hands off", which
+     * {@link #syncVaultLauncherIcon(boolean)} distinguishes from "never decided".
+     */
+    private void releaseVaultIconOwnership() {
+        try {
+            LuminaConfig.putBoolean(KEY_VAULT_OWNS_ICON, false);
+        } catch (Throwable ignore) {
         }
-        CharSequence[] names = new CharSequence[]{
-                LuminaLocale.getString(R.string.LuminaVaultSkinNotepad),
-                LuminaLocale.getString(R.string.LuminaVaultSkinCalculator)
-        };
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(LuminaLocale.getString(R.string.LuminaVaultSkin));
-        builder.setItems(names, (dialog, which) -> {
-            migrateLegacyIfNeeded();
-            LuminaConfig.putString(KEY_DECOY_SKIN,
-                    which == 1 ? DECOY_SKIN_CALCULATOR : DECOY_SKIN_NOTEPAD);
-            LuminaConfig.putBoolean(KEY_VAULT_ENABLED, true);
-            update();
-        });
-        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
-        showDialog(builder.create());
+    }
+
+    /**
+     * Keep the launcher icon in step with the vault so the camouflage is complete: turning
+     * the vault on also turns the home-screen icon + name into the decoy app's (notepad ->
+     * Notes alias, calculator -> Calculator alias), and turning it off restores the real
+     * LuminaGram icon.
+     *
+     * COUPLING RULES (deliberately conservative — an icon is a visible, user-owned thing):
+     * <ul>
+     *   <li>The vault never fights the "App disguise" section. It only adopts the icon while
+     *       {@code disguiseEnabled} is off, i.e. when there is no hand-picked disguise to
+     *       clobber.</li>
+     *   <li>Adoption happens when the user switches the vault ON, or — for users who enabled
+     *       the vault before this coupling existed — the first time they change the skin
+     *       ({@code vaultOwnsDisguiseIcon} not present yet = "never decided"). Once the user
+     *       has taken the icon back by hand (key present and false) the vault stays out until
+     *       the vault switch is turned on again.</li>
+     *   <li>While owned, the icon follows every skin change.</li>
+     *   <li>Turning the vault off only restores the default icon if the vault owned it. A
+     *       user's own disguise preset is left exactly as it was.</li>
+     * </ul>
+     *
+     * The vault drives the icon THROUGH the disguise preset keys instead of calling
+     * {@link LauncherIconController#setIcon} directly. That matters: on every cold start
+     * {@link LauncherIconController#tryFixLauncherIconIfNeeded()} re-applies
+     * {@code disguisePreset} when {@code disguiseEnabled} is on, so an alias set behind the
+     * preset system's back would silently revert on the next launch — and the preset system
+     * stays the single owner of the aliases (no two controllers fighting, which is what
+     * produced the historical "app vanished from the launcher" brick).
+     *
+     * FAIL-SAFE: fully wrapped in try/catch, and every alias switch goes through
+     * {@link LuminaDisguiseController#applyDisguise(Context, String)}, which enables the
+     * target alias FIRST and only then disables the siblings — so at no point are zero
+     * launcher components enabled, and a PackageManager failure leaves the launcher exactly
+     * as it was.
+     *
+     * @param vaultSwitchToggled true when called right after the user flipped the vault
+     *                           master switch (the one action that may re-adopt the icon).
+     */
+    private void syncVaultLauncherIcon(boolean vaultSwitchToggled) {
+        try {
+            final boolean owns = LuminaConfig.getBoolean(KEY_VAULT_OWNS_ICON, false);
+            if (!vaultEnabled()) {
+                if (!owns) {
+                    // Never owned it -> the vault has no business touching the launcher.
+                    return;
+                }
+                LuminaConfig.putBoolean(KEY_VAULT_OWNS_ICON, false);
+                LuminaConfig.putBoolean(KEY_DISGUISE_ENABLED, false);
+                LuminaConfig.putString(KEY_DISGUISE_PRESET, LuminaDisguiseController.PRESET_DEFAULT);
+                LuminaDisguiseController.applyDisguise(getParentActivity(),
+                        LuminaDisguiseController.PRESET_DEFAULT);
+                return;
+            }
+            if (!owns) {
+                if (LuminaConfig.getBoolean(KEY_DISGUISE_ENABLED, false)) {
+                    // A hand-picked disguise is active: leave it alone.
+                    return;
+                }
+                if (!vaultSwitchToggled && LuminaConfig.contains(KEY_VAULT_OWNS_ICON)) {
+                    // The user already took the icon back; only the master switch re-adopts.
+                    return;
+                }
+            }
+            final String preset = LuminaDisguiseController.presetForDecoySkin(currentDecoySkin());
+            LuminaConfig.putBoolean(KEY_VAULT_OWNS_ICON, true);
+            LuminaConfig.putBoolean(KEY_DISGUISE_ENABLED, true);
+            LuminaConfig.putString(KEY_DISGUISE_PRESET, preset);
+            LuminaDisguiseController.applyDisguise(getParentActivity(), preset);
+        } catch (Throwable ignore) {
+            // An icon that did not change is always better than a crash in settings.
+        }
     }
 
     private void showUnlockCodeDialog() {

@@ -55,6 +55,18 @@ public final class LuminaDisguiseController {
     }
 
     /**
+     * The disguise preset whose launcher icon + name match a {@link LuminaDecoy} decoy skin,
+     * so that turning the vault on can make the home-screen entry look like the decoy app the
+     * user will actually see ({@code notepad} -> Notes, {@code calculator} -> Calculator).
+     *
+     * Notepad is the fallback because it is also {@code decoySkin}'s default; this never
+     * returns {@link #PRESET_DEFAULT}, since a decoy skin always has a camouflage icon.
+     */
+    public static String presetForDecoySkin(String skin) {
+        return LuminaDecoy.SKIN_CALCULATOR.equals(skin) ? PRESET_CALCULATOR : PRESET_NOTES;
+    }
+
+    /**
      * Apply the disguise for {@code presetId}: enable exactly its launcher alias and disable
      * every sibling (the other disguise aliases AND the icon-pack aliases), leaving precisely
      * one launcher component enabled. A null / unknown preset and the "default" preset restore
