@@ -7,14 +7,31 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
- * Downloads, unpacks and locates the per-language Vosk acoustic models used by
+ * Downloads, unpacks, inventories and deletes the per-language Vosk acoustic models used by
  * {@link VoskTranscriber}. Models live under the app-private files dir at
- * {@code vosk-models/<lang>/} and are fetched once from alphacephei.com "small" model zips.
+ * {@code vosk-models/<voskLang>/} and are fetched once from alphacephei.com "small" model zips.
+ *
+ * <p><b>The catalogue is deliberately hard-coded.</b> Vosk only publishes acoustic models for a
+ * few dozen languages; offering anything else (as the old picker did, by reusing the ~100-entry
+ * translation language list) produced downloads that could only 404 or, worse, silently fetch the
+ * English model under another language's name. {@link #MODELS} is transcribed from Vosk's own
+ * machine-readable catalogue, <a href="https://alphacephei.com/vosk/models/model-list.json">
+ * model-list.json</a> (every entry with {@code type == "small"} and {@code obsolete == false},
+ * as of 2026-08), which is also what <a href="https://alphacephei.com/vosk/models">the models
+ * page</a> renders. Only the "small" models are listed: the big ones are 1-4 GB and are meant for
+ * servers, not phones.
+ *
+ * <p>The key of a catalogue entry ({@link VoskModel#lang}) is Vosk's own language id, which is not
+ * always an ISO-639 code — {@code cn} for Chinese, {@code ua} for Ukrainian, {@code kz} for Kazakh,
+ * {@code vn} for Vietnamese. It doubles as the on-disk directory name and as the value stored in
+ * the {@code voskModelLang} preference. {@link #matchLang(String)} maps arbitrary ISO tags onto it.
  *
  * <p>All network / disk work runs on {@link Utilities#globalQueue}; callbacks fire on that
  * background thread (callers that touch UI must marshal back onto the main thread).
@@ -29,41 +46,228 @@ public final class LuminaVoskModelManager {
         void onError(String m);
     }
 
+    /** Preference holding the user's chosen offline model language (a {@link VoskModel#lang}). */
+    public static final String CONFIG_KEY_LANG = "voskModelLang";
+
+    /** Used when nothing is chosen and the spoken language is not one Vosk covers. */
+    public static final String DEFAULT_LANG = "en-us";
+
+    private static final String BASE_URL = "https://alphacephei.com/vosk/models/";
+
     private static final int CONNECT_TIMEOUT = 30000;
     private static final int READ_TIMEOUT = 30000;
 
-    /** lang (ISO-639) -> alphacephei "small" model zip URL. Unknown langs fall back to "en". */
-    private static final HashMap<String, String> URLS = new HashMap<>();
-    static {
-        URLS.put("en", "https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip");
-        URLS.put("zh", "https://alphacephei.com/vosk/models/vosk-model-small-cn-0.22.zip");
-        URLS.put("ru", "https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip");
-        URLS.put("es", "https://alphacephei.com/vosk/models/vosk-model-small-es-0.42.zip");
-        URLS.put("fr", "https://alphacephei.com/vosk/models/vosk-model-small-fr-0.22.zip");
-        URLS.put("de", "https://alphacephei.com/vosk/models/vosk-model-small-de-0.15.zip");
-        URLS.put("pt", "https://alphacephei.com/vosk/models/vosk-model-small-pt-0.3.zip");
+    /** One downloadable Vosk model. Immutable; the whole catalogue is static data. */
+    public static final class VoskModel {
+        /** Vosk's language id — on-disk dir name and stored preference value ("en-us", "cn", …). */
+        public final String lang;
+        /** ISO-639-1 code of the language, for looking up a localized display name. */
+        public final String iso;
+        /** ISO-3166 region for regional variants, or null. Used only to qualify the name. */
+        public final String region;
+        /** English name, used when the platform has no localized name for {@link #iso}. */
+        public final String englishName;
+        /** Model archive name, e.g. "vosk-model-small-en-us-0.15" (without the ".zip"). */
+        public final String modelName;
+        /** Size of the zip in bytes, as published by Vosk. */
+        public final long downloadBytes;
+
+        VoskModel(String lang, String iso, String region, String englishName, String modelName, long downloadBytes) {
+            this.lang = lang;
+            this.iso = iso;
+            this.region = region;
+            this.englishName = englishName;
+            this.modelName = modelName;
+            this.downloadBytes = downloadBytes;
+        }
+
+        public String url() {
+            return BASE_URL + modelName + ".zip";
+        }
     }
 
-    /** Reduce an ISO tag ("en-US", "zh_CN") to a supported base lang, defaulting to "en". */
-    public static String normalizeLang(String lang) {
-        if (lang == null) {
-            return "en";
+    /**
+     * Vosk's "small" (mobile) models, one per language, taken verbatim from model-list.json.
+     * Ordered by English name; the UI re-sorts by the localized name.
+     */
+    private static final VoskModel[] MODELS = new VoskModel[]{
+        new VoskModel("ar", "ar", null, "Arabic", "vosk-model-small-ar-0.3", 104351896L),
+        new VoskModel("ar-tn", "ar", "TN", "Arabic (Tunisian)", "vosk-model-small-ar-tn-0.1-linto", 165703754L),
+        new VoskModel("ca", "ca", null, "Catalan", "vosk-model-small-ca-0.4", 43405881L),
+        new VoskModel("cn", "zh", null, "Chinese", "vosk-model-small-cn-0.22", 43898754L),
+        new VoskModel("cs", "cs", null, "Czech", "vosk-model-small-cs-0.4-rhasspy", 46088666L),
+        new VoskModel("nl", "nl", null, "Dutch", "vosk-model-small-nl-0.22", 40441176L),
+        new VoskModel("en-in", "en", "IN", "English (India)", "vosk-model-small-en-in-0.4", 37573330L),
+        new VoskModel("en-gb", "en", "GB", "English (UK)", "vosk-model-small-en-gb-0.15", 42757500L),
+        new VoskModel("en-us", "en", "US", "English (US)", "vosk-model-small-en-us-0.15", 41205931L),
+        new VoskModel("eo", "eo", null, "Esperanto", "vosk-model-small-eo-0.42", 43839401L),
+        new VoskModel("fr", "fr", null, "French", "vosk-model-small-fr-0.22", 42233323L),
+        new VoskModel("ka", "ka", null, "Georgian", "vosk-model-small-ka-0.42", 45682310L),
+        new VoskModel("de", "de", null, "German", "vosk-model-small-de-0.15", 46499967L),
+        new VoskModel("gu", "gu", null, "Gujarati", "vosk-model-small-gu-0.42", 108054987L),
+        new VoskModel("hi", "hi", null, "Hindi", "vosk-model-small-hi-0.22", 44458845L),
+        new VoskModel("it", "it", null, "Italian", "vosk-model-small-it-0.22", 49665141L),
+        new VoskModel("ja", "ja", null, "Japanese", "vosk-model-small-ja-0.22", 49704573L),
+        new VoskModel("kz", "kk", null, "Kazakh", "vosk-model-small-kz-0.42", 59697294L),
+        new VoskModel("ko", "ko", null, "Korean", "vosk-model-small-ko-0.22", 86914329L),
+        new VoskModel("ky", "ky", null, "Kyrgyz", "vosk-model-small-ky-0.42", 51041096L),
+        new VoskModel("fa", "fa", null, "Persian", "vosk-model-small-fa-0.42", 53431220L),
+        new VoskModel("pl", "pl", null, "Polish", "vosk-model-small-pl-0.22", 52979372L),
+        new VoskModel("pt", "pt", null, "Portuguese", "vosk-model-small-pt-0.3", 32453112L),
+        new VoskModel("ru", "ru", null, "Russian", "vosk-model-small-ru-0.22", 46236750L),
+        new VoskModel("es", "es", null, "Spanish", "vosk-model-small-es-0.42", 39817833L),
+        new VoskModel("sv", "sv", null, "Swedish", "vosk-model-small-sv-rhasspy-0.15", 303504931L),
+        new VoskModel("tg", "tg", null, "Tajik", "vosk-model-small-tg-0.22", 51879043L),
+        new VoskModel("te", "te", null, "Telugu", "vosk-model-small-te-0.42", 60544249L),
+        new VoskModel("tr", "tr", null, "Turkish", "vosk-model-small-tr-0.3", 36855784L),
+        new VoskModel("ua", "uk", null, "Ukrainian", "vosk-model-small-uk-v3-small", 143914407L),
+        new VoskModel("uz", "uz", null, "Uzbek", "vosk-model-small-uz-0.22", 51061189L),
+        new VoskModel("vn", "vi", null, "Vietnamese", "vosk-model-small-vn-0.4", 33656337L),
+    };
+
+    private static final Map<String, VoskModel> BY_LANG = new LinkedHashMap<>();
+
+    /** ISO tags that do not spell themselves the way Vosk spells them. */
+    private static final Map<String, String> ALIASES = new LinkedHashMap<>();
+
+    static {
+        for (VoskModel m : MODELS) {
+            BY_LANG.put(m.lang, m);
         }
-        String s = lang.trim().toLowerCase();
+        ALIASES.put("en", "en-us");   // plain "en" -> US English
+        ALIASES.put("zh", "cn");
+        ALIASES.put("cmn", "cn");
+        ALIASES.put("uk", "ua");
+        ALIASES.put("kk", "kz");
+        ALIASES.put("vi", "vn");
+    }
+
+    /** The full catalogue, in declaration order. Never null, never empty. */
+    public static VoskModel[] models() {
+        return MODELS.clone();
+    }
+
+    /** Catalogue entry for a Vosk language id, or null when it is not one of ours. */
+    public static VoskModel modelFor(String lang) {
+        if (lang == null) {
+            return null;
+        }
+        return BY_LANG.get(lang);
+    }
+
+    /**
+     * Map an arbitrary language tag ("en", "en-US", "zh_CN", "uk") onto the Vosk language id of a
+     * model we can actually download, or null when Vosk publishes no model for it. This is the
+     * strict form — use it whenever "we have nothing for this language" must stay visible.
+     */
+    public static String matchLang(String lang) {
+        if (lang == null) {
+            return null;
+        }
+        String s = lang.trim().toLowerCase(Locale.ROOT).replace('_', '-');
+        if (s.length() == 0) {
+            return null;
+        }
+        if (BY_LANG.containsKey(s)) {
+            return s;
+        }
+        String alias = ALIASES.get(s);
+        if (alias != null) {
+            return alias;
+        }
         int dash = s.indexOf('-');
         if (dash > 0) {
-            s = s.substring(0, dash);
+            String base = s.substring(0, dash);
+            if (BY_LANG.containsKey(base)) {
+                return base;
+            }
+            alias = ALIASES.get(base);
+            if (alias != null) {
+                return alias;
+            }
         }
-        int underscore = s.indexOf('_');
-        if (underscore > 0) {
-            s = s.substring(0, underscore);
-        }
-        return URLS.containsKey(s) ? s : "en";
+        return null;
     }
 
-    /** {@code <filesDir>/vosk-models/<lang>} — where the unpacked model files live. */
+    /**
+     * The ISO-639-1 / BCP-47 spelling of a Vosk language id, for the cloud engines and anything
+     * else that expects a standard tag rather than Vosk's own ids ("cn" -> "zh", "ua" -> "uk",
+     * "en-us" -> "en-US"). Unknown input is passed through untouched.
+     */
+    public static String isoTag(String lang) {
+        VoskModel model = modelFor(matchLang(lang));
+        if (model == null) {
+            return lang;
+        }
+        return model.region != null ? (model.iso + "-" + model.region) : model.iso;
+    }
+
+    /** The user's chosen offline model language, or null when none is chosen (or it is stale). */
+    public static String selectedLang() {
+        return matchLang(LuminaConfig.getString(CONFIG_KEY_LANG, ""));
+    }
+
+    /**
+     * Lenient form of {@link #matchLang(String)} for the transcription path, which must end up
+     * with <i>some</i> model: an unsupported spoken language falls back to whatever the user
+     * downloaded, and only then to {@link #DEFAULT_LANG}. Never returns null.
+     */
+    public static String normalizeLang(String lang) {
+        String matched = matchLang(lang);
+        if (matched != null) {
+            return matched;
+        }
+        matched = selectedLang();
+        if (matched != null) {
+            return matched;
+        }
+        return DEFAULT_LANG;
+    }
+
+    /** {@code <filesDir>/vosk-models} — the parent of every unpacked model. */
+    private static File modelsRoot() {
+        File root = new File(ApplicationLoader.getFilesDirFixed(), "vosk-models");
+        if (!legacyMigrated) {
+            legacyMigrated = true;
+            try {
+                migrateLegacyDirs(root);
+            } catch (Throwable e) {
+                FileLog.e(e);
+            }
+        }
+        return root;
+    }
+
+    private static volatile boolean legacyMigrated;
+
+    /**
+     * Before the catalogue existed, dirs were keyed by base ISO code and only seven languages were
+     * reachable. Six of those keys ("ru", "es", "fr", "de", "pt") already match Vosk's ids; rename
+     * the two that do not so an existing download is not orphaned (and invisible to the new
+     * management screen) after the update.
+     */
+    private static void migrateLegacyDirs(File root) {
+        renameLegacy(new File(root, "en"), new File(root, "en-us"));
+        renameLegacy(new File(root, "zh"), new File(root, "cn"));
+    }
+
+    private static void renameLegacy(File from, File to) {
+        if (!from.isDirectory() || to.exists()) {
+            return;
+        }
+        File[] files = from.listFiles();
+        if (files == null || files.length == 0) {
+            deleteRecursive(from);
+            return;
+        }
+        if (!from.renameTo(to)) {
+            FileLog.e(new Exception("vosk: could not migrate " + from + " -> " + to));
+        }
+    }
+
+    /** {@code <filesDir>/vosk-models/<voskLang>} — where the unpacked model files live. */
     public static File modelDir(String lang) {
-        return new File(ApplicationLoader.getFilesDirFixed(), "vosk-models/" + normalizeLang(lang));
+        return new File(modelsRoot(), normalizeLang(lang));
     }
 
     /** True when the model dir exists and is non-empty (a usable model is present). */
@@ -74,6 +278,23 @@ public final class LuminaVoskModelManager {
         }
         File[] files = dir.listFiles();
         return files != null && files.length > 0;
+    }
+
+    /** Bytes the unpacked model for {@code lang} occupies on disk, or 0 when it is not installed. */
+    public static long installedBytes(String lang) {
+        return dirSize(modelDir(lang));
+    }
+
+    /** Bytes every installed model occupies on disk, including anything we no longer list. */
+    public static long totalInstalledBytes() {
+        return dirSize(modelsRoot());
+    }
+
+    /** Remove an installed model. Returns true when nothing is left on disk afterwards. */
+    public static boolean deleteModel(String lang) {
+        File dir = modelDir(lang);
+        deleteRecursive(dir);
+        return !dir.exists();
     }
 
     /**
@@ -90,10 +311,15 @@ public final class LuminaVoskModelManager {
     }
 
     private static void downloadAndUnzip(String lang, ModelCallback cb) {
-        String url = URLS.get(lang);
-        if (url == null) {
-            url = URLS.get("en");
+        VoskModel model = BY_LANG.get(lang);
+        if (model == null) {
+            model = BY_LANG.get(DEFAULT_LANG);
         }
+        if (model == null) {
+            cb.onError("no Vosk model for '" + lang + "'");
+            return;
+        }
+        String url = model.url();
         File modelDir = modelDir(lang);
         File parent = modelDir.getParentFile();
         File tmpZip = new File(parent, lang + ".zip.tmp");
@@ -120,6 +346,10 @@ public final class LuminaVoskModelManager {
             }
 
             long contentLength = connection.getContentLength();
+            if (contentLength <= 0) {
+                // Chunked / compressed responses hide the length; fall back on the catalogue size.
+                contentLength = model.downloadBytes;
+            }
             InputStream in = connection.getInputStream();
             FileOutputStream fos = new FileOutputStream(tmpZip);
             try {
@@ -265,6 +495,23 @@ public final class LuminaVoskModelManager {
                 }
             }
         }
+    }
+
+    private static long dirSize(File f) {
+        if (f == null || !f.exists()) {
+            return 0;
+        }
+        if (f.isFile()) {
+            return f.length();
+        }
+        long total = 0;
+        File[] children = f.listFiles();
+        if (children != null) {
+            for (File child : children) {
+                total += dirSize(child);
+            }
+        }
+        return total;
     }
 
     private static void deleteRecursive(File f) {
