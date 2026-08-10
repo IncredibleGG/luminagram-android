@@ -11241,6 +11241,13 @@
     <!-- LuminaGram crypto address clipboard guard (anti-scam, wave11) -->
     <string name="LuminaPrivacyCryptoClipboardGuard">Crypto address paste guard</string>
     <string name="LuminaPrivacyCryptoClipboardGuardInfo">Warn when you paste what looks like a crypto wallet address into the message box. Clipboard-hijacking malware can silently swap a copied address for a scammer\'s — this asks you to double-check before it is inserted. Checks run offline on your device.</string>
+    <string name="LuminaBackgroundGuardTitle">Background delivery</string>
+    <string name="LuminaBackgroundGuardAction">Messages may not arrive while closed</string>
+    <string name="LuminaBackgroundGuardInfo">Android is allowed to suspend LuminaGram in the background, which stops new messages from arriving until you open the app. Fixing this takes one tap.</string>
+    <string name="LuminaBackgroundGuardMessage">To deliver messages while LuminaGram is closed, Android has to stop putting it to sleep. Without this you will only see messages when you open the app.</string>
+    <string name="LuminaBackgroundGuardMessageVendor">To deliver messages while LuminaGram is closed, Android has to stop putting it to sleep. On this phone the manufacturer adds a second restriction as well, so you may need to allow auto-start too.</string>
+    <string name="LuminaBackgroundGuardBattery">Allow background activity</string>
+    <string name="LuminaBackgroundGuardAutostart">Auto-start settings</string>
     <string name="LuminaCryptoClipboardGuardTitle">Check this crypto address</string>
     <string name="LuminaCryptoClipboardGuardMessage">This looks like a crypto wallet address. Malware can swap a copied address for a scammer\'s — double-check it matches the one you intended before sending.</string>
     <string name="LuminaCryptoClipboardGuardPaste">Paste anyway</string>

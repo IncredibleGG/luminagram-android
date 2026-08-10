@@ -8636,10 +8636,38 @@ public class ChatActivityEnterView extends FrameLayout implements
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), resourcesProvider);
         builder.setTitle(LuminaLocale.getString(R.string.LuminaCryptoClipboardGuardTitle));
-        builder.setMessage(LuminaLocale.getString(R.string.LuminaCryptoClipboardGuardMessage));
+        builder.setMessage(luminaCryptoAddressForDisplay(pasted));
         builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaCryptoClipboardGuardPaste), (dialog, which) -> luminaInsertPastedText(pasted));
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
         builder.show();
+    }
+
+    // Asking someone to check an address without showing it is not a warning, it is
+    // just an obstacle - they have nothing to compare against and will tap through.
+    // The address goes on its own line in a monospace face, the way the desktop
+    // build already shows it: an address swap works precisely because 0/O and l/1
+    // pass for each other in a proportional font.
+    private CharSequence luminaCryptoAddressForDisplay(CharSequence pasted) {
+        final String message = LuminaLocale.getString(R.string.LuminaCryptoClipboardGuardMessage);
+        final String address = pasted == null ? "" : pasted.toString().trim();
+        if (address.length() == 0) {
+            return message;
+        }
+        final SpannableStringBuilder text = new SpannableStringBuilder(message);
+        text.append("\n\n");
+        final int start = text.length();
+        text.append(address);
+        try {
+            text.setSpan(
+                new TypefaceSpan(AndroidUtilities.getTypeface(AndroidUtilities.TYPEFACE_ROBOTO_MONO)),
+                start,
+                text.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } catch (Exception e) {
+            // A missing font is no reason to drop the address itself.
+            FileLog.e(e);
+        }
+        return text;
     }
 
     // Inserts plain text at the current selection, mirroring handleRichHtmlPaste()'s plain-text

@@ -1,10 +1,12 @@
 package org.telegram.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import org.telegram.messenger.AndroidUtilities;
+import org.telegram.messenger.LuminaBackgroundGuard;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaLocale;
@@ -55,6 +57,14 @@ public class LuminaGramSettingsActivity extends BaseFragment {
     }
 
     private void fillItems(ArrayList<UItem> items, UniversalAdapter adapter) {
+        // Sits above everything else and only when there is something wrong: a
+        // messenger the system has silenced is not a settings detail, and the user
+        // has no way to discover it on their own - the symptom is silence.
+        if (luminaBackgroundAtRisk()) {
+            items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaBackgroundGuardTitle)));
+            items.add(UItem.asButton(ID_BACKGROUND_GUARD, LuminaLocale.getString(R.string.LuminaBackgroundGuardAction)));
+            items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaBackgroundGuardInfo)));
+        }
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaGramChatList)));
         items.add(UItem.asSwitch(1, LuminaLocale.getString(R.string.LuminaHideTabs)).setChecked(LuminaConfig.hideTabs));
         items.add(UItem.asSwitch(2, LuminaLocale.getString(R.string.LuminaHideStories)).setChecked(LuminaConfig.hideStories));
@@ -82,6 +92,9 @@ public class LuminaGramSettingsActivity extends BaseFragment {
 
     private void onClick(UItem item, View view, int position, float x, float y) {
         switch (item.id) {
+            case ID_BACKGROUND_GUARD:
+                showBackgroundGuardDialog();
+                break;
             case 1:
                 LuminaConfig.toggleHideTabs();
                 // Live-refresh: DialogsActivity re-runs updateFilterTabs() on dialogFiltersUpdated.
@@ -181,6 +194,38 @@ public class LuminaGramSettingsActivity extends BaseFragment {
                 LuminaChangelogActivity.markCurrentVersionSeen();
             }, 500);
         }
+    }
+
+    private static final int ID_BACKGROUND_GUARD = 900;
+
+    // "At risk" is deliberately narrow: only the battery exemption can actually be
+    // read back. Vendor autostart cannot, so nagging about it forever would train
+    // people to ignore this row. A user who turned delivery off is left alone.
+    private boolean luminaBackgroundAtRisk() {
+        if (getParentActivity() == null || LuminaBackgroundGuard.deliveryDisabledByUser()) {
+            return false;
+        }
+        return !LuminaBackgroundGuard.batteryUnrestricted(getParentActivity());
+    }
+
+    private void showBackgroundGuardDialog() {
+        final Activity activity = getParentActivity();
+        if (activity == null) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(LuminaLocale.getString(R.string.LuminaBackgroundGuardTitle));
+        builder.setMessage(LuminaBackgroundGuard.vendorRestrictsBackground()
+                ? LuminaLocale.getString(R.string.LuminaBackgroundGuardMessageVendor)
+                : LuminaLocale.getString(R.string.LuminaBackgroundGuardMessage));
+        builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaBackgroundGuardBattery),
+                (dialog, which) -> LuminaBackgroundGuard.requestBatteryExemption(activity));
+        if (LuminaBackgroundGuard.vendorRestrictsBackground()) {
+            builder.setNeutralButton(LuminaLocale.getString(R.string.LuminaBackgroundGuardAutostart),
+                    (dialog, which) -> LuminaBackgroundGuard.openAutostartSettings(activity));
+        }
+        builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+        showDialog(builder.create());
     }
 
     private void showOnboardingCard() {

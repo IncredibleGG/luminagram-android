@@ -348,6 +348,10 @@ public class ApplicationLoader extends Application {
     }
 
     public static void startPushService() {
+        // Both delivery switches default to false upstream because Firebase covers
+        // the case. It does not cover ours, so turn them on once per install before
+        // reading them back - see LuminaBackgroundGuard.
+        LuminaBackgroundGuard.applyDefaultsOnce();
         SharedPreferences preferences = MessagesController.getGlobalNotificationsSettings();
         boolean enabled;
         if (preferences.contains("pushService")) {
