@@ -93,9 +93,9 @@ public class LuminaMediaActivity extends BaseFragment {
                 .setChecked(LuminaConfig.getBoolean(KEY_ATTACH_DRAG_REORDER, true)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaMediaDragReorderInfo)));
 
-        String saveFolder = LuminaConfig.getString(KEY_SAVE_MEDIA_FOLDER, "");
+        // Show the album the saver will actually use (default included), not the raw pref.
         items.add(UItem.asButton(ID_SAVE_MEDIA_FOLDER, LuminaLocale.getString(R.string.LuminaMediaSaveFolder),
-                saveFolder.isEmpty() ? "Telegram" : saveFolder));
+                LuminaConfig.galleryAlbumName()));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaMediaSaveFolderInfo)));
     }
 
@@ -112,7 +112,13 @@ public class LuminaMediaActivity extends BaseFragment {
                     LuminaLocale.getString(R.string.LuminaMediaSaveFolderHint),
                     current, 48, LocaleController.getString(R.string.Save), getResourceProvider(),
                     text -> {
-                        LuminaConfig.putString(KEY_SAVE_MEDIA_FOLDER, text == null ? "" : text.trim());
+                        // Empty keeps "use the default album"; anything else is stored already
+                        // sanitized so the row never advertises a name the saver would rewrite.
+                        String cleaned = text == null ? "" : text.trim();
+                        if (!cleaned.isEmpty()) {
+                            cleaned = LuminaConfig.sanitizeAlbumName(cleaned);
+                        }
+                        LuminaConfig.putString(KEY_SAVE_MEDIA_FOLDER, cleaned);
                         if (listView != null && listView.adapter != null) {
                             listView.adapter.update(true);
                         }

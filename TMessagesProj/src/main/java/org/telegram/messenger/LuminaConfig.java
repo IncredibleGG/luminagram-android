@@ -145,6 +145,59 @@ public class LuminaConfig {
         return preferences.contains(key);
     }
 
+    // ---- Public gallery album ----
+    // "Save to gallery" exports into a named album under the shared media roots:
+    // Pictures/<album>, Movies/<album>, Download/<album>, Music/<album>.
+    //
+    // Upstream hardcodes "Telegram" at every one of those call sites. LuminaGram is a
+    // separate application and must not create or write into another app's album, so the
+    // default is DEFAULT_GALLERY_ALBUM. Anything exported before this change keeps living
+    // in LEGACY_GALLERY_ALBUM: that directory is SHARED public storage which the genuine
+    // Telegram app (or another fork) may own on the same device, so we never rename, move
+    // or delete it. Nothing in the app ever reads the album back — it is a one-way export
+    // target — so the old files stay exactly where they were and stay indexed by
+    // MediaStore. A user who wants the old layout can type LEGACY_GALLERY_ALBUM into the
+    // "Save media to folder" setting.
+    public static final String DEFAULT_GALLERY_ALBUM = "LuminaGram";
+    public static final String LEGACY_GALLERY_ALBUM = "Telegram";
+    public static final String KEY_SAVE_MEDIA_FOLDER = "saveMediaFolder";
+
+    /** Effective album name for every gallery export. Never null, never empty. */
+    public static String galleryAlbumName() {
+        return sanitizeAlbumName(getString(KEY_SAVE_MEDIA_FOLDER, ""));
+    }
+
+    /**
+     * Reduce a user-supplied folder name to a single safe path segment.
+     * The value flows straight into {@code new File(...)} and into
+     * {@code MediaStore.MediaColumns.RELATIVE_PATH}, so separators, drive/reserved
+     * characters and control characters are stripped rather than trusted, and a leading
+     * dot (".", "..", hidden dirs) is removed. An empty result falls back to the default.
+     */
+    public static String sanitizeAlbumName(String raw) {
+        if (raw == null) {
+            return DEFAULT_GALLERY_ALBUM;
+        }
+        String name = raw.trim();
+        StringBuilder sb = new StringBuilder(name.length());
+        for (int i = 0; i < name.length(); i++) {
+            char c = name.charAt(i);
+            if (c == '/' || c == '\\' || c == ':' || c == '*' || c == '?' || c == '"'
+                    || c == '<' || c == '>' || c == '|' || c < ' ') {
+                continue;
+            }
+            sb.append(c);
+        }
+        name = sb.toString().trim();
+        while (name.startsWith(".")) {
+            name = name.substring(1).trim();
+        }
+        if (name.length() > 48) {
+            name = name.substring(0, 48).trim();
+        }
+        return name.isEmpty() ? DEFAULT_GALLERY_ALBUM : name;
+    }
+
     // ---- Message bookmarks / collections (Wave 3) ----
     // A local, client-side alternative to Saved Messages. Bookmarks live only in the
     // app-private "luminagram" prefs as a JSON array string under the "bookmarks" key

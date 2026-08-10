@@ -101,11 +101,12 @@ public class LuminaTranslateActivity extends BaseFragment {
         return name != null ? name : code;
     }
 
-    // Current value shown on the 送出語言 row.
+    // Current value shown on the 送出語言 row. TextCell hard-ellipsizes its value at 40%
+    // of the screen width, so the row gets the short form and the picker keeps the long one.
     private CharSequence currentSendLanguageName() {
         String code = LuminaConfig.getString(KEY_SEND_LANG, "auto");
         if (code == null || code.length() == 0 || "auto".equals(code)) {
-            return LuminaLocale.getString(R.string.LuminaTranslateSendLangAuto);
+            return LuminaLocale.getString(R.string.LuminaTranslateSendLangAutoShort);
         }
         return languageDisplayName(code);
     }
