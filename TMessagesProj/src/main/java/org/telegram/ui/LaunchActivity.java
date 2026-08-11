@@ -6080,7 +6080,18 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                         }
                     }
                 }
-                if (!checkCancelled[0] && pendingUpdate != null && !ApplicationLoader.applicationLoaderInstance.isDownloadingUpdate() && (first || prevUpdate == null || pendingUpdate.higherThan(prevUpdate))) {
+                // A tap must always answer. The version gate below exists so the silent
+                // background check does not nag about the same release on every resume -
+                // applying it to a manual check meant the second tap on an already-known
+                // version did nothing at all, not even "you are up to date" (that line
+                // only runs when there is no update). showCustomUpdateAppPopup already
+                // knows how to re-attach to a running download or offer an installed-ready
+                // file, so it is safe to call it whatever state we are in.
+                final boolean userAsked = (progress != null);
+                final boolean offerUpdate = userAsked
+                        || (!ApplicationLoader.applicationLoaderInstance.isDownloadingUpdate()
+                            && (first || prevUpdate == null || pendingUpdate.higherThan(prevUpdate)));
+                if (!checkCancelled[0] && pendingUpdate != null && offerUpdate) {
                     ApplicationLoader.applicationLoaderInstance.showCustomUpdateAppPopup(LaunchActivity.this, pendingUpdate, currentAccount);
                 }
             });

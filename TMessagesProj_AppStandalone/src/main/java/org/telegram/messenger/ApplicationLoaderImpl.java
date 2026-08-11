@@ -879,15 +879,12 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
         if (!userInitiated && LuminaConfig.getBoolean(KEY_READY_PROMPTED, false)) {
             return false;
         }
-        LuminaConfig.putBoolean(KEY_READY_PROMPTED, true);
-        try {
-            LuminaUpdateService.cancelReadyNotification();
-        } catch (Throwable e) {
-            FileLog.e(e);
-        }
         if (!checkApkInstallPermissions(host)) {
             // The "allow installs from this source" dialog is up instead; report false so
-            // the caller still leaves a notification as the way back.
+            // the caller still leaves a notification as the way back. Deliberately before
+            // the flag is written: this is the path a first-time installer always takes,
+            // and marking it "prompted" here stranded the downloaded APK for good - every
+            // later resume returned early and the manual check had its own gate.
             return false;
         }
         try {
@@ -895,6 +892,13 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
         } catch (Exception e) {
             FileLog.e(e);
             return false;
+        }
+        // Only now: the installer is actually up, so this offer really was delivered.
+        LuminaConfig.putBoolean(KEY_READY_PROMPTED, true);
+        try {
+            LuminaUpdateService.cancelReadyNotification();
+        } catch (Throwable e) {
+            FileLog.e(e);
         }
         return true;
     }

@@ -38,6 +38,10 @@ public class LuminaChangelogActivity extends BaseFragment {
     // per release covers all nine languages. A version (or language) with no translation
     // simply shows these English lines.
     private static final Object[][] CHANGELOG = {
+        {"1.3.3", 7025, new String[]{
+            "A downloaded update could get stranded: the first time Android asked permission to install, the offer was marked as delivered and never came back",
+            "Checking for updates by hand always answers now, instead of staying silent on a version it had already seen",
+        }},
         {"1.3.2", 7024, new String[]{
             "The crypto address warning now shows the address it asks you to check",
             "Notifications keep arriving with the app closed, and settings say so when Android is silencing us",

@@ -67,6 +67,43 @@ public final class LuminaChangelogText {
     }
 
     static {
+        put("1.3.3",
+            /* zh-hans */ new String[]{
+                "下载好的更新可能会被卡住:第一次 Android 询问安装权限时，提示被当成已送达，之后再也不出现",
+                "手动检查更新一定会有回应，不会再对已经看过的版本毫无反应",
+            },
+            /* zh-hant */ new String[]{
+                "下載好的更新可能會被卡住:第一次 Android 詢問安裝權限時,提示被當成已送達,之後再也不出現",
+                "手動檢查更新一定會有回應,不會再對已經看過的版本毫無反應",
+            },
+            /* ar      */ new String[]{
+                "كان التحديث المُنزَّل قد يعلق: عند أول مرة يطلب فيها أندرويد إذن التثبيت، كان العرض يُحسب مُسلَّمًا ولا يعود",
+                "التحقق اليدوي من التحديثات يستجيب دائمًا الآن بدل أن يصمت أمام إصدار سبق أن رآه",
+            },
+            /* ru      */ new String[]{
+                "Загруженное обновление могло застрять: при первом запросе Android на разрешение установки предложение считалось доставленным и больше не появлялось",
+                "Ручная проверка обновлений теперь всегда отвечает, а не молчит о версии, которую уже видела",
+            },
+            /* fa      */ new String[]{
+                "به‌روزرسانی دانلودشده ممکن بود گیر کند: نخستین باری که اندروید اجازه نصب می‌خواست، پیشنهاد تحویل‌شده حساب می‌شد و دیگر برنمی‌گشت",
+                "بررسی دستی به‌روزرسانی همیشه پاسخ می‌دهد، نه اینکه درباره نسخه‌ای که قبلاً دیده سکوت کند",
+            },
+            /* tr      */ new String[]{
+                "İndirilen güncelleme takılabiliyordu: Android ilk kez kurulum izni istediğinde teklif iletilmiş sayılıp bir daha gelmiyordu",
+                "Elle güncelleme kontrolü artık her zaman yanıt veriyor; daha önce gördüğü bir sürüm için sessiz kalmıyor",
+            },
+            /* es      */ new String[]{
+                "Una actualización descargada podía quedarse varada: la primera vez que Android pedía permiso para instalar, el aviso se daba por entregado y no volvía",
+                "Buscar actualizaciones a mano siempre responde ahora, en vez de callar ante una versión que ya había visto",
+            },
+            /* pt-br   */ new String[]{
+                "Uma atualização baixada podia ficar presa: na primeira vez que o Android pedia permissão para instalar, o aviso era dado como entregue e não voltava",
+                "Procurar atualizações manualmente agora sempre responde, em vez de ficar em silêncio sobre uma versão que já tinha visto",
+            },
+            /* id      */ new String[]{
+                "Pembaruan yang sudah diunduh bisa tersangkut: saat Android pertama kali meminta izin memasang, tawaran itu dianggap tersampaikan dan tidak muncul lagi",
+                "Memeriksa pembaruan secara manual kini selalu menjawab, bukan diam soal versi yang sudah pernah dilihatnya",
+            });
         put("1.3.2",
             /* zh-hans */ new String[]{
                 "加密货币地址警告现在会把要你核对的地址显示出来",
