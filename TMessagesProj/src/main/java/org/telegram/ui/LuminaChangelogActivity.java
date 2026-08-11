@@ -38,6 +38,15 @@ public class LuminaChangelogActivity extends BaseFragment {
     // per release covers all nine languages. A version (or language) with no translation
     // simply shows these English lines.
     private static final Object[][] CHANGELOG = {
+        {"1.3.2", 7024, new String[]{
+            "The crypto address warning now shows the address it asks you to check",
+            "Notifications keep arriving with the app closed, and settings say so when Android is silencing us",
+            "Vault settings read properly again, and mark which mode and decoy style are active",
+            "Turning the vault on switches the home screen icon to match the decoy app",
+            "Voice models: only the languages Vosk actually ships, with sizes, and they can be deleted",
+            "Saved photos and files go into a LuminaGram folder; anything saved earlier stays where it is",
+            "What's New is now translated into every language the app supports",
+        }},
         {"1.3.1", 7023, new String[]{
             "A stray tap no longer throws away an update download",
             "Downloads carry on in the background, with progress in the notification shade",
