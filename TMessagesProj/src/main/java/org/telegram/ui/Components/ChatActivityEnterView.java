@@ -5181,7 +5181,9 @@ public class ChatActivityEnterView extends FrameLayout implements
                 }
             });
         }
-        // LuminaGram: quick toggle for translate-before-send, right in the send long-press menu.
+        // LuminaGram: MASTER capability toggle for translate-before-send. This only makes the feature
+        // available -- on its own it translates nothing. Each chat is turned on separately (rows
+        // below). Turning the master off here disables outgoing translation in every chat at once.
         options.add(R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaTranslateBeforeSend), () -> {
             LuminaConfig.toggleTranslateBeforeSend();
             luminaUpdateTranslatePreview();
@@ -5196,11 +5198,34 @@ public class ChatActivityEnterView extends FrameLayout implements
                 messageSendPreview = null;
             }
         });
-        // LuminaGram: change this dialog's translate-before-send language any time (auto mode only,
-        // where a per-dialog language is what gets used; a fixed global language ignores the lock).
-        if (LuminaConfig.translateBeforeSend && "auto".equals(LuminaConfig.getString("trSendLang", "auto"))) {
-            options.add(R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaTrSendSetLangMenu), () -> {
-                luminaChooseDialogSendLang();
+        // LuminaGram: per-dialog translate-before-send switch (default OFF). The row above is only the
+        // master capability; whether THIS chat translates outgoing messages is decided here.
+        if (LuminaConfig.translateBeforeSend && LuminaConfig.getDialogSendEnabled(dialog_id)) {
+            // On for this chat. In "auto" send-language mode a per-dialog language is what gets used,
+            // so offer to re-pick it (a fixed global language ignores the per-dialog lock). Always
+            // offer to turn this chat off.
+            if ("auto".equals(LuminaConfig.getString("trSendLang", "auto"))) {
+                options.add(R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaTrSendSetLangMenu), () -> {
+                    luminaChooseDialogSendLang();
+                    if (messageSendPreview != null) {
+                        messageSendPreview.dismiss(false);
+                        messageSendPreview = null;
+                    }
+                });
+            }
+            options.add(R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaTrSendDisableDialog), () -> {
+                luminaDisableDialogSend();
+                if (messageSendPreview != null) {
+                    messageSendPreview.dismiss(false);
+                    messageSendPreview = null;
+                }
+            });
+        } else {
+            // Off for this chat (or the master capability is off): one row to turn it on for this
+            // chat. Enabling flips the master capability on if needed, so a single tap is enough;
+            // it never touches any other chat (those stay at their default off).
+            options.add(R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaTrSendEnableDialog), () -> {
+                luminaEnableDialogSend();
                 if (messageSendPreview != null) {
                     messageSendPreview.dismiss(false);
                     messageSendPreview = null;
@@ -7517,7 +7542,10 @@ public class ChatActivityEnterView extends FrameLayout implements
                 updateSendButtonPaid();
                 return;
             }
-            if (LuminaConfig.translateBeforeSend && parentFragment != null && message != null && message.toString().trim().length() > 0) {
+            // LuminaGram: translate-before-send fires only when the GLOBAL capability is on AND this
+            // specific chat has been turned on (per-dialog switch, default off). Global-on alone no
+            // longer translates anything; a chat that is off falls straight through to the normal send.
+            if (LuminaConfig.translateBeforeSend && LuminaConfig.getDialogSendEnabled(dialog_id) && parentFragment != null && message != null && message.toString().trim().length() > 0) {
                 luminaTranslateBeforeSend(message, notify, scheduleDate, scheduleRepeatPeriod, payStars);
                 updateSendButtonPaid();
                 return;
@@ -8351,6 +8379,9 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
             final String chosen = langs.get(which).code;
             LuminaConfig.setDialogSendLang(dialog_id, chosen);
+            // LuminaGram: choosing a language for this chat IS how it is turned on (per-dialog
+            // switch, default off). Idempotent when already on (e.g. re-picking from the menu).
+            LuminaConfig.setDialogSendEnabled(dialog_id, true);
             // b25: the send language changed, so the preview cache (keyed on SOURCE text only)
             // is now stale — it holds a translation for the OLD language. Invalidate it before
             // refreshing, or the live panel would keep showing the old-language translation AND
@@ -8372,6 +8403,51 @@ public class ChatActivityEnterView extends FrameLayout implements
         });
         builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
         builder.show();
+    }
+
+    // LuminaGram: turn translate-before-send ON for THIS chat from the Send long-press menu. Also
+    // flips the global capability on if it was off, so a single tap is enough (this never affects
+    // any other chat -- they stay at their default off). In "auto" send-language mode, choosing the
+    // language IS the on-switch, so we open the picker (which sets the language and flips the chat on
+    // and refreshes the preview). With a FIXED global send language there is nothing to pick, so we
+    // just flip the chat on and refresh the preview.
+    private void luminaEnableDialogSend() {
+        if (!LuminaConfig.translateBeforeSend) {
+            LuminaConfig.toggleTranslateBeforeSend();
+        }
+        final String sendLang = LuminaConfig.getString("trSendLang", "auto");
+        if (sendLang != null && sendLang.length() > 0 && !"auto".equals(sendLang)) {
+            LuminaConfig.setDialogSendEnabled(dialog_id, true);
+            luminaPreviewGeneration++;
+            luminaPreviewTranslatedFor = null;
+            luminaPreviewTranslatedText = null;
+            luminaUpdateTranslatePreview();
+            if (parentFragment != null) {
+                BulletinFactory.of(parentFragment).createSimpleBulletin(
+                        R.raw.msg_translate,
+                        LuminaLocale.getString(R.string.LuminaTrSendDialogEnabled)
+                ).show();
+            }
+            return;
+        }
+        luminaChooseDialogSendLang();
+    }
+
+    // LuminaGram: turn translate-before-send OFF for THIS chat from the Send long-press menu. Leaves
+    // the global capability and this chat's remembered language untouched -- only the per-dialog
+    // switch flips -- and refreshes the live preview so it disappears at once.
+    private void luminaDisableDialogSend() {
+        LuminaConfig.setDialogSendEnabled(dialog_id, false);
+        luminaPreviewGeneration++;
+        luminaPreviewTranslatedFor = null;
+        luminaPreviewTranslatedText = null;
+        luminaUpdateTranslatePreview();
+        if (parentFragment != null) {
+            BulletinFactory.of(parentFragment).createSimpleBulletin(
+                    R.raw.msg_translate,
+                    LuminaLocale.getString(R.string.LuminaTrSendDialogDisabled)
+            ).show();
+        }
     }
 
     // LuminaGram: the actual translate round-trip + send once a target language is resolved
@@ -8754,7 +8830,10 @@ public class ChatActivityEnterView extends FrameLayout implements
         }
         // LuminaGram: also require an in-scope chat with a resolvable send language, so the live
         // preview never shows a translation the actual send would skip (out of scope / undetected).
-        final boolean enabled = LuminaConfig.translateBeforeSend && editingMessageObject == null && !recordingAudioVideo && luminaResolveSendLang() != null;
+        // Per-dialog gate: the live preview follows the same rule as the send path -- the global
+        // capability must be on AND this chat must be turned on (default off), or there is nothing
+        // to preview.
+        final boolean enabled = LuminaConfig.translateBeforeSend && LuminaConfig.getDialogSendEnabled(dialog_id) && editingMessageObject == null && !recordingAudioVideo && luminaResolveSendLang() != null;
         final CharSequence cs = messageEditText.getTextToUse();
         final String text = cs == null ? "" : cs.toString().trim();
         if (!enabled || text.length() == 0) {

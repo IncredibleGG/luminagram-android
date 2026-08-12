@@ -261,7 +261,9 @@ public final class LuminaChatLanguageMenu {
     }
 
     private static String outgoingRowText(long dialogId) {
-        if (!LuminaConfig.translateBeforeSend) {
+        // Off unless the global capability is on AND this chat is turned on (per-dialog switch,
+        // default off). translateBeforeSend alone no longer translates anything.
+        if (!LuminaConfig.translateBeforeSend || !LuminaConfig.getDialogSendEnabled(dialogId)) {
             return LuminaLocale.getString(R.string.LuminaChatLangMeOff);
         }
         final String code = effectiveSendLanguage(dialogId);
@@ -277,11 +279,13 @@ public final class LuminaChatLanguageMenu {
                 LuminaLocale.getString(R.string.LuminaChatLangMeTitle),
                 code -> {
                     if (OFF_CODE.equals(code)) {
-                        if (LuminaConfig.translateBeforeSend) {
-                            LuminaConfig.toggleTranslateBeforeSend();
-                        }
+                        // Turn translate-before-send OFF for THIS chat only. The global capability
+                        // and every other chat are left untouched (per-dialog switch, default off).
+                        LuminaConfig.setDialogSendEnabled(dialogId, false);
                     } else {
                         LuminaConfig.setDialogSendLang(dialogId, code);
+                        // Choosing a language turns this chat ON (per-dialog switch, default off).
+                        LuminaConfig.setDialogSendEnabled(dialogId, true);
                         // The send path prefers a fixed global send language over this chat's
                         // locked one, so when the global is what governs this chat, the global
                         // is the knob this row edits - otherwise the language just chosen
@@ -290,6 +294,8 @@ public final class LuminaChatLanguageMenu {
                         if (global != null && global.length() > 0 && !AUTO.equals(global)) {
                             LuminaConfig.putString(KEY_SEND_LANG, code);
                         }
+                        // Flip the global capability on if it was off, so the chosen language
+                        // actually takes effect (the capability gates every per-dialog switch).
                         if (!LuminaConfig.translateBeforeSend) {
                             LuminaConfig.toggleTranslateBeforeSend();
                         }

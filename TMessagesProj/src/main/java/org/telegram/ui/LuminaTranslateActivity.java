@@ -125,6 +125,9 @@ public class LuminaTranslateActivity extends BaseFragment {
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateSendHeader)));
         items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND, LuminaLocale.getString(R.string.LuminaTranslateBeforeSend))
                 .setChecked(LuminaConfig.translateBeforeSend));
+        // The master toggle only ENABLES the feature; it translates nothing on its own. Each chat is
+        // turned on separately (long-press Send, or the chat's translate menu). Spelled out here.
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaTranslateBeforeSendInfo)));
         items.add(UItem.asButton(ITEM_SEND_LANG, LuminaLocale.getString(R.string.LuminaTranslateSendLang), currentSendLanguageName()));
         items.add(UItem.asSwitch(ITEM_TRANSLATE_BEFORE_SEND_CONFIRM, LuminaLocale.getString(R.string.LuminaTranslateBeforeSendConfirm))
                 .setChecked(LuminaConfig.translateBeforeSendConfirm));

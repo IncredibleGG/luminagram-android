@@ -534,6 +534,53 @@ public class LuminaConfig {
         putString(KEY_TR_SEND_LANG_DIALOG, o.toString());
     }
 
+    // ---- Per-dialog translate-before-send ON/OFF switch ----
+    // translateBeforeSend (the global boolean) is only the capability gate: it makes the feature
+    // available but translates nothing on its own. Whether outgoing messages in a GIVEN chat are
+    // translated is decided here, per dialog, and defaults to OFF. Send-side translation applies
+    // only when translateBeforeSend (global) && getDialogSendEnabled(dialogId).
+    // Kept as its own boolean map rather than reusing the presence of a per-dialog send language
+    // (KEY_TR_SEND_LANG_DIALOG): that language map is only written in "auto" send-language mode, so
+    // "has a language" cannot mark a chat enabled when a FIXED global send language is in use (no
+    // per-dialog language is ever stored then). A dedicated switch also keeps "which language" and
+    // "is this chat on" independent -- re-picking or clearing the language never flips the switch,
+    // and turning a chat off never destroys its remembered language. Stored app-privately as a JSON
+    // object string { "<dialogId>": true } under the "trSendEnabledDialog" key -- never sent to Telegram.
+    public static final String KEY_TR_SEND_ENABLED_DIALOG = "trSendEnabledDialog";
+
+    /** True when translate-before-send is turned on for this dialog (default false). */
+    public static boolean getDialogSendEnabled(long dialogId) {
+        String raw = getString(KEY_TR_SEND_ENABLED_DIALOG, "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                org.json.JSONObject o = new org.json.JSONObject(raw);
+                return o.optBoolean(String.valueOf(dialogId), false);
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return false;
+    }
+
+    /** Turn translate-before-send on/off for this dialog; off removes the entry (keeps the map small). */
+    public static void setDialogSendEnabled(long dialogId, boolean enabled) {
+        org.json.JSONObject o;
+        String raw = getString(KEY_TR_SEND_ENABLED_DIALOG, "");
+        try {
+            o = (raw != null && raw.length() > 0) ? new org.json.JSONObject(raw) : new org.json.JSONObject();
+        } catch (org.json.JSONException e) {
+            o = new org.json.JSONObject();
+        }
+        try {
+            if (!enabled) {
+                o.remove(String.valueOf(dialogId));
+            } else {
+                o.put(String.valueOf(dialogId), true);
+            }
+        } catch (org.json.JSONException ignore) {
+        }
+        putString(KEY_TR_SEND_ENABLED_DIALOG, o.toString());
+    }
+
     // ---- Per-dialog translation register (tone / formality / relationship) ----
     // Which relationship a chat stands in -- client, colleague, friend, family, elder, someone you
     // are flirting with, or a sentence the user writes themselves -- so translations of that chat

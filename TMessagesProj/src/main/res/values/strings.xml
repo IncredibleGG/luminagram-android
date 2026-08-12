@@ -11269,7 +11269,7 @@
     <string name="LuminaAutoTranslateAll">Auto-translate all chats</string>
     <string name="LuminaAutoTranslateAllInfo">Automatically translate incoming messages in every chat, bypassing the premium requirement. Chats you have turned off individually stay off.</string>
     <string name="LuminaTranslateBeforeSend">Translate before send</string>
-    <string name="LuminaTranslateBeforeSendInfo">When on, your typed message is translated to the target language. You can preview the translation before it is sent.</string>
+    <string name="LuminaTranslateBeforeSendInfo">This only enables the feature — it translates nothing on its own. Turn it on for each chat separately: long-press the Send button, or open the chat\'s translate menu.</string>
     <string name="LuminaSendTranslation">Send translation</string>
     <string name="LuminaSendOriginal">Send original</string>
     <string name="LuminaTranslateOriginalLabel">Original</string>
@@ -11304,6 +11304,11 @@
     <string name="LuminaTrSendSetLangMenu">Set translation language</string>
     <string name="LuminaTrSendLangLocked">Messages will be translated to %1$s</string>
     <string name="LuminaTrSendTimeout">Translation timed out; your message was restored. Please try again.</string>
+    <!-- LuminaGram per-dialog translate-before-send switch (Send long-press menu) -->
+    <string name="LuminaTrSendEnableDialog">Translate my messages in this chat</string>
+    <string name="LuminaTrSendDisableDialog">Turn off translate-before-send here</string>
+    <string name="LuminaTrSendDialogEnabled">Translate-before-send is on for this chat</string>
+    <string name="LuminaTrSendDialogDisabled">Translate-before-send is off for this chat</string>
     <!-- LuminaGram chat title-bar language menu (mirrors the desktop client) -->
     <string name="LuminaChatLangThem">Them, translated into %1$s</string>
     <string name="LuminaChatLangThemOff">Them, not translated</string>
