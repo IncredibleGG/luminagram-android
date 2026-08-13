@@ -38,6 +38,10 @@ public class LuminaChangelogActivity extends BaseFragment {
     // per release covers all nine languages. A version (or language) with no translation
     // simply shows these English lines.
     private static final Object[][] CHANGELOG = {
+        {"1.3.4", 7026, new String[]{
+            "Translate-before-send is now per chat: the global switch just enables it, and you turn it on for each contact or group from the send button's menu",
+            "Long bilingual messages fold the original to one line with a tap to expand; the translation always stays in full",
+        }},
         {"1.3.3", 7025, new String[]{
             "A downloaded update could get stranded: the first time Android asked permission to install, the offer was marked as delivered and never came back",
             "Checking for updates by hand always answers now, instead of staying silent on a version it had already seen",

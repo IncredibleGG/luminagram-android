@@ -67,6 +67,43 @@ public final class LuminaChangelogText {
     }
 
     static {
+        put("1.3.4",
+            /* zh-hans */ new String[]{
+                "发送前翻译改为按对话:全局开关只是启用功能,要在送出键选单里为每个联系人或群组分别打开",
+                "长的双语讯息会把原文折成一行、点击展开,译文永远完整显示",
+            },
+            /* zh-hant */ new String[]{
+                "發送前翻譯改為按對話:全局開關只是啟用功能,要在送出鍵選單裡為每個聯絡人或群組分別打開",
+                "長的雙語訊息會把原文折成一行、點擊展開,譯文永遠完整顯示",
+            },
+            /* ar      */ new String[]{
+                "الترجمة قبل الإرسال أصبحت لكل محادثة: المفتاح العام يفعّل الميزة فقط، وتشغّلها لكل جهة اتصال أو مجموعة من قائمة زر الإرسال",
+                "الرسائل ثنائية اللغة الطويلة تطوي النص الأصلي إلى سطر واحد مع لمسة للتوسيع، وتبقى الترجمة كاملة دائمًا",
+            },
+            /* ru      */ new String[]{
+                "Перевод перед отправкой теперь для каждого чата: общий переключатель лишь включает функцию, а в каждом чате вы включаете её из меню кнопки отправки",
+                "Длинные двуязычные сообщения сворачивают оригинал в одну строку с разворотом по нажатию; перевод всегда показан полностью",
+            },
+            /* fa      */ new String[]{
+                "ترجمه پیش از ارسال اکنون برای هر گفتگو است: کلید سراسری فقط ویژگی را فعال می‌کند و برای هر مخاطب یا گروه از منوی دکمه ارسال روشنش می‌کنید",
+                "پیام‌های دوزبانه بلند، متن اصلی را در یک خط جمع می‌کنند و با یک ضربه باز می‌شوند؛ ترجمه همیشه کامل می‌ماند",
+            },
+            /* tr      */ new String[]{
+                "Göndermeden önce çeviri artık sohbet başına: genel anahtar yalnızca özelliği etkinleştirir, her kişi veya grup için gönder düğmesi menüsünden açarsınız",
+                "Uzun iki dilli mesajlar orijinali tek satıra katlar, dokununca açılır; çeviri her zaman tam kalır",
+            },
+            /* es      */ new String[]{
+                "La traducción al enviar ahora es por chat: el interruptor global solo activa la función, y la enciendes para cada contacto o grupo desde el menú del botón de enviar",
+                "Los mensajes bilingües largos pliegan el original a una línea con toque para expandir; la traducción siempre se muestra completa",
+            },
+            /* pt-br   */ new String[]{
+                "A tradução ao enviar agora é por conversa: o interruptor global apenas ativa o recurso, e você o liga para cada contato ou grupo pelo menu do botão de enviar",
+                "Mensagens bilíngues longas dobram o original em uma linha com toque para expandir; a tradução sempre aparece completa",
+            },
+            /* id      */ new String[]{
+                "Terjemah sebelum kirim kini per obrolan: sakelar global hanya mengaktifkan fitur, dan Anda menyalakannya untuk tiap kontak atau grup dari menu tombol kirim",
+                "Pesan dwibahasa panjang melipat teks asli jadi satu baris dengan ketuk untuk membuka; terjemahan selalu tampil penuh",
+            });
         put("1.3.3",
             /* zh-hans */ new String[]{
                 "下载好的更新可能会被卡住:第一次 Android 询问安装权限时，提示被当成已送达，之后再也不出现",
