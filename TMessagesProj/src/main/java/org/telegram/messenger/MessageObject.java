@@ -3775,6 +3775,12 @@ public class MessageObject {
     // source and to avoid re-applying on every bind.
     public boolean luminaDualOriginalApplied = false;
 
+    // LuminaGram fold-original: transient, per-view expand flag for a long bilingual message whose
+    // ORIGINAL (main) text is folded to one line by ChatMessageCell. Set true when the user taps to
+    // expand; never persisted or serialized, so it resets on app restart / message reload — matching
+    // Telegram's own collapsible-quote behavior. Default false = folded (when the feature applies).
+    public boolean luminaOriginalExpanded = false;
+
     // LuminaGram dual-language: for OUTGOING translate-before-send messages, swap the main text
     // to the ORIGINAL (from the capture agent) so the sent translation can be drawn as a small
     // dimmed sub-line by ChatMessageCell. No-op unless dual-language display is on and the message

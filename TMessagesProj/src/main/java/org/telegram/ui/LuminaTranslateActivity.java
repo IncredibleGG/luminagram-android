@@ -63,6 +63,7 @@ public class LuminaTranslateActivity extends BaseFragment {
     private static final int ITEM_SCOPE_GROUP = 15;
     private static final int ITEM_MODE_ALL = 16;
     private static final int ITEM_MODE_MANUAL = 17;
+    private static final int ITEM_FOLD_ORIGINAL = 18;
 
     private UniversalRecyclerView listView;
 
@@ -147,7 +148,12 @@ public class LuminaTranslateActivity extends BaseFragment {
         items.add(UItem.asSwitch(ITEM_DUAL_LANGUAGE, LuminaLocale.getString(R.string.LuminaDualLanguageDisplay))
                 .setChecked(LuminaConfig.getBoolean("dualLanguageDisplay", false)));
         items.add(UItem.asButton(ITEM_READ_LANG, LuminaLocale.getString(R.string.LuminaTranslateReadLang), currentReadLanguageName()));
-        items.add(UItem.asShadow(null));
+        // Long bilingual messages: fold the ORIGINAL to one line so it doesn't flood the chat; the
+        // translation is always shown in full. Defaults ON. Tapping a folded original expands it
+        // (transient — reset on app restart).
+        items.add(UItem.asSwitch(ITEM_FOLD_ORIGINAL, LuminaLocale.getString(R.string.LuminaFoldOriginalLongMessages))
+                .setChecked(LuminaConfig.getBoolean("foldOriginalLongMessages", true)));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaFoldOriginalLongMessagesInfo)));
 
         // ---- 3) Scope ----
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateScopeHeader)));
@@ -213,6 +219,10 @@ public class LuminaTranslateActivity extends BaseFragment {
                 break;
             case ITEM_DUAL_LANGUAGE:
                 LuminaConfig.putBoolean("dualLanguageDisplay", !LuminaConfig.getBoolean("dualLanguageDisplay", false));
+                update();
+                break;
+            case ITEM_FOLD_ORIGINAL:
+                LuminaConfig.putBoolean("foldOriginalLongMessages", !LuminaConfig.getBoolean("foldOriginalLongMessages", true));
                 update();
                 break;
             case ITEM_READ_LANG:

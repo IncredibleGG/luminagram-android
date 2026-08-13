@@ -1182,6 +1182,19 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     private int dualLanguageHeight;
     private int dualLanguageWidth;
     private static TextPaint dualLanguageTextPaint;
+    // LuminaGram: fold-original state for long bilingual messages. When originalFolded is true the
+    // ORIGINAL (main, big) text is drawn as a single clipped line plus a tappable "show original"
+    // affordance, while the translation sub-line stays fully shown. The expand flag lives on the
+    // MessageObject (luminaOriginalExpanded), so it is transient: never persisted, reset on app
+    // restart. These fields are recomputed every bind in computeOriginalFold().
+    private static final int FOLD_ORIGINAL_THRESHOLD_LINES = 4; // fold only when the original has MORE lines than this
+    private boolean originalFolded;
+    private int collapsedOriginalHeight; // first line + affordance row (used for measure / subline offset / hit-test)
+    private int foldOneLineHeight;       // pixel height of the original's first line
+    private int foldAffordanceWidth;     // measured width of the affordance (set while drawing; used for hit-test)
+    private boolean foldPressed;
+    private static TextPaint foldAffordanceTextPaint;
+    private Path foldTrianglePath;
     public int linkPreviewHeight;
     private int mediaOffsetY;
     private int descriptionY;
@@ -2390,6 +2403,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     }
 
     private boolean checkTextBlockMotionEvent(MotionEvent event) {
+        // LuminaGram: while the original is folded, its links/spoilers are hidden below the collapsed
+        // line — never hit-test them; checkFoldMotionEvent handles the tap (expand) instead.
+        if (originalFolded) {
+            return false;
+        }
         if (!(currentMessageObject.type == MessageObject.TYPE_TEXT || currentMessageObject.type == MessageObject.TYPE_EMOJIS || currentMessageObject.type == MessageObject.TYPE_STORY_MENTION) || currentMessageObject.textLayoutBlocks == null || currentMessageObject.textLayoutBlocks.isEmpty() || !(currentMessageObject.messageText instanceof Spannable)) {
             return false;
         }
@@ -4470,6 +4488,10 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         if (n > 15 || getParent() == null) {
             return false;
         }
+        // LuminaGram: folded original hides its spoilers below the collapsed line — do not hit-test them.
+        if (originalFolded) {
+            return false;
+        }
         if (currentMessageObject.hasValidGroupId() && currentMessagesGroup != null && !currentMessagesGroup.isDocuments) {
             ViewGroup parent = (ViewGroup) getParent();
             for (int i = 0; i < parent.getChildCount(); i++) {
@@ -4946,8 +4968,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         lastTouchY = getEventY(event);
         backgroundDrawable.setTouchCoords(lastTouchX, lastTouchY);
 
-        boolean result = checkSpoilersMotionEvent(event, 0);
+        boolean result = checkFoldMotionEvent(event);
 
+        if (!result) {
+            result = checkSpoilersMotionEvent(event, 0);
+        }
         if (!result) {
             result = checkTextBlockMotionEvent(event);
         }
@@ -7037,6 +7062,10 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             dualLanguageLayout = null;
             dualLanguageHeight = 0;
             dualLanguageWidth = 0;
+            originalFolded = false;
+            collapsedOriginalHeight = 0;
+            foldOneLineHeight = 0;
+            foldPressed = false;
             // LuminaGram dual-language: for outgoing translate-before-send messages swap the main
             // (big) text to the ORIGINAL before measuring, so the sent translation can be shown as
             // a small dimmed sub-line. No-op when the toggle is off or for non-plain messages.
@@ -7757,12 +7786,16 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 if (dualLanguageWidth > 0) {
                     backgroundWidth = Math.max(backgroundWidth, dualLanguageWidth + getExtraTextX() * 2 + dp(2));
                 }
+                // LuminaGram: decide whether the ORIGINAL (main text) is folded for this long bilingual message.
+                computeOriginalFold(messageObject);
                 if (messageObject.isSponsored()) {
                     totalHeight = dp(22.5f);
                 } else if (messageObject.type == MessageObject.TYPE_ARTICLE) {
                     totalHeight = messageObject.richLayout.getHeight() + dp(19.5f) + namesOffset;
                 } else {
-                    totalHeight = messageObject.textHeight() + dualLanguageHeight + dp(19.5f) + namesOffset;
+                    // LuminaGram: when folded, the original contributes only one line + affordance to the height.
+                    int originalContribution = originalFolded ? collapsedOriginalHeight : messageObject.textHeight();
+                    totalHeight = originalContribution + dualLanguageHeight + dp(19.5f) + namesOffset;
                     // LuminaGram: reserve an extra bottom row for the timestamp when a dual-language
                     // translation sub-line is present. The sub-line takes the place of the last text
                     // line but reserves no horizontal space for the time, so the bottom-right time
@@ -16692,6 +16725,12 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         if (transitionParams.animateTextY) {
             textY = transitionParams.animateFromTextY * (1f - transitionParams.animateChangeProgress) + this.textY * transitionParams.animateChangeProgress;
         }
+        // LuminaGram: folded original — draw the first line clipped + an affordance, then the full translation.
+        if (originalFolded) {
+            drawFoldedOriginal(canvas, textY);
+            drawDualLanguageSubline(canvas, textY);
+            return;
+        }
         if (transitionParams.animateChangeProgress != 1.0f && transitionParams.animateMessageText) {
             canvas.save();
             if (currentBackgroundDrawable != null) {
@@ -16829,9 +16868,146 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         int color = getThemedColor(currentMessageObject.isOutOwner() ? Theme.key_chat_messageTextOut : Theme.key_chat_messageTextIn);
         dualLanguageTextPaint.setColor(ColorUtils.setAlphaComponent(color, 150));
         canvas.save();
-        canvas.translate(textX, textY + currentMessageObject.textHeight() + dp(6));
+        // LuminaGram: when the original is folded, the sub-line sits right below the collapsed
+        // original (one line + affordance) instead of below the full original text.
+        int mainH = originalFolded ? collapsedOriginalHeight : currentMessageObject.textHeight();
+        canvas.translate(textX, textY + mainH + dp(6));
         dualLanguageLayout.draw(canvas);
         canvas.restore();
+    }
+
+    // LuminaGram: height of the tappable "show original" affordance row drawn under the folded first line.
+    private int foldAffordanceHeight() {
+        return dp(20);
+    }
+
+    // LuminaGram: decide whether to fold the ORIGINAL (main, big) text of a long bilingual message.
+    // Folding applies only when a translation sub-line is present (dualLanguageLayout != null), the
+    // "fold long messages" setting is on, the original is longer than the line threshold, and the
+    // user has not expanded THIS message. Sets originalFolded / collapsedOriginalHeight /
+    // foldOneLineHeight, consumed by measurement (totalHeight), drawing and hit-testing. A no-op
+    // (originalFolded stays false, so behavior is byte-for-byte the current behavior) whenever the
+    // setting is off, the message is short, it is already expanded, or it is not a dual-language bubble.
+    private void computeOriginalFold(MessageObject messageObject) {
+        originalFolded = false;
+        collapsedOriginalHeight = 0;
+        foldOneLineHeight = 0;
+        if (messageObject == null || dualLanguageLayout == null) {
+            return;
+        }
+        if (!LuminaConfig.getBoolean("foldOriginalLongMessages", true)) {
+            return;
+        }
+        if (messageObject.luminaOriginalExpanded) {
+            return;
+        }
+        ArrayList<MessageObject.TextLayoutBlock> blocks = messageObject.textLayoutBlocks;
+        if (blocks == null || blocks.isEmpty()) {
+            return;
+        }
+        int lineCount = 0;
+        for (int a = 0; a < blocks.size(); a++) {
+            MessageObject.TextLayoutBlock b = blocks.get(a);
+            if (b != null && b.textLayout != null) {
+                lineCount += b.textLayout.getLineCount();
+            }
+        }
+        if (lineCount <= FOLD_ORIGINAL_THRESHOLD_LINES) {
+            return;
+        }
+        MessageObject.TextLayoutBlock first = blocks.get(0);
+        if (first == null || first.textLayout == null || first.textLayout.getLineCount() == 0) {
+            return;
+        }
+        int oneLine = first.textLayout.getLineBottom(0);
+        if (oneLine <= 0) {
+            return;
+        }
+        foldOneLineHeight = oneLine;
+        collapsedOriginalHeight = oneLine + foldAffordanceHeight();
+        originalFolded = true;
+    }
+
+    // LuminaGram: draw the folded ORIGINAL — the first line of the main text clipped to one line,
+    // plus a tappable "show original" affordance beneath it. Reuses the normal main-text draw
+    // (spoilers, emoji, spans intact) under a one-line clip so styling matches the expanded view.
+    private void drawFoldedOriginal(Canvas canvas, float textY) {
+        if (currentMessageObject == null || currentMessageObject.textLayoutBlocks == null) {
+            return;
+        }
+        canvas.save();
+        float clipLeft = textX - dp(2);
+        float clipRight = textX + Math.max(currentMessageObject.textWidth, foldAffordanceWidth) + dp(6);
+        canvas.clipRect(clipLeft, textY, clipRight, textY + foldOneLineHeight);
+        drawMessageText(textX, textY, canvas, currentMessageObject.textLayoutBlocks, currentMessageObject.textXOffset, true, 1.0f, true, false, false);
+        canvas.restore();
+        drawFoldAffordance(canvas, textX, textY + foldOneLineHeight);
+    }
+
+    // LuminaGram: draw a downward chevron + localized "show original" label in the link colour.
+    private void drawFoldAffordance(Canvas canvas, float x, float yTop) {
+        if (foldAffordanceTextPaint == null) {
+            foldAffordanceTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        }
+        foldAffordanceTextPaint.setTypeface(AndroidUtilities.bold());
+        foldAffordanceTextPaint.setTextSize(dp(13));
+        foldAffordanceTextPaint.setStyle(Paint.Style.FILL);
+        int color = getThemedColor(currentMessageObject != null && currentMessageObject.isOutOwner() ? Theme.key_chat_messageLinkOut : Theme.key_chat_messageLinkIn);
+        foldAffordanceTextPaint.setColor(color);
+
+        final String label = LuminaLocale.getString(R.string.LuminaExpandOriginal);
+        final float triW = dp(8);
+        final float centerY = yTop + foldAffordanceHeight() / 2f;
+
+        if (foldTrianglePath == null) {
+            foldTrianglePath = new Path();
+        }
+        foldTrianglePath.reset();
+        foldTrianglePath.moveTo(x, centerY - triW / 3f);
+        foldTrianglePath.lineTo(x + triW, centerY - triW / 3f);
+        foldTrianglePath.lineTo(x + triW / 2f, centerY + triW / 2f);
+        foldTrianglePath.close();
+        canvas.drawPath(foldTrianglePath, foldAffordanceTextPaint);
+
+        final float textStart = x + triW + dp(5);
+        final float baseline = centerY - (foldAffordanceTextPaint.descent() + foldAffordanceTextPaint.ascent()) / 2f;
+        canvas.drawText(label, textStart, baseline, foldAffordanceTextPaint);
+        foldAffordanceWidth = (int) (triW + dp(5) + foldAffordanceTextPaint.measureText(label));
+    }
+
+    // LuminaGram: while the original is folded, a tap on the collapsed original (first line +
+    // affordance) expands it. Consumes the whole gesture so link/spoiler hit-testing never runs on
+    // the truncated text. Expansion is transient (stored on the MessageObject, reset on app restart).
+    private boolean checkFoldMotionEvent(MotionEvent event) {
+        if (!originalFolded || currentMessageObject == null) {
+            return false;
+        }
+        final int x = (int) getEventX(event);
+        final int y = (int) getEventY(event);
+        final int right = textX + Math.max(currentMessageObject.textWidth, foldAffordanceWidth) + dp(6);
+        final boolean inside = x >= textX - dp(2) && x <= right && y >= textY && y <= textY + collapsedOriginalHeight;
+        final int action = event.getAction();
+        if (action == MotionEvent.ACTION_DOWN) {
+            if (inside) {
+                foldPressed = true;
+                return true;
+            }
+        } else if (action == MotionEvent.ACTION_UP) {
+            if (foldPressed) {
+                foldPressed = false;
+                if (inside && !hadLongPress) {
+                    currentMessageObject.luminaOriginalExpanded = true;
+                    if (delegate != null) {
+                        delegate.forceUpdate(this, true);
+                    }
+                    invalidate();
+                }
+                return true;
+            }
+        } else if (action == MotionEvent.ACTION_CANCEL) {
+            foldPressed = false;
+        }
+        return false;
     }
 
     public void drawMessageText(Canvas canvas, ArrayList<MessageObject.TextLayoutBlock> textLayoutBlocks, boolean origin, float alpha, boolean drawOnlyText) {
@@ -21369,6 +21545,15 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         float textY = this.textY;
         if (transitionParams.animateTextY) {
             textY = transitionParams.animateFromTextY * (1f - transitionParams.animateChangeProgress) + this.textY * transitionParams.animateChangeProgress;
+        }
+        // LuminaGram: folded original — clip animated emoji to the single visible first line so
+        // custom emoji from the hidden lines do not float over the collapsed bubble / translation.
+        if (originalFolded) {
+            canvas.save();
+            canvas.clipRect(textX - dp(2), textY, textX + Math.max(currentMessageObject.textWidth, foldAffordanceWidth) + dp(6), textY + foldOneLineHeight);
+            drawAnimatedEmojiMessageText(textX, textY, canvas, currentMessageObject.textLayoutBlocks, animatedEmojiStack, true, alpha, currentMessageObject.textXOffset, false);
+            canvas.restore();
+            return;
         }
         if (transitionParams.animateChangeProgress != 1.0f && transitionParams.animateMessageText && !(botDraftTypingAnimator != null && botDraftTypingAnimator.isRunning())) {
             canvas.save();

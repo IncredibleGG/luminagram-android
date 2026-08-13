@@ -11274,6 +11274,10 @@
     <string name="LuminaSendOriginal">Send original</string>
     <string name="LuminaTranslateOriginalLabel">Original</string>
     <string name="LuminaDualLanguageDisplay">Auto-translate (bilingual)</string>
+    <!-- LuminaGram fold-original for long bilingual messages -->
+    <string name="LuminaFoldOriginalLongMessages">Fold original in long messages</string>
+    <string name="LuminaFoldOriginalLongMessagesInfo">In long bilingual messages, the original is collapsed to one line so it doesn\'t flood the chat. Tap it to expand. The translation is always shown in full.</string>
+    <string name="LuminaExpandOriginal">Show original</string>
     <!-- LuminaGram two-direction translate settings -->
     <string name="LuminaTranslateSendHeader">Sending</string>
     <string name="LuminaTranslateReceiveHeader">Receiving</string>
