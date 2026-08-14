@@ -125,6 +125,7 @@ import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaDigestHelper;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaChatLock;
 import org.telegram.messenger.NotificationsController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
@@ -594,6 +595,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     private ActionBarMenuSubItem readItem;
     @Nullable
     private ActionBarMenuSubItem blockItem;
+    private ActionBarMenuSubItem luminaLockItem;
 
     private float additionalFloatingTranslation;
     private float floatingButtonPanOffset;
@@ -714,6 +716,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     private final static int add_to_folder = 109;
     private final static int remove_from_folder = 110;
     private final static int community_ungroup = 111;
+    private final static int lumina_lock = 112;
 
     private final static int ARCHIVE_ITEM_STATE_PINNED = 0;
     private final static int ARCHIVE_ITEM_STATE_SHOWED = 1;
@@ -3406,6 +3409,11 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             @Override
             public void onTextChanged(EditText editText) {
                 String text = editText.getText().toString();
+                if (LuminaChatLock.tryRevealFromSearch(text)) {
+                    editText.getText().clear();
+                    luminaRefreshDialogs();
+                    return;
+                }
                 if (!text.isEmpty() || (searchViewPager != null && searchViewPager.dialogsSearchAdapter != null && searchViewPager.dialogsSearchAdapter.hasRecentSearch()) || searchFiltersWasShowed || hasStories) {
                     searchWas = true;
                     if (!searchIsShowed) {
@@ -6764,6 +6772,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         readItem = otherItem.addSubItem(read, R.drawable.msg_markread, LocaleController.getString(R.string.MarkAsRead));
         clearItem = otherItem.addSubItem(clear, R.drawable.msg_clear, LocaleController.getString(R.string.ClearHistory));
         blockItem = otherItem.addSubItem(block, R.drawable.msg_block, LocaleController.getString(R.string.BlockUser));
+        luminaLockItem = otherItem.addSubItem(lumina_lock, R.drawable.msg_secret, LuminaLocale.getString(R.string.LuminaChatLockAdd));
 
         muteItem.setOnLongClickListener(e -> {
             performSelectedDialogsAction(selectedDialogs, mute, true, true);
@@ -9194,6 +9203,11 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
         int count = selectedDialogs.size();
         int pinnedActionCount = 0;
+        if (action == lumina_lock) {
+            luminaPerformLockAction(new ArrayList<>(selectedDialogs));
+            hideActionMode(false);
+            return;
+        }
         if (action == archive || action == archive2) {
             ArrayList<Long> copy = new ArrayList<>(selectedDialogs);
             getMessagesController().addDialogToFolder(copy, canUnarchiveCount == 0 ? 1 : 0, -1, null, 0);
@@ -9959,6 +9973,23 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 blockItem.setVisibility(View.GONE);
             } else {
                 blockItem.setVisibility(View.VISIBLE);
+            }
+        }
+        if (luminaLockItem != null) {
+            try {
+                boolean allLocked = count > 0;
+                for (int a = 0; a < selectedDialogs.size(); a++) {
+                    if (!LuminaChatLock.isLocked(selectedDialogs.get(a))) {
+                        allLocked = false;
+                        break;
+                    }
+                }
+                luminaLockItem.setText(allLocked
+                        ? LuminaLocale.getString(R.string.LuminaChatLockRemove)
+                        : LuminaLocale.getString(R.string.LuminaChatLockAdd));
+                luminaLockItem.setVisibility(communitiesCount > 0 ? View.GONE : View.VISIBLE);
+            } catch (Throwable ignore) {
+                luminaLockItem.setVisibility(View.VISIBLE);
             }
         }
         if (removeFromFolderItem != null) {
@@ -11023,13 +11054,134 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     private ArrayList<TLRPC.Dialog> botShareDialogs;
 
     @NonNull
+    // ================= LuminaGram: single-chat lock / private folder =================
+    // Display-ONLY filtering: hidden chats keep receiving messages and keep their unread
+    // state -- nothing here ever marks read, changes typing, or touches online/last-seen.
+    // Fail-open everywhere: any error leaves chats visible so a dialog is never lost.
+
+    /** Rebuild every visible dialog page so the lock/reveal filter re-applies. */
+    public void luminaRefreshDialogs() {
+        try {
+            if (viewPages != null) {
+                for (int a = 0; a < viewPages.length; a++) {
+                    if (viewPages[a] != null && viewPages[a].dialogsAdapter != null) {
+                        viewPages[a].dialogsAdapter.updateList(null);
+                    }
+                }
+            }
+        } catch (Throwable ignore) {
+        }
+    }
+
+    /** Drop hidden (locked and not-revealed) chats from a display list. Returns the SAME
+     *  reference untouched when the feature is inactive, so there is zero behavior change
+     *  for users who never lock a chat. Never mutates the source list. */
+    private ArrayList<TLRPC.Dialog> luminaFilterHidden(ArrayList<TLRPC.Dialog> src) {
+        try {
+            if (onlySelect || src == null || src.isEmpty() || !LuminaChatLock.isActive()) {
+                return src;
+            }
+            java.util.HashSet<Long> locked = LuminaChatLock.lockedIdSet();
+            if (locked.isEmpty()) {
+                return src;
+            }
+            ArrayList<TLRPC.Dialog> out = new ArrayList<>(src.size());
+            for (int i = 0; i < src.size(); i++) {
+                TLRPC.Dialog d = src.get(i);
+                if (d != null && !(d instanceof TLRPC.TL_dialogFolder) && locked.contains(d.id)) {
+                    continue; // display-layer hide only
+                }
+                out.add(d);
+            }
+            return out;
+        } catch (Throwable t) {
+            return src; // fail-open: never lose chats
+        }
+    }
+
+    /** Lock or unlock every selected dialog (toggle: if all are already locked, unlock them,
+     *  otherwise lock them all). Prompts for a reveal code the first time one is needed. */
+    private void luminaPerformLockAction(ArrayList<Long> dialogIds) {
+        try {
+            if (dialogIds == null || dialogIds.isEmpty()) {
+                return;
+            }
+            boolean allLocked = true;
+            for (int i = 0; i < dialogIds.size(); i++) {
+                if (!LuminaChatLock.isLocked(dialogIds.get(i))) {
+                    allLocked = false;
+                    break;
+                }
+            }
+            if (allLocked) {
+                for (int i = 0; i < dialogIds.size(); i++) {
+                    LuminaChatLock.unlock(dialogIds.get(i));
+                }
+                luminaRefreshDialogs();
+                return;
+            }
+            if (!LuminaChatLock.hasCode()) {
+                luminaPromptSetCode(dialogIds);
+                return;
+            }
+            luminaLockAllAndHide(dialogIds);
+        } catch (Throwable ignore) {
+        }
+    }
+
+    private void luminaLockAllAndHide(ArrayList<Long> dialogIds) {
+        try {
+            for (int i = 0; i < dialogIds.size(); i++) {
+                LuminaChatLock.lock(dialogIds.get(i));
+            }
+            luminaRefreshDialogs();
+            if (!LuminaChatLock.isRevealed()) {
+                try {
+                    Toast.makeText(getParentActivity(), LuminaLocale.getString(R.string.LuminaChatLockHiddenToast), Toast.LENGTH_SHORT).show();
+                } catch (Throwable ignore) {
+                }
+            }
+        } catch (Throwable ignore) {
+        }
+    }
+
+    private void luminaPromptSetCode(final ArrayList<Long> dialogIds) {
+        try {
+            if (getParentActivity() == null) {
+                return;
+            }
+            final EditText input = new EditText(getParentActivity());
+            input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            input.setHint(LuminaLocale.getString(R.string.LuminaChatLockCodeHint));
+            AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
+            builder.setTitle(LuminaLocale.getString(R.string.LuminaChatLockSetCodeTitle));
+            builder.setMessage(LuminaLocale.getString(R.string.LuminaChatLockSetCodeMessage));
+            builder.setView(input);
+            builder.setPositiveButton(LuminaLocale.getString(R.string.LuminaChatLockSetCodeSave), (d, w) -> {
+                String code = "";
+                try {
+                    code = input.getText().toString().trim();
+                } catch (Throwable ignore) {
+                }
+                if (code.length() == 0) {
+                    return;
+                }
+                LuminaConfig.putString(LuminaConfig.KEY_CHAT_LOCK_CODE, code);
+                luminaLockAllAndHide(dialogIds);
+            });
+            builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
+            showDialog(builder.create());
+        } catch (Throwable ignore) {
+        }
+    }
+
     public ArrayList<TLRPC.Dialog> getDialogsArray(int currentAccount, int dialogsType, int folderId, boolean frozen) {
         if (frozen && frozenDialogsList != null) {
             return frozenDialogsList;
         }
         MessagesController messagesController = AccountInstance.getInstance(currentAccount).getMessagesController();
         if (dialogsType == DIALOGS_TYPE_DEFAULT) {
-            return messagesController.getDialogs(folderId);
+            return luminaFilterHidden(messagesController.getDialogs(folderId));
         } else if (dialogsType == DIALOGS_TYPE_WIDGET || dialogsType == DIALOGS_TYPE_IMPORT_HISTORY) {
             return messagesController.dialogsServerOnly;
         } else if (dialogsType == DIALOGS_TYPE_ADD_USERS_TO) {
@@ -11069,12 +11221,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         } else if (dialogsType == 7 || dialogsType == 8) {
             MessagesController.DialogFilter dialogFilter = messagesController.selectedDialogFilter[dialogsType == 7 ? 0 : 1];
             if (dialogFilter == null) {
-                return messagesController.getDialogs(folderId);
+                return luminaFilterHidden(messagesController.getDialogs(folderId));
             } else {
                 if (initialDialogsType == DIALOGS_TYPE_FORWARD) {
                     return dialogFilter.dialogsForward;
                 }
-                return dialogFilter.dialogs;
+                return luminaFilterHidden(dialogFilter.dialogs);
             }
         } else if (dialogsType == DIALOGS_TYPE_BLOCK) {
             return messagesController.dialogsForBlock;

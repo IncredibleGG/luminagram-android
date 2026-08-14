@@ -283,6 +283,21 @@ public class DialogsSearchAdapter extends RecyclerListView.SelectionAdapter {
     }
 
     private boolean filter(Object obj) {
+        // LuminaGram private folder: hide locked-and-not-revealed chats from every search
+        // surface (local, global, phone and recent all funnel through here). Display-only;
+        // fail-open on any error so a chat is never lost from search.
+        try {
+            long lid = 0;
+            if (obj instanceof TLRPC.User) {
+                lid = ((TLRPC.User) obj).id;
+            } else if (obj instanceof TLRPC.Chat) {
+                lid = -((TLRPC.Chat) obj).id;
+            }
+            if (lid != 0 && org.telegram.messenger.LuminaChatLock.isHidden(lid)) {
+                return false;
+            }
+        } catch (Throwable ignore) {
+        }
         if (dialogsType != DialogsActivity.DIALOGS_TYPE_START_ATTACH_BOT) {
             return true;
         }
@@ -641,6 +656,9 @@ public class DialogsSearchAdapter extends RecyclerListView.SelectionAdapter {
                                 if (foundDuplicate) {
                                     continue;
                                 }
+                            }
+                            if (org.telegram.messenger.LuminaChatLock.isHidden(did)) {
+                                continue; // LuminaGram: hide messages from locked chats in search
                             }
                             searchResultMessages.add(msg);
                             long dialog_id = MessageObject.getDialogId(message);

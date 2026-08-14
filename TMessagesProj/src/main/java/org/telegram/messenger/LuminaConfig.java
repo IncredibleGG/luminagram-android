@@ -368,6 +368,20 @@ public class LuminaConfig {
     /** All do-not-translate terms (insertion order). Never null; empty on parse error. */
     public static org.json.JSONArray getGlossaryTerms() {
         String raw = getString(KEY_GLOSSARY_TERMS, "");
+    // ---- Single-chat lock / private folder (LuminaGram) ----
+    // A purely LOCAL, display-only "private folder": dialogIds the user chose to hide from the
+    // chat list and search until they type a secret reveal code. Stored only in the app-private
+    // "luminagram" prefs as a JSON array string of dialogIds under the "lockedChats" key (via
+    // getString/putString) -- nothing is ever sent to Telegram, and NO receive/read/typing/
+    // online state is touched. See LuminaChatLock for the session reveal + display predicate.
+    public static final String KEY_LOCKED_CHATS = "lockedChats";
+    // Optional dedicated reveal code. When empty, LuminaChatLock falls back to the vault's
+    // decoyUnlockCode so existing vault users get chat-lock reveal for free.
+    public static final String KEY_CHAT_LOCK_CODE = "chatLockCode";
+
+    /** All locked dialogIds (insertion order). Never null; empty on none / parse error. */
+    public static org.json.JSONArray getLockedChatIds() {
+        String raw = getString(KEY_LOCKED_CHATS, "");
         if (raw != null && raw.length() > 0) {
             try {
                 return new org.json.JSONArray(raw);
@@ -375,6 +389,56 @@ public class LuminaConfig {
             }
         }
         return new org.json.JSONArray();
+    }
+
+    /** True when at least one chat is in the locked set. */
+    public static boolean hasAnyLockedChat() {
+        try {
+            return getLockedChatIds().length() > 0;
+        } catch (Throwable ignore) {
+            return false;
+        }
+    }
+
+    /** Membership test for the locked set (does NOT consider the session reveal state). */
+    public static boolean isChatInLockedSet(long dialogId) {
+        try {
+            org.json.JSONArray arr = getLockedChatIds();
+            for (int i = 0; i < arr.length(); i++) {
+                if (arr.optLong(i) == dialogId) {
+                    return true;
+                }
+            }
+        } catch (Throwable ignore) {
+        }
+        return false;
+    }
+
+    /** Add ({@code locked=true}) or remove ({@code locked=false}) a dialog from the locked set. */
+    public static void setChatLocked(long dialogId, boolean locked) {
+        try {
+            if (dialogId == 0) {
+                return;
+            }
+            org.json.JSONArray arr = getLockedChatIds();
+            org.json.JSONArray out = new org.json.JSONArray();
+            boolean present = false;
+            for (int i = 0; i < arr.length(); i++) {
+                long v = arr.optLong(i);
+                if (v == dialogId) {
+                    present = true;
+                    if (!locked) {
+                        continue; // drop it
+                    }
+                }
+                out.put(v);
+            }
+            if (locked && !present) {
+                out.put(dialogId);
+            }
+            putString(KEY_LOCKED_CHATS, out.toString());
+        } catch (Throwable ignore) {
+        }
     }
 
     // Typed toggles keep the static field and the persisted value in sync (XOR idiom)

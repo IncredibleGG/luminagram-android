@@ -11564,6 +11564,13 @@
     <!-- LuminaGram disguise vault password door -->
     <string name="LuminaVaultDoorHint">Password</string>
     <string name="LuminaVaultDoorConfirm">OK</string>
+    <string name="LuminaChatLockAdd">Add to private folder</string>
+    <string name="LuminaChatLockRemove">Remove from private folder</string>
+    <string name="LuminaChatLockHiddenToast">Hidden. Type your code in search to reveal.</string>
+    <string name="LuminaChatLockSetCodeTitle">Set a reveal code</string>
+    <string name="LuminaChatLockSetCodeMessage">Type this code in the chat search box to reveal your private folder. Keep it secret.</string>
+    <string name="LuminaChatLockSetCodeSave">Save</string>
+    <string name="LuminaChatLockCodeHint">Reveal code</string>
     <!-- LuminaGram decoy notepad lock -->
     <string name="LuminaNotepadTitle">Notes</string>
     <!-- LuminaGram interface & display preferences (Wave 6) -->
