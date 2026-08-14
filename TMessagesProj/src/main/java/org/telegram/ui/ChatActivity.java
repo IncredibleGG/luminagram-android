@@ -184,6 +184,7 @@ import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaFileGuard;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaScreenshotDetector;
 import org.telegram.messenger.LuminaVoiceToText;
@@ -35095,6 +35096,107 @@ public class ChatActivity extends BaseFragment implements
         showDialog(builder.create());
     }
 
+    // ---- LuminaGram: file masquerade guard (anti-scam) ----
+    // Runs a purely-local check before a document is handed to an external viewer. If the file's
+    // name/type looks disguised (an RTL-override filename, or an executable posing as media/pdf,
+    // e.g. "EvilVideo"), we interpose a confirmation dialog whose emphasized default button is the
+    // safe "Cancel"; only an explicit, red "Open anyway" tap proceeds. Fail-open throughout: any
+    // problem in the check or the dialog falls through to opening the file exactly as before.
+    private void luminaGuardedOpenForView(MessageObject message) {
+        final Runnable open = () -> {
+            try {
+                AndroidUtilities.openForView(message, getParentActivity(), themeDelegate, false);
+            } catch (Exception e) {
+                FileLog.e(e);
+                alertUserOpenError(message);
+            }
+        };
+        try {
+            if (LuminaConfig.fileMasqueradeGuard
+                    && message != null
+                    && message.getDocument() != null
+                    && getParentActivity() != null) {
+                File file = null;
+                try {
+                    if (message.messageOwner != null
+                            && message.messageOwner.attachPath != null
+                            && message.messageOwner.attachPath.length() != 0) {
+                        File af = new File(message.messageOwner.attachPath);
+                        if (af.exists()) {
+                            file = af;
+                        }
+                    }
+                    if (file == null) {
+                        File pf = getFileLoader().getPathToMessage(message.messageOwner);
+                        if (pf != null && pf.exists()) {
+                            file = pf;
+                        }
+                    }
+                } catch (Throwable ignore) {
+                    // best-effort magic-byte source; the string checks work without it
+                }
+                LuminaFileGuard.Result result =
+                        LuminaFileGuard.check(message.getDocumentName(), message.getMimeType(), file);
+                if (result != null && result.suspicious) {
+                    luminaShowFileGuardWarning(result, open);
+                    return;
+                }
+            }
+        } catch (Throwable t) {
+            FileLog.e(t);
+            // fall through and open normally
+        }
+        open.run();
+    }
+
+    private void luminaShowFileGuardWarning(LuminaFileGuard.Result result, Runnable openAction) {
+        if (getParentActivity() == null) {
+            // No UI to warn with: do not silently open a suspicious file, and do not crash.
+            return;
+        }
+        try {
+            final String body;
+            switch (result.reason) {
+                case LuminaFileGuard.REASON_RTL:
+                    body = String.format(LuminaLocale.getString(R.string.LuminaFileGuardRtl),
+                            luminaFileGuardArg(result.safeName));
+                    break;
+                case LuminaFileGuard.REASON_EXECUTABLE:
+                    body = String.format(LuminaLocale.getString(R.string.LuminaFileGuardExecutable),
+                            luminaFileGuardArg(result.safeName), luminaFileGuardArg(result.realType));
+                    break;
+                case LuminaFileGuard.REASON_MISMATCH:
+                default:
+                    body = String.format(LuminaLocale.getString(R.string.LuminaFileGuardMismatch),
+                            luminaFileGuardArg(result.claimedType), luminaFileGuardArg(result.realType));
+                    break;
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), themeDelegate);
+            builder.setTitle(LuminaLocale.getString(R.string.LuminaFileGuardTitle));
+            builder.setMessage(body);
+            // The safe choice is the emphasized positive button, so a stray tap cancels rather than
+            // opens; the destructive action is the deliberate, red negative button.
+            builder.setPositiveButton(LocaleController.getString(R.string.Cancel), null);
+            builder.setNegativeButton(LuminaLocale.getString(R.string.LuminaFileGuardOpenAnyway),
+                    (dialog, which) -> openAction.run());
+            AlertDialog dialog = builder.create();
+            showDialog(dialog);
+            // Button views only exist after the dialog is shown; the red tint is cosmetic, so null-guard.
+            TextView openAnyway = (TextView) dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+            if (openAnyway != null) {
+                openAnyway.setTextColor(getThemedColor(Theme.key_text_RedBold));
+            }
+        } catch (Throwable t) {
+            FileLog.e(t);
+            // Fail-open: if the warning cannot be presented, open as the user asked.
+            openAction.run();
+        }
+    }
+
+    private static String luminaFileGuardArg(String s) {
+        return (s == null || s.trim().isEmpty()) ? "?" : s;
+    }
+
     private void parseMarkdownAsync(MessageObject message) {
         if (getParentActivity() == null) {
             return;
@@ -35122,12 +35224,7 @@ public class ChatActivity extends BaseFragment implements
                 if (ok) {
                     createArticleViewer(false).open(message, finalParsed);
                 } else {
-                    try {
-                        AndroidUtilities.openForView(message, getParentActivity(), themeDelegate, false);
-                    } catch (Exception e) {
-                        FileLog.e(e);
-                        alertUserOpenError(message);
-                    }
+                    luminaGuardedOpenForView(message);
                 }
             });
         }).start();
@@ -41286,12 +41383,7 @@ public class ChatActivity extends BaseFragment implements
                         handled = true;
                     }
                     if (!handled) {
-                        try {
-                            AndroidUtilities.openForView(message, getParentActivity(), themeDelegate, false);
-                        } catch (Exception e) {
-                            FileLog.e(e);
-                            alertUserOpenError(message);
-                        }
+                        luminaGuardedOpenForView(message);
                     }
                 }
 
@@ -41593,12 +41685,7 @@ public class ChatActivity extends BaseFragment implements
                     handled = true;
                 }
                 if (!handled) {
-                    try {
-                        AndroidUtilities.openForView(message, getParentActivity(), themeDelegate, false);
-                    } catch (Exception e) {
-                        FileLog.e(e);
-                        alertUserOpenError(message);
-                    }
+                    luminaGuardedOpenForView(message);
                 }
             }
         }

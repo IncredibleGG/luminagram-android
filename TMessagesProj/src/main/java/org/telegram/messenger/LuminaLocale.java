@@ -475,6 +475,14 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaOtpGuardSendAnyway", "我知道风险，仍要发送");
         zhHans.put("LuminaOtpGuard", "登录码泄露防护");
         zhHans.put("LuminaOtpGuardInfo", "当 Telegram 刚给你发过登录码、而你正要发出含有验证码的消息时，先弹出警告。整个判断都在你的设备上完成，不会上传任何内容，也不会改动你的消息。");
+        // --- file masquerade guard (anti-scam) ---
+        zhHans.put("LuminaFileGuard", "文件伪装防护");
+        zhHans.put("LuminaFileGuardInfo", "在你打开一个名称或类型被伪装的文件前先警告你——例如一个假装成视频或图片的应用程序，或使用了隐藏的从右到左字符的文件名。整个检查都在你的设备上完成。");
+        zhHans.put("LuminaFileGuardTitle", "可疑文件");
+        zhHans.put("LuminaFileGuardRtl", "这个文件名使用了隐藏的文字方向控制字符，用来掩盖它的真实身份。\n\n它的真实名称是：\n%1$s\n\n除非你完全信任发送者，否则不要打开它。");
+        zhHans.put("LuminaFileGuardExecutable", "这个文件（%1$s）看起来无害，但它其实是一个应用程序（%2$s）。打开它可能会在你的设备上安装恶意软件。\n\n除非你完全信任发送者，否则不要打开它。");
+        zhHans.put("LuminaFileGuardMismatch", "这个文件自称是 %1$s，但它实际上似乎是 %2$s。它可能并不是看起来的那样。\n\n除非你完全信任发送者，否则不要打开它。");
+        zhHans.put("LuminaFileGuardOpenAnyway", "仍然打开");
         // --- login guard ---
         zhHans.put("LuminaSessionGuardHeader", "登录守卫");
         zhHans.put("LuminaSessionGuard", "新登录提醒");
@@ -978,6 +986,14 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaOtpGuardSendAnyway", "我知道風險，仍要傳送");
         zhHant.put("LuminaOtpGuard", "登入碼外洩防護");
         zhHant.put("LuminaOtpGuardInfo", "當 Telegram 剛寄給你登入碼、而你正要送出含有驗證碼的訊息時，先跳出警告。整個判斷都在你的裝置上完成，不會上傳任何內容，也不會更動你的訊息。");
+        // --- file masquerade guard (anti-scam) ---
+        zhHant.put("LuminaFileGuard", "檔案偽裝防護");
+        zhHant.put("LuminaFileGuardInfo", "在你開啟一個名稱或類型被偽裝的檔案前先警告你——例如一個假裝成影片或圖片的應用程式，或使用了隱藏的由右至左字元的檔名。整個檢查都在你的裝置上完成。");
+        zhHant.put("LuminaFileGuardTitle", "可疑檔案");
+        zhHant.put("LuminaFileGuardRtl", "這個檔名使用了隱藏的文字方向控制字元，用來掩蓋它的真實身分。\n\n它的真實名稱是：\n%1$s\n\n除非你完全信任傳送者，否則不要開啟它。");
+        zhHant.put("LuminaFileGuardExecutable", "這個檔案（%1$s）看起來無害，但它其實是一個應用程式（%2$s）。開啟它可能會在你的裝置上安裝惡意軟體。\n\n除非你完全信任傳送者，否則不要開啟它。");
+        zhHant.put("LuminaFileGuardMismatch", "這個檔案自稱是 %1$s，但它實際上似乎是 %2$s。它可能並不是看起來的那樣。\n\n除非你完全信任傳送者，否則不要開啟它。");
+        zhHant.put("LuminaFileGuardOpenAnyway", "仍要開啟");
         // --- login guard ---
         zhHant.put("LuminaSessionGuardHeader", "登入守衛");
         zhHant.put("LuminaSessionGuard", "新登入警示");

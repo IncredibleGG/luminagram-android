@@ -42,6 +42,13 @@ public class LuminaConfig {
     // Warn when a stranger's display name / username uses visual look-alike
     // (homoglyph) characters commonly used to impersonate a trusted account.
     public static boolean homoglyphWarn = true;
+    // ---- Anti-scam: file masquerade guard (Wave) ----
+    // Warn before opening a document whose displayed name / type hides what it really is
+    // (RTL-override filenames, or executables disguised as media/pdf, e.g. "EvilVideo").
+    // Purely local check; default ON so the protection is opt-out, not opt-in. Initialized to
+    // true at declaration so that even the degraded prefs-load path (preferences == null) leaves
+    // the guard armed rather than silently off.
+    public static boolean fileMasqueradeGuard = true;
 
     static {
         loadConfig();
@@ -69,6 +76,7 @@ public class LuminaConfig {
                 customAccentColor = preferences.getInt("customAccentColor", 0);
                 appFont = preferences.getInt("appFont", 0);
                 homoglyphWarn = preferences.getBoolean("homoglyphWarn", true);
+                fileMasqueradeGuard = preferences.getBoolean("fileMasqueradeGuard", true);
 
                 configLoaded = true;
             } catch (Throwable e) {
@@ -394,6 +402,13 @@ public class LuminaConfig {
             return;
         }
         editor.putBoolean("compactChatList", compactChatList ^= true).apply();
+    }
+
+    public static void toggleFileMasqueradeGuard() {
+        if (editor == null) {
+            return;
+        }
+        editor.putBoolean("fileMasqueradeGuard", fileMasqueradeGuard ^= true).apply();
     }
 
     public static void toggleTranslateBeforeSend() {
