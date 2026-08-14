@@ -50,6 +50,14 @@ public class LuminaConfig {
     // the guard armed rather than silently off.
     public static boolean fileMasqueradeGuard = true;
 
+    // ---- Input field (Wave) ----
+    // Hide the AI Editor icon Telegram shows inside the message input field
+    // (the "Rewrite / translate / correct with AI" button). Default OFF = keep stock
+    // behavior (button shown); when ON that single icon is never displayed. Fail-safe:
+    // this only gates that one icon's visibility, so a wrong value at worst shows the
+    // stock button rather than breaking the input row.
+    public static boolean hideInputAiButton;
+
     static {
         loadConfig();
     }
@@ -77,6 +85,7 @@ public class LuminaConfig {
                 appFont = preferences.getInt("appFont", 0);
                 homoglyphWarn = preferences.getBoolean("homoglyphWarn", true);
                 fileMasqueradeGuard = preferences.getBoolean("fileMasqueradeGuard", true);
+                hideInputAiButton = preferences.getBoolean("hideInputAiButton", false);
 
                 configLoaded = true;
             } catch (Throwable e) {
