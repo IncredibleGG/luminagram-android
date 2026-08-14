@@ -11784,4 +11784,12 @@
     <string name="LuminaOcrTranslateInfo">When viewing a full-screen image, adds a menu action that recognizes the text inside it on your device and translates it with your chosen engine. Recognition happens offline.</string>
     <string name="LuminaReverseVoiceSending">Translating and sending as a voice message…</string>
     <string name="LuminaReverseVoiceFailed">Couldn’t create the voice message</string>
+    <string name="LuminaTranslateMoreHeader">More</string>
+    <string name="LuminaGroupSkipSetting">In groups, skip languages you read</string>
+    <string name="LuminaGroupSkipSettingInfo">When a group is translated, messages already in a language you read are left untranslated.</string>
+    <string name="LuminaReverseVoiceSetting">Send text as translated voice</string>
+    <string name="LuminaReverseVoiceSettingInfo">Experimental. Long-press Send to translate your text and send it as a voice message spoken by the device.</string>
+    <string name="LuminaStrangerInboxHeader">Stranger requests</string>
+    <string name="LuminaStrangerInbox">Stranger request inbox</string>
+    <string name="LuminaStrangerInboxInfo">Messages from people who are not your contacts and share no group with you go to a separate requests list instead of the main chat list.</string>
 </resources>

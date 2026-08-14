@@ -38,6 +38,13 @@ public class LuminaChangelogActivity extends BaseFragment {
     // per release covers all nine languages. A version (or language) with no translation
     // simply shows these English lines.
     private static final Object[][] CHANGELOG = {
+        {"1.3.7", 7029, new String[]{
+            "Translate text inside images and screenshots: open an image, then Translate image text",
+            "Explain a message - long-press it for tone, slang and how to reply, using your own AI key",
+            "In group chats, messages already in a language you read are left untranslated",
+            "People who are not your contacts and share no group land in a separate requests list, not your main chats",
+            "Experimental: long-press Send to send your text as a translated voice message",
+        }},
         {"1.3.6", 7028, new String[]{
             "Your numeric user ID now shows on your profile and on others - long-press to copy",
             "A do-not-translate list keeps brand names, @usernames and links from being translated",

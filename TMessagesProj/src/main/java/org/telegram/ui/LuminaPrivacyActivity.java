@@ -48,6 +48,7 @@ public class LuminaPrivacyActivity extends BaseFragment {
     private static final int ID_SCAM_KEYWORD_WARNING = 13;
     private static final int ID_AUTO_BLUR_INCOMING = 14;
     private static final int ID_OTP_GUARD = 15;
+    private static final int ID_STRANGER_INBOX = 16;
 
     private UniversalRecyclerView listView;
 
@@ -125,6 +126,11 @@ public class LuminaPrivacyActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_HIDE_NOTIF_CONTENT, LuminaLocale.getString(R.string.LuminaPrivacyHideNotifContent))
                 .setChecked(LuminaConfig.getBoolean("hideNotifContent", false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaPrivacyHideNotifContentInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaStrangerInboxHeader)));
+        items.add(UItem.asSwitch(ID_STRANGER_INBOX, LuminaLocale.getString(R.string.LuminaStrangerInbox))
+                .setChecked(LuminaConfig.strangerInbox));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaStrangerInboxInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -166,6 +172,9 @@ public class LuminaPrivacyActivity extends BaseFragment {
             case ID_OTP_GUARD:
                 // Default ON: this is a protection, not a preference. Off is opt-out.
                 LuminaOtpGuard.setEnabled(!LuminaOtpGuard.isEnabled());
+                break;
+            case ID_STRANGER_INBOX:
+                LuminaConfig.toggleStrangerInbox();
                 break;
         }
         if (listView != null && listView.adapter != null) {

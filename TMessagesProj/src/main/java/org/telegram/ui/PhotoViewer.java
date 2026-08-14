@@ -11181,7 +11181,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             return;
         }
         boolean show = LuminaConfig.ocrTranslate
-                && !isVideo
+                && !isCurrentVideo
                 && centerImage != null
                 && centerImage.getBitmap() != null;
         if (show) {

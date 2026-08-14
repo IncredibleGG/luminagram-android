@@ -64,6 +64,10 @@ public class LuminaTranslateActivity extends BaseFragment {
     private static final int ITEM_MODE_ALL = 16;
     private static final int ITEM_MODE_MANUAL = 17;
     private static final int ITEM_FOLD_ORIGINAL = 18;
+    private static final int ITEM_OCR_TRANSLATE = 19;
+    private static final int ITEM_EXPLAIN = 20;
+    private static final int ITEM_GROUP_SKIP = 21;
+    private static final int ITEM_REVERSE_VOICE = 22;
 
     private UniversalRecyclerView listView;
 
@@ -165,6 +169,19 @@ public class LuminaTranslateActivity extends BaseFragment {
 
         // ---- 4) Multi-provider translation (bring-your-own key) ----
         final LuminaTranslator provider = LuminaTranslators.current();
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateMoreHeader)));
+        items.add(UItem.asSwitch(ITEM_OCR_TRANSLATE, LuminaLocale.getString(R.string.LuminaOcrTranslateSetting))
+                .setChecked(LuminaConfig.ocrTranslate));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaOcrTranslateInfo)));
+        items.add(UItem.asSwitch(ITEM_EXPLAIN, LuminaLocale.getString(R.string.LuminaExplainSetting))
+                .setChecked(LuminaConfig.explainMessage));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaExplainSettingInfo)));
+        items.add(UItem.asSwitch(ITEM_GROUP_SKIP, LuminaLocale.getString(R.string.LuminaGroupSkipSetting))
+                .setChecked(LuminaConfig.isGroupSkipMyLanguagesEnabled()));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaGroupSkipSettingInfo)));
+        items.add(UItem.asSwitch(ITEM_REVERSE_VOICE, LuminaLocale.getString(R.string.LuminaReverseVoiceSetting))
+                .setChecked(LuminaConfig.reverseVoice));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaReverseVoiceSettingInfo)));
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateProviderHeader)));
         items.add(UItem.asButton(ITEM_PROVIDER, LuminaLocale.getString(R.string.LuminaTranslateProvider), provider.displayName()));
         if (provider.needsKey()) {
@@ -266,6 +283,23 @@ public class LuminaTranslateActivity extends BaseFragment {
                 break;
             case ITEM_TEST:
                 runProviderTest();
+                break;
+            case ITEM_OCR_TRANSLATE:
+                LuminaConfig.toggleOcrTranslate();
+                update();
+                break;
+            case ITEM_EXPLAIN:
+                LuminaConfig.toggleExplainMessage();
+                update();
+                break;
+            case ITEM_GROUP_SKIP:
+                LuminaConfig.toggleGroupSkipMyLanguages();
+                update();
+                break;
+            case ITEM_REVERSE_VOICE:
+                LuminaConfig.reverseVoice = !LuminaConfig.reverseVoice;
+                LuminaConfig.putBoolean("reverseVoice", LuminaConfig.reverseVoice);
+                update();
                 break;
         }
     }
