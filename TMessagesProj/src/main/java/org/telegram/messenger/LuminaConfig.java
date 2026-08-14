@@ -701,11 +701,15 @@ public class LuminaConfig {
             return;
         }
         editor.putBoolean("explainMessage", explainMessage ^= true).apply();
+    }
+
     public static void toggleOcrTranslate() {
         if (editor == null) {
             return;
         }
         editor.putBoolean("ocrTranslate", ocrTranslate ^= true).apply();
+    }
+
     /** Persist the stranger-request-inbox master switch (default OFF). */
     public static void toggleStrangerInbox() {
         if (editor == null) {
