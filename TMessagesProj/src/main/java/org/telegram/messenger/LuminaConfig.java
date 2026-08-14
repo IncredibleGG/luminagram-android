@@ -65,6 +65,13 @@ public class LuminaConfig {
     // reply. Default ON; initialized true at declaration so the degraded prefs-load path
     // (preferences == null) still offers the action rather than silently hiding it.
     public static boolean explainMessage = true;
+    // ---- Image OCR translation (Wave) ----
+    // When viewing a full-screen image, offer to recognize the text inside it (on-device
+    // ML Kit OCR) and translate it with the user's chosen engine, shown in an overlay panel.
+    // Default ON so the action is opt-out; initialized true so even the degraded prefs-load
+    // path (preferences == null) leaves the feature available. Only gates the menu action's
+    // visibility, so a wrong value at worst hides one optional menu entry.
+    public static boolean ocrTranslate = true;
 
     static {
         loadConfig();
@@ -93,6 +100,7 @@ public class LuminaConfig {
                 appFont = preferences.getInt("appFont", 0);
                 homoglyphWarn = preferences.getBoolean("homoglyphWarn", true);
                 fileMasqueradeGuard = preferences.getBoolean("fileMasqueradeGuard", true);
+                ocrTranslate = preferences.getBoolean("ocrTranslate", true);
                 hideInputAiButton = preferences.getBoolean("hideInputAiButton", false);
                 explainMessage = preferences.getBoolean("explainMessage", true);
 
@@ -679,6 +687,11 @@ public class LuminaConfig {
             return;
         }
         editor.putBoolean("explainMessage", explainMessage ^= true).apply();
+    public static void toggleOcrTranslate() {
+        if (editor == null) {
+            return;
+        }
+        editor.putBoolean("ocrTranslate", ocrTranslate ^= true).apply();
     }
 
     public static void toggleTranslateBeforeSend() {

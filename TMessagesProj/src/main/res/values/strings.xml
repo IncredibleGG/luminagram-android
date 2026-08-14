@@ -11760,4 +11760,16 @@
     <string name="LuminaExplainError">Couldn\'t explain this message. Please try again.</string>
     <string name="LuminaExplainSetting">Explain a message</string>
     <string name="LuminaExplainSettingInfo">Adds an \"Explain\" action to the message long-press menu. It uses your own translation LLM key to break a message down into its literal meaning, real tone, cultural or slang notes, and a suggested reply.</string>
+    <!-- LuminaGram image OCR translation (full-screen photo viewer) -->
+    <string name="LuminaOcrTranslate">Translate text in image</string>
+    <string name="LuminaOcrOriginal">Original</string>
+    <string name="LuminaOcrTranslation">Translation</string>
+    <string name="LuminaOcrRecognizing">Recognizing text…</string>
+    <string name="LuminaOcrNoImage">Image is not ready yet</string>
+    <string name="LuminaOcrNoText">No text found in this image</string>
+    <string name="LuminaOcrFailed">Couldn’t recognize the text</string>
+    <string name="LuminaOcrTranslateFailed">Couldn’t translate the text</string>
+    <string name="LuminaOcrRateLimited">Translation service is busy, please try again later</string>
+    <string name="LuminaOcrTranslateSetting">Translate text in images</string>
+    <string name="LuminaOcrTranslateInfo">When viewing a full-screen image, adds a menu action that recognizes the text inside it on your device and translates it with your chosen engine. Recognition happens offline.</string>
 </resources>

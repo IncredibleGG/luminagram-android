@@ -565,6 +565,18 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaExplainError", "无法解释这条消息，请重试。");
         zhHans.put("LuminaExplainSetting", "解释消息");
         zhHans.put("LuminaExplainSettingInfo", "在消息长按菜单中加入「解释一下」。它使用你自己的翻译 LLM 密钥，把一条消息拆解成字面意思、真实语气、文化或俚语注解，以及建议怎么回。");
+        // ---- Image OCR translation ----
+        zhHans.put("LuminaOcrTranslate", "翻译图中文字");
+        zhHans.put("LuminaOcrOriginal", "原文");
+        zhHans.put("LuminaOcrTranslation", "译文");
+        zhHans.put("LuminaOcrRecognizing", "正在识别文字…");
+        zhHans.put("LuminaOcrNoImage", "图片尚未就绪");
+        zhHans.put("LuminaOcrNoText", "未在图片中找到文字");
+        zhHans.put("LuminaOcrFailed", "文字识别失败");
+        zhHans.put("LuminaOcrTranslateFailed", "翻译失败");
+        zhHans.put("LuminaOcrRateLimited", "翻译服务繁忙，请稍后再试");
+        zhHans.put("LuminaOcrTranslateSetting", "翻译图片中的文字");
+        zhHans.put("LuminaOcrTranslateInfo", "查看全屏图片时，增加一个菜单操作：在本机识别图中文字，并用你选择的引擎翻译。识别过程离线完成。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -1104,6 +1116,18 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaExplainError", "無法解釋這則訊息，請再試一次。");
         zhHant.put("LuminaExplainSetting", "解釋訊息");
         zhHant.put("LuminaExplainSettingInfo", "在訊息長按選單中加入「解釋一下」。它會使用你自己的翻譯 LLM 金鑰，把一則訊息拆解成字面意思、真實語氣、文化或俚語註解，以及建議怎麼回。");
+        // ---- Image OCR translation ----
+        zhHant.put("LuminaOcrTranslate", "翻譯圖中文字");
+        zhHant.put("LuminaOcrOriginal", "原文");
+        zhHant.put("LuminaOcrTranslation", "譯文");
+        zhHant.put("LuminaOcrRecognizing", "正在辨識文字…");
+        zhHant.put("LuminaOcrNoImage", "圖片尚未就緒");
+        zhHant.put("LuminaOcrNoText", "未在圖片中找到文字");
+        zhHant.put("LuminaOcrFailed", "文字辨識失敗");
+        zhHant.put("LuminaOcrTranslateFailed", "翻譯失敗");
+        zhHant.put("LuminaOcrRateLimited", "翻譯服務繁忙，請稍後再試");
+        zhHant.put("LuminaOcrTranslateSetting", "翻譯圖片中的文字");
+        zhHant.put("LuminaOcrTranslateInfo", "檢視全螢幕圖片時，新增一個選單動作：在本機辨識圖中文字，並用你選擇的引擎翻譯。辨識過程離線完成。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----

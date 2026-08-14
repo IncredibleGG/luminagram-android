@@ -32,6 +32,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -69,6 +70,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -177,6 +179,9 @@ import org.telegram.messenger.ImageReceiver;
 import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaLocale;
+import org.telegram.messenger.LuminaOcr;
+import org.telegram.messenger.LuminaTranslator;
+import org.telegram.messenger.LuminaTranslators;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.LuminaGate;
 import org.telegram.messenger.MediaDataController;
@@ -2198,6 +2203,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     private final static int gallery_menu_create_sticker = 25;
     private final static int gallery_menu_delete2 = 26;
     private final static int gallery_menu_save_frame = 27;
+    private final static int gallery_menu_ocr_translate = 28;   // LuminaGram: OCR-translate text drawn inside the image
 
     private final static int ads_sponsor_info = 101;
     private final static int ads_about = 102;
@@ -5738,6 +5744,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                         menuItem.hideSubItem(gallery_menu_hide_translation);
                     }, 32);
                     updateCaptionTranslated();
+                } else if (id == gallery_menu_ocr_translate) {
+                    startOcrTranslate();
                 } else if (id == gallery_menu_loop) {
                     playerLooping = !playerLooping;
                     VideoPlayer.saveLooping(playerLooping, currentMessageObject);
@@ -5958,11 +5966,13 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         menuItem.addSubItem(gallery_menu_set_as_main, R.drawable.msg_openprofile, getString(R.string.SetAsMain)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_translate, R.drawable.msg_translate, getString(R.string.TranslateMessage)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_hide_translation, R.drawable.msg_translate, getString(R.string.HideTranslation)).setColors(0xfffafafa, 0xfffafafa);
+        menuItem.addSubItem(gallery_menu_ocr_translate, R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaOcrTranslate)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_delete, R.drawable.msg_delete, getString(R.string.Delete)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_cancel_loading, R.drawable.msg_cancel, getString(R.string.StopDownload)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.redrawPopup(0xf9222222);
         menuItem.hideSubItem(gallery_menu_translate);
         menuItem.hideSubItem(gallery_menu_hide_translation);
+        menuItem.hideSubItem(gallery_menu_ocr_translate);
         setMenuItemIcon(false, true);
         menuItem.setPopupItemsSelectorColor(0x0fffffff);
 
@@ -5972,6 +5982,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 if (videoPlayerControlVisible && isPlaying) {
                     AndroidUtilities.cancelRunOnUIThread(hideActionBarRunnable);
                 }
+                updateOcrTranslateMenuVisibility();
             }
 
             @Override
@@ -11156,6 +11167,136 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         } catch (Exception e) {
             FileLog.e(e);
         }
+    }
+
+    // ==== LuminaGram: OCR translation of text inside the currently viewed image ====
+
+    /**
+     * Show/hide the "translate text in image" action when the more-menu opens. Evaluated
+     * lazily here (instead of being woven into the per-media menu branches) so it stays
+     * isolated and only appears for still images that already have a decoded bitmap.
+     */
+    private void updateOcrTranslateMenuVisibility() {
+        if (menuItem == null) {
+            return;
+        }
+        boolean show = LuminaConfig.ocrTranslate
+                && !isVideo
+                && centerImage != null
+                && centerImage.getBitmap() != null;
+        if (show) {
+            menuItem.showSubItem(gallery_menu_ocr_translate);
+        } else {
+            menuItem.hideSubItem(gallery_menu_ocr_translate);
+        }
+    }
+
+    private void startOcrTranslate() {
+        if (parentActivity == null || containerView == null) {
+            return;
+        }
+        Bitmap src = centerImage != null ? centerImage.getBitmap() : null;
+        if (src == null || src.isRecycled()) {
+            BulletinFactory.of(containerView, resourcesProvider)
+                    .createErrorBulletin(LuminaLocale.getString(R.string.LuminaOcrNoImage)).show();
+            return;
+        }
+        // Copy defensively: swiping to another image can recycle the live bitmap while ML Kit
+        // is still processing it. Fall back to the live bitmap only if the copy fails (e.g. OOM).
+        Bitmap bitmap;
+        try {
+            bitmap = src.copy(Bitmap.Config.ARGB_8888, false);
+        } catch (Throwable t) {
+            bitmap = src;
+        }
+        final int rotation = centerImage != null ? centerImage.getOrientation() : 0;
+        BulletinFactory.of(containerView, resourcesProvider)
+                .createSimpleBulletin(R.raw.info, LuminaLocale.getString(R.string.LuminaOcrRecognizing)).show();
+        LuminaOcr.recognize(bitmap, rotation, new LuminaOcr.Callback() {
+            @Override
+            public void onResult(String text) {
+                if (parentActivity == null || containerView == null) {
+                    return;
+                }
+                String trimmed = text == null ? "" : text.trim();
+                if (trimmed.length() == 0) {
+                    BulletinFactory.of(containerView, resourcesProvider)
+                            .createErrorBulletin(LuminaLocale.getString(R.string.LuminaOcrNoText)).show();
+                    return;
+                }
+                translateOcrText(trimmed);
+            }
+
+            @Override
+            public void onError(String message) {
+                if (parentActivity == null || containerView == null) {
+                    return;
+                }
+                BulletinFactory.of(containerView, resourcesProvider)
+                        .createErrorBulletin(LuminaLocale.getString(R.string.LuminaOcrFailed)).show();
+            }
+        });
+    }
+
+    private void translateOcrText(String original) {
+        try {
+            String toLang = TranslateAlert2.getToLanguage();
+            LuminaTranslators.current().translate(original, toLang, new LuminaTranslator.Callback() {
+                @Override
+                public void onResult(String translated, String detectedSourceLang) {
+                    if (parentActivity == null) {
+                        return;
+                    }
+                    showOcrResultDialog(original, translated);
+                }
+
+                @Override
+                public void onError(boolean rateLimited, String message) {
+                    if (parentActivity == null) {
+                        return;
+                    }
+                    // Still surface the recognized text even when translation fails.
+                    showOcrResultDialog(original, null);
+                    if (containerView != null) {
+                        BulletinFactory.of(containerView, resourcesProvider)
+                                .createErrorBulletin(LuminaLocale.getString(rateLimited ? R.string.LuminaOcrRateLimited : R.string.LuminaOcrTranslateFailed)).show();
+                    }
+                }
+            });
+        } catch (Throwable t) {
+            FileLog.e(t);
+            showOcrResultDialog(original, null);
+        }
+    }
+
+    private void showOcrResultDialog(String original, String translated) {
+        if (parentActivity == null) {
+            return;
+        }
+        SpannableStringBuilder sb = new SpannableStringBuilder();
+        int s0 = sb.length();
+        sb.append(LuminaLocale.getString(R.string.LuminaOcrOriginal));
+        sb.setSpan(new StyleSpan(Typeface.BOLD), s0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        sb.append('\n').append(original);
+        if (!TextUtils.isEmpty(translated)) {
+            sb.append("\n\n");
+            int s1 = sb.length();
+            sb.append(LuminaLocale.getString(R.string.LuminaOcrTranslation));
+            sb.setSpan(new StyleSpan(Typeface.BOLD), s1, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            sb.append('\n').append(translated);
+        }
+        final String copyText = !TextUtils.isEmpty(translated) ? translated : original;
+        AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity, resourcesProvider)
+                .setTitle(LuminaLocale.getString(R.string.LuminaOcrTranslate))
+                .setMessage(sb)
+                .setPositiveButton(getString(R.string.Close), null)
+                .setNeutralButton(getString(R.string.Copy), (dialog, which) -> {
+                    if (AndroidUtilities.addToClipboard(copyText) && containerView != null) {
+                        BulletinFactory.of(containerView, resourcesProvider)
+                                .createCopyBulletin(getString(R.string.TextCopied)).show();
+                    }
+                });
+        showAlertDialog(builder);
     }
 
     private static final int thumbSize = 512;
