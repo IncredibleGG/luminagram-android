@@ -377,6 +377,158 @@ public class LuminaConfig {
         return new org.json.JSONArray();
     }
 
+    // ---- Languages the user already reads ("only translate what I can't read") ----
+    // A LOCAL, display-only list of language codes the user understands. Used by
+    // TranslateController to SKIP translating group/channel messages whose detected
+    // source language is already one of these (saves translation quota + hides
+    // redundant sub-lines). Stored in the app-private "luminagram" prefs as a plain
+    // comma-separated string of normalized language codes, e.g. "zh,en" (a JSON array
+    // string is also accepted on read). Nothing is ever sent to Telegram.
+    //
+    // Default (when the user has never customised the list): the interface language
+    // PLUS the configured dual-language READ language (trReadLang), if any.
+    public static final String KEY_MY_LANGUAGES = "myLanguages";
+    // On/off switch for the group-skip optimisation (default ON). When off, group
+    // translation behaves exactly like upstream (translate every foreign message).
+    public static final String KEY_GROUP_SKIP_MY_LANGUAGES = "groupSkipMyLanguages";
+
+    /** True when the "skip languages I already read" optimisation is enabled (default ON). */
+    public static boolean isGroupSkipMyLanguagesEnabled() {
+        return getBoolean(KEY_GROUP_SKIP_MY_LANGUAGES, true);
+    }
+
+    public static void toggleGroupSkipMyLanguages() {
+        putBoolean(KEY_GROUP_SKIP_MY_LANGUAGES, !isGroupSkipMyLanguagesEnabled());
+    }
+
+    /**
+     * Canonicalise a raw language code for membership tests: lower-cased, trimmed, with
+     * any region/script subtag stripped ("zh-Hans" / "zh_CN" / "en-US" -> "zh" / "en"),
+     * and the app-wide Bokmal alias applied ("nb" -> "no"). Returns "" for blank input.
+     */
+    public static String normalizeLangCode(String lang) {
+        if (lang == null) {
+            return null;
+        }
+        String s = lang.trim().toLowerCase(java.util.Locale.ROOT);
+        if (s.isEmpty()) {
+            return "";
+        }
+        int cut = s.length();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '-' || ch == '_') {
+                cut = i;
+                break;
+            }
+        }
+        s = s.substring(0, cut);
+        if ("nb".equals(s)) {
+            s = "no";
+        }
+        return s;
+    }
+
+    /** Parse a stored value (comma/space/semicolon separated, or a JSON array) into a normalized set. */
+    private static java.util.Set<String> parseLangSet(String raw) {
+        java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
+        if (raw == null) {
+            return out;
+        }
+        raw = raw.trim();
+        if (raw.isEmpty()) {
+            return out;
+        }
+        if (raw.charAt(0) == '[') {
+            try {
+                org.json.JSONArray a = new org.json.JSONArray(raw);
+                for (int i = 0; i < a.length(); i++) {
+                    String c = normalizeLangCode(a.optString(i));
+                    if (c != null && !c.isEmpty()) {
+                        out.add(c);
+                    }
+                }
+                return out;
+            } catch (org.json.JSONException ignore) {
+                // fall through to delimiter parsing
+            }
+        }
+        for (String part : raw.split("[,;\\s]+")) {
+            String c = normalizeLangCode(part);
+            if (c != null && !c.isEmpty()) {
+                out.add(c);
+            }
+        }
+        return out;
+    }
+
+    private static String joinLangSet(java.util.Set<String> set) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : set) {
+            if (sb.length() > 0) {
+                sb.append(',');
+            }
+            sb.append(s);
+        }
+        return sb.toString();
+    }
+
+    /** Interface language + configured READ language (trReadLang) -- the fallback set. */
+    public static java.util.Set<String> getDefaultMyLanguages() {
+        java.util.LinkedHashSet<String> out = new java.util.LinkedHashSet<>();
+        try {
+            String iface = LocaleController.getInstance().getCurrentLocaleInfo().pluralLangCode;
+            String c = normalizeLangCode(iface);
+            if (c != null && !c.isEmpty()) {
+                out.add(c);
+            }
+        } catch (Throwable ignore) {
+        }
+        try {
+            String read = getString("trReadLang", "");
+            String c = normalizeLangCode(read);
+            if (c != null && !c.isEmpty()) {
+                out.add(c);
+            }
+        } catch (Throwable ignore) {
+        }
+        return out;
+    }
+
+    /**
+     * Languages the user reads. When the key has never been written, this is the live
+     * default (interface language + trReadLang). Once the user customises the list, the
+     * stored value wins verbatim -- an explicitly emptied list means "translate everything".
+     */
+    public static java.util.Set<String> getMyLanguages() {
+        if (!contains(KEY_MY_LANGUAGES)) {
+            return getDefaultMyLanguages();
+        }
+        return parseLangSet(getString(KEY_MY_LANGUAGES, ""));
+    }
+
+    /** Membership test used by the translate pipeline; normalizes {@code lang} first. */
+    public static boolean isMyLanguage(String lang) {
+        String n = normalizeLangCode(lang);
+        if (n == null || n.isEmpty()) {
+            return false;
+        }
+        return getMyLanguages().contains(n);
+    }
+
+    /** User-editable value for the settings UI; shows the computed default until customised. */
+    public static String getMyLanguagesRaw() {
+        if (!contains(KEY_MY_LANGUAGES)) {
+            return joinLangSet(getDefaultMyLanguages());
+        }
+        return getString(KEY_MY_LANGUAGES, "");
+    }
+
+    /** Persist a user-entered list; normalized + de-duped so the stored value is canonical. */
+    public static void setMyLanguages(String raw) {
+        putString(KEY_MY_LANGUAGES, joinLangSet(parseLangSet(raw)));
+    }
+
     // ---- Single-chat lock / private folder (LuminaGram) ----
     // A purely LOCAL, display-only "private folder": dialogIds the user chose to hide from the
     // chat list and search until they type a secret reveal code. Stored only in the app-private

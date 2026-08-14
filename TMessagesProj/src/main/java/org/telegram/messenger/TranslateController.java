@@ -693,6 +693,84 @@ public class TranslateController extends BaseController {
         checkTranslation(messageObject, onScreen, false);
     }
 
+    // LuminaGram (Group skip): "only translate what I can't read".
+    // Message hashes whose on-device source-language detection is currently in flight,
+    // so we never launch the (free, on-device) detector twice for the same message and
+    // never re-enter translation before it resolves. Mirrors detectingPhotos/pendingLanguageChecks.
+    private final HashSet<Integer> groupSkipDetecting = new HashSet<>();
+
+    // Decides whether checkTranslation must STOP for this message under the group-skip
+    // optimisation. Returns true to stop, false to let normal translation proceed.
+    //
+    // Scope: only real GROUP / channel dialogs (DialogObject.isChatDialog -- excludes 1:1
+    // user chats, encrypted chats and folder pseudo-dialogs) while the dialog is actually
+    // being translated. 1:1 chats keep the exact upstream behavior, per spec.
+    //
+    //   - source language already known & a "my language" -> return true (skip: show original,
+    //     spend no translation quota). UNKNOWN ("und") never matches -> translate (safe default).
+    //   - source language already known & NOT a my language -> return false (translate normally).
+    //   - source language unknown -> kick off on-device detection (no quota) and re-run
+    //     checkTranslation from the callback; return true to hold this pass. When the re-run
+    //     happens originalLanguage is non-null, so no second detection is launched -> no loop.
+    private boolean luminaGroupSkipShouldStop(MessageObject messageObject, boolean onScreen, boolean keepReply) {
+        if (!LuminaConfig.isGroupSkipMyLanguagesEnabled()) {
+            return false;
+        }
+        if (messageObject == null || messageObject.messageOwner == null) {
+            return false;
+        }
+        final long dialogId = messageObject.getDialogId();
+        // Groups / channels only. 1:1 user chats (and encrypted / folder dialogs) are untouched.
+        if (!DialogObject.isChatDialog(dialogId)) {
+            return false;
+        }
+        // Only meaningful while whole-chat translation is on for this dialog.
+        if (!isTranslatingDialog(dialogId)) {
+            return false;
+        }
+        final String detected = messageObject.messageOwner.originalLanguage;
+        if (detected != null) {
+            return !UNKNOWN_LANGUAGE.equals(detected) && LuminaConfig.isMyLanguage(detected);
+        }
+        // Source language not yet known: detect on-device first, then decide on the re-run.
+        if (!LanguageDetector.hasSupport()) {
+            return false; // cannot detect -> behave like upstream (translate).
+        }
+        final String detectText = getDetectLanguageText(messageObject);
+        if (TextUtils.isEmpty(detectText)) {
+            return false; // nothing to detect from -> normal behavior.
+        }
+        if (!onScreen) {
+            // Off-screen messages are never pushed to translate in this method anyway;
+            // don't eagerly spend detection work -- the on-screen pass will handle it.
+            return false;
+        }
+        final int hash = hash(messageObject);
+        if (groupSkipDetecting.contains(hash)) {
+            return true; // detection already in flight for this message -> hold.
+        }
+        groupSkipDetecting.add(hash);
+        final MessageObject finalMessageObject = messageObject;
+        Utilities.stageQueue.postRunnable(() -> {
+            LanguageDetector.detectLanguage(detectText, lng -> AndroidUtilities.runOnUIThread(() -> {
+                String detectedLanguage = lng;
+                if (detectedLanguage == null) {
+                    detectedLanguage = UNKNOWN_LANGUAGE;
+                }
+                finalMessageObject.messageOwner.originalLanguage = detectedLanguage;
+                getMessagesStorage().updateMessageCustomParams(dialogId, finalMessageObject.messageOwner);
+                groupSkipDetecting.remove((Integer) hash);
+                checkTranslation(finalMessageObject, onScreen, keepReply);
+            }), err -> AndroidUtilities.runOnUIThread(() -> {
+                finalMessageObject.messageOwner.originalLanguage = UNKNOWN_LANGUAGE;
+                getMessagesStorage().updateMessageCustomParams(dialogId, finalMessageObject.messageOwner);
+                groupSkipDetecting.remove((Integer) hash);
+                checkTranslation(finalMessageObject, onScreen, keepReply);
+            }));
+        });
+        return true; // hold this pass; the re-run above makes the real skip/translate decision.
+    }
+
     private void checkTranslation(MessageObject messageObject, boolean onScreen, boolean keepReply) {
         if (messageObject == null || messageObject.messageOwner == null) {
             return;
@@ -731,6 +809,15 @@ public class TranslateController extends BaseController {
         }
 
         if (isTranslateDialogHidden(dialogId)) {
+            return;
+        }
+
+        // LuminaGram (Group skip): in GROUP / channel chats, don't translate messages whose
+        // detected source language is one the user already reads (LuminaConfig myLanguages).
+        // 1:1 user chats are untouched. Returns true to STOP this pass -- either because the
+        // language is a "my language" (skip / show original) or because detection was just
+        // kicked off and will re-run this method once the source language is known.
+        if (luminaGroupSkipShouldStop(messageObject, onScreen, keepReply)) {
             return;
         }
 
@@ -1008,6 +1095,7 @@ public class TranslateController extends BaseController {
         hideTranslateDialogs.clear();
         loadingTranslations.clear();
         loadingTranscriptionTranslations.clear();
+        groupSkipDetecting.clear();
     }
 
     public void reset() {
