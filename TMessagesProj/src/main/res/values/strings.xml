@@ -11535,6 +11535,13 @@
     <string name="LuminaReplacerTo">With</string>
     <string name="LuminaReplacerInfo">Automatically replace text in messages you send. Each rule swaps a whole word (for example brb → be right back). Matching is case-sensitive and is skipped for messages with formatting.</string>
     <string name="LuminaReplacerManage">Manage rules…</string>
+    <string name="LuminaGlossaryTitle">Do-not-translate list</string>
+    <string name="LuminaGlossaryHeader">Terms</string>
+    <string name="LuminaGlossaryAdd">Add term</string>
+    <string name="LuminaGlossaryEdit">Edit term</string>
+    <string name="LuminaGlossaryTerm">Term</string>
+    <string name="LuminaGlossaryInfo">Words in this list are never translated — they are kept exactly as typed. Use it for brand names, product models, names of people and other terms a translation engine tends to mangle. @usernames and links are always kept as-is, even when they are not in the list. Matching is whole-word and case-insensitive. The list is global and applies to every chat.</string>
+    <string name="LuminaGlossaryManage">Do-not-translate list…</string>
     <string name="LuminaGoToFirstMessage">Go to first message</string>
     <string name="LuminaTranslateThisChat">Translate this chat</string>
     <!-- LuminaGram media and download preferences -->

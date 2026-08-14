@@ -39,7 +39,14 @@ public final class LuminaTranslators {
 
     public static LuminaTranslator byId(String id) {
         LuminaTranslator t = id == null ? null : REG.get(id);
-        return t != null ? t : REG.get("telegram");
+        if (t == null) {
+            t = REG.get("telegram");
+        }
+        // Single shared hook: every translation path funnels through here (and through
+        // current(), which delegates to byId). Wrapping the selected provider makes the
+        // glossary / do-not-translate protection apply everywhere without touching any UI
+        // call site. all() stays unwrapped so the provider picker lists the raw providers.
+        return LuminaGlossary.wrap(t);
     }
 
     /** The provider chosen in settings, falling back to Telegram when unset/unknown. */

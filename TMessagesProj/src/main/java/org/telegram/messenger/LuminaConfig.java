@@ -358,6 +358,25 @@ public class LuminaConfig {
         return result;
     }
 
+    // ---- Translation glossary / do-not-translate list (global) ----
+    // A flat JSON array of user-defined terms that must survive translation verbatim
+    // (brand names, product models, people, handles). Stored in the app-private
+    // "luminagram" prefs under this key -- nothing is ever sent to Telegram. @usernames
+    // and http(s) links are always protected by LuminaGlossary regardless of this list.
+    public static final String KEY_GLOSSARY_TERMS = "glossaryTerms";
+
+    /** All do-not-translate terms (insertion order). Never null; empty on parse error. */
+    public static org.json.JSONArray getGlossaryTerms() {
+        String raw = getString(KEY_GLOSSARY_TERMS, "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                return new org.json.JSONArray(raw);
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return new org.json.JSONArray();
+    }
+
     // Typed toggles keep the static field and the persisted value in sync (XOR idiom)
     public static void toggleHideTabs() {
         if (editor == null) {
