@@ -920,6 +920,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     private ActionBarMenuItem editItem;
     private ActionBarMenuItem masksItem;
     private ActionBarMenuItem deleteItem;
+    private ActionBarMenuItem ocrTranslateItem;   // LuminaGram: OCR-translate top-level action button
     private ActionBarMenuSubItem castItem;
     private CastMediaRouteButton castItemButton;
     private LinearLayout itemsLayout;
@@ -5897,6 +5898,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         videoItem.redrawPopup(0xf9222222);
         videoItem.setOnMenuDismiss(byClick -> checkProgress(0, false, false));
 
+        ocrTranslateItem = menu.addItem(gallery_menu_ocr_translate, R.drawable.msg_translate);
+        ocrTranslateItem.setContentDescription(LuminaLocale.getString(R.string.LuminaOcrTranslate));
+        setItemVisible(ocrTranslateItem, false, false);
+
         menuItem = menu.addItem(0, R.drawable.media_more);
         menuItem.setContentDescription(getString(R.string.AccDescrMoreOptions));
         menuItem.setOnClickListener(v -> {
@@ -5966,13 +5971,11 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         menuItem.addSubItem(gallery_menu_set_as_main, R.drawable.msg_openprofile, getString(R.string.SetAsMain)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_translate, R.drawable.msg_translate, getString(R.string.TranslateMessage)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_hide_translation, R.drawable.msg_translate, getString(R.string.HideTranslation)).setColors(0xfffafafa, 0xfffafafa);
-        menuItem.addSubItem(gallery_menu_ocr_translate, R.drawable.msg_translate, LuminaLocale.getString(R.string.LuminaOcrTranslate)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_delete, R.drawable.msg_delete, getString(R.string.Delete)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_cancel_loading, R.drawable.msg_cancel, getString(R.string.StopDownload)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.redrawPopup(0xf9222222);
         menuItem.hideSubItem(gallery_menu_translate);
         menuItem.hideSubItem(gallery_menu_hide_translation);
-        menuItem.hideSubItem(gallery_menu_ocr_translate);
         setMenuItemIcon(false, true);
         menuItem.setPopupItemsSelectorColor(0x0fffffff);
 
@@ -7812,6 +7815,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     containerView.requestLayout();
                 }
                 detectFaces();
+                updateOcrTranslateMenuVisibility();
             }
             if (imageReceiver == centerImage && set && placeProvider != null && placeProvider.scaleToFill() && !ignoreDidSetImage && sendPhotoType != SELECT_TYPE_AVATAR && sendPhotoType != SELECT_TYPE_STICKER) {
                 if (!wasLayout) {
@@ -11177,18 +11181,14 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
      * isolated and only appears for still images that already have a decoded bitmap.
      */
     private void updateOcrTranslateMenuVisibility() {
-        if (menuItem == null) {
+        if (ocrTranslateItem == null) {
             return;
         }
         boolean show = LuminaConfig.ocrTranslate
                 && !isCurrentVideo
                 && centerImage != null
                 && centerImage.getBitmap() != null;
-        if (show) {
-            menuItem.showSubItem(gallery_menu_ocr_translate);
-        } else {
-            menuItem.hideSubItem(gallery_menu_ocr_translate);
-        }
+        setItemVisible(ocrTranslateItem, show, false);
     }
 
     private void startOcrTranslate() {
@@ -16217,6 +16217,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             }
         }
         detectFaces();
+        updateOcrTranslateMenuVisibility();
         if (captionEdit != null) {
             long dialogId = 0;
             if (placeProvider != null)
