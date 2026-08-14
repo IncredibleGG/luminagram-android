@@ -11732,4 +11732,7 @@
     <string name="LuminaSecCheckupValueSet">Set</string>
     <string name="LuminaSecCheckupValueNotSet">Not set</string>
     <string name="LuminaSecCheckupValueUnknown">Tap to view</string>
+    <string name="LuminaAntiScamHeader">Anti-impersonation</string>
+    <string name="LuminaHomoglyphWarn">Warn on look-alike names</string>
+    <string name="LuminaHomoglyphWarnInfo">Flags contact and sender names that mix in look-alike characters from other alphabets, or digits used as letters. A common trick for impersonating people and official accounts. Checking happens on your device.</string>
 </resources>

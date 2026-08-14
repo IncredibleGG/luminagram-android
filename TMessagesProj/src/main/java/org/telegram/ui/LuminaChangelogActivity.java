@@ -38,6 +38,12 @@ public class LuminaChangelogActivity extends BaseFragment {
     // per release covers all nine languages. A version (or language) with no translation
     // simply shows these English lines.
     private static final Object[][] CHANGELOG = {
+        {"1.3.5", 7027, new String[]{
+            "Account security checkup: a one-page view of two-step verification, recovery email, privacy and signed-in devices, each linking straight to its official setting",
+            "Warns when a contact or sender name mixes in look-alike characters, a common trick for impersonating people and official accounts",
+            "Warns before opening a file whose name or type is disguised, such as an app pretending to be a video or photo",
+            "Up to 10 accounts, and no longer limited to fewer without Premium",
+        }},
         {"1.3.4", 7026, new String[]{
             "Translate-before-send is now per chat: the global switch just enables it, and you turn it on for each contact or group from the send button's menu",
             "Long bilingual messages fold the original to one line with a tap to expand; the translation always stays in full",

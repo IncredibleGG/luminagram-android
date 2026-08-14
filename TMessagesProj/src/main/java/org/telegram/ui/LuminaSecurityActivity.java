@@ -57,6 +57,8 @@ public class LuminaSecurityActivity extends BaseFragment {
     private static final int ID_SCREENSHOT_DETECTION = 5;
     private static final int ID_SESSION_GUARD = 6;
     private static final int ID_SESSION_GUARD_CHECK = 7;
+    private static final int ID_HOMOGLYPH_WARN = 8;
+    private static final int ID_FILE_GUARD = 9;
 
     // Fake-crash duress unlock: a separate LOCAL code (NOT the Telegram passcode) that, when
     // entered at the passcode screen, shows a fake Android crash and exits. Read in PasscodeView.
@@ -120,6 +122,14 @@ public class LuminaSecurityActivity extends BaseFragment {
                 .setChecked(LuminaSessionGuard.isEnabled()));
         items.add(UItem.asButton(ID_SESSION_GUARD_CHECK, LuminaLocale.getString(R.string.LuminaSessionGuardCheckNow)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSessionGuardInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaAntiScamHeader)));
+        items.add(UItem.asSwitch(ID_HOMOGLYPH_WARN, LuminaLocale.getString(R.string.LuminaHomoglyphWarn))
+                .setChecked(LuminaConfig.homoglyphWarn));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaHomoglyphWarnInfo)));
+        items.add(UItem.asSwitch(ID_FILE_GUARD, LuminaLocale.getString(R.string.LuminaFileGuard))
+                .setChecked(LuminaConfig.fileMasqueradeGuard));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaFileGuardInfo)));
     }
 
     private CharSequence fakeCrashCodeValueText() {
@@ -150,6 +160,12 @@ public class LuminaSecurityActivity extends BaseFragment {
                 break;
             case ID_SESSION_GUARD_CHECK:
                 runSessionGuardCheck();
+                break;
+            case ID_HOMOGLYPH_WARN:
+                LuminaConfig.toggleHomoglyphWarn();
+                break;
+            case ID_FILE_GUARD:
+                LuminaConfig.toggleFileMasqueradeGuard();
                 break;
         }
         if (listView != null && listView.adapter != null) {
