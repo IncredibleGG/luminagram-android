@@ -38,6 +38,9 @@ public class LuminaChangelogActivity extends BaseFragment {
     // per release covers all nine languages. A version (or language) with no translation
     // simply shows these English lines.
     private static final Object[][] CHANGELOG = {
+        {"1.3.8", 7030, new String[]{
+            "Translating text inside an image is now a button in the photo viewer, no longer hidden in the menu",
+        }},
         {"1.3.7", 7029, new String[]{
             "Translate text inside images and screenshots: open an image, then Translate image text",
             "Explain a message - long-press it for tone, slang and how to reply, using your own AI key",
