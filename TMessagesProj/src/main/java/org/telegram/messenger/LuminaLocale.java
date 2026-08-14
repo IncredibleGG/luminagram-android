@@ -193,6 +193,8 @@ public final class LuminaLocale {
         zhHans.put("LuminaShowMessageDetails", "消息详情菜单");
         zhHans.put("LuminaTimeWithSeconds", "在消息时间中显示秒");
         zhHans.put("ProfileDcId", "数据中心");
+        zhHans.put("ProfileUserId", "用户 ID");
+        zhHans.put("ProfileUserIdCopied", "已复制用户 ID");
         zhHans.put("ProfileChatCreated", "创建于");
         zhHans.put("ProfileChatJoined", "加入于");
         zhHans.put("LuminaMessageDetails", "详情");
@@ -707,6 +709,8 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHant.put("LuminaShowMessageDetails", "訊息詳細資訊選單");
         zhHant.put("LuminaTimeWithSeconds", "在訊息時間中顯示秒");
         zhHant.put("ProfileDcId", "資料中心");
+        zhHant.put("ProfileUserId", "用戶 ID");
+        zhHant.put("ProfileUserIdCopied", "已複製用戶 ID");
         zhHant.put("ProfileChatCreated", "建立於");
         zhHant.put("ProfileChatJoined", "加入於");
         zhHant.put("LuminaMessageDetails", "詳細資訊");

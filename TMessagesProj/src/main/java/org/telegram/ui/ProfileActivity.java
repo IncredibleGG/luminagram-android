@@ -655,6 +655,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int phoneRow;
     private int registrationDateRow;
     private int dcIdRow;
+    private int userIdRow;
     private int photoDateRow;
     private int newContactRiskRow;
     private int chatDateRow;
@@ -5049,6 +5050,14 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     try {
                         AndroidUtilities.addToClipboard(UserInfoActivity.birthdayString(userInfo.birthday));
                         BulletinFactory.of(ProfileActivity.this).createCopyBulletin(getString(R.string.BirthdayCopied)).show();
+                    } catch (Exception e) {
+                        FileLog.e(e);
+                    }
+                    return true;
+                } else if (position == userIdRow) {
+                    try {
+                        AndroidUtilities.addToClipboard(String.valueOf(userId));
+                        BulletinFactory.of(ProfileActivity.this).createCopyBulletin(LuminaLocale.getString(R.string.ProfileUserIdCopied)).show();
                     } catch (Exception e) {
                         FileLog.e(e);
                     }
@@ -10648,6 +10657,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         birthdayRow = -1;
         registrationDateRow = -1;
         dcIdRow = -1;
+        userIdRow = -1;
         photoDateRow = -1;
         newContactRiskRow = -1;
         luminaPrivateNoteRow = -1;
@@ -10910,6 +10920,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 if (user != null && username != null) {
                     usernameRow = rowCount++;
                 }
+                // LuminaGram: always show the numeric Telegram user ID (no toggle).
+                userIdRow = rowCount++;
                 if (userId != 0 && !myProfile && LuminaConfig.getBoolean("showRegistrationDate", true)
                         && getEstimatedRegistrationDate(userId) != null) {
                     registrationDateRow = rowCount++;
@@ -13714,6 +13726,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else if (position == dcIdRow) {
                         int dc = getProfileDcId();
                         detailCell.setTextAndValue(dc > 0 ? "DC" + dc : "—", LuminaLocale.getString(R.string.ProfileDcId), false);
+                    } else if (position == userIdRow) {
+                        detailCell.setTextAndValue(String.valueOf(userId), LuminaLocale.getString(R.string.ProfileUserId), false);
                     } else if (position == photoDateRow) {
                         String photoDate = getProfilePhotoDateString();
                         detailCell.setTextAndValue(photoDate != null ? photoDate : "—", LuminaLocale.getString(R.string.LuminaPhotoUploadedOn), false);
@@ -14574,7 +14588,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                     position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                 return VIEW_TYPE_HEADER;
-            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow || position == dcIdRow || position == photoDateRow || position == luminaPrivateNoteRow || position == chatDateRow) {
+            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == registrationDateRow || position == dcIdRow || position == userIdRow || position == photoDateRow || position == luminaPrivateNoteRow || position == chatDateRow) {
                 return VIEW_TYPE_TEXT_DETAIL;
             } else if (position == usernameRow || position == setUsernameRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE;

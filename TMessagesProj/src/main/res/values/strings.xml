@@ -11410,6 +11410,8 @@
     <string name="LuminaShowMessageDetails">Message details menu</string>
     <string name="LuminaTimeWithSeconds">Show seconds in message time</string>
     <string name="ProfileDcId">Datacenter</string>
+    <string name="ProfileUserId">User ID</string>
+    <string name="ProfileUserIdCopied">User ID copied to clipboard</string>
     <string name="ProfileChatCreated">Created</string>
     <string name="ProfileChatJoined">Joined</string>
     <string name="LuminaMessageDetails">Details</string>
