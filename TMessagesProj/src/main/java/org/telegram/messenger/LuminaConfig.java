@@ -58,6 +58,14 @@ public class LuminaConfig {
     // stock button rather than breaking the input row.
     public static boolean hideInputAiButton;
 
+    // ---- Cultural annotation "Explain this message" (Wave) ----
+    // Adds an "Explain" action to the message long-press menu that sends the message text to
+    // the user's OWN translation LLM (same key/base/model as the LLM translate provider) and
+    // shows a card with its literal meaning, real tone, cultural/slang notes and a suggested
+    // reply. Default ON; initialized true at declaration so the degraded prefs-load path
+    // (preferences == null) still offers the action rather than silently hiding it.
+    public static boolean explainMessage = true;
+
     static {
         loadConfig();
     }
@@ -86,6 +94,7 @@ public class LuminaConfig {
                 homoglyphWarn = preferences.getBoolean("homoglyphWarn", true);
                 fileMasqueradeGuard = preferences.getBoolean("fileMasqueradeGuard", true);
                 hideInputAiButton = preferences.getBoolean("hideInputAiButton", false);
+                explainMessage = preferences.getBoolean("explainMessage", true);
 
                 configLoaded = true;
             } catch (Throwable e) {
@@ -662,6 +671,14 @@ public class LuminaConfig {
             return;
         }
         editor.putBoolean("fileMasqueradeGuard", fileMasqueradeGuard ^= true).apply();
+    }
+
+    /** Whether the message long-press "Explain" cultural-note action is offered (default on). */
+    public static void toggleExplainMessage() {
+        if (editor == null) {
+            return;
+        }
+        editor.putBoolean("explainMessage", explainMessage ^= true).apply();
     }
 
     public static void toggleTranslateBeforeSend() {

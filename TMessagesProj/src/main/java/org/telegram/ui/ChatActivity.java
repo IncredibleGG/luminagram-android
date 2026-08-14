@@ -184,6 +184,7 @@ import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.UserObject;
 import org.telegram.messenger.LuminaConfig;
+import org.telegram.messenger.LuminaExplain;
 import org.telegram.messenger.LuminaFileGuard;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaScreenshotDetector;
@@ -1256,6 +1257,7 @@ public class ChatActivity extends BaseFragment implements
     public final static int OPTION_DETAILS = 204;
     public final static int OPTION_BOOKMARK = 205;
     public final static int OPTION_LUMINA_VOICE_TO_TEXT = 206;
+    public final static int OPTION_LUMINA_EXPLAIN = 207;
 
     private final static int[] allowedNotificationsDuringChatListAnimations = new int[]{
             NotificationCenter.messagesRead,
@@ -33369,6 +33371,10 @@ public class ChatActivity extends BaseFragment implements
                 toggleMessageBookmark(selectedObject);
                 break;
             }
+            case OPTION_LUMINA_EXPLAIN: {
+                luminaShowExplainDialog(selectedObject);
+                break;
+            }
             case OPTION_LUMINA_VOICE_TO_TEXT: {
                 try {
                     if (selectedObject != null) {
@@ -46371,6 +46377,15 @@ public class ChatActivity extends BaseFragment implements
             options.add(OPTION_LUMINA_VOICE_TO_TEXT);
             icons.add(R.drawable.msg_translate);
         }
+        // LuminaGram: cultural annotation "Explain this message" -- long-press a text/caption
+        // message to get an LLM card with its literal meaning, real tone, cultural / slang notes
+        // and a suggested reply. Only offered when the message actually carries text to explain.
+        if (LuminaConfig.explainMessage && selectedObject != null && !selectedObject.isSponsored()
+                && selectedObject.getId() != 0 && !TextUtils.isEmpty(luminaExplainSourceText(selectedObject))) {
+            items.add(LuminaLocale.getString(R.string.LuminaExplainMenu));
+            options.add(OPTION_LUMINA_EXPLAIN);
+            icons.add(R.drawable.msg_language);
+        }
     }
 
     // LuminaGram: read-only message details popup. Everything shown is already on the
@@ -46442,6 +46457,76 @@ public class ChatActivity extends BaseFragment implements
                     LuminaLocale.getString(nowBookmarked ? R.string.LuminaBookmarkAdded : R.string.LuminaBookmarkRemoved)
             ).show();
         }
+    }
+
+    // LuminaGram: source text for the "Explain this message" card -- the rendered message text,
+    // falling back to a media caption. Null / empty means there is nothing to explain (a media-only
+    // message), which hides the menu entry.
+    private CharSequence luminaExplainSourceText(MessageObject msg) {
+        if (msg == null) {
+            return null;
+        }
+        CharSequence t = msg.messageText;
+        if (TextUtils.isEmpty(t)) {
+            t = msg.caption;
+        }
+        return t;
+    }
+
+    // LuminaGram: run the cultural "Explain" on a message and show the result as a scrollable card.
+    // A spinner covers the network round-trip; the result (or a localized error / no-key hint) is
+    // shown via the theme-aware AlertDialog whose message area is already scrollable. All UI stays on
+    // the UI thread -- LuminaExplain marshals its callback back here -- and every dialog op is guarded
+    // so a closed chat cannot crash.
+    private void luminaShowExplainDialog(MessageObject msg) {
+        if (msg == null || getParentActivity() == null) {
+            return;
+        }
+        CharSequence cs = luminaExplainSourceText(msg);
+        if (TextUtils.isEmpty(cs)) {
+            return;
+        }
+        final AlertDialog progress = new AlertDialog(getParentActivity(), AlertDialog.ALERT_TYPE_SPINNER, themeDelegate);
+        progress.setCanCancel(true);
+        progress.show();
+        LuminaExplain.explain(cs.toString(), new LuminaExplain.Callback() {
+            @Override
+            public void onResult(String text) {
+                try {
+                    progress.dismiss();
+                } catch (Exception ignore) {
+                }
+                if (getParentActivity() == null) {
+                    return;
+                }
+                final CharSequence result = text;
+                AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), themeDelegate)
+                        .setTitle(LuminaLocale.getString(R.string.LuminaExplainTitle))
+                        .setMessage(result)
+                        .setPositiveButton(LocaleController.getString(R.string.OK), null)
+                        .setNeutralButton(LocaleController.getString(R.string.Copy),
+                                (dialog, which) -> AndroidUtilities.addToClipboard(result));
+                showDialog(builder.create());
+            }
+
+            @Override
+            public void onError(String message) {
+                try {
+                    progress.dismiss();
+                } catch (Exception ignore) {
+                }
+                if (getParentActivity() == null) {
+                    return;
+                }
+                CharSequence msgText = TextUtils.isEmpty(message)
+                        ? LuminaLocale.getString(R.string.LuminaExplainError) : message;
+                AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), themeDelegate)
+                        .setTitle(LuminaLocale.getString(R.string.LuminaExplainTitle))
+                        .setMessage(msgText)
+                        .setPositiveButton(LocaleController.getString(R.string.OK), null);
+                showDialog(builder.create());
+            }
+        });
     }
 
     private void updateBotforumTabsBottomMargin() {

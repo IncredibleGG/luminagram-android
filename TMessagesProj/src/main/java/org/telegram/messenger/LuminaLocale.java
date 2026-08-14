@@ -559,6 +559,12 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaSecCheckupValueSet", "已设置");
         zhHans.put("LuminaSecCheckupValueNotSet", "未设置");
         zhHans.put("LuminaSecCheckupValueUnknown", "点击查看");
+        zhHans.put("LuminaExplainMenu", "解释一下");
+        zhHans.put("LuminaExplainTitle", "解释这条消息");
+        zhHans.put("LuminaExplainNoKey", "请先在翻译设置中填写 LLM 密钥。");
+        zhHans.put("LuminaExplainError", "无法解释这条消息，请重试。");
+        zhHans.put("LuminaExplainSetting", "解释消息");
+        zhHans.put("LuminaExplainSettingInfo", "在消息长按菜单中加入「解释一下」。它使用你自己的翻译 LLM 密钥，把一条消息拆解成字面意思、真实语气、文化或俚语注解，以及建议怎么回。");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -1092,6 +1098,12 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaSecCheckupValueSet", "已設定");
         zhHant.put("LuminaSecCheckupValueNotSet", "未設定");
         zhHant.put("LuminaSecCheckupValueUnknown", "點擊查看");
+        zhHant.put("LuminaExplainMenu", "解釋一下");
+        zhHant.put("LuminaExplainTitle", "解釋這則訊息");
+        zhHant.put("LuminaExplainNoKey", "請先在翻譯設定填入 LLM 金鑰。");
+        zhHant.put("LuminaExplainError", "無法解釋這則訊息，請再試一次。");
+        zhHant.put("LuminaExplainSetting", "解釋訊息");
+        zhHant.put("LuminaExplainSettingInfo", "在訊息長按選單中加入「解釋一下」。它會使用你自己的翻譯 LLM 金鑰，把一則訊息拆解成字面意思、真實語氣、文化或俚語註解，以及建議怎麼回。");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
