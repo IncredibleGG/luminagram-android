@@ -37,6 +37,7 @@ public class LuminaInterfaceActivity extends BaseFragment {
     private static final int ID_DISABLE_NUMBER_ROUNDING = 3;
     private static final int ID_UNREAD_DIGEST = 4;
     private static final int ID_PHOTO_UPLOAD_DATE = 5;
+    private static final int ID_HIDE_AI_BUTTON = 6;
 
     private static final String KEY_SYSTEM_EMOJI = "systemEmoji";
     private static final String KEY_CONFIRM_VOICE_VIDEO = "confirmSendVoiceVideo";
@@ -96,6 +97,11 @@ public class LuminaInterfaceActivity extends BaseFragment {
         items.add(UItem.asSwitch(ID_PHOTO_UPLOAD_DATE, LuminaLocale.getString(R.string.LuminaShowPhotoUploadDate))
                 .setChecked(LuminaConfig.getBoolean(KEY_PHOTO_UPLOAD_DATE, false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaShowPhotoUploadDateInfo)));
+
+        items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaInterfaceComposerHeader)));
+        items.add(UItem.asSwitch(ID_HIDE_AI_BUTTON, LuminaLocale.getString(R.string.LuminaHideAiButton))
+                .setChecked(LuminaConfig.hideInputAiButton));
+        items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaHideAiButtonInfo)));
     }
 
     private void onClick(UItem item, View view, int position, float x, float y) {
@@ -115,6 +121,13 @@ public class LuminaInterfaceActivity extends BaseFragment {
                 break;
             case ID_UNREAD_DIGEST:
                 LuminaConfig.putBoolean("unreadDigest", !LuminaConfig.getBoolean("unreadDigest", true));
+                if (listView != null && listView.adapter != null) {
+                    listView.adapter.update(true);
+                }
+                return;
+            case ID_HIDE_AI_BUTTON:
+                LuminaConfig.hideInputAiButton = !LuminaConfig.hideInputAiButton;
+                LuminaConfig.putBoolean("hideInputAiButton", LuminaConfig.hideInputAiButton);
                 if (listView != null && listView.adapter != null) {
                     listView.adapter.update(true);
                 }

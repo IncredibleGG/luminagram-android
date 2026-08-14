@@ -533,6 +533,9 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaUpdateReadyVersionText", "点击安装版本 %1$s");
         // account security checkup page
         zhHans.put("LuminaSecCheckupTitle", "账号安全体检");
+        zhHans.put("LuminaInterfaceComposerHeader", "输入框");
+        zhHans.put("LuminaHideAiButton", "隐藏输入框的 AI 按钮");
+        zhHans.put("LuminaHideAiButtonInfo", "把 AI 编辑按钮从消息输入框移除。不影响其他地方的 AI 功能。");
         zhHans.put("LuminaAntiScamHeader", "防冒充");
         zhHans.put("LuminaHomoglyphWarn", "近似字名称警示");
         zhHans.put("LuminaHomoglyphWarnInfo", "当联系人或发送者的名称混入其他字母系统的近似字（如西里尔字母冒充拉丁字母），或用数字冒充字母时提醒你。检查在你的设备上完成。");
@@ -1063,6 +1066,9 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaUpdateReadyVersionText", "點擊安裝版本 %1$s");
         // account security checkup page
         zhHant.put("LuminaSecCheckupTitle", "帳號安全體檢");
+        zhHant.put("LuminaInterfaceComposerHeader", "輸入框");
+        zhHant.put("LuminaHideAiButton", "隱藏輸入框的 AI 按鈕");
+        zhHant.put("LuminaHideAiButtonInfo", "把 AI 編輯按鈕從訊息輸入框移除。不影響其他地方的 AI 功能。");
         zhHant.put("LuminaAntiScamHeader", "防冒充");
         zhHant.put("LuminaHomoglyphWarn", "近似字名稱警示");
         zhHant.put("LuminaHomoglyphWarnInfo", "當聯絡人或發送者的名稱混入其他字母系統的近似字（如西里爾字母冒充拉丁字母），或用數字冒充字母時提醒你。檢查在你的裝置上完成。");

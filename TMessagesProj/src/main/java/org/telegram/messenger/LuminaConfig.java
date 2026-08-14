@@ -368,6 +368,15 @@ public class LuminaConfig {
     /** All do-not-translate terms (insertion order). Never null; empty on parse error. */
     public static org.json.JSONArray getGlossaryTerms() {
         String raw = getString(KEY_GLOSSARY_TERMS, "");
+        if (raw != null && raw.length() > 0) {
+            try {
+                return new org.json.JSONArray(raw);
+            } catch (org.json.JSONException ignore) {
+            }
+        }
+        return new org.json.JSONArray();
+    }
+
     // ---- Single-chat lock / private folder (LuminaGram) ----
     // A purely LOCAL, display-only "private folder": dialogIds the user chose to hide from the
     // chat list and search until they type a secret reveal code. Stored only in the app-private

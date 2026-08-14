@@ -11751,4 +11751,7 @@
     <string name="LuminaAntiScamHeader">Anti-impersonation</string>
     <string name="LuminaHomoglyphWarn">Warn on look-alike names</string>
     <string name="LuminaHomoglyphWarnInfo">Flags contact and sender names that mix in look-alike characters from other alphabets, or digits used as letters. A common trick for impersonating people and official accounts. Checking happens on your device.</string>
+    <string name="LuminaInterfaceComposerHeader">Message field</string>
+    <string name="LuminaHideAiButton">Hide AI button in the message field</string>
+    <string name="LuminaHideAiButtonInfo">Removes the AI editor button from the message input field. It does not disable AI features elsewhere.</string>
 </resources>

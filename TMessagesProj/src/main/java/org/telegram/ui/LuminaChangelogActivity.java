@@ -38,6 +38,12 @@ public class LuminaChangelogActivity extends BaseFragment {
     // per release covers all nine languages. A version (or language) with no translation
     // simply shows these English lines.
     private static final Object[][] CHANGELOG = {
+        {"1.3.6", 7028, new String[]{
+            "Your numeric user ID now shows on your profile and on others - long-press to copy",
+            "A do-not-translate list keeps brand names, @usernames and links from being translated",
+            "You can hide the AI button in the message field (Interface settings)",
+            "Lock a chat into a private folder: long-press it, and it stays out of the list and search until you type your secret code",
+        }},
         {"1.3.5", 7027, new String[]{
             "Account security checkup: a one-page view of two-step verification, recovery email, privacy and signed-in devices, each linking straight to its official setting",
             "Warns when a contact or sender name mixes in look-alike characters, a common trick for impersonating people and official accounts",
