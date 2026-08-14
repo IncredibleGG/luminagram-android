@@ -126,6 +126,7 @@ import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaDigestHelper;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaChatLock;
+import org.telegram.messenger.LuminaRequestInbox;
 import org.telegram.messenger.NotificationsController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
@@ -6024,6 +6025,20 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 false,
                 true
             );
+        } else if (luminaStrangerBannerVisible()) {
+            dialogsHintCellVisible = true;
+            dialogsHintCell.setOnClickListener(v -> {
+                LuminaRequestsActivity a = new LuminaRequestsActivity();
+                a.onChanged = () -> {
+                    luminaRefreshDialogs();
+                    updateDialogsHint();
+                };
+                presentFragment(a);
+            });
+            dialogsHintCell.setText(
+                LuminaLocale.getString(R.string.LuminaRequestInboxTitle),
+                String.format(java.util.Locale.getDefault(), LuminaLocale.getString(R.string.LuminaRequestInboxBannerSubtitle), luminaStrangerReqCount)
+            );
         } else if (folderId == 0 && communityId == 0 && getMessagesController().pendingSuggestions.contains("SETUP_PASSKEY")) {
             dialogsHintCellVisible = true;
             dialogsHintCell.setOnClickListener(v -> {
@@ -11076,6 +11091,63 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     /** Drop hidden (locked and not-revealed) chats from a display list. Returns the SAME
      *  reference untouched when the feature is inactive, so there is zero behavior change
      *  for users who never lock a chat. Never mutates the source list. */
+    // ================= LuminaGram: stranger request inbox =================
+    // Display-ONLY diversion of unsolicited 1:1 messages (non-contact, no known common group,
+    // not yet triaged) out of the main list and into LuminaRequestsActivity, reached from the
+    // top banner. Nothing here touches receive / unread / read / typing / online state; a
+    // diverted chat keeps receiving and keeps its unread badge, it is only drawn elsewhere.
+    // Fail-open: any error leaves chats in the main list so nothing is ever lost.
+
+    /** How many stranger requests the top banner should advertise; set by
+     *  {@link #luminaStrangerBannerVisible()} just before the banner text is built. */
+    private int luminaStrangerReqCount = 0;
+
+    /** Whether the "stranger requests (N)" banner should show right now (main list only). */
+    private boolean luminaStrangerBannerVisible() {
+        try {
+            if (folderId != 0 || communityId != 0 || initialDialogsType != DIALOGS_TYPE_DEFAULT) {
+                return false;
+            }
+            if (!LuminaRequestInbox.isEnabled()) {
+                return false;
+            }
+            luminaStrangerReqCount = LuminaRequestInbox.countPending(currentAccount);
+            return luminaStrangerReqCount > 0;
+        } catch (Throwable ignore) {
+            return false;
+        }
+    }
+
+    /** Drop pending stranger requests from the main default list (folder 0 only). Returns the
+     *  SAME reference untouched when the feature is inactive, so there is zero behavior change
+     *  for anyone who leaves it off. Never mutates the source list. */
+    private ArrayList<TLRPC.Dialog> luminaFilterStrangerRequests(ArrayList<TLRPC.Dialog> src, int folder) {
+        try {
+            if (onlySelect || folder != 0 || src == null || src.isEmpty() || !LuminaRequestInbox.isEnabled()) {
+                return src;
+            }
+            ArrayList<TLRPC.Dialog> out = null;
+            for (int i = 0; i < src.size(); i++) {
+                TLRPC.Dialog d = src.get(i);
+                if (LuminaRequestInbox.isStrangerRequest(currentAccount, d)) {
+                    if (out == null) {
+                        out = new ArrayList<>(src.size());
+                        for (int j = 0; j < i; j++) {
+                            out.add(src.get(j));
+                        }
+                    }
+                    continue; // display-layer divert only
+                }
+                if (out != null) {
+                    out.add(d);
+                }
+            }
+            return out == null ? src : out;
+        } catch (Throwable t) {
+            return src; // fail-open: never divert on error
+        }
+    }
+
     private ArrayList<TLRPC.Dialog> luminaFilterHidden(ArrayList<TLRPC.Dialog> src) {
         try {
             if (onlySelect || src == null || src.isEmpty() || !LuminaChatLock.isActive()) {
@@ -11181,7 +11253,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
         MessagesController messagesController = AccountInstance.getInstance(currentAccount).getMessagesController();
         if (dialogsType == DIALOGS_TYPE_DEFAULT) {
-            return luminaFilterHidden(messagesController.getDialogs(folderId));
+            return luminaFilterStrangerRequests(luminaFilterHidden(messagesController.getDialogs(folderId)), folderId);
         } else if (dialogsType == DIALOGS_TYPE_WIDGET || dialogsType == DIALOGS_TYPE_IMPORT_HISTORY) {
             return messagesController.dialogsServerOnly;
         } else if (dialogsType == DIALOGS_TYPE_ADD_USERS_TO) {

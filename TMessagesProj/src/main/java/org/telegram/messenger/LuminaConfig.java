@@ -78,6 +78,12 @@ public class LuminaConfig {
     // Advanced / opt-in: default OFF. Local-only (system TTS + the fork's own translate
     // engine); never does voice cloning. Trigger: long-press Send in a chat.
     public static boolean reverseVoice;
+    // ---- Stranger request inbox (Wave) ----
+    // Divert unsolicited 1:1 messages from non-contacts (no known common group) out of the
+    // main chat list into a dedicated request inbox. Purely a local DISPLAY diversion: no
+    // server call, and receive / unread / read / typing / online state are never touched.
+    // Default OFF so enabling the fork never silently changes an existing user's chat list.
+    public static boolean strangerInbox;
 
     static {
         loadConfig();
@@ -110,6 +116,7 @@ public class LuminaConfig {
                 hideInputAiButton = preferences.getBoolean("hideInputAiButton", false);
                 explainMessage = preferences.getBoolean("explainMessage", true);
                 reverseVoice = preferences.getBoolean("reverseVoice", false);
+                strangerInbox = preferences.getBoolean("strangerInbox", false);
 
                 configLoaded = true;
             } catch (Throwable e) {
@@ -699,6 +706,12 @@ public class LuminaConfig {
             return;
         }
         editor.putBoolean("ocrTranslate", ocrTranslate ^= true).apply();
+    /** Persist the stranger-request-inbox master switch (default OFF). */
+    public static void toggleStrangerInbox() {
+        if (editor == null) {
+            return;
+        }
+        editor.putBoolean("strangerInbox", strangerInbox ^= true).apply();
     }
 
     public static void toggleTranslateBeforeSend() {

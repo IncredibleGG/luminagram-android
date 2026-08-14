@@ -11571,6 +11571,16 @@
     <string name="LuminaChatLockSetCodeMessage">Type this code in the chat search box to reveal your private folder. Keep it secret.</string>
     <string name="LuminaChatLockSetCodeSave">Save</string>
     <string name="LuminaChatLockCodeHint">Reveal code</string>
+    <string name="LuminaRequestInboxTitle">Stranger requests</string>
+    <string name="LuminaRequestInboxBannerSubtitle">%1$d waiting to review</string>
+    <string name="LuminaRequestInboxEmpty">No pending requests.</string>
+    <string name="LuminaRequestInboxOpen">Open chat</string>
+    <string name="LuminaRequestInboxAccept">Accept</string>
+    <string name="LuminaRequestInboxBlock">Block</string>
+    <string name="LuminaRequestInboxReport">Report</string>
+    <string name="LuminaRequestInboxReportConfirm">Report this account for spam and block it?</string>
+    <string name="LuminaRequestInboxAcceptedToast">Accepted. Moved to your chats.</string>
+    <string name="LuminaRequestInboxReportedToast">Reported and blocked.</string>
     <!-- LuminaGram decoy notepad lock -->
     <string name="LuminaNotepadTitle">Notes</string>
     <!-- LuminaGram interface & display preferences (Wave 6) -->
