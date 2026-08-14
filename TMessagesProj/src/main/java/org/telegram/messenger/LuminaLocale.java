@@ -506,6 +506,28 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaUpdateReadyTitle", "更新已下载");
         zhHans.put("LuminaUpdateReadyText", "点击安装");
         zhHans.put("LuminaUpdateReadyVersionText", "点击安装版本 %1$s");
+        // account security checkup page
+        zhHans.put("LuminaSecCheckupTitle", "账号安全体检");
+        zhHans.put("LuminaSecCheckupSummaryChecking", "正在检查你的账号…");
+        zhHans.put("LuminaSecCheckupSummaryAllGood", "你的账号保护得不错。");
+        zhHans.put("LuminaSecCheckupSummaryIssues", "还有 %1$d 项可以加强。");
+        zhHans.put("LuminaSecCheckup2FAHeader", "两步验证");
+        zhHans.put("LuminaSecCheckup2FA", "两步验证");
+        zhHans.put("LuminaSecCheckupRecoveryEmail", "救援邮箱");
+        zhHans.put("LuminaSecCheckup2FAInfo", "即使有人拿到你的登录验证码，密码也能保护你的账号；设置救援邮箱后，忘记密码也能重新登录。点按任意项打开 Telegram 的对应设置。");
+        zhHans.put("LuminaSecCheckupPrivacyHeader", "隐私");
+        zhHans.put("LuminaSecCheckupWhoCanAddGroups", "谁可以把我加入群组");
+        zhHans.put("LuminaSecCheckupWhoCanCall", "谁可以给我打电话");
+        zhHans.put("LuminaSecCheckupWhoCanSeePhone", "谁可以看到我的电话号码");
+        zhHans.put("LuminaSecCheckupPrivacyInfo", "点按任意项，在 Telegram 隐私设置中查看。");
+        zhHans.put("LuminaSecCheckupSessionsHeader", "登录的设备");
+        zhHans.put("LuminaSecCheckupSessions", "已登录的设备");
+        zhHans.put("LuminaSecCheckupSessionsInfo", "当前登录到你账号的设备数量。点按可查看，并登出任何你不认识的设备。");
+        zhHans.put("LuminaSecCheckupValueOn", "已开启");
+        zhHans.put("LuminaSecCheckupValueOff", "未开启");
+        zhHans.put("LuminaSecCheckupValueSet", "已设置");
+        zhHans.put("LuminaSecCheckupValueNotSet", "未设置");
+        zhHans.put("LuminaSecCheckupValueUnknown", "点击查看");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -986,6 +1008,28 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaUpdateReadyTitle", "更新已下載");
         zhHant.put("LuminaUpdateReadyText", "點擊安裝");
         zhHant.put("LuminaUpdateReadyVersionText", "點擊安裝版本 %1$s");
+        // account security checkup page
+        zhHant.put("LuminaSecCheckupTitle", "帳號安全體檢");
+        zhHant.put("LuminaSecCheckupSummaryChecking", "正在檢查你的帳號…");
+        zhHant.put("LuminaSecCheckupSummaryAllGood", "你的帳號保護得不錯。");
+        zhHant.put("LuminaSecCheckupSummaryIssues", "還有 %1$d 項可以加強。");
+        zhHant.put("LuminaSecCheckup2FAHeader", "兩步驟驗證");
+        zhHant.put("LuminaSecCheckup2FA", "兩步驟驗證");
+        zhHant.put("LuminaSecCheckupRecoveryEmail", "救援信箱");
+        zhHant.put("LuminaSecCheckup2FAInfo", "即使有人拿到你的登入驗證碼，密碼也能保護你的帳號；設定救援信箱後，忘記密碼也能重新登入。點按任一項開啟 Telegram 的對應設定。");
+        zhHant.put("LuminaSecCheckupPrivacyHeader", "隱私");
+        zhHant.put("LuminaSecCheckupWhoCanAddGroups", "誰可以把我加入群組");
+        zhHant.put("LuminaSecCheckupWhoCanCall", "誰可以打電話給我");
+        zhHant.put("LuminaSecCheckupWhoCanSeePhone", "誰可以看到我的電話號碼");
+        zhHant.put("LuminaSecCheckupPrivacyInfo", "點按任一項，在 Telegram 隱私設定中查看。");
+        zhHant.put("LuminaSecCheckupSessionsHeader", "登入的裝置");
+        zhHant.put("LuminaSecCheckupSessions", "已登入的裝置");
+        zhHant.put("LuminaSecCheckupSessionsInfo", "目前登入你帳號的裝置數量。點按可查看，並登出任何你不認得的裝置。");
+        zhHant.put("LuminaSecCheckupValueOn", "已開啟");
+        zhHant.put("LuminaSecCheckupValueOff", "未開啟");
+        zhHant.put("LuminaSecCheckupValueSet", "已設定");
+        zhHant.put("LuminaSecCheckupValueNotSet", "未設定");
+        zhHant.put("LuminaSecCheckupValueUnknown", "點擊查看");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----
@@ -1465,6 +1509,28 @@ ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaUpdateReadyTitle", "تم تنزيل التحديث");
         ar.put("LuminaUpdateReadyText", "اضغط للتثبيت");
         ar.put("LuminaUpdateReadyVersionText", "اضغط لتثبيت الإصدار %1$s");
+        // account security checkup page
+        ar.put("LuminaSecCheckupTitle", "Security checkup");
+        ar.put("LuminaSecCheckupSummaryChecking", "Checking your account…");
+        ar.put("LuminaSecCheckupSummaryAllGood", "Your account looks well protected.");
+        ar.put("LuminaSecCheckupSummaryIssues", "%1$d thing(s) you could strengthen.");
+        ar.put("LuminaSecCheckup2FAHeader", "Two-step verification");
+        ar.put("LuminaSecCheckup2FA", "Two-step verification");
+        ar.put("LuminaSecCheckupRecoveryEmail", "Recovery email");
+        ar.put("LuminaSecCheckup2FAInfo", "A password protects your account even if someone gets your login code, and a recovery email lets you back in if you forget it. Tap a row to open Telegram's own settings.");
+        ar.put("LuminaSecCheckupPrivacyHeader", "Privacy");
+        ar.put("LuminaSecCheckupWhoCanAddGroups", "Who can add me to groups");
+        ar.put("LuminaSecCheckupWhoCanCall", "Who can call me");
+        ar.put("LuminaSecCheckupWhoCanSeePhone", "Who can see my phone number");
+        ar.put("LuminaSecCheckupPrivacyInfo", "Tap a row to review it in Telegram's Privacy settings.");
+        ar.put("LuminaSecCheckupSessionsHeader", "Signed-in devices");
+        ar.put("LuminaSecCheckupSessions", "Devices signed in");
+        ar.put("LuminaSecCheckupSessionsInfo", "How many devices are currently logged in to your account. Tap to review them and sign out any you don't recognise.");
+        ar.put("LuminaSecCheckupValueOn", "On");
+        ar.put("LuminaSecCheckupValueOff", "Off");
+        ar.put("LuminaSecCheckupValueSet", "Set");
+        ar.put("LuminaSecCheckupValueNotSet", "Not set");
+        ar.put("LuminaSecCheckupValueUnknown", "Tap to view");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -1944,6 +2010,28 @@ ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaUpdateReadyTitle", "Обновление загружено");
         ru.put("LuminaUpdateReadyText", "Нажмите, чтобы установить");
         ru.put("LuminaUpdateReadyVersionText", "Нажмите, чтобы установить версию %1$s");
+        // account security checkup page
+        ru.put("LuminaSecCheckupTitle", "Security checkup");
+        ru.put("LuminaSecCheckupSummaryChecking", "Checking your account…");
+        ru.put("LuminaSecCheckupSummaryAllGood", "Your account looks well protected.");
+        ru.put("LuminaSecCheckupSummaryIssues", "%1$d thing(s) you could strengthen.");
+        ru.put("LuminaSecCheckup2FAHeader", "Two-step verification");
+        ru.put("LuminaSecCheckup2FA", "Two-step verification");
+        ru.put("LuminaSecCheckupRecoveryEmail", "Recovery email");
+        ru.put("LuminaSecCheckup2FAInfo", "A password protects your account even if someone gets your login code, and a recovery email lets you back in if you forget it. Tap a row to open Telegram's own settings.");
+        ru.put("LuminaSecCheckupPrivacyHeader", "Privacy");
+        ru.put("LuminaSecCheckupWhoCanAddGroups", "Who can add me to groups");
+        ru.put("LuminaSecCheckupWhoCanCall", "Who can call me");
+        ru.put("LuminaSecCheckupWhoCanSeePhone", "Who can see my phone number");
+        ru.put("LuminaSecCheckupPrivacyInfo", "Tap a row to review it in Telegram's Privacy settings.");
+        ru.put("LuminaSecCheckupSessionsHeader", "Signed-in devices");
+        ru.put("LuminaSecCheckupSessions", "Devices signed in");
+        ru.put("LuminaSecCheckupSessionsInfo", "How many devices are currently logged in to your account. Tap to review them and sign out any you don't recognise.");
+        ru.put("LuminaSecCheckupValueOn", "On");
+        ru.put("LuminaSecCheckupValueOff", "Off");
+        ru.put("LuminaSecCheckupValueSet", "Set");
+        ru.put("LuminaSecCheckupValueNotSet", "Not set");
+        ru.put("LuminaSecCheckupValueUnknown", "Tap to view");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -2423,6 +2511,28 @@ fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaUpdateReadyTitle", "به‌روزرسانی دانلود شد");
         fa.put("LuminaUpdateReadyText", "برای نصب ضربه بزنید");
         fa.put("LuminaUpdateReadyVersionText", "برای نصب نسخه %1$s ضربه بزنید");
+        // account security checkup page
+        fa.put("LuminaSecCheckupTitle", "Security checkup");
+        fa.put("LuminaSecCheckupSummaryChecking", "Checking your account…");
+        fa.put("LuminaSecCheckupSummaryAllGood", "Your account looks well protected.");
+        fa.put("LuminaSecCheckupSummaryIssues", "%1$d thing(s) you could strengthen.");
+        fa.put("LuminaSecCheckup2FAHeader", "Two-step verification");
+        fa.put("LuminaSecCheckup2FA", "Two-step verification");
+        fa.put("LuminaSecCheckupRecoveryEmail", "Recovery email");
+        fa.put("LuminaSecCheckup2FAInfo", "A password protects your account even if someone gets your login code, and a recovery email lets you back in if you forget it. Tap a row to open Telegram's own settings.");
+        fa.put("LuminaSecCheckupPrivacyHeader", "Privacy");
+        fa.put("LuminaSecCheckupWhoCanAddGroups", "Who can add me to groups");
+        fa.put("LuminaSecCheckupWhoCanCall", "Who can call me");
+        fa.put("LuminaSecCheckupWhoCanSeePhone", "Who can see my phone number");
+        fa.put("LuminaSecCheckupPrivacyInfo", "Tap a row to review it in Telegram's Privacy settings.");
+        fa.put("LuminaSecCheckupSessionsHeader", "Signed-in devices");
+        fa.put("LuminaSecCheckupSessions", "Devices signed in");
+        fa.put("LuminaSecCheckupSessionsInfo", "How many devices are currently logged in to your account. Tap to review them and sign out any you don't recognise.");
+        fa.put("LuminaSecCheckupValueOn", "On");
+        fa.put("LuminaSecCheckupValueOff", "Off");
+        fa.put("LuminaSecCheckupValueSet", "Set");
+        fa.put("LuminaSecCheckupValueNotSet", "Not set");
+        fa.put("LuminaSecCheckupValueUnknown", "Tap to view");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -2902,6 +3012,28 @@ tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaUpdateReadyTitle", "Güncelleme indirildi");
         tr.put("LuminaUpdateReadyText", "Yüklemek için dokunun");
         tr.put("LuminaUpdateReadyVersionText", "%1$s sürümünü yüklemek için dokunun");
+        // account security checkup page
+        tr.put("LuminaSecCheckupTitle", "Security checkup");
+        tr.put("LuminaSecCheckupSummaryChecking", "Checking your account…");
+        tr.put("LuminaSecCheckupSummaryAllGood", "Your account looks well protected.");
+        tr.put("LuminaSecCheckupSummaryIssues", "%1$d thing(s) you could strengthen.");
+        tr.put("LuminaSecCheckup2FAHeader", "Two-step verification");
+        tr.put("LuminaSecCheckup2FA", "Two-step verification");
+        tr.put("LuminaSecCheckupRecoveryEmail", "Recovery email");
+        tr.put("LuminaSecCheckup2FAInfo", "A password protects your account even if someone gets your login code, and a recovery email lets you back in if you forget it. Tap a row to open Telegram's own settings.");
+        tr.put("LuminaSecCheckupPrivacyHeader", "Privacy");
+        tr.put("LuminaSecCheckupWhoCanAddGroups", "Who can add me to groups");
+        tr.put("LuminaSecCheckupWhoCanCall", "Who can call me");
+        tr.put("LuminaSecCheckupWhoCanSeePhone", "Who can see my phone number");
+        tr.put("LuminaSecCheckupPrivacyInfo", "Tap a row to review it in Telegram's Privacy settings.");
+        tr.put("LuminaSecCheckupSessionsHeader", "Signed-in devices");
+        tr.put("LuminaSecCheckupSessions", "Devices signed in");
+        tr.put("LuminaSecCheckupSessionsInfo", "How many devices are currently logged in to your account. Tap to review them and sign out any you don't recognise.");
+        tr.put("LuminaSecCheckupValueOn", "On");
+        tr.put("LuminaSecCheckupValueOff", "Off");
+        tr.put("LuminaSecCheckupValueSet", "Set");
+        tr.put("LuminaSecCheckupValueNotSet", "Not set");
+        tr.put("LuminaSecCheckupValueUnknown", "Tap to view");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -3381,6 +3513,28 @@ es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaUpdateReadyTitle", "Actualización descargada");
         es.put("LuminaUpdateReadyText", "Toca para instalar");
         es.put("LuminaUpdateReadyVersionText", "Toca para instalar la versión %1$s");
+        // account security checkup page
+        es.put("LuminaSecCheckupTitle", "Security checkup");
+        es.put("LuminaSecCheckupSummaryChecking", "Checking your account…");
+        es.put("LuminaSecCheckupSummaryAllGood", "Your account looks well protected.");
+        es.put("LuminaSecCheckupSummaryIssues", "%1$d thing(s) you could strengthen.");
+        es.put("LuminaSecCheckup2FAHeader", "Two-step verification");
+        es.put("LuminaSecCheckup2FA", "Two-step verification");
+        es.put("LuminaSecCheckupRecoveryEmail", "Recovery email");
+        es.put("LuminaSecCheckup2FAInfo", "A password protects your account even if someone gets your login code, and a recovery email lets you back in if you forget it. Tap a row to open Telegram's own settings.");
+        es.put("LuminaSecCheckupPrivacyHeader", "Privacy");
+        es.put("LuminaSecCheckupWhoCanAddGroups", "Who can add me to groups");
+        es.put("LuminaSecCheckupWhoCanCall", "Who can call me");
+        es.put("LuminaSecCheckupWhoCanSeePhone", "Who can see my phone number");
+        es.put("LuminaSecCheckupPrivacyInfo", "Tap a row to review it in Telegram's Privacy settings.");
+        es.put("LuminaSecCheckupSessionsHeader", "Signed-in devices");
+        es.put("LuminaSecCheckupSessions", "Devices signed in");
+        es.put("LuminaSecCheckupSessionsInfo", "How many devices are currently logged in to your account. Tap to review them and sign out any you don't recognise.");
+        es.put("LuminaSecCheckupValueOn", "On");
+        es.put("LuminaSecCheckupValueOff", "Off");
+        es.put("LuminaSecCheckupValueSet", "Set");
+        es.put("LuminaSecCheckupValueNotSet", "Not set");
+        es.put("LuminaSecCheckupValueUnknown", "Tap to view");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -3860,6 +4014,28 @@ ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaUpdateReadyTitle", "Atualização baixada");
         ptBr.put("LuminaUpdateReadyText", "Toque para instalar");
         ptBr.put("LuminaUpdateReadyVersionText", "Toque para instalar a versão %1$s");
+        // account security checkup page
+        ptBr.put("LuminaSecCheckupTitle", "Security checkup");
+        ptBr.put("LuminaSecCheckupSummaryChecking", "Checking your account…");
+        ptBr.put("LuminaSecCheckupSummaryAllGood", "Your account looks well protected.");
+        ptBr.put("LuminaSecCheckupSummaryIssues", "%1$d thing(s) you could strengthen.");
+        ptBr.put("LuminaSecCheckup2FAHeader", "Two-step verification");
+        ptBr.put("LuminaSecCheckup2FA", "Two-step verification");
+        ptBr.put("LuminaSecCheckupRecoveryEmail", "Recovery email");
+        ptBr.put("LuminaSecCheckup2FAInfo", "A password protects your account even if someone gets your login code, and a recovery email lets you back in if you forget it. Tap a row to open Telegram's own settings.");
+        ptBr.put("LuminaSecCheckupPrivacyHeader", "Privacy");
+        ptBr.put("LuminaSecCheckupWhoCanAddGroups", "Who can add me to groups");
+        ptBr.put("LuminaSecCheckupWhoCanCall", "Who can call me");
+        ptBr.put("LuminaSecCheckupWhoCanSeePhone", "Who can see my phone number");
+        ptBr.put("LuminaSecCheckupPrivacyInfo", "Tap a row to review it in Telegram's Privacy settings.");
+        ptBr.put("LuminaSecCheckupSessionsHeader", "Signed-in devices");
+        ptBr.put("LuminaSecCheckupSessions", "Devices signed in");
+        ptBr.put("LuminaSecCheckupSessionsInfo", "How many devices are currently logged in to your account. Tap to review them and sign out any you don't recognise.");
+        ptBr.put("LuminaSecCheckupValueOn", "On");
+        ptBr.put("LuminaSecCheckupValueOff", "Off");
+        ptBr.put("LuminaSecCheckupValueSet", "Set");
+        ptBr.put("LuminaSecCheckupValueNotSet", "Not set");
+        ptBr.put("LuminaSecCheckupValueUnknown", "Tap to view");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -4339,6 +4515,28 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaUpdateReadyTitle", "Pembaruan telah diunduh");
         id.put("LuminaUpdateReadyText", "Ketuk untuk memasang");
         id.put("LuminaUpdateReadyVersionText", "Ketuk untuk memasang versi %1$s");
+        // account security checkup page
+        id.put("LuminaSecCheckupTitle", "Security checkup");
+        id.put("LuminaSecCheckupSummaryChecking", "Checking your account…");
+        id.put("LuminaSecCheckupSummaryAllGood", "Your account looks well protected.");
+        id.put("LuminaSecCheckupSummaryIssues", "%1$d thing(s) you could strengthen.");
+        id.put("LuminaSecCheckup2FAHeader", "Two-step verification");
+        id.put("LuminaSecCheckup2FA", "Two-step verification");
+        id.put("LuminaSecCheckupRecoveryEmail", "Recovery email");
+        id.put("LuminaSecCheckup2FAInfo", "A password protects your account even if someone gets your login code, and a recovery email lets you back in if you forget it. Tap a row to open Telegram's own settings.");
+        id.put("LuminaSecCheckupPrivacyHeader", "Privacy");
+        id.put("LuminaSecCheckupWhoCanAddGroups", "Who can add me to groups");
+        id.put("LuminaSecCheckupWhoCanCall", "Who can call me");
+        id.put("LuminaSecCheckupWhoCanSeePhone", "Who can see my phone number");
+        id.put("LuminaSecCheckupPrivacyInfo", "Tap a row to review it in Telegram's Privacy settings.");
+        id.put("LuminaSecCheckupSessionsHeader", "Signed-in devices");
+        id.put("LuminaSecCheckupSessions", "Devices signed in");
+        id.put("LuminaSecCheckupSessionsInfo", "How many devices are currently logged in to your account. Tap to review them and sign out any you don't recognise.");
+        id.put("LuminaSecCheckupValueOn", "On");
+        id.put("LuminaSecCheckupValueOff", "Off");
+        id.put("LuminaSecCheckupValueSet", "Set");
+        id.put("LuminaSecCheckupValueNotSet", "Not set");
+        id.put("LuminaSecCheckupValueUnknown", "Tap to view");
         T.put("id", id);
     }
 

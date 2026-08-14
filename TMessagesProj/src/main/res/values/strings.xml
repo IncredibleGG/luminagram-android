@@ -11701,4 +11701,26 @@
     <string name="LuminaSessionQrConfirmTitle">Authorise a new device?</string>
     <string name="LuminaSessionQrConfirmMessage">You are about to authorise a new device to sign in to your account. Unless you are sitting at that computer yourself, whoever controls it will be able to read all of your messages. Never scan a login QR code that someone sent you.</string>
     <string name="LuminaSessionQrConfirmContinue">I am at that device \u2014 continue</string>
+    <!-- LuminaGram: account security checkup page -->
+    <string name="LuminaSecCheckupTitle">Security checkup</string>
+    <string name="LuminaSecCheckupSummaryChecking">Checking your account…</string>
+    <string name="LuminaSecCheckupSummaryAllGood">Your account looks well protected.</string>
+    <string name="LuminaSecCheckupSummaryIssues">%1$d thing(s) you could strengthen.</string>
+    <string name="LuminaSecCheckup2FAHeader">Two-step verification</string>
+    <string name="LuminaSecCheckup2FA">Two-step verification</string>
+    <string name="LuminaSecCheckupRecoveryEmail">Recovery email</string>
+    <string name="LuminaSecCheckup2FAInfo">A password protects your account even if someone gets your login code, and a recovery email lets you back in if you forget it. Tap a row to open Telegram\'s own settings.</string>
+    <string name="LuminaSecCheckupPrivacyHeader">Privacy</string>
+    <string name="LuminaSecCheckupWhoCanAddGroups">Who can add me to groups</string>
+    <string name="LuminaSecCheckupWhoCanCall">Who can call me</string>
+    <string name="LuminaSecCheckupWhoCanSeePhone">Who can see my phone number</string>
+    <string name="LuminaSecCheckupPrivacyInfo">Tap a row to review it in Telegram\'s Privacy settings.</string>
+    <string name="LuminaSecCheckupSessionsHeader">Signed-in devices</string>
+    <string name="LuminaSecCheckupSessions">Devices signed in</string>
+    <string name="LuminaSecCheckupSessionsInfo">How many devices are currently logged in to your account. Tap to review them and sign out any you don\'t recognise.</string>
+    <string name="LuminaSecCheckupValueOn">On</string>
+    <string name="LuminaSecCheckupValueOff">Off</string>
+    <string name="LuminaSecCheckupValueSet">Set</string>
+    <string name="LuminaSecCheckupValueNotSet">Not set</string>
+    <string name="LuminaSecCheckupValueUnknown">Tap to view</string>
 </resources>
