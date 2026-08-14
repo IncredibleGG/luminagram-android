@@ -11772,4 +11772,6 @@
     <string name="LuminaOcrRateLimited">Translation service is busy, please try again later</string>
     <string name="LuminaOcrTranslateSetting">Translate text in images</string>
     <string name="LuminaOcrTranslateInfo">When viewing a full-screen image, adds a menu action that recognizes the text inside it on your device and translates it with your chosen engine. Recognition happens offline.</string>
+    <string name="LuminaReverseVoiceSending">Translating and sending as a voice message…</string>
+    <string name="LuminaReverseVoiceFailed">Couldn’t create the voice message</string>
 </resources>

@@ -72,6 +72,12 @@ public class LuminaConfig {
     // path (preferences == null) leaves the feature available. Only gates the menu action's
     // visibility, so a wrong value at worst hides one optional menu entry.
     public static boolean ocrTranslate = true;
+    // ---- Reverse voice (advanced, Wave) ----
+    // Type text, translate it to the recipient's language, synthesize it with the
+    // on-device system TTS engine and send the result as a real voice message.
+    // Advanced / opt-in: default OFF. Local-only (system TTS + the fork's own translate
+    // engine); never does voice cloning. Trigger: long-press Send in a chat.
+    public static boolean reverseVoice;
 
     static {
         loadConfig();
@@ -103,6 +109,7 @@ public class LuminaConfig {
                 ocrTranslate = preferences.getBoolean("ocrTranslate", true);
                 hideInputAiButton = preferences.getBoolean("hideInputAiButton", false);
                 explainMessage = preferences.getBoolean("explainMessage", true);
+                reverseVoice = preferences.getBoolean("reverseVoice", false);
 
                 configLoaded = true;
             } catch (Throwable e) {

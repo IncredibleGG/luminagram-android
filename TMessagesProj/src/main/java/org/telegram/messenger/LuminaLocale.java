@@ -577,6 +577,8 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaOcrRateLimited", "翻译服务繁忙，请稍后再试");
         zhHans.put("LuminaOcrTranslateSetting", "翻译图片中的文字");
         zhHans.put("LuminaOcrTranslateInfo", "查看全屏图片时，增加一个菜单操作：在本机识别图中文字，并用你选择的引擎翻译。识别过程离线完成。");
+        zhHans.put("LuminaReverseVoiceSending", "正在翻译并作为语音消息发送…");
+        zhHans.put("LuminaReverseVoiceFailed", "无法生成语音消息");
         T.put("zh-hans", zhHans);
 
         // ---- Traditional Chinese ----
@@ -1128,6 +1130,8 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaOcrRateLimited", "翻譯服務繁忙，請稍後再試");
         zhHant.put("LuminaOcrTranslateSetting", "翻譯圖片中的文字");
         zhHant.put("LuminaOcrTranslateInfo", "檢視全螢幕圖片時，新增一個選單動作：在本機辨識圖中文字，並用你選擇的引擎翻譯。辨識過程離線完成。");
+        zhHant.put("LuminaReverseVoiceSending", "正在翻譯並以語音訊息傳送…");
+        zhHant.put("LuminaReverseVoiceFailed", "無法產生語音訊息");
         T.put("zh-hant", zhHant);
 
         // ---- Arabic (RTL) ----

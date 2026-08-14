@@ -137,6 +137,7 @@ import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaOtpGuard;
 import org.telegram.messenger.LuminaTranslator;
 import org.telegram.messenger.LuminaTranslators;
+import org.telegram.messenger.LuminaTts;
 import org.telegram.messenger.LuminaTBS;
 import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.MediaController;
@@ -4819,7 +4820,108 @@ public class ChatActivityEnterView extends FrameLayout implements
     }
 
     private ActionBarMenuSubItem actionScheduleButton;
+    // ============================================================================
+    // LuminaGram reverse-voice: type -> translate -> system TTS -> send as a REAL
+    // voice message. Advanced/opt-in (LuminaConfig.reverseVoice, default OFF).
+    // Trigger entry: LONG-PRESS the Send button while text is present. All logic is
+    // local (system TTS + the fork's own translate engine); no voice cloning.
+    // ============================================================================
+    private boolean luminaReverseVoiceInFlight;
+
+    private boolean luminaReverseVoiceEligible() {
+        if (!LuminaConfig.reverseVoice) {
+            return false;
+        }
+        if (parentActivity == null || parentFragment == null || isStories) {
+            return false;
+        }
+        if (isInScheduleMode() || editingMessageObject != null || recordingAudioVideo) {
+            return false;
+        }
+        if (dialog_id == 0 || messageEditText == null) {
+            return false;
+        }
+        final CharSequence t = messageEditText.getText();
+        return t != null && !TextUtils.isEmpty(t.toString().trim());
+    }
+
+    private void luminaReverseVoiceSend() {
+        if (luminaReverseVoiceInFlight || messageEditText == null) {
+            return;
+        }
+        final String original = messageEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(original)) {
+            return;
+        }
+        final int account = currentAccount;
+        final long dialogId = dialog_id;
+        // Reuse the existing translate-before-send language resolution. May be null in
+        // "auto" mode before a per-dialog language is locked; in that case we speak the
+        // text as typed (still useful when the user types directly in the target language).
+        final String toLang = luminaResolveSendLang();
+        luminaReverseVoiceInFlight = true;
+        if (parentFragment != null) {
+            try {
+                BulletinFactory.of(parentFragment).createSimpleBulletin(
+                        R.raw.chats_infotip,
+                        LuminaLocale.getString(R.string.LuminaReverseVoiceSending)
+                ).show();
+            } catch (Throwable ignore) {}
+        }
+        final LuminaTts.Callback cb = new LuminaTts.Callback() {
+            @Override
+            public void onSent() {
+                AndroidUtilities.runOnUIThread(() -> {
+                    luminaReverseVoiceInFlight = false;
+                    // Only clear the composer once the voice message actually went out,
+                    // so a synth/encode failure never loses the user's typed text.
+                    if (messageEditText != null
+                            && original.equals(messageEditText.getText().toString().trim())) {
+                        setFieldText("");
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String reason) {
+                AndroidUtilities.runOnUIThread(() -> {
+                    luminaReverseVoiceInFlight = false;
+                    if (parentFragment != null) {
+                        try {
+                            BulletinFactory.of(parentFragment).createSimpleBulletin(
+                                    R.raw.error,
+                                    LuminaLocale.getString(R.string.LuminaReverseVoiceFailed)
+                            ).show();
+                        } catch (Throwable ignore) {}
+                    }
+                });
+            }
+        };
+        if (toLang != null && toLang.length() > 0) {
+            LuminaTranslators.current().translate(original, toLang, new LuminaTranslator.Callback() {
+                @Override
+                public void onResult(String translated, String detectedSourceLang) {
+                    final String speak = (translated != null && translated.trim().length() > 0) ? translated : original;
+                    LuminaTts.speakAndSend(account, dialogId, speak, toLang, cb);
+                }
+
+                @Override
+                public void onError(boolean rateLimited, String message) {
+                    // Translation failed: fall back to speaking the original text.
+                    LuminaTts.speakAndSend(account, dialogId, original, toLang, cb);
+                }
+            });
+        } else {
+            LuminaTts.speakAndSend(account, dialogId, original, null, cb);
+        }
+    }
+
     private boolean onSendLongClick(View view) {
+        // LuminaGram reverse-voice: long-press Send = translate then send as a voice message.
+        if (luminaReverseVoiceEligible()) {
+            luminaReverseVoiceSend();
+            return true;
+        }
         if (isInScheduleMode() || parentFragment != null && parentFragment.getChatMode() == ChatActivity.MODE_QUICK_REPLIES || animatorEphemeralMessageVisibility.getValue()) {
             return false;
         }

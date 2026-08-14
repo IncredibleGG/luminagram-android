@@ -1997,6 +1997,60 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         return recordStartRunnable != null || recordingAudio != null;
     }
 
+    // ============================================================================
+    // LuminaGram reverse-voice — MINIMAL, CLEARLY-FLAGGED addition. =============
+    // Encodes a block of 48 kHz mono 16-bit PCM (produced from system-TTS audio by
+    // LuminaTts) into a Telegram-compatible voice .ogg by REUSING the SAME private
+    // native opus recorder pipeline the microphone uses (startRecord/writeFrame/
+    // stopRecord). This is the ONLY change made to MediaController for the feature:
+    // it adds no field and modifies no existing method. Guarded so it can never
+    // collide with a live microphone recording — the native encoder keeps
+    // single-instance global state in jni/audio.c and is NOT re-entrant.
+    // Returns true on success (an .ogg was written at outOggPath).
+    // ============================================================================
+    public boolean luminaEncodePcmToOgg(short[] pcm48kMono, String outOggPath) {
+        if (pcm48kMono == null || pcm48kMono.length == 0 || outOggPath == null) {
+            return false;
+        }
+        if (isRecordingAudio()) {
+            // The native opus encoder is single-instance; never reuse it mid-record.
+            return false;
+        }
+        try {
+            if (startRecord(outOggPath, 48000) == 0) {
+                return false;
+            }
+            final int FRAME = 960; // samples per 20 ms opus frame at 48 kHz (== jni frame_size)
+            // The jni writeFrame() wrapper sets end-of-stream when (len/2 < frame_size), i.e.
+            // only on a PARTIAL final frame. Pad by one silent sample when the length is an exact
+            // multiple of FRAME so the stream always ends on a single partial frame -> clean e_o_s.
+            final int total = pcm48kMono.length;
+            final int totalWithPad = total + ((total % FRAME == 0) ? 1 : 0);
+            final ByteBuffer buf = ByteBuffer.allocateDirect(FRAME * 2);
+            buf.order(ByteOrder.nativeOrder());
+            int i = 0;
+            while (i < totalWithPad) {
+                final int n = Math.min(FRAME, totalWithPad - i);
+                buf.rewind();
+                for (int k = 0; k < n; k++) {
+                    final int idx = i + k;
+                    buf.putShort(idx < total ? pcm48kMono[idx] : 0);
+                }
+                writeFrame(buf, n * 2);
+                i += n;
+            }
+            stopRecord();
+            return true;
+        } catch (Throwable e) {
+            try {
+                stopRecord();
+            } catch (Throwable ignore) {
+            }
+            FileLog.e(e);
+            return false;
+        }
+    }
+
     private boolean isNearToSensor(float value) {
         return value < 5.0f && value != proximitySensor.getMaximumRange();
     }
