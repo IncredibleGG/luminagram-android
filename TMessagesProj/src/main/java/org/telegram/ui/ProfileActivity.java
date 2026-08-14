@@ -150,6 +150,7 @@ import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.LuminaConfig;
 import org.telegram.messenger.LuminaContactNotes;
+import org.telegram.messenger.LuminaHomoglyph;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
@@ -10542,6 +10543,33 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         if (est != null) {
             sb.append('\n');
             sb.append(String.format(LuminaLocale.getString(R.string.ProfileRiskAccountCreated), est));
+        }
+
+        // LuminaGram (homoglyph): flag names built from visual look-alike characters
+        // (Cyrillic/Greek confusables, fullwidth forms, 0/1-as-letters, mixed scripts)
+        // — a common impersonation trick. Purely local, on-device character comparison.
+        if (LuminaConfig.homoglyphWarn) {
+            TLRPC.User hgUser = getMessagesController().getUser(uid);
+            String displayName = null;
+            if (hgUser != null) {
+                String fn = hgUser.first_name != null ? hgUser.first_name : "";
+                String ln = hgUser.last_name != null ? hgUser.last_name : "";
+                displayName = (fn + " " + ln).trim();
+            }
+            String publicUsername = UserObject.getPublicUsername(hgUser);
+            boolean nameBad = LuminaHomoglyph.containsSuspiciousChars(displayName);
+            boolean userBad = LuminaHomoglyph.containsSuspiciousChars(publicUsername);
+            if (nameBad || userBad) {
+                SpannableStringBuilder out = new SpannableStringBuilder(sb.toString());
+                out.append('\n');
+                out.append(LuminaLocale.getString(R.string.ProfileRiskHomoglyph));
+                CharSequence offender = nameBad ? displayName : publicUsername;
+                if (offender != null && offender.length() > 0) {
+                    out.append('\n');
+                    out.append(LuminaHomoglyph.highlight(offender));
+                }
+                return out;
+            }
         }
         return sb.toString();
     }

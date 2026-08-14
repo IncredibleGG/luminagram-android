@@ -38,6 +38,11 @@ public class LuminaConfig {
     public static int customAccentColor;         // 0 = none picked yet
     public static int appFont;                   // 0 = Telegram default, 1 = System, 2 = Serif, 3 = Monospace
 
+    // ---- Anti-scam / security ----
+    // Warn when a stranger's display name / username uses visual look-alike
+    // (homoglyph) characters commonly used to impersonate a trusted account.
+    public static boolean homoglyphWarn = true;
+
     static {
         loadConfig();
     }
@@ -63,6 +68,7 @@ public class LuminaConfig {
                 customAccentEnabled = preferences.getBoolean("customAccentEnabled", false);
                 customAccentColor = preferences.getInt("customAccentColor", 0);
                 appFont = preferences.getInt("appFont", 0);
+                homoglyphWarn = preferences.getBoolean("homoglyphWarn", true);
 
                 configLoaded = true;
             } catch (Throwable e) {
@@ -402,6 +408,28 @@ public class LuminaConfig {
             return;
         }
         editor.putBoolean("translateBeforeSendConfirm", translateBeforeSendConfirm ^= true).apply();
+    }
+
+    // ---- Anti-scam / security ----
+
+    /** Whether to warn about homoglyph / look-alike impersonation names (default on). */
+    public static boolean isHomoglyphWarn() {
+        return homoglyphWarn;
+    }
+
+    /** Persist the homoglyph-warning switch. */
+    public static void setHomoglyphWarn(boolean value) {
+        homoglyphWarn = value;
+        if (editor != null) {
+            editor.putBoolean("homoglyphWarn", value).apply();
+        }
+    }
+
+    public static void toggleHomoglyphWarn() {
+        if (editor == null) {
+            return;
+        }
+        editor.putBoolean("homoglyphWarn", homoglyphWarn ^= true).apply();
     }
 
     // ---- Appearance (Wave 2) ----

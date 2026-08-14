@@ -11220,6 +11220,7 @@
     <string name="ProfileRiskNotContact">Not in your contacts</string>
     <string name="ProfileRiskNoCommonGroups">No groups in common</string>
     <string name="ProfileRiskAccountCreated">Account created %1$s</string>
+    <string name="ProfileRiskHomoglyph">⚠ Name uses look-alike characters — may be impersonating someone</string>
     <!-- LuminaGram profile photo upload date (wave18) -->
     <string name="LuminaPhotoUploadDate">Uploaded %1$s</string>
     <!-- LuminaGram privacy / security (wave1) -->
