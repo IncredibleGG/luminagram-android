@@ -27,6 +27,14 @@ public final class LuminaDecoy {
      */
     public static volatile boolean unlocked = false;
 
+    /**
+     * Re-arm the gate so the next foreground entry shows the decoy again. Called when the
+     * app is backgrounded (LaunchActivity onStop / onUserLeaveHint). Cheap and never throws.
+     */
+    public static void relock() {
+        unlocked = false;
+    }
+
     /** Prefs key: legacy master toggle for the calculator decoy lock (pre-vault users). */
     public static final String KEY_ENABLED = "decoyLockEnabled";
     /** Prefs key: the secret code that unlocks the real app. */

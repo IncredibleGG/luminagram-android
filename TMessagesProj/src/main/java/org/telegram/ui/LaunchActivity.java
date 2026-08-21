@@ -6908,6 +6908,9 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
     protected void onStop() {
         super.onStop();
         isStarted = false;
+        // LuminaGram: re-arm the disguise/vault gate whenever the app is backgrounded, so a
+        // warm re-entry (onResume) re-gates even though the process was never killed.
+        try { org.telegram.messenger.LuminaDecoy.relock(); } catch (Throwable ignore) {}
         pipActivityHandler.onStop();
         Browser.unbindCustomTabsService(this);
         ApplicationLoader.mainInterfaceStopped = true;
@@ -7061,6 +7064,9 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     @Override
     protected void onUserLeaveHint() {
+        // LuminaGram: user is leaving (Home / recents / switch app) - re-arm the disguise
+        // so the next entry shows the fake app again. Paired with the onResume re-check.
+        try { org.telegram.messenger.LuminaDecoy.relock(); } catch (Throwable ignore) {}
         pipActivityHandler.onUserLeaveHint();
         for (Runnable callback : onUserLeaveHintListeners) {
             callback.run();
@@ -7072,9 +7078,45 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     View feedbackView;
 
+    // LuminaGram: build + start the decoy/door for the current vault config. Returns true if
+    // it diverted. Does NOT finish() the caller - the caller decides teardown semantics.
+    private boolean startLuminaDecoy() {
+        try {
+            Intent intent;
+            String mode = org.telegram.messenger.LuminaDecoy.resolveVaultMode(this);
+            if (org.telegram.messenger.LuminaDecoy.MODE_PASSWORD_DOOR.equals(mode)) {
+                intent = new Intent(this, LuminaVaultDoorActivity.class);
+            } else {
+                String skin = org.telegram.messenger.LuminaDecoy.resolveDecoySkin(this);
+                if (org.telegram.messenger.LuminaDecoy.SKIN_NOTEPAD.equals(skin)) {
+                    intent = new Intent();
+                    intent.setClassName(this, "org.telegram.ui.LuminaNotepadActivity");
+                } else {
+                    intent = new Intent(this, LuminaCalculatorActivity.class);
+                }
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+            return true;
+        } catch (Throwable ignore) {
+            return false; // fail-open: caller falls through to the real app
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        // LuminaGram: LaunchActivity is singleTask, so returning from background delivers
+        // onResume (NOT onCreate) - the onCreate decoy gate is bypassed on warm re-entry.
+        // Re-check here so the disguise/vault re-arms on EVERY entry, not just cold start.
+        try {
+            if (!luminaDecoyFinished && org.telegram.messenger.LuminaDecoy.shouldGate(this)) {
+                if (startLuminaDecoy()) {
+                    finish();
+                    return;
+                }
+            }
+        } catch (Throwable ignore) {}
         isResumed = true;
         pipActivityHandler.onResume();
         if (onResumeStaticCallback != null) {
@@ -7166,6 +7208,8 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             MessagesController.getInstance(currentAccount).checkPromoInfo(true);
         }
         org.telegram.messenger.LuminaSessionGuard.onAppForeground(currentAccount);
+        // LuminaGram: translation-settings roaming SHELVED (per user) — auto-sync disabled; settings per-device. Re-enable by uncommenting.
+        // org.telegram.messenger.LuminaSyncController.onAppForeground();
         //if (refreshRateController != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         //    refreshRateController.start();
         //}
