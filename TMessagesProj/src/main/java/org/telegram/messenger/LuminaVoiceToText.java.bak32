@@ -103,7 +103,7 @@ public final class LuminaVoiceToText {
             }
 
             // 3. run the currently selected local transcriber
-            final String langHint = resolveLangHint(mo, currentAccount);
+            final String langHint = resolveLangHint();
             final LuminaTranscriber transcriber = LuminaTranscribers.current();
             if (transcriber == null) {
                 showError(fragment, LuminaLocale.getString(R.string.LuminaSttUiError));
@@ -492,32 +492,6 @@ public final class LuminaVoiceToText {
             } catch (Exception ignore) {
             }
         });
-    }
-
-    // #32: prefer the CHAT's language when we already hold that Vosk model, so a Chinese
-    // contact's voice is transcribed with the Chinese model even if the user last picked
-    // another one. Switches only among ALREADY-downloaded models -- never starts a download,
-    // and falls back to the stored/app default when the chat language has no local model.
-    private static String resolveLangHint(final MessageObject mo, final int currentAccount) {
-        try {
-            if (mo != null) {
-                final long dialogId = mo.getDialogId();
-                final TranslateController tc =
-                        MessagesController.getInstance(currentAccount).getTranslateController();
-                if (tc != null) {
-                    final String detected = tc.getDialogDetectedLanguage(dialogId);
-                    if (detected != null && detected.length() > 0
-                            && !TranslateController.UNKNOWN_LANGUAGE.equals(detected)) {
-                        final String norm = LuminaVoskModelManager.normalizeLang(detected);
-                        if (LuminaVoskModelManager.isModelReady(norm)) {
-                            return LuminaVoskModelManager.isoTag(norm);
-                        }
-                    }
-                }
-            }
-        } catch (Exception ignore) {
-        }
-        return resolveLangHint();
     }
 
     private static String resolveLangHint() {

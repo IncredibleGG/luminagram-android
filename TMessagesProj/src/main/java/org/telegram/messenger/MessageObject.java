@@ -7569,7 +7569,16 @@ public class MessageObject {
             }, 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             return ssb;
         }
-        CharSequence text = translated && messageOwner.translatedVoiceTranscription != null ? messageOwner.translatedVoiceTranscription.text : messageOwner.voiceTranscription;
+        CharSequence text;
+        if (translated && messageOwner.translatedVoiceTranscription != null && !TextUtils.isEmpty(messageOwner.translatedVoiceTranscription.text)) {
+            // LuminaGram: show the original transcript AND its translation together (align iOS
+            // dual display) instead of replacing the transcript with the translation.
+            String lgOrig = messageOwner.voiceTranscription;
+            String lgTr = messageOwner.translatedVoiceTranscription.text;
+            text = TextUtils.isEmpty(lgOrig) ? lgTr : (lgOrig + "\n\n" + lgTr);
+        } else {
+            text = messageOwner.voiceTranscription;
+        }
         if (!TextUtils.isEmpty(text)) {
             text = Emoji.replaceEmoji(text, Theme.chat_msgTextPaint.getFontMetricsInt(), false);
         }

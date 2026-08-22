@@ -97,10 +97,14 @@ final class VoskTranscriber implements LuminaTranscriber {
             }
             appendText(collected, recognizer.getFinalResult());
 
-            cb.onResult(collected.toString().trim());
+            cb.onResult(tidyCjkSpacing(collected.toString().trim()));
         } catch (Throwable e) {
             FileLog.e(e);
-            cb.onError(e.getMessage() != null ? e.getMessage() : e.toString());
+            // LuminaGram: report the full cause chain so a wrapped UnsatisfiedLinkError isn't hidden.
+            StringBuilder sb = new StringBuilder(e.toString());
+            Throwable c = e.getCause();
+            for (int d = 0; c != null && d < 4; d++) { sb.append(" <- ").append(c.toString()); c = c.getCause(); }
+            cb.onError(sb.toString());
         } finally {
             try {
                 if (recognizer != null) {
@@ -132,6 +136,45 @@ final class VoskTranscriber implements LuminaTranscriber {
             }
         } catch (Throwable ignore) {
         }
+    }
+
+    /**
+     * Vosk emits space-separated word tokens; CJK scripts (Chinese/Japanese) do not use spaces,
+     * so a space sitting between two CJK characters is spurious. Drop those, keep Latin spacing.
+     */
+    private static String tidyCjkSpacing(final String s) {
+        if (s == null || s.length() < 3) {
+            return s;
+        }
+        final StringBuilder out = new StringBuilder(s.length());
+        final int n = s.length();
+        int i = 0;
+        while (i < n) {
+            final char ch = s.charAt(i);
+            if (ch == ' ') {
+                int j = i;
+                while (j < n && s.charAt(j) == ' ') {
+                    j++;
+                }
+                final char prev = out.length() > 0 ? out.charAt(out.length() - 1) : 0;
+                final char next = j < n ? s.charAt(j) : 0;
+                if (!(isCjk(prev) && isCjk(next))) {
+                    out.append(' ');
+                }
+                i = j;
+            } else {
+                out.append(ch);
+                i++;
+            }
+        }
+        return out.toString();
+    }
+
+    private static boolean isCjk(final char c) {
+        return (c >= 0x3040 && c <= 0x30ff)
+                || (c >= 0x3400 && c <= 0x9fff)
+                || (c >= 0xf900 && c <= 0xfaff)
+                || (c >= 0xff66 && c <= 0xff9f);
     }
 
     private static String resolveLang(String langHint) {

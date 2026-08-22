@@ -669,6 +669,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         default void didPressOther(ChatMessageCell cell, float otherX, float otherY) {
         }
 
+        // LuminaGram: a voice / round-video transcribe button was tapped -> the host fragment runs
+        // LuminaGram's own on-device transcription (or toggles an existing transcript's panel).
+        default void didPressLuminaTranscribe(ChatMessageCell cell) {
+        }
+
         default void didPressSponsoredClose(ChatMessageCell cell) {
         }
 
@@ -3092,7 +3097,18 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     }
 
     private boolean checkTranscribeButtonMotionEvent(MotionEvent event) {
-        return useTranscribeButton && (!isPlayingRound || getVideoTranscriptionProgress() > 0 || wasTranscriptionOpen) && transcribeButton != null && transcribeButton.onTouch(event.getAction(), getEventX(event), getEventY(event));
+        if (!(useTranscribeButton && (!isPlayingRound || getVideoTranscriptionProgress() > 0 || wasTranscriptionOpen) && transcribeButton != null)) {
+            return false;
+        }
+        boolean result = transcribeButton.onTouch(event.getAction(), getEventX(event), getEventY(event));
+        // LuminaGram: our TranscribeButton.onTap override routes to LuminaGram transcription and
+        // never runs the base button's own press/ripple reset, so clear its internal pressed state
+        // on UP; otherwise a handled tap would linger and re-fire onTap on the next unrelated touch
+        // (e.g. the seek bar) inside this cell.
+        if (result && event.getAction() == MotionEvent.ACTION_UP) {
+            transcribeButton.onTouch(MotionEvent.ACTION_CANCEL, getEventX(event), getEventY(event));
+        }
+        return result;
     }
 
     private boolean checkLinkPreviewMotionEvent(MotionEvent event) {
@@ -12719,6 +12735,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             !currentMessageObject.isRepostPreview &&
             (!currentMessageObject.isOutOwner() || currentMessageObject.isSent()) &&
             (
+                true /* LuminaGram: force the transcribe button for every voice note / round video; onTap routes to LuminaGram on-device transcription instead of the premium/trial server path */ ||
                 UserConfig.getInstance(currentAccount).isPremium()
                 ||
                 TranscribeButton.isFreeTranscribeInChat(currentMessageObject)
@@ -14870,6 +14887,15 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         @Override
                         protected void onOpen() {
                             wasTranscriptionOpen = true;
+                        }
+
+                        // LuminaGram: route taps to LuminaGram's own on-device voice-to-text
+                        // (via the host fragment) instead of Telegram's premium/trial server RPC.
+                        @Override
+                        public void onTap() {
+                            if (delegate != null) {
+                                delegate.didPressLuminaTranscribe(ChatMessageCell.this);
+                            }
                         }
                     };
                     transcribeButton.setOpen(currentMessageObject.messageOwner != null && currentMessageObject.messageOwner.voiceTranscriptionOpen && currentMessageObject.messageOwner.voiceTranscriptionFinal && TranscribeButton.isVideoTranscriptionOpen(currentMessageObject), false);

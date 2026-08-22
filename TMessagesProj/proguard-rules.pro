@@ -114,3 +114,14 @@
 # Use -keep to explicitly keep any other classes shrinking would remove
 -dontoptimize
 -dontobfuscate
+
+
+# LuminaGram: keep Vosk offline speech-to-text + its JNA bindings. R8 shrinking (obfuscate is
+# already off) tree-shakes the reflectively/JNI-accessed classes, which makes org.vosk.LibVosk
+# fail to load its native library ("transcription failed: org.vosk.LibVosk").
+-keep class org.vosk.** { *; }
+-keep class com.sun.jna.** { *; }
+-keepclassmembers class * extends com.sun.jna.Structure { *; }
+-keepclassmembers class * implements com.sun.jna.Library { *; }
+-dontwarn java.awt.**
+-dontwarn com.sun.jna.**

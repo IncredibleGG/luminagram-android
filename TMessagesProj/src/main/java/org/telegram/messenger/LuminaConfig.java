@@ -104,7 +104,7 @@ public class LuminaConfig {
                 storiesFullyOff = preferences.getBoolean("storiesFullyOff", false);
                 storiesHidePostEntry = preferences.getBoolean("storiesHidePostEntry", false);
                 compactChatList = preferences.getBoolean("compactChatList", false);
-                translateBeforeSend = preferences.getBoolean("translateBeforeSend", false);
+                translateBeforeSend = preferences.getBoolean("translateBeforeSend", true);
                 translateBeforeSendConfirm = preferences.getBoolean("translateBeforeSendConfirm", false);
                 materialYouEnabled = preferences.getBoolean("materialYouEnabled", false);
                 customAccentEnabled = preferences.getBoolean("customAccentEnabled", false);

@@ -170,7 +170,7 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
         // consumed by LuminaVoiceToText.
         items.add(UItem.asHeader(LuminaLocale.getString(R.string.LuminaTranslateHeader)));
         items.add(UItem.asSwitch(ITEM_AUTO_TRANSLATE, LuminaLocale.getString(R.string.LuminaSttAutoTranslate))
-                .setChecked(LuminaConfig.getBoolean(KEY_AUTO_TRANSLATE, true)));
+                .setChecked(LuminaConfig.getBoolean(KEY_AUTO_TRANSLATE, false)));
         items.add(UItem.asShadow(LuminaLocale.getString(R.string.LuminaSttAutoTranslateInfo)));
         items.add(UItem.asSwitch(ITEM_AUTO_PIPELINE, LuminaLocale.getString(R.string.LuminaSttAutoPipeline))
                 .setChecked(LuminaConfig.getBoolean(KEY_AUTO_PIPELINE, false)));
@@ -224,7 +224,7 @@ public class LuminaVoiceToTextActivity extends BaseFragment {
                 presentFragment(new LuminaVoskModelsActivity());
                 break;
             case ITEM_AUTO_TRANSLATE:
-                LuminaConfig.putBoolean(KEY_AUTO_TRANSLATE, !LuminaConfig.getBoolean(KEY_AUTO_TRANSLATE, true));
+                LuminaConfig.putBoolean(KEY_AUTO_TRANSLATE, !LuminaConfig.getBoolean(KEY_AUTO_TRANSLATE, false));
                 update();
                 break;
             case ITEM_AUTO_PIPELINE:

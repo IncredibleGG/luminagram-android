@@ -11236,7 +11236,8 @@ public class ChatActivity extends BaseFragment implements
             // accent when translation is currently ON for this dialog, default otherwise.
             luminaTranslateHeaderItem.setVisibility(manualEligible ? View.VISIBLE : View.GONE);
             if (manualEligible) {
-                boolean on = translateController.isTranslatingDialog(getDialogId());
+                boolean on = translateController.isTranslatingDialog(getDialogId())
+                    || LuminaConfig.getDialogSendEnabled(getDialogId()); // LuminaGram: also blue when 己方 (outgoing) is on
                 luminaTranslateHeaderItem.setIconColor(getThemedColor(on ? Theme.key_chat_addContact : Theme.key_actionBarDefaultIcon));
             }
         }
@@ -31049,7 +31050,7 @@ public class ChatActivity extends BaseFragment implements
                     )
                     && (currentChat == null || ChatObject.isChannelAndNotMegaGroup(currentChat) || ChatObject.canUserDoAction(currentChat, ChatObject.ACTION_SEND_REACTIONS));
             }
-            final boolean showMessageSeen = !suggestEdit && !isEphemeral && !isReactionsViewAvailable && !isInScheduleMode() && currentChat != null && message.isOutOwner() && message.isSent() && !message.isEditing() && !message.isSending() && !message.isSendError() && !message.isContentUnread() && !message.isUnread() && (ConnectionsManager.getInstance(currentAccount).getCurrentTime() - message.messageOwner.date < getMessagesController().chatReadMarkExpirePeriod) && (ChatObject.isMegagroup(currentChat) || !ChatObject.isChannel(currentChat)) && chatInfo != null && chatInfo.participants_count <= getMessagesController().chatReadMarkSizeThreshold && !(message.messageOwner.action instanceof TLRPC.TL_messageActionChatJoinedByRequest) && chatMode != MODE_SAVED && message.canSetReaction() && !ChatObject.isMonoForum(currentChat);
+            final boolean showMessageSeen = !suggestEdit && !isEphemeral && !isReactionsViewAvailable && !isInScheduleMode() && currentChat != null && /* LuminaGram: expose the group read-members (seen by) list on ALL group messages, not only your own -- getMessageReadParticipants works for any message in a read-mark-tracked group; dropped the isOutOwner gate */ message.isSent() && !message.isEditing() && !message.isSending() && !message.isSendError() && !message.isContentUnread() && !message.isUnread() && (ConnectionsManager.getInstance(currentAccount).getCurrentTime() - message.messageOwner.date < getMessagesController().chatReadMarkExpirePeriod) && (ChatObject.isMegagroup(currentChat) || !ChatObject.isChannel(currentChat)) && chatInfo != null && chatInfo.participants_count <= getMessagesController().chatReadMarkSizeThreshold && !(message.messageOwner.action instanceof TLRPC.TL_messageActionChatJoinedByRequest) && chatMode != MODE_SAVED && message.canSetReaction() && !ChatObject.isMonoForum(currentChat);
             final boolean showMessageAuthor = !suggestEdit && !isEphemeral && currentChat != null && !message.isOut() && ChatObject.isMonoForum(currentChat) && ChatObject.canManageMonoForum(currentAccount, currentChat) && -currentChat.linked_monoforum_id == message.getFromChatId();
             final boolean showPrivateMessageSeen = !suggestEdit && !isEphemeral && !isReactionsViewAvailable && currentChat == null && currentEncryptedChat == null && (currentUser != null && !UserObject.isUserSelf(currentUser) && !UserObject.isReplyUser(currentUser) && !UserObject.isAnonymous(currentUser) && !currentUser.bot && !UserObject.isService(currentUser.id)) && (userInfo == null || !userInfo.read_dates_private) && !isInScheduleMode() && message.isOutOwner() && message.isSent() && !message.isEditing() && !message.isSending() && !message.isSendError() && !message.isContentUnread() && !message.isUnread() && (ConnectionsManager.getInstance(currentAccount).getCurrentTime() - message.messageOwner.date < getMessagesController().pmReadDateExpirePeriod) && !(message.messageOwner.action instanceof TLRPC.TL_messageActionChatJoinedByRequest);
             final boolean showPrivateMessageEdit = !suggestEdit && !isEphemeral && (currentUser == null || !UserObject.isReplyUser(currentUser) && !UserObject.isAnonymous(currentUser)) && !isInScheduleMode() && message.isEdited() && !(message.messageOwner.action instanceof TLRPC.TL_messageActionChatJoinedByRequest);
@@ -33279,6 +33280,95 @@ public class ChatActivity extends BaseFragment implements
         MediaController.saveFile(path, getParentActivity(), messageObject.isVideo() ? 1 : 0, null, null);
     }
 
+    // LuminaGram: shared on-device voice-to-text entry point, used both by the message context
+    // menu (OPTION_LUMINA_VOICE_TO_TEXT) and by tapping a voice bubble's transcribe button. When
+    // no STT engine has been chosen it offers the own-key / free (Vosk) picker, then runs
+    // LuminaVoiceToText.transcribe on the given voice / round-video message.
+    private void luminaStartVoiceToText(final MessageObject mo) {
+        try {
+            if (mo != null) {
+                if (LuminaConfig.getString("sttEngine", "").isEmpty()) {
+                    final MessageObject voiceMsg = mo;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), themeDelegate);
+                    builder.setTitle(LuminaLocale.getString(R.string.LuminaSttUiPickTitle));
+                    builder.setItems(new CharSequence[]{
+                            LuminaLocale.getString(R.string.LuminaSttUiPickOwnKey),
+                            LuminaLocale.getString(R.string.LuminaSttUiPickFree)
+                    }, (dialog, which) -> {
+                        if (which == 0) {
+                            presentFragment(new org.telegram.ui.LuminaVoiceToTextActivity());
+                        } else {
+                            LuminaConfig.putString("sttEngine", "vosk");
+                            String defLang = "en";
+                            LocaleController.LocaleInfo li = LocaleController.getInstance().getCurrentLocaleInfo();
+                            if (li != null && li.getLangCode() != null && li.getLangCode().length() > 0) {
+                                defLang = li.getLangCode();
+                                int di = defLang.indexOf('-');
+                                if (di > 0) defLang = defLang.substring(0, di);
+                            }
+                            final String lang = LuminaConfig.getString("voskModelLang", defLang);
+                            if (LuminaVoskModelManager.isModelReady(lang)) {
+                                LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this);
+                            } else {
+                                BulletinFactory.of(ChatActivity.this).createSimpleBulletin(R.raw.chats_infotip, LuminaLocale.getString(R.string.LuminaSttUiDownloading)).show();
+                                LuminaVoskModelManager.ensureModel(lang, new LuminaVoskModelManager.ModelCallback() {
+                                    @Override
+                                    public void onReady(java.io.File model) {
+                                        AndroidUtilities.runOnUIThread(() -> LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this));
+                                    }
+                                    @Override
+                                    public void onProgress(float progress) {
+                                    }
+                                    @Override
+                                    public void onError(String error) {
+                                        AndroidUtilities.runOnUIThread(() -> BulletinFactory.of(ChatActivity.this).createErrorBulletin(LuminaLocale.getString(R.string.LuminaSttUiError)).show());
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    builder.show();
+                } else {
+                    // LuminaGram: engine already chosen. If it is offline Vosk, ensure the model
+                    // is downloaded first, otherwise Vosk just errors out ("transcription failed").
+                    final MessageObject voiceMsg = mo;
+                    if ("vosk".equals(LuminaConfig.getString("sttEngine", ""))) {
+                        String defLang = "en";
+                        LocaleController.LocaleInfo li = LocaleController.getInstance().getCurrentLocaleInfo();
+                        if (li != null && li.getLangCode() != null && li.getLangCode().length() > 0) {
+                            defLang = li.getLangCode();
+                            int di = defLang.indexOf('-');
+                            if (di > 0) defLang = defLang.substring(0, di);
+                        }
+                        final String lang = LuminaConfig.getString("voskModelLang", defLang);
+                        if (LuminaVoskModelManager.isModelReady(lang)) {
+                            LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this);
+                        } else {
+                            BulletinFactory.of(ChatActivity.this).createSimpleBulletin(R.raw.chats_infotip, LuminaLocale.getString(R.string.LuminaSttUiDownloading)).show();
+                            LuminaVoskModelManager.ensureModel(lang, new LuminaVoskModelManager.ModelCallback() {
+                                @Override
+                                public void onReady(java.io.File model) {
+                                    AndroidUtilities.runOnUIThread(() -> LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this));
+                                }
+                                @Override
+                                public void onProgress(float progress) {
+                                }
+                                @Override
+                                public void onError(String error) {
+                                    AndroidUtilities.runOnUIThread(() -> BulletinFactory.of(ChatActivity.this).createErrorBulletin(LuminaLocale.getString(R.string.LuminaSttUiError)).show());
+                                }
+                            });
+                        }
+                    } else {
+                        LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
+    }
+
     private void processSelectedOption(int option) {
         if (selectedObject == null || getParentActivity() == null) {
             return;
@@ -33376,56 +33466,7 @@ public class ChatActivity extends BaseFragment implements
                 break;
             }
             case OPTION_LUMINA_VOICE_TO_TEXT: {
-                try {
-                    if (selectedObject != null) {
-                        if (LuminaConfig.getString("sttEngine", "").isEmpty()) {
-                            final MessageObject voiceMsg = selectedObject;
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity(), themeDelegate);
-                            builder.setTitle(LuminaLocale.getString(R.string.LuminaSttUiPickTitle));
-                            builder.setItems(new CharSequence[]{
-                                    LuminaLocale.getString(R.string.LuminaSttUiPickOwnKey),
-                                    LuminaLocale.getString(R.string.LuminaSttUiPickFree)
-                            }, (dialog, which) -> {
-                                if (which == 0) {
-                                    presentFragment(new org.telegram.ui.LuminaVoiceToTextActivity());
-                                } else {
-                                    LuminaConfig.putString("sttEngine", "vosk");
-                                    String defLang = "en";
-                                    LocaleController.LocaleInfo li = LocaleController.getInstance().getCurrentLocaleInfo();
-                                    if (li != null && li.getLangCode() != null && li.getLangCode().length() > 0) {
-                                        defLang = li.getLangCode();
-                                        int di = defLang.indexOf('-');
-                                        if (di > 0) defLang = defLang.substring(0, di);
-                                    }
-                                    final String lang = LuminaConfig.getString("voskModelLang", defLang);
-                                    if (LuminaVoskModelManager.isModelReady(lang)) {
-                                        LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this);
-                                    } else {
-                                        BulletinFactory.of(ChatActivity.this).createSimpleBulletin(R.raw.chats_infotip, LuminaLocale.getString(R.string.LuminaSttUiDownloading)).show();
-                                        LuminaVoskModelManager.ensureModel(lang, new LuminaVoskModelManager.ModelCallback() {
-                                            @Override
-                                            public void onReady(java.io.File model) {
-                                                AndroidUtilities.runOnUIThread(() -> LuminaVoiceToText.transcribe(voiceMsg, currentAccount, ChatActivity.this));
-                                            }
-                                            @Override
-                                            public void onProgress(float progress) {
-                                            }
-                                            @Override
-                                            public void onError(String error) {
-                                                AndroidUtilities.runOnUIThread(() -> BulletinFactory.of(ChatActivity.this).createErrorBulletin(LuminaLocale.getString(R.string.LuminaSttUiError)).show());
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                            builder.show();
-                        } else {
-                            LuminaVoiceToText.transcribe(selectedObject, currentAccount, ChatActivity.this);
-                        }
-                    }
-                } catch (Exception e) {
-                    FileLog.e(e);
-                }
+                luminaStartVoiceToText(selectedObject); // LuminaGram: shared entry point (also used by the voice-bubble transcribe button)
                 break;
             }
             case OPTION_FORWARD_NO_AUTHOR:
@@ -39611,6 +39652,31 @@ public class ChatActivity extends BaseFragment implements
                 return;
             }
             showForwardHint(cell);
+        }
+
+        // LuminaGram: voice-bubble transcribe button tapped -> our own on-device transcription.
+        // If a transcript already exists just toggle the inline panel (mirroring the notification
+        // the native server path posts); otherwise start LuminaGram voice-to-text.
+        @Override
+        public void didPressLuminaTranscribe(ChatMessageCell cell) {
+            if (cell == null) {
+                return;
+            }
+            MessageObject mo = cell.getMessageObject();
+            if (mo == null || mo.messageOwner == null) {
+                return;
+            }
+            if (!TextUtils.isEmpty(mo.messageOwner.voiceTranscription)) {
+                boolean open = !mo.messageOwner.voiceTranscriptionOpen;
+                if (open) {
+                    TranscribeButton.openVideoTranscription(mo);
+                }
+                mo.messageOwner.voiceTranscriptionOpen = open;
+                MessagesStorage.getInstance(currentAccount).updateMessageVoiceTranscriptionOpen(mo.getDialogId(), mo.getId(), mo.messageOwner);
+                NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.voiceTranscriptionUpdate, mo, null, null, (Boolean) open, open ? Boolean.TRUE : null);
+                return;
+            }
+            luminaStartVoiceToText(mo);
         }
 
         @Override

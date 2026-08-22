@@ -7208,8 +7208,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             MessagesController.getInstance(currentAccount).checkPromoInfo(true);
         }
         org.telegram.messenger.LuminaSessionGuard.onAppForeground(currentAccount);
-        // LuminaGram: translation-settings roaming SHELVED (per user) — auto-sync disabled; settings per-device. Re-enable by uncommenting.
-        // org.telegram.messenger.LuminaSyncController.onAppForeground();
         //if (refreshRateController != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         //    refreshRateController.start();
         //}
