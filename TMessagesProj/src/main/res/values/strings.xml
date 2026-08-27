@@ -11712,6 +11712,17 @@
     <string name="LuminaFileGuardExecutable">This file (%1$s) looks harmless, but it is actually an app or program (%2$s). Opening it could install harmful software on your device.\n\nDo not open it unless you fully trust the sender.</string>
     <string name="LuminaFileGuardMismatch">This file claims to be %1$s, but it appears to actually be %2$s. It may not be what it looks like.\n\nDo not open it unless you fully trust the sender.</string>
     <string name="LuminaFileGuardOpenAnyway">Open anyway</string>
+    <string name="LuminaFileTypeApk">Android app (.apk)</string>
+    <string name="LuminaFileTypeExe">Windows program (.exe)</string>
+    <string name="LuminaFileTypeMsi">Windows installer (.msi)</string>
+    <string name="LuminaFileTypeJar">Java program (.jar)</string>
+    <string name="LuminaFileTypeJs">script (.js)</string>
+    <string name="LuminaFileTypeSh">shell script (.sh)</string>
+    <string name="LuminaFileTypeGeneric">app / program</string>
+    <string name="LuminaFileTypeElf">native program (ELF)</string>
+    <string name="LuminaFileTypeDex">Android app (.dex)</string>
+    <string name="LuminaFileTypeScript">script</string>
+    <string name="LuminaThemePreviewChatTitle">LuminaGram Chat</string>
 <!-- LuminaGram login guard (session guard) -->
     <string name="LuminaSessionGuardHeader">Login guard</string>
     <string name="LuminaSessionGuard">New-login alerts</string>

@@ -325,31 +325,31 @@ public final class LuminaFileGuard {
 
     /** Short, human-recognizable token for an executable/installer MIME type. */
     private static String mimeExecToken(String mime) {
-        if (mime == null) return "app / program";
+        if (mime == null) return LuminaLocale.getString(R.string.LuminaFileTypeGeneric);
         String m = mime.trim().toLowerCase();
         switch (m) {
             case "application/vnd.android.package-archive":
-                return "Android app (.apk)";
+                return LuminaLocale.getString(R.string.LuminaFileTypeApk);
             case "application/x-msdownload":
             case "application/x-msdos-program":
             case "application/x-dosexec":
             case "application/vnd.microsoft.portable-executable":
-                return "Windows program (.exe)";
+                return LuminaLocale.getString(R.string.LuminaFileTypeExe);
             case "application/x-ms-installer":
             case "application/x-msi":
-                return "Windows installer (.msi)";
+                return LuminaLocale.getString(R.string.LuminaFileTypeMsi);
             case "application/java-archive":
             case "application/x-java-archive":
-                return "Java program (.jar)";
+                return LuminaLocale.getString(R.string.LuminaFileTypeJar);
             case "text/javascript":
             case "application/javascript":
             case "application/x-javascript":
-                return "script (.js)";
+                return LuminaLocale.getString(R.string.LuminaFileTypeJs);
             case "application/x-sh":
             case "application/x-shellscript":
-                return "shell script (.sh)";
+                return LuminaLocale.getString(R.string.LuminaFileTypeSh);
             default:
-                return "app / program";
+                return LuminaLocale.getString(R.string.LuminaFileTypeGeneric);
         }
     }
 
@@ -378,13 +378,13 @@ public final class LuminaFileGuard {
             if (n < 4) return null;
             int b0 = head[0] & 0xFF, b1 = head[1] & 0xFF, b2 = head[2] & 0xFF, b3 = head[3] & 0xFF;
             // ELF: 0x7F 'E' 'L' 'F'
-            if (b0 == 0x7F && b1 == 0x45 && b2 == 0x4C && b3 == 0x46) return "native program (ELF)";
+            if (b0 == 0x7F && b1 == 0x45 && b2 == 0x4C && b3 == 0x46) return LuminaLocale.getString(R.string.LuminaFileTypeElf);
             // Android Dalvik: "dex\n"
-            if (b0 == 0x64 && b1 == 0x65 && b2 == 0x78 && b3 == 0x0A) return "Android app (.dex)";
+            if (b0 == 0x64 && b1 == 0x65 && b2 == 0x78 && b3 == 0x0A) return LuminaLocale.getString(R.string.LuminaFileTypeDex);
             // Windows PE: "MZ"
-            if (b0 == 0x4D && b1 == 0x5A) return "Windows program (.exe)";
+            if (b0 == 0x4D && b1 == 0x5A) return LuminaLocale.getString(R.string.LuminaFileTypeExe);
             // Shell/script shebang: "#!"
-            if (b0 == 0x23 && b1 == 0x21) return "script";
+            if (b0 == 0x23 && b1 == 0x21) return LuminaLocale.getString(R.string.LuminaFileTypeScript);
             return null;
         } catch (Throwable ignore) {
             return null;

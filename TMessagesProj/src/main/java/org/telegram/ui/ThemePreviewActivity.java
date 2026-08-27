@@ -95,6 +95,7 @@ import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
 import org.telegram.messenger.NotificationCenter;
+import org.telegram.messenger.LuminaLocale;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SendMessagesHelper;
 import org.telegram.messenger.SharedConfig;
@@ -1057,7 +1058,7 @@ public class ThemePreviewActivity extends BaseFragment implements DownloadContro
         }
 
         if (messagesAdapter.showSecretMessages) {
-            actionBar2.setTitle("LuminaGram Chat");
+            actionBar2.setTitle(LuminaLocale.getString(R.string.LuminaThemePreviewChatTitle));
             actionBar2.setSubtitle(LocaleController.formatPluralString("Members", 505));
         } else {
             if (screenType == SCREEN_TYPE_CHANGE_BACKGROUND) {

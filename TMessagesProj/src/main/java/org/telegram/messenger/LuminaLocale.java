@@ -509,6 +509,17 @@ zhHans.put("LuminaDigestTitle", "未读摘要");
         zhHans.put("LuminaFileGuardExecutable", "这个文件（%1$s）看起来无害，但它其实是一个应用程序（%2$s）。打开它可能会在你的设备上安装恶意软件。\n\n除非你完全信任发送者，否则不要打开它。");
         zhHans.put("LuminaFileGuardMismatch", "这个文件自称是 %1$s，但它实际上似乎是 %2$s。它可能并不是看起来的那样。\n\n除非你完全信任发送者，否则不要打开它。");
         zhHans.put("LuminaFileGuardOpenAnyway", "仍然打开");
+        zhHans.put("LuminaFileTypeApk", "Android 应用 (.apk)");
+        zhHans.put("LuminaFileTypeExe", "Windows 程序 (.exe)");
+        zhHans.put("LuminaFileTypeMsi", "Windows 安装程序 (.msi)");
+        zhHans.put("LuminaFileTypeJar", "Java 程序 (.jar)");
+        zhHans.put("LuminaFileTypeJs", "脚本 (.js)");
+        zhHans.put("LuminaFileTypeSh", "Shell 脚本 (.sh)");
+        zhHans.put("LuminaFileTypeGeneric", "应用 / 程序");
+        zhHans.put("LuminaFileTypeElf", "原生程序 (ELF)");
+        zhHans.put("LuminaFileTypeDex", "Android 应用 (.dex)");
+        zhHans.put("LuminaFileTypeScript", "脚本");
+        zhHans.put("LuminaThemePreviewChatTitle", "LuminaGram 聊天");
         // --- login guard ---
         zhHans.put("LuminaSessionGuardHeader", "登录守卫");
         zhHans.put("LuminaSessionGuard", "新登录提醒");
@@ -1082,6 +1093,17 @@ zhHant.put("LuminaDigestTitle", "未讀摘要");
         zhHant.put("LuminaFileGuardExecutable", "這個檔案（%1$s）看起來無害，但它其實是一個應用程式（%2$s）。開啟它可能會在你的裝置上安裝惡意軟體。\n\n除非你完全信任傳送者，否則不要開啟它。");
         zhHant.put("LuminaFileGuardMismatch", "這個檔案自稱是 %1$s，但它實際上似乎是 %2$s。它可能並不是看起來的那樣。\n\n除非你完全信任傳送者，否則不要開啟它。");
         zhHant.put("LuminaFileGuardOpenAnyway", "仍要開啟");
+        zhHant.put("LuminaFileTypeApk", "Android 應用程式 (.apk)");
+        zhHant.put("LuminaFileTypeExe", "Windows 程式 (.exe)");
+        zhHant.put("LuminaFileTypeMsi", "Windows 安裝程式 (.msi)");
+        zhHant.put("LuminaFileTypeJar", "Java 程式 (.jar)");
+        zhHant.put("LuminaFileTypeJs", "指令碼 (.js)");
+        zhHant.put("LuminaFileTypeSh", "Shell 指令碼 (.sh)");
+        zhHant.put("LuminaFileTypeGeneric", "應用程式 / 程式");
+        zhHant.put("LuminaFileTypeElf", "原生程式 (ELF)");
+        zhHant.put("LuminaFileTypeDex", "Android 應用程式 (.dex)");
+        zhHant.put("LuminaFileTypeScript", "指令碼");
+        zhHant.put("LuminaThemePreviewChatTitle", "LuminaGram 聊天");
         // --- login guard ---
         zhHant.put("LuminaSessionGuardHeader", "登入守衛");
         zhHant.put("LuminaSessionGuard", "新登入警示");
@@ -1674,6 +1696,7 @@ ar.put("LuminaDigestTitle", "ملخص غير المقروء");
         ar.put("LuminaSecCheckupValueSet", "Set");
         ar.put("LuminaSecCheckupValueNotSet", "Not set");
         ar.put("LuminaSecCheckupValueUnknown", "Tap to view");
+        ar.put("LuminaThemePreviewChatTitle", "دردشة LuminaGram");
         T.put("ar", ar);
 
         // ---- Russian ----
@@ -2176,6 +2199,7 @@ ru.put("LuminaDigestTitle", "Сводка непрочитанных");
         ru.put("LuminaSecCheckupValueSet", "Set");
         ru.put("LuminaSecCheckupValueNotSet", "Not set");
         ru.put("LuminaSecCheckupValueUnknown", "Tap to view");
+        ru.put("LuminaThemePreviewChatTitle", "Чат LuminaGram");
         T.put("ru", ru);
 
         // ---- Persian / Farsi (RTL) ----
@@ -2678,6 +2702,7 @@ fa.put("LuminaDigestTitle", "خلاصه خوانده‌نشده‌ها");
         fa.put("LuminaSecCheckupValueSet", "Set");
         fa.put("LuminaSecCheckupValueNotSet", "Not set");
         fa.put("LuminaSecCheckupValueUnknown", "Tap to view");
+        fa.put("LuminaThemePreviewChatTitle", "گفتگوی LuminaGram");
         T.put("fa", fa);
 
         // ---- Turkish ----
@@ -3180,6 +3205,7 @@ tr.put("LuminaDigestTitle", "Okunmamış özeti");
         tr.put("LuminaSecCheckupValueSet", "Set");
         tr.put("LuminaSecCheckupValueNotSet", "Not set");
         tr.put("LuminaSecCheckupValueUnknown", "Tap to view");
+        tr.put("LuminaThemePreviewChatTitle", "LuminaGram Sohbeti");
         T.put("tr", tr);
 
         // ---- Spanish ----
@@ -3682,6 +3708,7 @@ es.put("LuminaDigestTitle", "Resumen de no leídos");
         es.put("LuminaSecCheckupValueSet", "Set");
         es.put("LuminaSecCheckupValueNotSet", "Not set");
         es.put("LuminaSecCheckupValueUnknown", "Tap to view");
+        es.put("LuminaThemePreviewChatTitle", "Chat de LuminaGram");
         T.put("es", es);
 
         // ---- Portuguese (Brazil) — key is pt-br ----
@@ -4184,6 +4211,7 @@ ptBr.put("LuminaDigestTitle", "Resumo de não lidas");
         ptBr.put("LuminaSecCheckupValueSet", "Set");
         ptBr.put("LuminaSecCheckupValueNotSet", "Not set");
         ptBr.put("LuminaSecCheckupValueUnknown", "Tap to view");
+        ptBr.put("LuminaThemePreviewChatTitle", "Conversa do LuminaGram");
         T.put("pt-br", ptBr);
 
         // ---- Indonesian ----
@@ -4686,6 +4714,7 @@ id.put("LuminaDigestTitle", "Ringkasan belum dibaca");
         id.put("LuminaSecCheckupValueSet", "Set");
         id.put("LuminaSecCheckupValueNotSet", "Not set");
         id.put("LuminaSecCheckupValueUnknown", "Tap to view");
+        id.put("LuminaThemePreviewChatTitle", "Obrolan LuminaGram");
         T.put("id", id);
     }
 
